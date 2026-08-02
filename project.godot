@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="flapjack_v1"
-run/main_scene="uid://dsulca5ocriar"
+run/main_scene="uid://5eqiped6q75s"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
