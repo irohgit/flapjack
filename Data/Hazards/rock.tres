@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="HazardData" format=3 uid="uid://c88gfpq8o5v7f"]
+
+[ext_resource type="Script" uid="uid://cuck5pgjuntcb" path="res://Data/Hazards/hazard_data.gd" id="1_27s1r"]
+[ext_resource type="Texture2D" uid="uid://dwqcbwpdbakxp" path="res://Assets/Hazards/Hazard_Rock_1.png" id="2_eh7uy"]
+
+[resource]
+script = ExtResource("1_27s1r")
+texture = ExtResource("2_eh7uy")
+metadata/_custom_type_script = "uid://cuck5pgjuntcb"

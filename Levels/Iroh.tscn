@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://dsulca5ocriar"]
+
+[ext_resource type="PackedScene" uid="uid://cclwwsegfn8rr" path="res://Actors/Player/player.tscn" id="1_e8ii7"]
+[ext_resource type="PackedScene" uid="uid://cuwj1wdixoj3p" path="res://Actors/Hazards/hazard.tscn" id="1_wu73u"]
+[ext_resource type="PackedScene" uid="uid://buoclsm4meh3f" path="res://Actors/Enemies/enemy_ship.tscn" id="2_h6hye"]
+[ext_resource type="Script" uid="uid://tsoi3lwff5mf" path="res://Actors/Camera/shake_camera.gd" id="3_o4h3a"]
+[ext_resource type="PackedScene" uid="uid://bl12qi0n68b6i" path="res://Actors/Projectiles/projectile.tscn" id="3_odipc"]
+[ext_resource type="Resource" uid="uid://dk3d73cdpoumi" path="res://Data/Projectiles/enemy_cannonball.tres" id="4_67i2g"]
+
+[node name="Game" type="Node2D" unique_id=141585991]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1873851463 groups=["shake_camera"]]
+anchor_mode = 0
+script = ExtResource("3_o4h3a")
+
+[node name="World" type="Node2D" parent="." unique_id=19047034]
+
+[node name="EnemyShip" parent="World" unique_id=1035340143 instance=ExtResource("2_h6hye")]
+position = Vector2(600, 300)
+projectile_scene = ExtResource("3_odipc")
+ammo = ExtResource("4_67i2g")
+drift_speed = 0.0
+
+[node name="EnemyShip2" parent="World" unique_id=1573959086 instance=ExtResource("2_h6hye")]
+position = Vector2(121, 604)
+projectile_scene = ExtResource("3_odipc")
+ammo = ExtResource("4_67i2g")
+drift_speed = 0.0
+
+[node name="Hazard" parent="World" unique_id=90124748 instance=ExtResource("1_wu73u")]
+position = Vector2(360, 500)
+
+[node name="Player" parent="World" unique_id=1105456395 instance=ExtResource("1_e8ii7")]
+position = Vector2(360, 1200)

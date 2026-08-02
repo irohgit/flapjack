@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://bl12qi0n68b6i"]
+
+[ext_resource type="Script" uid="uid://cg2bmscy6ln3e" path="res://Actors/Projectiles/Projectile.gd" id="1_sdwb2"]
+
+[sub_resource type="Curve" id="Curve_s6q3q"]
+_data = [Vector2(0.0014409218, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.0021277666), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_yys3n"]
+colors = PackedColorArray(0.680529, 0.8435728, 0.92674845, 1, 1, 1, 1, 0)
+
+[node name="Projectile" type="Area2D" unique_id=1512241293]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_sdwb2")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=492757982]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1875046026]
+
+[node name="Line2D" type="Line2D" parent="." unique_id=1035360307]
+width = 13.0
+width_curve = SubResource("Curve_s6q3q")
+gradient = SubResource("Gradient_yys3n")
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ProjectileData" format=3 uid="uid://dk3d73cdpoumi"]
+
+[ext_resource type="Script" uid="uid://cre7gs48pepsi" path="res://Data/Projectiles/projectile_data.gd" id="1_khvej"]
+[ext_resource type="AudioStream" uid="uid://byy7pb1556tpq" path="res://Audio/distant_cannon.mp3" id="1_p4iuf"]
+[ext_resource type="Texture2D" uid="uid://csr8gl21i8k6k" path="res://Assets/Projectiles/enemy_cannonball.png" id="3_0xt0f"]
+
+[resource]
+script = ExtResource("1_khvej")
+allegiance = 1
+texture = ExtResource("3_0xt0f")
+trail_colour = Color(1.307195, 0.5989421, 0.374208, 0.32156864)
+trail_length = 20
+impact_sound = ExtResource("1_p4iuf")
+metadata/_custom_type_script = "uid://cre7gs48pepsi"
