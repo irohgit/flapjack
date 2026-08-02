@@ -1,0 +1,15 @@
+[gd_resource type="NoiseTexture2D" format=3 uid="uid://conqv6viso2ly"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_water"]
+noise_type = 3
+seed = 18427
+frequency = 0.015
+fractal_octaves = 4
+
+[resource]
+width = 256
+height = 256
+generate_mipmaps = false
+noise = SubResource("FastNoiseLite_water")
+seamless = true
+seamless_blend_skirt = 0.15
