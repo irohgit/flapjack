@@ -1,2 +1,2 @@
-class_name AugmentResource
+class_name AugmentData
 extends Resource

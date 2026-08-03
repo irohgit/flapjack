@@ -1,4 +1,4 @@
-class_name WeaponResource
+class_name WeaponData
 extends Resource
 
 enum WeaponType {ACTIVE, PASSIVE}

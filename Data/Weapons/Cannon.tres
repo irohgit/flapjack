@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="WeaponResource" format=3 uid="uid://b7nwwwfmfkswx"]
+[gd_resource type="Resource" script_class="WeaponData" format=3 uid="uid://b7nwwwfmfkswx"]
 
 [ext_resource type="Script" uid="uid://dfww4fxipct38" path="res://Data/Weapons/weapon_data.gd" id="1_c1qbg"]
 [ext_resource type="Resource" uid="uid://c41c24mr6dvlc" path="res://Data/Projectiles/cannonball.tres" id="2_lekde"]
@@ -7,6 +7,6 @@
 script = ExtResource("1_c1qbg")
 name = "Cannon"
 damage = 1
-firerate = 1.0
+firerate = 0.5
 weaponProjectile = ExtResource("2_lekde")
 metadata/_custom_type_script = "uid://dfww4fxipct38"
