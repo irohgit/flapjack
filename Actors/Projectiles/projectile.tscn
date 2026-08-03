@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://cg2bmscy6ln3e" path="res://Actors/Projectiles/Projectile.gd" id="1_sdwb2"]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_wyght"]
+
 [sub_resource type="Curve" id="Curve_s6q3q"]
 _data = [Vector2(0.0014409218, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.0021277666), 0.0, 0.0, 0, 0]
 point_count = 2
@@ -17,6 +19,7 @@ script = ExtResource("1_sdwb2")
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=492757982]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1875046026]
+shape = SubResource("CircleShape2D_wyght")
 
 [node name="Line2D" type="Line2D" parent="." unique_id=1035360307]
 width = 13.0

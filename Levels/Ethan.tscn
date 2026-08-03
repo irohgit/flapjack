@@ -67,4 +67,5 @@ position = Vector2(360, 500)
 
 [node name="Player" parent="World" unique_id=1105456395 instance=ExtResource("6_6m8jk")]
 position = Vector2(360, 1200)
+scale = Vector2(1, 1)
 weapons = Array[ExtResource("9_wyght")]([ExtResource("10_6m8jk")])
