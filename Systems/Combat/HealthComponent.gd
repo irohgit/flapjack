@@ -65,6 +65,16 @@ func take_damage(amount: int) -> void:
 		died.emit()
 
 
+# Stable read API for observers such as UI. UI should listen to health_changed
+# for live updates, then use these methods once when it first connects.
+func get_current_health() -> int:
+	return current_health
+
+
+func get_max_health() -> int:
+	return max_health
+
+
 # Public read of the private timer. Feedback and HUD code asks through this
 # rather than reaching into _invincible_for directly.
 func is_invincible() -> bool:
