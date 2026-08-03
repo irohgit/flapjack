@@ -6,6 +6,11 @@
 [ext_resource type="Script" uid="uid://tsoi3lwff5mf" path="res://Actors/Camera/shake_camera.gd" id="3_o4h3a"]
 [ext_resource type="PackedScene" uid="uid://bl12qi0n68b6i" path="res://Actors/Projectiles/projectile.tscn" id="3_odipc"]
 [ext_resource type="Resource" uid="uid://dk3d73cdpoumi" path="res://Data/Projectiles/enemy_cannonball.tres" id="4_67i2g"]
+[ext_resource type="Texture2D" uid="uid://bih4j810dbm77" path="res://Assets/UI/Health/heart.png" id="7_bvmwd"]
+[ext_resource type="Texture2D" uid="uid://s6xw6m0b8tim" path="res://Assets/UI/Health/frame.png" id="8_fpqtc"]
+[ext_resource type="Texture2D" uid="uid://ef3klwck2tmi" path="res://Assets/UI/Health/shield.png" id="8_oia53"]
+[ext_resource type="Texture2D" uid="uid://bu3rw4aqk4uoi" path="res://Assets/UI/Health/red_fill_alt.png" id="9_vspq2"]
+[ext_resource type="Texture2D" uid="uid://cjacv7cbjjpdy" path="res://Assets/UI/Health/blue_fill_alt.png" id="11_g5h0p"]
 
 [node name="Game" type="Node2D" unique_id=141585991]
 
@@ -33,3 +38,64 @@ position = Vector2(360, 500)
 
 [node name="Player" parent="World" unique_id=1105456395 instance=ExtResource("1_e8ii7")]
 position = Vector2(360, 1200)
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=2039641610]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD" unique_id=336015252]
+offset_left = 36.0
+offset_top = 12.0
+offset_right = 292.0
+offset_bottom = 81.0
+theme_override_constants/separation = 13
+
+[node name="HealthBar" type="TextureProgressBar" parent="HUD/VBoxContainer" unique_id=603399651]
+layout_mode = 2
+max_value = 3.0
+value = 3.0
+texture_under = ExtResource("8_fpqtc")
+texture_over = ExtResource("9_vspq2")
+
+[node name="ShieldBar" type="TextureProgressBar" parent="HUD/VBoxContainer" unique_id=749761861]
+layout_mode = 2
+max_value = 3.0
+value = 3.0
+texture_under = ExtResource("8_fpqtc")
+texture_over = ExtResource("11_g5h0p")
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD" unique_id=1028461382]
+offset_top = 10.0
+offset_right = 297.0
+offset_bottom = 78.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/MarginContainer" unique_id=1877710992]
+layout_mode = 2
+
+[node name="HealthRow" type="HBoxContainer" parent="HUD/MarginContainer/VBoxContainer" unique_id=1290183620]
+layout_mode = 2
+
+[node name="HeartIcon" type="TextureRect" parent="HUD/MarginContainer/VBoxContainer/HealthRow" unique_id=1659474026]
+layout_mode = 2
+texture = ExtResource("7_bvmwd")
+
+[node name="HealthLabel" type="Label" parent="HUD/MarginContainer/VBoxContainer/HealthRow" unique_id=63423901]
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(113, -4)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+text = "3/3"
+
+[node name="ShieldRow" type="HBoxContainer" parent="HUD/MarginContainer/VBoxContainer" unique_id=1341834408]
+layout_mode = 2
+
+[node name="ShieldIcon" type="TextureRect" parent="HUD/MarginContainer/VBoxContainer/ShieldRow" unique_id=960276390]
+layout_mode = 2
+texture = ExtResource("8_oia53")
+
+[node name="ShieldLabel" type="Label" parent="HUD/MarginContainer/VBoxContainer/ShieldRow" unique_id=1754018623]
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(113, -2)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+text = "2/2"
