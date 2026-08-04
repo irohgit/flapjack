@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://5585i5xhr3f3" path="res://Actors/Coins/coins.gd" id="1_x00jg"]
 [ext_resource type="Texture2D" uid="uid://baaqp061605yv" path="res://Assets/Coins/CoinsV2_outline_18x18res.png" id="2_ey26c"]
+[ext_resource type="Script" uid="uid://bqupifjbf41sk" path="res://Actors/Coins/floating_component.gd" id="3_ey26c"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tv712"]
 atlas = ExtResource("2_ey26c")
@@ -77,6 +78,9 @@ frame_progress = 0.6384489
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1066864327]
 shape = SubResource("CircleShape2D_be312")
+
+[node name="FloatingComponent" type="Node" parent="." unique_id=1170803382]
+script = ExtResource("3_ey26c")
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

@@ -44,4 +44,3 @@ silver_coin_scene = ExtResource("9_s6p42")
 bronze_coin_scene = ExtResource("10_1to4v")
 min_x = 50
 max_x = 700
-max_y = 900

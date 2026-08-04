@@ -6,8 +6,7 @@ extends Node2D
 
 @export var min_x := 100
 @export var max_x := 900
-@export var min_y := 100
-@export var max_y := 500
+@export var y := -50
 
 func _ready():
 	print("spawner ready")
@@ -36,7 +35,6 @@ func spawn_coin():
 		coin_scene = bronze_coin_scene
 	var coin = coin_scene.instantiate()
 	coin.position = Vector2(
-		randf_range(min_x, max_x),
-		randf_range(min_y, max_y)
+		randf_range(min_x, max_x),y
 	)
 	add_child(coin)
