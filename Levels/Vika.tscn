@@ -36,6 +36,8 @@ position = Vector2(360, 500)
 
 [node name="Player" parent="World" unique_id=1105456395 instance=ExtResource("6_s6p42")]
 position = Vector2(360, 1200)
+collision_layer = 7
+collision_mask = 22
 
 [node name="CoinSpawner" type="Node2D" parent="World" unique_id=1073487522]
 script = ExtResource("7_5plqp")

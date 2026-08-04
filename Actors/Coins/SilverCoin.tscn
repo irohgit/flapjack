@@ -56,7 +56,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_nuxu7")
 }],
 "loop": 1,
-"name": &"default",
+"name": &"idle",
 "speed": 5.0
 }]
 
@@ -65,5 +65,4 @@ coin_value = 5
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=1539950087]
 sprite_frames = SubResource("SpriteFrames_wghy6")
-animation = &"default"
 frame_progress = 0.0
