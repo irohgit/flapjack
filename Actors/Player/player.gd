@@ -9,6 +9,7 @@ extends Area2D
 @export var projectile_scene: PackedScene
 @export var ammo: ProjectileData
 @export var fire_interval := 0.45
+@export var coin_count:= 0
 
 @onready var _health: HealthComponent = $HealthComponent
 
@@ -45,6 +46,11 @@ func _shake(amount: float) -> void:
 	print("cameras found: ", cams.size())
 	if not cams.is_empty():
 		cams[0].add_trauma(amount)
+
+## Collected item
+func _add_coins(amount: int):
+	coin_count += amount
+	print("Coins:", coin_count)
 
 ## Combat
 var _fire_timer := 0.0
