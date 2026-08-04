@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://7gbr0uqa7ccb"]
+
+[ext_resource type="PackedScene" uid="uid://bv6jbe75s1t7h" path="res://Actors/Coins/Coins.tscn" id="1_b3o28"]
+[ext_resource type="Texture2D" uid="uid://baaqp061605yv" path="res://Assets/Coins/CoinsV2_outline_18x18res.png" id="2_j086c"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1mw0v"]
+atlas = ExtResource("2_j086c")
+region = Rect2(0, 36, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6jglk"]
+atlas = ExtResource("2_j086c")
+region = Rect2(18, 36, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6fpao"]
+atlas = ExtResource("2_j086c")
+region = Rect2(36, 36, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ccu8t"]
+atlas = ExtResource("2_j086c")
+region = Rect2(54, 36, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rropo"]
+atlas = ExtResource("2_j086c")
+region = Rect2(72, 36, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7fctb"]
+atlas = ExtResource("2_j086c")
+region = Rect2(90, 36, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nuxu7"]
+atlas = ExtResource("2_j086c")
+region = Rect2(108, 36, 18, 18)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wghy6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1mw0v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6jglk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6fpao")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ccu8t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rropo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7fctb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nuxu7")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="SilverCoin" unique_id=1333639417 instance=ExtResource("1_b3o28")]
+coin_value = 5
+
+[node name="AnimatedSprite2D" parent="." index="0" unique_id=1539950087]
+sprite_frames = SubResource("SpriteFrames_wghy6")
+animation = &"default"
+frame_progress = 0.0
