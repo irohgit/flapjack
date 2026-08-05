@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://conqv6viso2ly" path="res://Assets/Shaders/Water/water_noise.tres" id="3_0water"]
 [ext_resource type="PackedScene" uid="uid://bl12qi0n68b6i" path="res://Actors/Projectiles/projectile.tscn" id="3_6ghmm"]
 [ext_resource type="Resource" uid="uid://dk3d73cdpoumi" path="res://Data/Projectiles/enemy_cannonball.tres" id="4_n48ea"]
+[ext_resource type="PackedScene" uid="uid://bd6pvesgtq0ik" path="res://Actors/Coins/coin_spawner.tscn" id="5_5fhce"]
 [ext_resource type="PackedScene" uid="uid://cuwj1wdixoj3p" path="res://Actors/Hazards/hazard.tscn" id="5_wyght"]
 [ext_resource type="PackedScene" uid="uid://cclwwsegfn8rr" path="res://Actors/Player/player.tscn" id="6_6m8jk"]
 [ext_resource type="Script" uid="uid://dfww4fxipct38" path="res://Data/Weapons/weapon_data.gd" id="9_wyght"]
@@ -70,7 +71,11 @@ position = Vector2(360, 500)
 [node name="Player" parent="World" unique_id=1105456395 instance=ExtResource("6_6m8jk")]
 position = Vector2(360, 1200)
 scale = Vector2(1, 1)
+collision_layer = 1
+collision_mask = 26
 weapons = Array[ExtResource("9_wyght")]([ExtResource("10_6m8jk")])
+
+[node name="CoinSpawner" parent="World" unique_id=1284645236 instance=ExtResource("5_5fhce")]
 
 [node name="SettingsPanel" type="ColorRect" parent="." unique_id=1564147772]
 visible = false
