@@ -3,5 +3,5 @@ extends Resource
 
 @export var projectile_scene: PackedScene
 
-func fire(shooter: Node2D, weapon: WeaponData) -> void:
+func fire(shooter: Node2D, weapon: WeaponState) -> void:
 	pass

@@ -60,7 +60,7 @@ func _update_weapons(delta: float) -> void:
 		var should_fire := shoot_pressed
 		
 		if should_fire and state.cooldown <= 0.0 and state.data.weaponType == WeaponData.WeaponType.ACTIVE:
-			state.data.weaponBehaviour.fire($".", state.data)
+			state.data.weaponBehaviour.fire($".", state)
 			
 			state.cooldown += maxf(state.data.firerate, 0.001)
 			
@@ -68,7 +68,7 @@ func _update_weapons(delta: float) -> void:
 			state.cooldown = 0.0
 			
 		if state.data.weaponType == WeaponData.WeaponType.PASSIVE && state.cooldown <= 0.0:
-			state.data.weaponBehaviour.fire($".", state.data)
+			state.data.weaponBehaviour.fire($".", state)
 			state.cooldown += maxf(state.data.firerate, 0.001)
 		elif not should_fire and state.data.weaponType == WeaponData.WeaponType.PASSIVE and state.cooldown < 0.0:
 			state.cooldown = 0.0
@@ -87,11 +87,3 @@ func _on_died() -> void:
 	_shake(0.8) #Camera Shake
 	DebugHud.flash("PLAYER DESTROYED")
 	queue_free()
-
-
-class WeaponState:
-	var data: WeaponData
-	var cooldown := 0.0
-	
-	func _init(weapon_data: WeaponData) -> void:
-		data = weapon_data
