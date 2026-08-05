@@ -1,4 +1,13 @@
 extends Control
 
-func _on_button_button_up() -> void:
+
+func PlayPress() -> void:
 	get_tree().change_scene_to_file("res://Levels/Ethan.tscn")
+
+
+func SettingsPress() -> void:
+	pass # Replace with function body.
+
+
+func ExitPress() -> void:
+	get_tree().quit()
