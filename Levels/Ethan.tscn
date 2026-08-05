@@ -23,14 +23,14 @@ shader_parameter/foam_color = Color(0.97, 1, 1, 1)
 shader_parameter/design_size = Vector2(720, 1280)
 shader_parameter/water_pixel_size = 6.0
 shader_parameter/animation_speed = 4.0
-shader_parameter/cell_size = 6.0
-shader_parameter/cell_irregularity = 0.55
+shader_parameter/cell_size = 13.0
+shader_parameter/cell_irregularity = 0.749999983236
 shader_parameter/cell_motion = 0.08
-shader_parameter/edge_warp = 3.5
-shader_parameter/wave_width = 0.28
-shader_parameter/rim_width = 0.12
-shader_parameter/foam_width = 0.05
-shader_parameter/foam_coverage = 0.58
+shader_parameter/edge_warp = 8.0
+shader_parameter/wave_width = 0.33999999612564
+shader_parameter/rim_width = 0.0800000000745
+shader_parameter/foam_width = 0.03999999910592
+shader_parameter/foam_coverage = 0.30999999307088
 
 [node name="Game" type="Node2D" unique_id=141585991]
 script = ExtResource("1_6m8jk")
