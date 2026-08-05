@@ -1,3 +1,48 @@
 [gd_scene format=3 uid="uid://bflry6g2tad73"]
 
-[node name="Vika" type="Node2D" unique_id=269684056]
+[ext_resource type="Script" uid="uid://tsoi3lwff5mf" path="res://Actors/Camera/shake_camera.gd" id="1_bhjmk"]
+[ext_resource type="PackedScene" uid="uid://buoclsm4meh3f" path="res://Actors/Enemies/enemy_ship.tscn" id="2_5plqp"]
+[ext_resource type="PackedScene" uid="uid://bl12qi0n68b6i" path="res://Actors/Projectiles/projectile.tscn" id="3_3dfi5"]
+[ext_resource type="Resource" uid="uid://dk3d73cdpoumi" path="res://Data/Projectiles/enemy_cannonball.tres" id="4_rr7vt"]
+[ext_resource type="PackedScene" uid="uid://cuwj1wdixoj3p" path="res://Actors/Hazards/hazard.tscn" id="5_iwhp5"]
+[ext_resource type="PackedScene" uid="uid://cclwwsegfn8rr" path="res://Actors/Player/player.tscn" id="6_s6p42"]
+[ext_resource type="Script" uid="uid://bxtriexoiepnq" path="res://Levels/coin_spawner.gd" id="7_5plqp"]
+[ext_resource type="PackedScene" uid="uid://dan4jnu6ekgwc" path="res://Actors/Coins/GoldCoin.tscn" id="8_iwhp5"]
+[ext_resource type="PackedScene" uid="uid://7gbr0uqa7ccb" path="res://Actors/Coins/SilverCoin.tscn" id="9_s6p42"]
+[ext_resource type="PackedScene" uid="uid://ckw6tg2ve3j2x" path="res://Actors/Coins/BronzeCoin.tscn" id="10_1to4v"]
+
+[node name="Game" type="Node2D" unique_id=141585991]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1873851463 groups=["shake_camera"]]
+anchor_mode = 0
+script = ExtResource("1_bhjmk")
+
+[node name="World" type="Node2D" parent="." unique_id=19047034]
+
+[node name="EnemyShip" parent="World" unique_id=1035340143 instance=ExtResource("2_5plqp")]
+position = Vector2(600, 300)
+projectile_scene = ExtResource("3_3dfi5")
+ammo = ExtResource("4_rr7vt")
+drift_speed = 0.0
+
+[node name="EnemyShip2" parent="World" unique_id=1573959086 instance=ExtResource("2_5plqp")]
+position = Vector2(121, 604)
+projectile_scene = ExtResource("3_3dfi5")
+ammo = ExtResource("4_rr7vt")
+drift_speed = 0.0
+
+[node name="Hazard" parent="World" unique_id=90124748 instance=ExtResource("5_iwhp5")]
+position = Vector2(360, 500)
+
+[node name="Player" parent="World" unique_id=1105456395 instance=ExtResource("6_s6p42")]
+position = Vector2(360, 1200)
+collision_layer = 7
+collision_mask = 22
+
+[node name="CoinSpawner" type="Node2D" parent="World" unique_id=1073487522]
+script = ExtResource("7_5plqp")
+gold_coin_scene = ExtResource("8_iwhp5")
+silver_coin_scene = ExtResource("9_s6p42")
+bronze_coin_scene = ExtResource("10_1to4v")
+min_x = 50
+max_x = 700

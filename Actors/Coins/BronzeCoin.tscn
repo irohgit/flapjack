@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://ckw6tg2ve3j2x"]
+
+[ext_resource type="PackedScene" uid="uid://bv6jbe75s1t7h" path="res://Actors/Coins/Coins.tscn" id="1_5o13k"]
+
+[node name="BronzeCoin" unique_id=1333639417 instance=ExtResource("1_5o13k")]

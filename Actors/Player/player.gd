@@ -7,6 +7,7 @@ extends Area2D
 
 #Projectile Firing 
 @export var projectile_scene: PackedScene
+@export var coin_count:= 0
 @export var weapons: Array[WeaponData]
 var _weapon_states: Array[WeaponState] = []
 
@@ -46,6 +47,12 @@ func _shake(amount: float) -> void:
 	if not cams.is_empty():
 		cams[0].add_trauma(amount)
 
+## Collected item
+func _add_coins(amount: int):
+	coin_count += amount
+	print("Coins:", coin_count)
+
+## Combat
 func _update_weapons(delta: float) -> void:
 	var shoot_pressed := Input.is_action_pressed("shoot")
 	
