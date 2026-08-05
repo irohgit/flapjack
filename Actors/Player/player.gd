@@ -7,9 +7,9 @@ extends Area2D
 
 #Projectile Firing 
 @export var projectile_scene: PackedScene
-@export var ammo: ProjectileData
-@export var fire_interval := 0.45
 @export var coin_count:= 0
+@export var weapons: Array[WeaponData]
+var _weapon_states: Array[WeaponState] = []
 
 @onready var _health: HealthComponent = $HealthComponent
 
@@ -22,6 +22,9 @@ func _ready() -> void:
 	_health.health_changed.connect(func(c, m): DebugHud.watch("health", "%d/%d" % [c, m]))
 	_health.died.connect(func(): DebugHud.flash("PLAYER DESTROYED"))
 	
+	for weapon in weapons:
+		_weapon_states.append(WeaponState.new(weapon))
+	
 func _process(_delta: float) -> void:
 	_move_intent = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 
@@ -30,10 +33,7 @@ func _physics_process(delta: float) -> void:
 	velocity = velocity.lerp(target, 1.0 - exp(-responsiveness * delta))
 	position += velocity * delta
 	position = Playarea.clamp_to_play_area(position, half_width)
-	_fire_timer -= delta
-	if Input.is_action_pressed("shoot") and _fire_timer <= 0.0:
-		_fire()
-		_fire_timer = fire_interval
+	_update_weapons(delta)
 		
 func _on_area_entered(area: Area2D) -> void:
 	# Overlap Function 
@@ -53,13 +53,40 @@ func _add_coins(amount: int):
 	print("Coins:", coin_count)
 
 ## Combat
-var _fire_timer := 0.0
+func _update_weapons(delta: float) -> void:
+	var shoot_pressed := Input.is_action_pressed("shoot")
+	
+	for state in _weapon_states:
+		state.cooldown -= delta
+		var should_fire := shoot_pressed
+		
+		if should_fire and state.cooldown <= 0.0 and state.data.weaponType == WeaponData.WeaponType.ACTIVE:
+			_fire_active_weapon(state.data)
+			
+			state.cooldown += maxf(state.data.firerate, 0.001)
+			
+		elif not should_fire and state.data.weaponType == WeaponData.WeaponType.ACTIVE and state.cooldown < 0.0:
+			state.cooldown = 0.0
+			
+		if state.data.weaponType == WeaponData.WeaponType.PASSIVE && state.cooldown <= 0.0:
+			_fire_passive_weapon(state.data)
+			state.cooldown += maxf(state.data.firerate, 0.001)
+		elif not should_fire and state.data.weaponType == WeaponData.WeaponType.PASSIVE and state.cooldown < 0.0:
+			state.cooldown = 0.0
 
-func _fire() -> void:
+func _fire_active_weapon(weapon: WeaponData) -> void:
 	var shot := projectile_scene.instantiate() as Projectile
-	shot.data = ammo
+	
+	if show == null:
+		push_error("Projectile not a projectile")
+		return
+	
+	shot.data = weapon.weaponProjectile
 	get_parent().add_child(shot)
 	shot.global_position = global_position + Vector2(0, -40)
+	
+func _fire_passive_weapon(weapon: WeaponData) -> void:
+	pass
 
 func take_damage(amount: int) -> void:
 	_health.take_damage(amount)
@@ -75,3 +102,11 @@ func _on_died() -> void:
 	_shake(0.8) #Camera Shake
 	DebugHud.flash("PLAYER DESTROYED")
 	queue_free()
+
+
+class WeaponState:
+	var data: WeaponData
+	var cooldown := 0.0
+	
+	func _init(weapon_data: WeaponData) -> void:
+		data = weapon_data
