@@ -5,8 +5,6 @@ extends Node2D
 @export var bronze_coin_data: PickupData
 @export var coin_scene: PackedScene
 
-@export var y := -50
-
 func _ready():
 	print("spawner ready")
 	GameEvents.enemy_died.connect(spawn_coin)
@@ -19,7 +17,7 @@ func spawn_coin(position: Vector2):
 	var coin = coin_scene.instantiate() as WorldPickup
 	coin.scale = Vector2.ONE * 3.0
 	
-	coin.position = position
+	coin.global_position = position
 	
 	# Random number between 0.0 and 1.0
 	var roll = randf()

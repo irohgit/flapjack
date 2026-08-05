@@ -1,13 +1,11 @@
 [gd_resource type="Resource" script_class="PickupData" format=3 uid="uid://c2mlimi5p04hl"]
 
 [ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="1_6fd7w"]
-[ext_resource type="SpriteFrames" uid="uid://bv0a2xq3kyec8" path="res://Animations/gold_coin_anim.tres" id="2_1sy38"]
 [ext_resource type="Texture2D" uid="uid://baaqp061605yv" path="res://Assets/Coins/CoinsV2_outline_18x18res.png" id="2_myq1t"]
 
 [resource]
 script = ExtResource("1_6fd7w")
 pickup_type = 2
 texture = ExtResource("2_myq1t")
-sprite_frames = ExtResource("2_1sy38")
 coin_amount = 3
 metadata/_custom_type_script = "uid://rau2jwiqd0pd"

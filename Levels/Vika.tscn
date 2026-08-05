@@ -6,7 +6,7 @@
 [ext_resource type="Resource" uid="uid://dk3d73cdpoumi" path="res://Data/Projectiles/enemy_cannonball.tres" id="4_rr7vt"]
 [ext_resource type="PackedScene" uid="uid://cuwj1wdixoj3p" path="res://Actors/Hazards/hazard.tscn" id="5_iwhp5"]
 [ext_resource type="PackedScene" uid="uid://cclwwsegfn8rr" path="res://Actors/Player/player.tscn" id="6_s6p42"]
-[ext_resource type="PackedScene" uid="uid://bd6pvesgtq0ik" path="res://Actors/Coins/coin_spawner.tscn" id="7_5plqp"]
+[ext_resource type="PackedScene" uid="uid://luquvycpj4hd" path="res://Actors/Pickup/coin_spawner.tscn" id="7_5plqp"]
 
 [node name="Game" type="Node2D" unique_id=141585991]
 
@@ -33,7 +33,6 @@ position = Vector2(360, 500)
 
 [node name="Player" parent="World" unique_id=1105456395 instance=ExtResource("6_s6p42")]
 position = Vector2(360, 1200)
-collision_layer = 7
 collision_mask = 22
 
-[node name="CoinSpawner" parent="World" unique_id=1284645236 instance=ExtResource("7_5plqp")]
+[node name="CoinSpawner" parent="World" unique_id=1386735529 instance=ExtResource("7_5plqp")]
