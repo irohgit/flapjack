@@ -61,7 +61,7 @@ func _update_weapons(delta: float) -> void:
 		var should_fire := shoot_pressed
 		
 		if should_fire and state.cooldown <= 0.0 and state.data.weaponType == WeaponData.WeaponType.ACTIVE:
-			_fire_active_weapon(state.data)
+			state.data.weaponBehaviour.fire($".", state.data)
 			
 			state.cooldown += maxf(state.data.firerate, 0.001)
 			
@@ -69,24 +69,10 @@ func _update_weapons(delta: float) -> void:
 			state.cooldown = 0.0
 			
 		if state.data.weaponType == WeaponData.WeaponType.PASSIVE && state.cooldown <= 0.0:
-			_fire_passive_weapon(state.data)
+			state.data.weaponBehaviour.fire($".", state.data)
 			state.cooldown += maxf(state.data.firerate, 0.001)
 		elif not should_fire and state.data.weaponType == WeaponData.WeaponType.PASSIVE and state.cooldown < 0.0:
 			state.cooldown = 0.0
-
-func _fire_active_weapon(weapon: WeaponData) -> void:
-	var shot := projectile_scene.instantiate() as Projectile
-	
-	if show == null:
-		push_error("Projectile not a projectile")
-		return
-	
-	shot.data = weapon.weaponProjectile
-	get_parent().add_child(shot)
-	shot.global_position = global_position + Vector2(0, -40)
-	
-func _fire_passive_weapon(weapon: WeaponData) -> void:
-	pass
 
 func take_damage(amount: int) -> void:
 	_health.take_damage(amount)

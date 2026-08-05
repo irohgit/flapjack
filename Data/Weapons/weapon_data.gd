@@ -9,3 +9,4 @@ enum WeaponType {ACTIVE, PASSIVE}
 @export var texture: Texture2D
 @export var weaponType := WeaponType.ACTIVE
 @export var weaponProjectile: ProjectileData
+@export var weaponBehaviour: WeaponBehaviour
