@@ -6,7 +6,6 @@ extends Area2D
 @export var half_width := 32.0
 
 #Projectile Firing 
-@export var projectile_scene: PackedScene
 @export var coin_count:= 0
 @export var weapons: Array[WeaponData]
 var _weapon_states: Array[WeaponState] = []
