@@ -1,0 +1,112 @@
+[gd_scene format=3 uid="uid://0js1ghbsjvcd"]
+
+[ext_resource type="Script" uid="uid://bjn2frcajvqas" path="res://Levels/ingame_menu.gd" id="1_3yu0n"]
+[ext_resource type="Shader" uid="uid://cq85abjo4x30h" path="res://Assets/Shaders/Water/water.gdshader" id="2_im6i0"]
+[ext_resource type="Texture2D" uid="uid://conqv6viso2ly" path="res://Assets/Shaders/Water/water_noise.tres" id="3_i4luy"]
+[ext_resource type="Script" uid="uid://tsoi3lwff5mf" path="res://Actors/Camera/shake_camera.gd" id="4_yx5hh"]
+[ext_resource type="PackedScene" uid="uid://dsf0q5lcpr0mh" path="res://Actors/Camera/ScrollDirector.tscn" id="5_im6i0"]
+[ext_resource type="PackedScene" uid="uid://buoclsm4meh3f" path="res://Actors/Enemies/enemy_ship.tscn" id="5_ndx46"]
+[ext_resource type="PackedScene" uid="uid://bl12qi0n68b6i" path="res://Actors/Projectiles/projectile.tscn" id="6_nf6vt"]
+[ext_resource type="Resource" uid="uid://dk3d73cdpoumi" path="res://Data/Projectiles/enemy_cannonball.tres" id="7_aa3m5"]
+[ext_resource type="PackedScene" uid="uid://cuwj1wdixoj3p" path="res://Actors/Hazards/hazard.tscn" id="8_y3xa5"]
+[ext_resource type="PackedScene" uid="uid://cclwwsegfn8rr" path="res://Actors/Player/player.tscn" id="9_nbhn6"]
+[ext_resource type="Script" uid="uid://dfww4fxipct38" path="res://Data/Weapons/weapon_data.gd" id="10_nlrgj"]
+[ext_resource type="Resource" uid="uid://b7nwwwfmfkswx" path="res://Data/Weapons/Cannon.tres" id="11_c83nf"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n48ea"]
+shader = ExtResource("2_im6i0")
+shader_parameter/noise_texture = ExtResource("3_i4luy")
+shader_parameter/deep_water = Color(0.24, 0.78, 0.82, 1)
+shader_parameter/wave_water = Color(0.32, 0.86, 0.88, 1)
+shader_parameter/rim_color = Color(0.62, 0.95, 0.95, 1)
+shader_parameter/foam_color = Color(0.97, 1, 1, 1)
+shader_parameter/design_size = Vector2(720, 1280)
+shader_parameter/water_pixel_size = 6.0
+shader_parameter/animation_speed = 4.0
+shader_parameter/cell_size = 6.0
+shader_parameter/cell_irregularity = 0.55
+shader_parameter/cell_motion = 0.08
+shader_parameter/edge_warp = 3.5
+shader_parameter/wave_width = 0.28
+shader_parameter/rim_width = 0.12
+shader_parameter/foam_width = 0.05
+shader_parameter/foam_coverage = 0.58
+
+[node name="Game" type="Node2D" unique_id=141585991]
+script = ExtResource("1_3yu0n")
+
+[node name="WaterBackground" type="CanvasLayer" parent="." unique_id=474036332]
+layer = -100
+
+[node name="Water" type="ColorRect" parent="WaterBackground" unique_id=1833802365]
+material = SubResource("ShaderMaterial_n48ea")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1873851463 groups=["shake_camera"]]
+anchor_mode = 0
+script = ExtResource("4_yx5hh")
+
+[node name="ScrollDirector" parent="." unique_id=1595117280 node_paths=PackedStringArray("camera") instance=ExtResource("5_im6i0")]
+camera = NodePath("../Camera2D")
+end_point = Vector2(0, -1000)
+scroll_speed = 25.0
+
+[node name="World" type="Node2D" parent="." unique_id=19047034]
+
+[node name="EnemyShip" parent="World" unique_id=1035340143 instance=ExtResource("5_ndx46")]
+position = Vector2(600, 300)
+projectile_scene = ExtResource("6_nf6vt")
+ammo = ExtResource("7_aa3m5")
+drift_speed = 0.0
+
+[node name="EnemyShip2" parent="World" unique_id=1573959086 instance=ExtResource("5_ndx46")]
+position = Vector2(121, 604)
+projectile_scene = ExtResource("6_nf6vt")
+ammo = ExtResource("7_aa3m5")
+drift_speed = 0.0
+
+[node name="Hazard" parent="World" unique_id=90124748 instance=ExtResource("8_y3xa5")]
+position = Vector2(360, 500)
+
+[node name="Player" parent="World" unique_id=1105456395 node_paths=PackedStringArray("camera") instance=ExtResource("9_nbhn6")]
+position = Vector2(360, 1200)
+scale = Vector2(1, 1)
+camera = NodePath("../../Camera2D")
+weapons = Array[ExtResource("10_nlrgj")]([ExtResource("11_c83nf")])
+
+[node name="SettingsPanel" type="ColorRect" parent="." unique_id=1564147772]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 720.0
+offset_bottom = 1280.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.12156863, 0.12156863, 0.12156863, 0.78431374)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsPanel" unique_id=624069474]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Resume" type="Button" parent="SettingsPanel/VBoxContainer" unique_id=618098144]
+layout_mode = 2
+text = "Resume
+"
+
+[node name="Exit" type="Button" parent="SettingsPanel/VBoxContainer" unique_id=1355883769]
+layout_mode = 2
+text = "Exit"
+
+[connection signal="button_up" from="SettingsPanel/VBoxContainer/Resume" to="." method="ResumePress"]
+[connection signal="button_up" from="SettingsPanel/VBoxContainer/Exit" to="." method="ExitPress"]
