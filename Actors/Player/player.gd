@@ -1,3 +1,5 @@
+class_name Player
+
 extends Area2D
 
 #Movement
@@ -38,6 +40,8 @@ func _on_area_entered(area: Area2D) -> void:
 	# Overlap Function 
 	if area.is_in_group("hazard"):
 		take_damage(area.get_contact_damage())
+	if area.is_in_group("pickup") and area.has_method("collect"):
+		area.collect(self)
 
 ## Camera
 func _shake(amount: float) -> void:
@@ -50,6 +54,13 @@ func _shake(amount: float) -> void:
 func _add_coins(amount: int):
 	coin_count += amount
 	print("Coins:", coin_count)
+
+func add_augment(augment: AugmentData) -> bool:
+	for state in _weapon_states:
+		if state.data == augment.targetWeapon:
+			state.augments.append(augment)
+			return true
+	return false
 
 ## Combat
 func _update_weapons(delta: float) -> void:
