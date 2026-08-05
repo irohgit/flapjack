@@ -5,6 +5,8 @@ enum PickupType {AUGMENT, WEAPON, COIN}
 
 @export var pickup_type: PickupType
 @export var texture: Texture2D
+@export var sprite_frames: SpriteFrames
+@export var animation_name: StringName
 
 @export var augment: AugmentData
 @export var weapon: WeaponData

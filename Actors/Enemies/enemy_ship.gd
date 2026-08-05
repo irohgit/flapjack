@@ -73,6 +73,8 @@ func _on_damaged() -> void:
 	create_tween().tween_property(self, "modulate", Color.WHITE, 0.15)
 	
 func _on_died() -> void:
+	GameEvents.enemy_died.emit(global_position)
+	
 	for cam in get_tree().get_nodes_in_group("shake_camera"):
 		if cam is ShakeCamera:
 			cam.add_trauma(0.15)

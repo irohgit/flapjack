@@ -13,7 +13,10 @@
 [ext_resource type="Script" uid="uid://dfww4fxipct38" path="res://Data/Weapons/weapon_data.gd" id="9_wyght"]
 [ext_resource type="Resource" uid="uid://b7nwwwfmfkswx" path="res://Data/Weapons/Cannon.tres" id="10_6m8jk"]
 [ext_resource type="PackedScene" uid="uid://dgp73phtjophn" path="res://Actors/Pickup/pickup.tscn" id="13_2mw5f"]
+[ext_resource type="Resource" uid="uid://c2mlimi5p04hl" path="res://Data/Pickups/GoldCoin.tres" id="13_xrke6"]
+[ext_resource type="Resource" uid="uid://bro26dstx3iic" path="res://Data/Pickups/SilverCoin.tres" id="14_1s150"]
 [ext_resource type="Resource" uid="uid://c8prjyekwi7hm" path="res://Data/Pickups/HomingCannonPickup.tres" id="14_ny1ot"]
+[ext_resource type="Resource" uid="uid://dbvcpemefqpmm" path="res://Data/Pickups/BronzeCoin.tres" id="15_xph54"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n48ea"]
 shader = ExtResource("2_6ghmm")
@@ -78,6 +81,10 @@ collision_mask = 26
 weapons = Array[ExtResource("9_wyght")]([ExtResource("10_6m8jk")])
 
 [node name="CoinSpawner" parent="World" unique_id=1284645236 instance=ExtResource("5_5fhce")]
+gold_coin_data = ExtResource("13_xrke6")
+silver_coin_data = ExtResource("14_1s150")
+bronze_coin_data = ExtResource("15_xph54")
+coin_scene = ExtResource("13_2mw5f")
 
 [node name="Pickup" parent="World" unique_id=169920597 instance=ExtResource("13_2mw5f")]
 position = Vector2(344, 783)

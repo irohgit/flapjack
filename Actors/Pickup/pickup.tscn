@@ -10,5 +10,7 @@ script = ExtResource("1_dxqhr")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1482293552]
 
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1740038192]
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=10593349]
 shape = SubResource("CircleShape2D_b77r1")
