@@ -20,6 +20,7 @@ func _ready() -> void:
 	area_entered.connect(_on_area_entered)
 	_trail.top_level = true
 	_trail.clear_points()
+	get_tree().create_timer(data.expire_time).timeout.connect(queue_free)
 
 
 func _apply_data() -> void:
@@ -48,8 +49,6 @@ func _apply_allegiance() -> void:
 func _physics_process(delta: float) -> void:
 	_move(delta)
 	_update_trail()
-	if not Playarea.is_near_screen(position, 100.0):
-		queue_free()
 
 
 # Override for homing, arcing, spiralling.

@@ -14,3 +14,4 @@ enum Allegiance { PLAYER, ENEMY }
 @export var trail_colour := Color.WHITE
 @export var trail_length := 12
 @export var impact_sound: AudioStream
+@export var expire_time := 5.0

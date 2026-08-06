@@ -3,9 +3,16 @@ extends CanvasLayer
 
 var _labels: Dictionary = {}
 var _container: VBoxContainer
+var _enabled := false
 
 
 func _ready() -> void:
+	_enabled = OS.is_debug_build()
+	visible = _enabled
+
+	if not _enabled:
+		return
+
 	layer = 128   # draw above everything
 
 	_container = VBoxContainer.new()
@@ -16,6 +23,9 @@ func _ready() -> void:
 
 # Persistent line, overwritten each call. Use for values that change every frame.
 func watch(key: String, value: Variant) -> void:
+	if not _enabled:
+		return
+
 	if not _labels.has(key):
 		var label := Label.new()
 		label.add_theme_color_override("font_color", Color.WHITE)
@@ -28,6 +38,9 @@ func watch(key: String, value: Variant) -> void:
 
 # Transient line, fades after a few seconds. Use for events.
 func flash(message: String, duration := 3.0) -> void:
+	if not _enabled:
+		return
+
 	var label := Label.new()
 	label.text = message
 	label.add_theme_color_override("font_color", Color(1, 0.9, 0.4))

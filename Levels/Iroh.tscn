@@ -36,8 +36,9 @@ drift_speed = 0.0
 [node name="Hazard" parent="World" unique_id=90124748 instance=ExtResource("1_wu73u")]
 position = Vector2(360, 500)
 
-[node name="Player" parent="World" unique_id=1105456395 instance=ExtResource("1_e8ii7")]
+[node name="Player" parent="World" unique_id=1105456395 node_paths=PackedStringArray("camera") instance=ExtResource("1_e8ii7")]
 position = Vector2(360, 1200)
+camera = NodePath("../../Camera2D")
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=2039641610]
 
