@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://0js1ghbsjvcd"]
 
 [ext_resource type="Script" uid="uid://bjn2frcajvqas" path="res://Levels/ingame_menu.gd" id="1_3yu0n"]
+[ext_resource type="Script" uid="uid://dfgolp8yapr4n" path="res://Levels/level_zero.gd" id="1_y3xa5"]
 [ext_resource type="Shader" uid="uid://cq85abjo4x30h" path="res://Assets/Shaders/Water/water.gdshader" id="2_im6i0"]
 [ext_resource type="Texture2D" uid="uid://conqv6viso2ly" path="res://Assets/Shaders/Water/water_noise.tres" id="3_i4luy"]
 [ext_resource type="Script" uid="uid://tsoi3lwff5mf" path="res://Actors/Camera/shake_camera.gd" id="4_yx5hh"]
@@ -12,6 +13,11 @@
 [ext_resource type="PackedScene" uid="uid://cclwwsegfn8rr" path="res://Actors/Player/player.tscn" id="9_nbhn6"]
 [ext_resource type="Script" uid="uid://dfww4fxipct38" path="res://Data/Weapons/weapon_data.gd" id="10_nlrgj"]
 [ext_resource type="Resource" uid="uid://b7nwwwfmfkswx" path="res://Data/Weapons/Cannon.tres" id="11_c83nf"]
+[ext_resource type="Texture2D" uid="uid://s6xw6m0b8tim" path="res://Assets/UI/Health/frame.png" id="13_aa3m5"]
+[ext_resource type="Texture2D" uid="uid://bu3rw4aqk4uoi" path="res://Assets/UI/Health/red_fill_alt.png" id="14_y3xa5"]
+[ext_resource type="Texture2D" uid="uid://cjacv7cbjjpdy" path="res://Assets/UI/Health/blue_fill_alt.png" id="15_nbhn6"]
+[ext_resource type="Texture2D" uid="uid://bih4j810dbm77" path="res://Assets/UI/Health/heart.png" id="16_nlrgj"]
+[ext_resource type="Texture2D" uid="uid://ef3klwck2tmi" path="res://Assets/UI/Health/shield.png" id="17_c83nf"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n48ea"]
 shader = ExtResource("2_im6i0")
@@ -32,8 +38,9 @@ shader_parameter/rim_width = 0.12
 shader_parameter/foam_width = 0.05
 shader_parameter/foam_coverage = 0.58
 
-[node name="Game" type="Node2D" unique_id=141585991]
-script = ExtResource("1_3yu0n")
+[node name="Game" type="Node2D" unique_id=141585991 node_paths=PackedStringArray("scroll_director")]
+script = ExtResource("1_y3xa5")
+scroll_director = NodePath("ScrollDirector")
 
 [node name="WaterBackground" type="CanvasLayer" parent="." unique_id=474036332]
 layer = -100
@@ -53,7 +60,6 @@ script = ExtResource("4_yx5hh")
 
 [node name="ScrollDirector" parent="." unique_id=1595117280 node_paths=PackedStringArray("camera") instance=ExtResource("5_im6i0")]
 camera = NodePath("../Camera2D")
-end_point = Vector2(0, -1000)
 scroll_speed = 15.0
 
 [node name="World" type="Node2D" parent="." unique_id=19047034]
@@ -79,6 +85,67 @@ scale = Vector2(1, 1)
 camera = NodePath("../../Camera2D")
 weapons = Array[ExtResource("10_nlrgj")]([ExtResource("11_c83nf")])
 
+[node name="HUD" type="CanvasLayer" parent="." unique_id=951542265]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD" unique_id=1243881957]
+offset_left = 36.0
+offset_top = 12.0
+offset_right = 292.0
+offset_bottom = 81.0
+theme_override_constants/separation = 13
+
+[node name="HealthBar" type="TextureProgressBar" parent="HUD/VBoxContainer" unique_id=1143390022]
+layout_mode = 2
+max_value = 3.0
+value = 3.0
+texture_under = ExtResource("13_aa3m5")
+texture_over = ExtResource("14_y3xa5")
+
+[node name="ShieldBar" type="TextureProgressBar" parent="HUD/VBoxContainer" unique_id=908392355]
+layout_mode = 2
+max_value = 3.0
+value = 3.0
+texture_under = ExtResource("13_aa3m5")
+texture_over = ExtResource("15_nbhn6")
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD" unique_id=144723114]
+offset_top = 10.0
+offset_right = 297.0
+offset_bottom = 78.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/MarginContainer" unique_id=1875191545]
+layout_mode = 2
+
+[node name="HealthRow" type="HBoxContainer" parent="HUD/MarginContainer/VBoxContainer" unique_id=1072044176]
+layout_mode = 2
+
+[node name="HeartIcon" type="TextureRect" parent="HUD/MarginContainer/VBoxContainer/HealthRow" unique_id=1646698725]
+layout_mode = 2
+texture = ExtResource("16_nlrgj")
+
+[node name="HealthLabel" type="Label" parent="HUD/MarginContainer/VBoxContainer/HealthRow" unique_id=1736492504]
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(113, -4)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+text = "3/3"
+
+[node name="ShieldRow" type="HBoxContainer" parent="HUD/MarginContainer/VBoxContainer" unique_id=751854156]
+layout_mode = 2
+
+[node name="ShieldIcon" type="TextureRect" parent="HUD/MarginContainer/VBoxContainer/ShieldRow" unique_id=1683634082]
+layout_mode = 2
+texture = ExtResource("17_c83nf")
+
+[node name="ShieldLabel" type="Label" parent="HUD/MarginContainer/VBoxContainer/ShieldRow" unique_id=279094994]
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(113, -2)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+text = "2/2"
+
 [node name="SettingsPanel" type="ColorRect" parent="." unique_id=1564147772]
 visible = false
 anchors_preset = 15
@@ -89,6 +156,7 @@ offset_bottom = 1280.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.12156863, 0.12156863, 0.12156863, 0.78431374)
+script = ExtResource("1_3yu0n")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="SettingsPanel" unique_id=624069474]
 layout_mode = 1
