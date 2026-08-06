@@ -1,6 +1,7 @@
 class_name EnemyData
 extends Resource
 
+@export var health := 3
 @export var contact_damage := 1 # Damage dealt to the player on contact.
 @export var projectile_damage := 1
 @export var projectile_fire_rate := 2
