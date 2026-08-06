@@ -7,6 +7,10 @@ extends Area2D
 @onready var _shape: CollisionShape2D = $CollisionShape2D
 @onready var _trail: Line2D = $Line2D
 
+var homing = false
+var homing_turn_speed := 6.0
+var _homing_target: Node2D
+
 var direction := Vector2.UP
 
 
@@ -49,8 +53,57 @@ func _physics_process(delta: float) -> void:
 
 # Override for homing, arcing, spiralling.
 func _move(delta: float) -> void:
+	
+	if homing:
+		_update_homing(delta)
+	
 	position += direction * data.speed * delta
 
+func _update_homing(delta: float) -> void:
+	if not _has_valid_homing_target():
+		_homing_target = _find_nearest_enemy()
+
+	if _homing_target == null:
+		return
+
+	var desired_direction := global_position.direction_to(
+		_homing_target.global_position
+	)
+
+	var angle_to_target := direction.angle_to(desired_direction)
+	var maximum_turn := homing_turn_speed * delta
+
+	direction = direction.rotated(
+		clampf(angle_to_target, -maximum_turn, maximum_turn)
+	).normalized()
+
+
+func _has_valid_homing_target() -> bool:
+	return (
+		is_instance_valid(_homing_target)
+		and not _homing_target.is_queued_for_deletion()
+	)
+
+
+func _find_nearest_enemy() -> Node2D:
+	var nearest: Node2D
+	var nearest_distance_squared := INF
+
+	for node in get_tree().get_nodes_in_group("enemy"):
+		var candidate := node as Node2D
+
+		if candidate == null or candidate.is_queued_for_deletion():
+			continue
+
+		var distance_squared := global_position.distance_squared_to(
+			candidate.global_position
+		)
+
+		if distance_squared < nearest_distance_squared:
+			nearest = candidate
+			nearest_distance_squared = distance_squared
+
+	return nearest
 
 func _update_trail() -> void:
 	_trail.add_point(global_position)

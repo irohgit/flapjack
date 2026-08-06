@@ -1,7 +1,14 @@
 [gd_resource type="Resource" script_class="WeaponData" format=3 uid="uid://b7nwwwfmfkswx"]
 
 [ext_resource type="Script" uid="uid://dfww4fxipct38" path="res://Data/Weapons/weapon_data.gd" id="1_c1qbg"]
+[ext_resource type="PackedScene" uid="uid://bl12qi0n68b6i" path="res://Actors/Projectiles/projectile.tscn" id="2_kvlpv"]
 [ext_resource type="Resource" uid="uid://c41c24mr6dvlc" path="res://Data/Projectiles/cannonball.tres" id="2_lekde"]
+[ext_resource type="Script" uid="uid://dos0tbtxfdq3x" path="res://Data/Weapons/cannon_behaviour.gd" id="2_s7wxh"]
+
+[sub_resource type="Resource" id="Resource_5fhce"]
+script = ExtResource("2_s7wxh")
+projectile_scene = ExtResource("2_kvlpv")
+metadata/_custom_type_script = "uid://dos0tbtxfdq3x"
 
 [resource]
 script = ExtResource("1_c1qbg")
@@ -9,4 +16,5 @@ name = "Cannon"
 damage = 1
 firerate = 0.5
 weaponProjectile = ExtResource("2_lekde")
+weaponBehaviour = SubResource("Resource_5fhce")
 metadata/_custom_type_script = "uid://dfww4fxipct38"

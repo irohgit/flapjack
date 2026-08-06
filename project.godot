@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="flapjack_v1"
-run/main_scene="uid://5eqiped6q75s"
+run/main_scene="uid://c8011xdsymjlm"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 Playarea="*uid://kwik3usbaupe"
 DebugHud="*uid://b0uptuewb1atn"
+GameEvents="*uid://3lsfc782llap"
 
 [display]
 
