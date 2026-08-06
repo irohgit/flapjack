@@ -6,6 +6,7 @@ extends Area2D
 @export var max_speed := 700.0
 @export var responsiveness := 25.0
 @export var half_width := 32.0
+@export var camera: Camera2D
 
 #Projectile Firing 
 @export var coin_count:= 0
@@ -33,8 +34,23 @@ func _physics_process(delta: float) -> void:
 	var target := _move_intent * max_speed
 	velocity = velocity.lerp(target, 1.0 - exp(-responsiveness * delta))
 	position += velocity * delta
-	position = Playarea.clamp_to_play_area(position, half_width)
+	position = _clamp_to_camera(position)
 	_update_weapons(delta)
+	
+func _clamp_to_camera(pos: Vector2) -> Vector2:
+	var camera_center = camera.get_screen_center_position()
+	var view_size = camera.get_viewport_rect().size
+	var margin: float = 0.0
+	
+	var left = camera_center.x - view_size.x * 0.5
+	var right = camera_center.x + view_size.x * 0.5
+	var top = camera_center.y - view_size.y * 0.5
+	var bottom = camera_center.y + view_size.y * 0.5
+
+	return Vector2(
+		clampf(pos.x, left + margin, right - margin),
+		clampf(pos.y, top + margin, bottom - margin)
+	)
 		
 func _on_area_entered(area: Area2D) -> void:
 	# Overlap Function 

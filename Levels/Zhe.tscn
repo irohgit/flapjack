@@ -131,11 +131,11 @@ drift_speed = 0.0
 [node name="Hazard" parent="World" unique_id=90124748 instance=ExtResource("1_wu73u")]
 position = Vector2(360, 500)
 
-[node name="Player" parent="World" unique_id=1105456395 instance=ExtResource("1_e8ii7")]
+[node name="Player" parent="World" unique_id=1105456395 node_paths=PackedStringArray("camera") instance=ExtResource("1_e8ii7")]
 position = Vector2(360, 1200)
 scale = Vector2(1, 1)
-collision_layer = 1
 collision_mask = 26
+camera = NodePath("../../Camera2D")
 weapons = Array[ExtResource("15_weapon_data")]([ExtResource("16_cannon")])
 
 [node name="CoinSpawner" parent="World" unique_id=1386735529 instance=ExtResource("17_coin_spawner")]
