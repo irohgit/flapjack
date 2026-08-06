@@ -1,3 +1,5 @@
+class_name Player
+
 extends Area2D
 
 #Movement
@@ -6,9 +8,9 @@ extends Area2D
 @export var half_width := 32.0
 
 #Projectile Firing 
-@export var projectile_scene: PackedScene
-@export var ammo: ProjectileData
-@export var fire_interval := 0.45
+@export var coin_count:= 0
+@export var weapons: Array[WeaponData]
+var _weapon_states: Array[WeaponState] = []
 
 @onready var _health: HealthComponent = $HealthComponent
 
@@ -21,6 +23,9 @@ func _ready() -> void:
 	_health.health_changed.connect(func(c, m): DebugHud.watch("health", "%d/%d" % [c, m]))
 	_health.died.connect(func(): DebugHud.flash("PLAYER DESTROYED"))
 	
+	for weapon in weapons:
+		_weapon_states.append(WeaponState.new(weapon))
+	
 func _process(_delta: float) -> void:
 	_move_intent = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 
@@ -29,15 +34,14 @@ func _physics_process(delta: float) -> void:
 	velocity = velocity.lerp(target, 1.0 - exp(-responsiveness * delta))
 	position += velocity * delta
 	position = Playarea.clamp_to_play_area(position, half_width)
-	_fire_timer -= delta
-	if Input.is_action_pressed("shoot") and _fire_timer <= 0.0:
-		_fire()
-		_fire_timer = fire_interval
+	_update_weapons(delta)
 		
 func _on_area_entered(area: Area2D) -> void:
 	# Overlap Function 
 	if area.is_in_group("hazard"):
 		take_damage(area.get_contact_damage())
+	if area.is_in_group("pickup") and area.has_method("collect"):
+		area.collect(self)
 
 ## Camera
 func _shake(amount: float) -> void:
@@ -46,14 +50,39 @@ func _shake(amount: float) -> void:
 	if not cams.is_empty():
 		cams[0].add_trauma(amount)
 
-## Combat
-var _fire_timer := 0.0
+## Collected item
+func _add_coins(amount: int):
+	coin_count += amount
+	print("Coins:", coin_count)
 
-func _fire() -> void:
-	var shot := projectile_scene.instantiate() as Projectile
-	shot.data = ammo
-	get_parent().add_child(shot)
-	shot.global_position = global_position + Vector2(0, -40)
+func add_augment(augment: AugmentData) -> bool:
+	for state in _weapon_states:
+		if state.data == augment.targetWeapon:
+			state.augments.append(augment)
+			return true
+	return false
+
+## Combat
+func _update_weapons(delta: float) -> void:
+	var shoot_pressed := Input.is_action_pressed("shoot")
+	
+	for state in _weapon_states:
+		state.cooldown -= delta
+		var should_fire := shoot_pressed
+		
+		if should_fire and state.cooldown <= 0.0 and state.data.weaponType == WeaponData.WeaponType.ACTIVE:
+			state.data.weaponBehaviour.fire($".", state)
+			
+			state.cooldown += maxf(state.data.firerate, 0.001)
+			
+		elif not should_fire and state.data.weaponType == WeaponData.WeaponType.ACTIVE and state.cooldown < 0.0:
+			state.cooldown = 0.0
+			
+		if state.data.weaponType == WeaponData.WeaponType.PASSIVE && state.cooldown <= 0.0:
+			state.data.weaponBehaviour.fire($".", state)
+			state.cooldown += maxf(state.data.firerate, 0.001)
+		elif not should_fire and state.data.weaponType == WeaponData.WeaponType.PASSIVE and state.cooldown < 0.0:
+			state.cooldown = 0.0
 
 func take_damage(amount: int) -> void:
 	_health.take_damage(amount)

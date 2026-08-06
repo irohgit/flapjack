@@ -1,0 +1,73 @@
+[gd_scene format=3 uid="uid://dfgiunphxmxmr"]
+
+[ext_resource type="Script" uid="uid://duntr73s38siv" path="res://Levels/main_menu.gd" id="1_yw2i3"]
+
+[sub_resource type="GDScript" id="GDScript_04b30"]
+script/source = "extends Button
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
+
+[node name="MainMenu" type="Control" unique_id=578260770]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_yw2i3")
+
+[node name="Panel" type="Panel" parent="." unique_id=30391756]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="Panel" unique_id=1623265029]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 92.0
+grow_horizontal = 2
+text = "FLAPJACK"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel" unique_id=475053844]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 229.0
+offset_bottom = 330.0
+grow_horizontal = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer" unique_id=1281526519]
+layout_mode = 2
+alignment = 1
+
+[node name="PlayButton" type="Button" parent="Panel/MarginContainer/VBoxContainer" unique_id=1247984612]
+layout_mode = 2
+text = "PLAY"
+script = SubResource("GDScript_04b30")
+
+[node name="SettingsButton" type="Button" parent="Panel/MarginContainer/VBoxContainer" unique_id=1942484023]
+layout_mode = 2
+text = "SETTINGS"
+
+[node name="ExitButton" type="Button" parent="Panel/MarginContainer/VBoxContainer" unique_id=1775286896]
+layout_mode = 2
+text = "EXIT"
+
+[connection signal="button_up" from="Panel/MarginContainer/VBoxContainer/PlayButton" to="." method="PlayPress"]
+[connection signal="button_up" from="Panel/MarginContainer/VBoxContainer/SettingsButton" to="." method="SettingsPress"]
+[connection signal="button_up" from="Panel/MarginContainer/VBoxContainer/ExitButton" to="." method="ExitPress"]
