@@ -19,6 +19,53 @@
 [ext_resource type="PackedScene" uid="uid://luquvycpj4hd" path="res://Actors/Pickup/coin_spawner.tscn" id="17_coin_spawner"]
 [ext_resource type="PackedScene" uid="uid://dgp73phtjophn" path="res://Actors/Pickup/pickup.tscn" id="18_pickup"]
 [ext_resource type="Resource" uid="uid://c8prjyekwi7hm" path="res://Data/Pickups/HomingCannonPickup.tres" id="19_homing_pickup"]
+[ext_resource type="Texture2D" uid="uid://cwvav4wx32kj3" path="res://Assets/UI/Coin/coin_frame.png" id="20_5r8ny"]
+[ext_resource type="Texture2D" uid="uid://bivaxkwiet2pe" path="res://Assets/UI/Coin/coin_icon.png" id="21_ly7d0"]
+[ext_resource type="FontFile" uid="uid://1qarew2on3k7" path="res://Assets/Fonts/PixelOperator.ttf" id="22_pixel_operator"]
+
+[sub_resource type="GDScript" id="GDScript_debug_hud_bottom_left"]
+script/source = "extends Node
+
+var _container: VBoxContainer
+
+
+func _ready() -> void:
+	if DebugHud.get_child_count() == 0:
+		return
+
+	_container = DebugHud.get_child(0) as VBoxContainer
+	if _container == null:
+		return
+
+	var current_size := _container.size
+	_container.anchor_left = 0.0
+	_container.anchor_top = 1.0
+	_container.anchor_right = 0.0
+	_container.anchor_bottom = 1.0
+	_container.grow_horizontal = Control.GROW_DIRECTION_END
+	_container.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	_container.offset_left = 16.0
+	_container.offset_top = -16.0 - current_size.y
+	_container.offset_right = 16.0 + current_size.x
+	_container.offset_bottom = -16.0
+
+
+func _exit_tree() -> void:
+	if not is_instance_valid(_container):
+		return
+
+	var current_size := _container.size
+	_container.anchor_left = 0.0
+	_container.anchor_top = 0.0
+	_container.anchor_right = 0.0
+	_container.anchor_bottom = 0.0
+	_container.grow_horizontal = Control.GROW_DIRECTION_END
+	_container.grow_vertical = Control.GROW_DIRECTION_END
+	_container.offset_left = 16.0
+	_container.offset_top = 16.0
+	_container.offset_right = 16.0 + current_size.x
+	_container.offset_bottom = 16.0 + current_size.y
+"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_zhe"]
 shader = ExtResource("13_water")
@@ -41,6 +88,9 @@ shader_parameter/foam_coverage = 0.30999999307088
 
 [node name="Zhe" type="Node2D" unique_id=2129134770]
 script = ExtResource("12_menu")
+
+[node name="DebugHudPlacement" type="Node" parent="." unique_id=1723063680]
+script = SubResource("GDScript_debug_hud_bottom_left")
 
 [node name="WaterBackground" type="CanvasLayer" parent="." unique_id=474036332]
 layer = -100
@@ -78,7 +128,6 @@ position = Vector2(360, 500)
 [node name="Player" parent="World" unique_id=1105456395 instance=ExtResource("1_e8ii7")]
 position = Vector2(360, 1200)
 scale = Vector2(1, 1)
-collision_layer = 1
 collision_mask = 26
 weapons = Array[ExtResource("15_weapon_data")]([ExtResource("16_cannon")])
 
@@ -90,43 +139,43 @@ data = ExtResource("19_homing_pickup")
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=2039641610]
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HUD" unique_id=336015252]
+[node name="Health and shield bar" type="VBoxContainer" parent="HUD" unique_id=336015252]
 offset_left = 36.0
 offset_top = 12.0
 offset_right = 292.0
 offset_bottom = 81.0
 theme_override_constants/separation = 13
 
-[node name="HealthBar" type="TextureProgressBar" parent="HUD/VBoxContainer" unique_id=603399651]
+[node name="HealthBar" type="TextureProgressBar" parent="HUD/Health and shield bar" unique_id=603399651]
 layout_mode = 2
 max_value = 3.0
 value = 3.0
 texture_under = ExtResource("8_fpqtc")
 texture_over = ExtResource("9_vspq2")
 
-[node name="ShieldBar" type="TextureProgressBar" parent="HUD/VBoxContainer" unique_id=749761861]
+[node name="ShieldBar" type="TextureProgressBar" parent="HUD/Health and shield bar" unique_id=749761861]
 layout_mode = 2
 max_value = 3.0
 value = 3.0
 texture_under = ExtResource("8_fpqtc")
 texture_over = ExtResource("11_g5h0p")
 
-[node name="MarginContainer" type="MarginContainer" parent="HUD" unique_id=1028461382]
+[node name="health and shield icon" type="MarginContainer" parent="HUD" unique_id=1028461382]
 offset_top = 10.0
 offset_right = 297.0
 offset_bottom = 78.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HUD/MarginContainer" unique_id=1877710992]
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/health and shield icon" unique_id=1877710992]
 layout_mode = 2
 
-[node name="HealthRow" type="HBoxContainer" parent="HUD/MarginContainer/VBoxContainer" unique_id=1290183620]
+[node name="HealthRow" type="HBoxContainer" parent="HUD/health and shield icon/VBoxContainer" unique_id=1290183620]
 layout_mode = 2
 
-[node name="HeartIcon" type="TextureRect" parent="HUD/MarginContainer/VBoxContainer/HealthRow" unique_id=1659474026]
+[node name="HeartIcon" type="TextureRect" parent="HUD/health and shield icon/VBoxContainer/HealthRow" unique_id=1659474026]
 layout_mode = 2
 texture = ExtResource("7_bvmwd")
 
-[node name="HealthLabel" type="Label" parent="HUD/MarginContainer/VBoxContainer/HealthRow" unique_id=63423901]
+[node name="HealthLabel" type="Label" parent="HUD/health and shield icon/VBoxContainer/HealthRow" unique_id=63423901]
 layout_mode = 2
 offset_transform_enabled = true
 offset_transform_position = Vector2(113, -4)
@@ -134,20 +183,60 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
 text = "3/3"
 
-[node name="ShieldRow" type="HBoxContainer" parent="HUD/MarginContainer/VBoxContainer" unique_id=1341834408]
+[node name="ShieldRow" type="HBoxContainer" parent="HUD/health and shield icon/VBoxContainer" unique_id=1341834408]
 layout_mode = 2
 
-[node name="ShieldIcon" type="TextureRect" parent="HUD/MarginContainer/VBoxContainer/ShieldRow" unique_id=960276390]
+[node name="ShieldIcon" type="TextureRect" parent="HUD/health and shield icon/VBoxContainer/ShieldRow" unique_id=960276390]
 layout_mode = 2
 texture = ExtResource("8_oia53")
 
-[node name="ShieldLabel" type="Label" parent="HUD/MarginContainer/VBoxContainer/ShieldRow" unique_id=1754018623]
+[node name="ShieldLabel" type="Label" parent="HUD/health and shield icon/VBoxContainer/ShieldRow" unique_id=1754018623]
 layout_mode = 2
 offset_transform_enabled = true
 offset_transform_position = Vector2(113, -2)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
 text = "2/2"
+
+[node name="Coin" type="Control" parent="HUD" unique_id=2088702151]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 581.0
+offset_top = 12.0
+offset_right = 621.0
+offset_bottom = 52.0
+
+[node name="Frame" type="TextureRect" parent="HUD/Coin" unique_id=481542505]
+layout_mode = 0
+offset_left = -97.0
+offset_top = 2.0
+offset_right = 415.0
+offset_bottom = 210.0
+scale = Vector2(0.4, 0.32000262)
+texture = ExtResource("20_5r8ny")
+
+[node name="CoinIcon" type="TextureRect" parent="HUD/Coin" unique_id=1934586189]
+layout_mode = 0
+offset_left = -66.0
+offset_top = 11.0
+offset_right = 62.0
+offset_bottom = 139.0
+scale = Vector2(0.37334305, 0.3595906)
+texture = ExtResource("21_ly7d0")
+
+[node name="Amount" type="Label" parent="HUD/Coin" unique_id=809634654]
+layout_mode = 0
+offset_left = -9.0
+offset_top = 4.0
+offset_right = 42.0
+offset_bottom = 44.0
+scale = Vector2(1.5600097, 1.3999994)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("22_pixel_operator")
+theme_override_font_sizes/font_size = 39
+text = "000"
 
 [node name="SettingsPanel" type="ColorRect" parent="." unique_id=1564147772]
 visible = false
