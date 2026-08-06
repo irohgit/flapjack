@@ -54,7 +54,7 @@ script = ExtResource("4_yx5hh")
 [node name="ScrollDirector" parent="." unique_id=1595117280 node_paths=PackedStringArray("camera") instance=ExtResource("5_im6i0")]
 camera = NodePath("../Camera2D")
 end_point = Vector2(0, -1000)
-scroll_speed = 25.0
+scroll_speed = 15.0
 
 [node name="World" type="Node2D" parent="." unique_id=19047034]
 
