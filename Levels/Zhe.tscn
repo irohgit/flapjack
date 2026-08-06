@@ -11,7 +11,6 @@
 [ext_resource type="Texture2D" uid="uid://ef3klwck2tmi" path="res://Assets/UI/Health/shield.png" id="8_oia53"]
 [ext_resource type="Texture2D" uid="uid://bu3rw4aqk4uoi" path="res://Assets/UI/Health/red_fill_alt.png" id="9_vspq2"]
 [ext_resource type="Texture2D" uid="uid://cjacv7cbjjpdy" path="res://Assets/UI/Health/blue_fill_alt.png" id="11_g5h0p"]
-[ext_resource type="Script" uid="uid://bjn2frcajvqas" path="res://Levels/ingame_menu.gd" id="12_menu"]
 [ext_resource type="Shader" uid="uid://cq85abjo4x30h" path="res://Assets/Shaders/Water/water.gdshader" id="13_water"]
 [ext_resource type="Texture2D" uid="uid://conqv6viso2ly" path="res://Assets/Shaders/Water/water_noise.tres" id="14_noise"]
 [ext_resource type="Script" uid="uid://dfww4fxipct38" path="res://Data/Weapons/weapon_data.gd" id="15_weapon_data"]
@@ -29,6 +28,7 @@
 [ext_resource type="Texture2D" path="res://Assets/UI/Pause/exit_button.png" id="27_pause_exit"]
 [ext_resource type="Texture2D" path="res://Assets/UI/Pause/divider_small.png" id="28_pause_divider"]
 [ext_resource type="Texture2D" path="res://Assets/UI/Pause/bottom_text.png" id="29_pause_hint"]
+[ext_resource type="Script" path="res://Levels/zhe_pause_menu.gd" id="30_pause_controller"]
 
 [sub_resource type="GDScript" id="GDScript_debug_hud_bottom_left"]
 script/source = "extends Node
@@ -94,7 +94,6 @@ shader_parameter/foam_width = 0.03999999910592
 shader_parameter/foam_coverage = 0.30999999307088
 
 [node name="Zhe" type="Node2D" unique_id=2129134770]
-script = ExtResource("12_menu")
 
 [node name="DebugHudPlacement" type="Node" parent="." unique_id=1723063680]
 script = SubResource("GDScript_debug_hud_bottom_left")
@@ -250,6 +249,7 @@ text = "000"
 process_mode = 3
 visible = false
 layer = 100
+script = ExtResource("30_pause_controller")
 
 [node name="Dimmer" type="ColorRect" parent="SettingsPanel"]
 anchors_preset = 15
@@ -257,7 +257,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.003921569, 0.015686275, 0.02745098, 0.9)
+color = Color(0.003921569, 0.015686275, 0.02745098, 1)
 
 [node name="PauseMenu" type="Control" parent="SettingsPanel" unique_id=624069474]
 layout_mode = 1
@@ -351,5 +351,5 @@ mouse_filter = 2
 texture = ExtResource("29_pause_hint")
 expand_mode = 1
 
-[connection signal="button_up" from="SettingsPanel/PauseMenu/Resume" to="." method="ResumePress"]
-[connection signal="button_up" from="SettingsPanel/PauseMenu/Exit" to="." method="ExitPress"]
+[connection signal="button_up" from="SettingsPanel/PauseMenu/Resume" to="SettingsPanel" method="ResumePress"]
+[connection signal="button_up" from="SettingsPanel/PauseMenu/Exit" to="SettingsPanel" method="ExitPress"]
