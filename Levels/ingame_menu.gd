@@ -2,11 +2,11 @@ extends Node
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_released("exit"):
-		$SettingsPanel.visible = !$SettingsPanel.visible
+		self.visible = !self.visible
 
 
 func ResumePress() -> void:
-	$SettingsPanel.visible = false
+	self.visible = false
 
 
 func ExitPress() -> void:
