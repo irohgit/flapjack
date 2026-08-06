@@ -1,20 +1,17 @@
-[gd_scene format=3 uid="uid://dfgiunphxmxmr"]
+[gd_scene load_steps=13 format=3 uid="uid://dfgiunphxmxmr"]
 
-[ext_resource type="Script" uid="uid://duntr73s38siv" path="res://Levels/main_menu.gd" id="1_yw2i3"]
-
-[sub_resource type="GDScript" id="GDScript_04b30"]
-script/source = "extends Button
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-"
+[ext_resource type="Script" uid="uid://duntr73s38siv" path="res://Levels/main_menu.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://Assets/UI/MainMenu/background.png" id="2_background"]
+[ext_resource type="Texture2D" path="res://Assets/UI/MainMenu/title.png" id="3_title"]
+[ext_resource type="Texture2D" path="res://Assets/UI/MainMenu/play_button.png" id="4_play"]
+[ext_resource type="Texture2D" path="res://Assets/UI/MainMenu/play_button_hover.png" id="5_play_hover"]
+[ext_resource type="Texture2D" path="res://Assets/UI/MainMenu/play_button_pressed.png" id="6_play_pressed"]
+[ext_resource type="Texture2D" path="res://Assets/UI/MainMenu/settings_button.png" id="7_settings"]
+[ext_resource type="Texture2D" path="res://Assets/UI/MainMenu/settings_button_hover.png" id="8_settings_hover"]
+[ext_resource type="Texture2D" path="res://Assets/UI/MainMenu/settings_button_pressed.png" id="9_settings_pressed"]
+[ext_resource type="Texture2D" path="res://Assets/UI/MainMenu/exit_button.png" id="10_exit"]
+[ext_resource type="Texture2D" path="res://Assets/UI/MainMenu/exit_button_hover.png" id="11_exit_hover"]
+[ext_resource type="Texture2D" path="res://Assets/UI/MainMenu/exit_button_pressed.png" id="12_exit_pressed"]
 
 [node name="MainMenu" type="Control" unique_id=578260770]
 layout_mode = 3
@@ -23,51 +20,74 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_yw2i3")
+script = ExtResource("1_script")
 
-[node name="Panel" type="Panel" parent="." unique_id=30391756]
+[node name="Background" type="TextureRect" parent="."]
+texture_filter = 1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_background")
+expand_mode = 1
+stretch_mode = 6
 
-[node name="Title" type="Label" parent="Panel" unique_id=1623265029]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 92.0
-grow_horizontal = 2
-text = "FLAPJACK"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="Title" type="TextureRect" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_left = 60.0
+offset_top = 220.0
+offset_right = 660.0
+offset_bottom = 520.0
+mouse_filter = 2
+texture = ExtResource("3_title")
+expand_mode = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="Panel" unique_id=475053844]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_top = 229.0
-offset_bottom = 330.0
-grow_horizontal = 2
+[node name="PlayButton" type="TextureButton" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_left = 110.0
+offset_top = 585.0
+offset_right = 610.0
+offset_bottom = 725.0
+mouse_default_cursor_shape = 2
+focus_mode = 0
+texture_normal = ExtResource("4_play")
+texture_hover = ExtResource("5_play_hover")
+texture_pressed = ExtResource("6_play_pressed")
+ignore_texture_size = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer" unique_id=1281526519]
-layout_mode = 2
-alignment = 1
+[node name="SettingsButton" type="TextureButton" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_left = 110.0
+offset_top = 740.0
+offset_right = 610.0
+offset_bottom = 880.0
+mouse_default_cursor_shape = 2
+focus_mode = 0
+texture_normal = ExtResource("7_settings")
+texture_hover = ExtResource("8_settings_hover")
+texture_pressed = ExtResource("9_settings_pressed")
+ignore_texture_size = true
 
-[node name="PlayButton" type="Button" parent="Panel/MarginContainer/VBoxContainer" unique_id=1247984612]
-layout_mode = 2
-text = "PLAY"
-script = SubResource("GDScript_04b30")
+[node name="ExitButton" type="TextureButton" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_left = 110.0
+offset_top = 895.0
+offset_right = 610.0
+offset_bottom = 1035.0
+mouse_default_cursor_shape = 2
+focus_mode = 0
+texture_normal = ExtResource("10_exit")
+texture_hover = ExtResource("11_exit_hover")
+texture_pressed = ExtResource("12_exit_pressed")
+ignore_texture_size = true
 
-[node name="SettingsButton" type="Button" parent="Panel/MarginContainer/VBoxContainer" unique_id=1942484023]
-layout_mode = 2
-text = "SETTINGS"
-
-[node name="ExitButton" type="Button" parent="Panel/MarginContainer/VBoxContainer" unique_id=1775286896]
-layout_mode = 2
-text = "EXIT"
-
-[connection signal="button_up" from="Panel/MarginContainer/VBoxContainer/PlayButton" to="." method="PlayPress"]
-[connection signal="button_up" from="Panel/MarginContainer/VBoxContainer/SettingsButton" to="." method="SettingsPress"]
-[connection signal="button_up" from="Panel/MarginContainer/VBoxContainer/ExitButton" to="." method="ExitPress"]
+[connection signal="button_up" from="PlayButton" to="." method="PlayPress"]
+[connection signal="button_up" from="SettingsButton" to="." method="SettingsPress"]
+[connection signal="button_up" from="ExitButton" to="." method="ExitPress"]
