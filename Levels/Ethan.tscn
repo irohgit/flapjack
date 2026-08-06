@@ -11,6 +11,9 @@
 [ext_resource type="PackedScene" uid="uid://cclwwsegfn8rr" path="res://Actors/Player/player.tscn" id="6_6m8jk"]
 [ext_resource type="Script" uid="uid://dfww4fxipct38" path="res://Data/Weapons/weapon_data.gd" id="9_wyght"]
 [ext_resource type="Resource" uid="uid://b7nwwwfmfkswx" path="res://Data/Weapons/Cannon.tres" id="10_6m8jk"]
+[ext_resource type="PackedScene" uid="uid://luquvycpj4hd" path="res://Actors/Pickup/coin_spawner.tscn" id="12_2mw5f"]
+[ext_resource type="PackedScene" uid="uid://dgp73phtjophn" path="res://Actors/Pickup/pickup.tscn" id="13_2mw5f"]
+[ext_resource type="Resource" uid="uid://c8prjyekwi7hm" path="res://Data/Pickups/HomingCannonPickup.tres" id="14_ny1ot"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n48ea"]
 shader = ExtResource("2_6ghmm")
@@ -22,14 +25,14 @@ shader_parameter/foam_color = Color(0.97, 1, 1, 1)
 shader_parameter/design_size = Vector2(720, 1280)
 shader_parameter/water_pixel_size = 6.0
 shader_parameter/animation_speed = 4.0
-shader_parameter/cell_size = 6.0
-shader_parameter/cell_irregularity = 0.55
+shader_parameter/cell_size = 13.0
+shader_parameter/cell_irregularity = 0.749999983236
 shader_parameter/cell_motion = 0.08
-shader_parameter/edge_warp = 3.5
-shader_parameter/wave_width = 0.28
-shader_parameter/rim_width = 0.12
-shader_parameter/foam_width = 0.05
-shader_parameter/foam_coverage = 0.58
+shader_parameter/edge_warp = 8.0
+shader_parameter/wave_width = 0.33999999612564
+shader_parameter/rim_width = 0.0800000000745
+shader_parameter/foam_width = 0.03999999910592
+shader_parameter/foam_coverage = 0.30999999307088
 
 [node name="Game" type="Node2D" unique_id=141585991]
 script = ExtResource("1_6m8jk")
@@ -70,7 +73,15 @@ position = Vector2(360, 500)
 [node name="Player" parent="World" unique_id=1105456395 instance=ExtResource("6_6m8jk")]
 position = Vector2(360, 1200)
 scale = Vector2(1, 1)
+collision_layer = 1
+collision_mask = 26
 weapons = Array[ExtResource("9_wyght")]([ExtResource("10_6m8jk")])
+
+[node name="CoinSpawner" parent="World" unique_id=1386735529 instance=ExtResource("12_2mw5f")]
+
+[node name="Homing" parent="World" unique_id=169920597 instance=ExtResource("13_2mw5f")]
+position = Vector2(344, 783)
+data = ExtResource("14_ny1ot")
 
 [node name="SettingsPanel" type="ColorRect" parent="." unique_id=1564147772]
 visible = false

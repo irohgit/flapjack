@@ -1,9 +1,15 @@
 [gd_resource type="Resource" script_class="AugmentData" format=3 uid="uid://bucpo6djf7l6m"]
 
 [ext_resource type="Script" uid="uid://cpp3oou337x" path="res://Data/Augments/augment_data.gd" id="1_p66wx"]
+[ext_resource type="Script" uid="uid://comcyui77kncb" path="res://Data/Augments/cannon_homing_effect.gd" id="1_r6bh5"]
 [ext_resource type="Resource" uid="uid://b7nwwwfmfkswx" path="res://Data/Weapons/Cannon.tres" id="2_pifml"]
+
+[sub_resource type="Resource" id="Resource_5fhce"]
+script = ExtResource("1_r6bh5")
+metadata/_custom_type_script = "uid://comcyui77kncb"
 
 [resource]
 script = ExtResource("1_p66wx")
 targetWeapon = ExtResource("2_pifml")
+augmentEffect = SubResource("Resource_5fhce")
 metadata/_custom_type_script = "uid://cpp3oou337x"

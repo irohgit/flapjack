@@ -1,3 +1,5 @@
+class_name Player
+
 extends Area2D
 
 #Movement
@@ -6,7 +8,6 @@ extends Area2D
 @export var half_width := 32.0
 
 #Projectile Firing 
-@export var projectile_scene: PackedScene
 @export var coin_count:= 0
 @export var weapons: Array[WeaponData]
 var _weapon_states: Array[WeaponState] = []
@@ -39,6 +40,8 @@ func _on_area_entered(area: Area2D) -> void:
 	# Overlap Function 
 	if area.is_in_group("hazard"):
 		take_damage(area.get_contact_damage())
+	if area.is_in_group("pickup") and area.has_method("collect"):
+		area.collect(self)
 
 ## Camera
 func _shake(amount: float) -> void:
@@ -52,6 +55,13 @@ func _add_coins(amount: int):
 	coin_count += amount
 	print("Coins:", coin_count)
 
+func add_augment(augment: AugmentData) -> bool:
+	for state in _weapon_states:
+		if state.data == augment.targetWeapon:
+			state.augments.append(augment)
+			return true
+	return false
+
 ## Combat
 func _update_weapons(delta: float) -> void:
 	var shoot_pressed := Input.is_action_pressed("shoot")
@@ -61,7 +71,7 @@ func _update_weapons(delta: float) -> void:
 		var should_fire := shoot_pressed
 		
 		if should_fire and state.cooldown <= 0.0 and state.data.weaponType == WeaponData.WeaponType.ACTIVE:
-			_fire_active_weapon(state.data)
+			state.data.weaponBehaviour.fire($".", state)
 			
 			state.cooldown += maxf(state.data.firerate, 0.001)
 			
@@ -69,24 +79,10 @@ func _update_weapons(delta: float) -> void:
 			state.cooldown = 0.0
 			
 		if state.data.weaponType == WeaponData.WeaponType.PASSIVE && state.cooldown <= 0.0:
-			_fire_passive_weapon(state.data)
+			state.data.weaponBehaviour.fire($".", state)
 			state.cooldown += maxf(state.data.firerate, 0.001)
 		elif not should_fire and state.data.weaponType == WeaponData.WeaponType.PASSIVE and state.cooldown < 0.0:
 			state.cooldown = 0.0
-
-func _fire_active_weapon(weapon: WeaponData) -> void:
-	var shot := projectile_scene.instantiate() as Projectile
-	
-	if show == null:
-		push_error("Projectile not a projectile")
-		return
-	
-	shot.data = weapon.weaponProjectile
-	get_parent().add_child(shot)
-	shot.global_position = global_position + Vector2(0, -40)
-	
-func _fire_passive_weapon(weapon: WeaponData) -> void:
-	pass
 
 func take_damage(amount: int) -> void:
 	_health.take_damage(amount)
@@ -102,11 +98,3 @@ func _on_died() -> void:
 	_shake(0.8) #Camera Shake
 	DebugHud.flash("PLAYER DESTROYED")
 	queue_free()
-
-
-class WeaponState:
-	var data: WeaponData
-	var cooldown := 0.0
-	
-	func _init(weapon_data: WeaponData) -> void:
-		data = weapon_data

@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 Playarea="*uid://kwik3usbaupe"
 DebugHud="*uid://b0uptuewb1atn"
+GameEvents="*uid://3lsfc782llap"
 
 [display]
 
