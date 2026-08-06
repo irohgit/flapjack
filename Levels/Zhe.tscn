@@ -11,15 +11,54 @@
 [ext_resource type="Texture2D" uid="uid://ef3klwck2tmi" path="res://Assets/UI/Health/shield.png" id="8_oia53"]
 [ext_resource type="Texture2D" uid="uid://bu3rw4aqk4uoi" path="res://Assets/UI/Health/red_fill_alt.png" id="9_vspq2"]
 [ext_resource type="Texture2D" uid="uid://cjacv7cbjjpdy" path="res://Assets/UI/Health/blue_fill_alt.png" id="11_g5h0p"]
+[ext_resource type="Script" uid="uid://bjn2frcajvqas" path="res://Levels/ingame_menu.gd" id="12_menu"]
+[ext_resource type="Shader" uid="uid://cq85abjo4x30h" path="res://Assets/Shaders/Water/water.gdshader" id="13_water"]
+[ext_resource type="Texture2D" uid="uid://conqv6viso2ly" path="res://Assets/Shaders/Water/water_noise.tres" id="14_noise"]
+[ext_resource type="Script" uid="uid://dfww4fxipct38" path="res://Data/Weapons/weapon_data.gd" id="15_weapon_data"]
+[ext_resource type="Resource" uid="uid://b7nwwwfmfkswx" path="res://Data/Weapons/Cannon.tres" id="16_cannon"]
+[ext_resource type="PackedScene" uid="uid://luquvycpj4hd" path="res://Actors/Pickup/coin_spawner.tscn" id="17_coin_spawner"]
+[ext_resource type="PackedScene" uid="uid://dgp73phtjophn" path="res://Actors/Pickup/pickup.tscn" id="18_pickup"]
+[ext_resource type="Resource" uid="uid://c8prjyekwi7hm" path="res://Data/Pickups/HomingCannonPickup.tres" id="19_homing_pickup"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_zhe"]
+shader = ExtResource("13_water")
+shader_parameter/noise_texture = ExtResource("14_noise")
+shader_parameter/deep_water = Color(0.24, 0.78, 0.82, 1)
+shader_parameter/wave_water = Color(0.32, 0.86, 0.88, 1)
+shader_parameter/rim_color = Color(0.62, 0.95, 0.95, 1)
+shader_parameter/foam_color = Color(0.97, 1, 1, 1)
+shader_parameter/design_size = Vector2(720, 1280)
+shader_parameter/water_pixel_size = 6.0
+shader_parameter/animation_speed = 4.0
+shader_parameter/cell_size = 13.0
+shader_parameter/cell_irregularity = 0.749999983236
+shader_parameter/cell_motion = 0.08
+shader_parameter/edge_warp = 8.0
+shader_parameter/wave_width = 0.33999999612564
+shader_parameter/rim_width = 0.0800000000745
+shader_parameter/foam_width = 0.03999999910592
+shader_parameter/foam_coverage = 0.30999999307088
 
 [node name="Zhe" type="Node2D" unique_id=2129134770]
+script = ExtResource("12_menu")
+
+[node name="WaterBackground" type="CanvasLayer" parent="." unique_id=474036332]
+layer = -100
+
+[node name="Water" type="ColorRect" parent="WaterBackground" unique_id=1833802365]
+material = SubResource("ShaderMaterial_zhe")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1873851463 groups=["shake_camera"]]
 anchor_mode = 0
 script = ExtResource("3_o4h3a")
 
 [node name="World" type="Node2D" parent="." unique_id=19047034]
-position = Vector2(8, 0)
 
 [node name="EnemyShip" parent="World" unique_id=1035340143 instance=ExtResource("2_h6hye")]
 position = Vector2(600, 300)
@@ -38,6 +77,16 @@ position = Vector2(360, 500)
 
 [node name="Player" parent="World" unique_id=1105456395 instance=ExtResource("1_e8ii7")]
 position = Vector2(360, 1200)
+scale = Vector2(1, 1)
+collision_layer = 1
+collision_mask = 26
+weapons = Array[ExtResource("15_weapon_data")]([ExtResource("16_cannon")])
+
+[node name="CoinSpawner" parent="World" unique_id=1386735529 instance=ExtResource("17_coin_spawner")]
+
+[node name="Homing" parent="World" unique_id=169920597 instance=ExtResource("18_pickup")]
+position = Vector2(344, 783)
+data = ExtResource("19_homing_pickup")
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=2039641610]
 
@@ -99,3 +148,35 @@ offset_transform_position = Vector2(113, -2)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
 text = "2/2"
+
+[node name="SettingsPanel" type="ColorRect" parent="." unique_id=1564147772]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 720.0
+offset_bottom = 1280.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.12156863, 0.12156863, 0.12156863, 0.78431374)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsPanel" unique_id=624069474]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Resume" type="Button" parent="SettingsPanel/VBoxContainer" unique_id=618098144]
+layout_mode = 2
+text = "Resume
+"
+
+[node name="Exit" type="Button" parent="SettingsPanel/VBoxContainer" unique_id=1355883769]
+layout_mode = 2
+text = "Exit"
+
+[connection signal="button_up" from="SettingsPanel/VBoxContainer/Resume" to="." method="ResumePress"]
+[connection signal="button_up" from="SettingsPanel/VBoxContainer/Exit" to="." method="ExitPress"]
