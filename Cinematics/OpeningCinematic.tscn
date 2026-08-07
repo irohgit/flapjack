@@ -1,94 +1,76 @@
-[gd_scene format=3 uid="uid://clbb7gk5jgf0g"]
+[gd_scene format=3 uid="uid://cbwqh8cwq0yhh"]
 
-[ext_resource type="Script" uid="uid://b657p1iyk2cl2" path="res://Cinematics/Splash.gd" id="1_ili7r"]
-[ext_resource type="FontFile" uid="uid://v5yo0808ccl2" path="res://Assets/Fonts/Bernoru/bernoru-blackultraexpanded.otf" id="1_yw30v"]
-[ext_resource type="FontFile" uid="uid://dhrhg3s7j7i2b" path="res://Assets/Fonts/Montserrat/static/Montserrat-Regular.ttf" id="3_nkmu0"]
+[ext_resource type="Texture2D" uid="uid://cbqieer4t24dn" path="res://Assets/Cinematics/Intro_Sky.png" id="1_fmc7a"]
+[ext_resource type="Texture2D" uid="uid://dfqkb1jbysrx5" path="res://Assets/Cinematics/Intro_Sun.png" id="2_ili7r"]
+[ext_resource type="Texture2D" uid="uid://cm2n6ajesu1nb" path="res://Assets/Cinematics/Opening_Sea.png" id="3_p3qoy"]
+[ext_resource type="Texture2D" uid="uid://k8c8yvdm24q2" path="res://Assets/Cinematics/Flapjack_Octopus.png" id="4_spo4w"]
+[ext_resource type="FontFile" uid="uid://bu8hjs3v2sok3" path="res://Assets/Fonts/TreasureMap/Treasuremapj.ttf" id="5_pes2o"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_5yy73"]
-line_spacing = 0.0
-paragraph_spacing = -30.0
-font = ExtResource("1_yw30v")
-font_size = 180
-font_color = Color(0.94302964, 0.78504795, 1.3091564e-05, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_yw30v"]
-font = ExtResource("3_nkmu0")
-font_size = 40
-font_color = Color(1, 1, 1, 0)
-
-[sub_resource type="Animation" id="Animation_8wdq7"]
+[sub_resource type="Animation" id="Animation_fmc7a"]
 resource_name = "OpeningCinematic"
-length = 2.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Control/GGEZ:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1.3666667),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(-784, 440), Vector2(116, 440)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Control/Interactive:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.2, 1.3666667),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(562, 791), Vector2(562, 491)]
-}
 
-[sub_resource type="Animation" id="Animation_yw30v"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Control/GGEZ:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-784, 440)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Control/Interactive:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(562, 791)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_yw30v"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ili7r"]
 _data = {
-&"OpeningCinematic": SubResource("Animation_8wdq7"),
-&"RESET": SubResource("Animation_yw30v")
+&"OpeningCinematic": SubResource("Animation_fmc7a")
 }
 
-[node name="Splash" type="Control" unique_id=2075085553]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("1_ili7r")
-metadata/_edit_vertical_guides_ = [360.0, 600.0, 120.0]
-metadata/_edit_horizontal_guides_ = [640.0]
+[sub_resource type="LabelSettings" id="LabelSettings_xrivr"]
+font = ExtResource("5_pes2o")
+font_size = 128
 
-[node name="Background" type="ColorRect" parent="." unique_id=806028320]
+[node name="OpeningCinematic" type="Control" unique_id=196866118]
+layout_mode = 3
+anchors_preset = 0
+metadata/_edit_vertical_guides_ = [381.0]
+metadata/_edit_horizontal_guides_ = [650.0]
+
+[node name="Sky" type="TextureRect" parent="." unique_id=2111773608]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_fmc7a")
+
+[node name="Sun" type="TextureRect" parent="." unique_id=1969274000]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_ili7r")
+
+[node name="SeaBack" type="TextureRect" parent="." unique_id=2066012471]
+layout_mode = 0
+offset_left = -1.0
+offset_top = 789.0
+offset_right = 720.0
+offset_bottom = 1279.0
+texture = ExtResource("3_p3qoy")
+
+[node name="SeaMiddle" type="TextureRect" parent="." unique_id=1570186092]
+modulate = Color(1, 1, 1, 0.42745098)
+layout_mode = 0
+offset_left = -1.0
+offset_top = 789.0
+offset_right = 720.0
+offset_bottom = 1279.0
+texture = ExtResource("3_p3qoy")
+
+[node name="SeaFront" type="TextureRect" parent="." unique_id=946588342]
+modulate = Color(1, 1, 1, 0.101960786)
+layout_mode = 0
+offset_left = -1.0
+offset_top = 789.0
+offset_right = 720.0
+offset_bottom = 1279.0
+texture = ExtResource("3_p3qoy")
+
+[node name="SeaFront2" type="TextureRect" parent="." unique_id=1164817416]
+layout_mode = 0
+offset_left = 194.0
+offset_top = 726.0
+offset_right = 522.0
+offset_bottom = 1054.0
+texture = ExtResource("4_spo4w")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1055800026]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -97,67 +79,26 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="Control" type="Control" parent="." unique_id=1377176324]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=316160357]
+libraries/ = SubResource("AnimationLibrary_ili7r")
 
-[node name="GGEZ" type="Label" parent="Control" unique_id=489712845]
+[node name="Flapjack Game Title" type="Label" parent="." unique_id=110138183]
+visible = false
 layout_mode = 0
-offset_left = -784.0
-offset_top = 440.0
-offset_right = -337.0
-offset_bottom = 798.0
-text = "GG
-EZ"
-label_settings = SubResource("LabelSettings_5yy73")
-horizontal_alignment = 1
+offset_left = -33.0
+offset_top = 585.0
+offset_right = 778.0
+offset_bottom = 726.0
+text = "FLAPJACK"
+label_settings = SubResource("LabelSettings_xrivr")
 
-[node name="Interactive" type="Label" parent="Control" unique_id=540359425]
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1048153146]
 layout_mode = 0
-offset_left = 562.0
-offset_top = 791.0
-offset_right = 602.0
-offset_bottom = 1074.0
-text = "I
-N
-T
-E
-R
-A
-C
-T
-I
-V
-E"
-horizontal_alignment = 1
-
-[node name="Presents" type="Label" parent="Control" unique_id=1055637969]
-layout_mode = 0
-offset_left = 226.0
-offset_top = 600.0
-offset_right = 487.0
-offset_bottom = 675.0
-text = "PRESENTS"
-label_settings = SubResource("LabelSettings_yw30v")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="GGEZ_Hider" type="ColorRect" parent="." unique_id=1637577445]
-layout_mode = 0
-offset_left = 124.0
-offset_top = 780.0
-offset_right = 720.0
-offset_bottom = 1283.0
-color = Color(0, 0, 0, 1)
-
-[node name="Interactive_Hider" type="ColorRect" parent="." unique_id=1247611470]
-layout_mode = 0
-offset_left = -327.0
-offset_top = 476.0
-offset_right = 121.0
-offset_bottom = 777.0
-color = Color(0, 0, 0, 1)
-
-[node name="OpeningCinematic" type="AnimationPlayer" parent="." unique_id=1584525861]
-libraries/ = SubResource("AnimationLibrary_yw30v")
+offset_left = 119.0
+offset_top = 617.0
+offset_right = 644.0
+offset_bottom = 713.0
+theme_override_fonts/normal_font = ExtResource("5_pes2o")
+theme_override_font_sizes/normal_font_size = 80
+bbcode_enabled = true
+text = "[color=#d99741][wave]FLAPJACK[wave]"
