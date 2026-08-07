@@ -9,14 +9,14 @@ extends Control
 
 @export var next_scene: PackedScene
 
-@onready var _anim: AnimationPlayer = $OpeningCinematic
+@onready var _anim: AnimationPlayer = $SplashCinematic
 
 var _finished := false
 
 
 func _ready() -> void:
 	#_anim.animation_finished.connect(_on_animation_finished)
-	_anim.play("OpeningCinematic")
+	_anim.play("SplashCinematic")
 	#_anim.queue("presents")
 
 

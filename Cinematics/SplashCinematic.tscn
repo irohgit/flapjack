@@ -81,7 +81,7 @@ tracks/4/keys = {
 
 [sub_resource type="Animation" id="Animation_8wdq7"]
 resource_name = "SplashCinematic"
-length = 6.133333
+length = 8.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -89,10 +89,10 @@ tracks/0/path = NodePath("Control/GGEZ:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1.3666667, 2.2, 4.866667),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0.5, 2.1666667),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(-784, 440), Vector2(116, 440), Vector2(116, 440), Vector2(650, 440)]
+"values": [Vector2(0, 358), Vector2(700, 358)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -101,10 +101,10 @@ tracks/1/path = NodePath("Control/Interactive:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.2, 1.3666667, 2.2, 4.866667),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0.5, 2.1666667),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(562, 791), Vector2(562, 491), Vector2(562, 491), Vector2(562, 100)]
+"values": [Vector2(1130, 800), Vector2(1130, 405)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -113,7 +113,7 @@ tracks/2/path = NodePath("Control/GGEZ:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(2.0406992, 4.266667),
+"times": PackedFloat32Array(3.4333334, 4.8),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
@@ -125,7 +125,7 @@ tracks/3/path = NodePath("Control/Interactive:modulate")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(2.0333333, 4.266667),
+"times": PackedFloat32Array(3.4333334, 4.8),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
@@ -137,7 +137,7 @@ tracks/4/path = NodePath("Control/Presents:label_settings:font_color")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(5.233333, 6.0666666),
+"times": PackedFloat32Array(5.9, 6.7333336),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
@@ -157,8 +157,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_wslet")
-metadata/_edit_vertical_guides_ = [360.0, 600.0, 120.0]
-metadata/_edit_horizontal_guides_ = [640.0]
+metadata/_edit_vertical_guides_ = [2157.0, 2001.0, -161.0, 960.0]
+metadata/_edit_horizontal_guides_ = [540.0]
 
 [node name="Background" type="ColorRect" parent="." unique_id=806028320]
 layout_mode = 1
@@ -179,7 +179,7 @@ layout_mode = 0
 offset_left = -784.0
 offset_top = 440.0
 offset_right = -337.0
-offset_bottom = 798.0
+offset_bottom = 798.0002
 text = "GG
 EZ"
 label_settings = SubResource("LabelSettings_5yy73")
@@ -187,18 +187,18 @@ horizontal_alignment = 1
 
 [node name="GGEZ_Hider1" type="ColorRect" parent="Control" unique_id=1488580002]
 layout_mode = 0
-offset_left = 554.0
-offset_top = 475.0
-offset_right = 1002.0
-offset_bottom = 776.0
+offset_left = 1060.0
+offset_top = -352.0
+offset_right = 1508.0
+offset_bottom = -51.0
 color = Color(0, 0, 0, 1)
 
 [node name="Interactive" type="Label" parent="Control" unique_id=540359425]
 layout_mode = 0
 offset_left = 562.0
 offset_top = 791.0
-offset_right = 602.0
-offset_bottom = 1074.0
+offset_right = 602.0001
+offset_bottom = 1074.0005
 text = "I
 N
 T
@@ -212,39 +212,39 @@ V
 E"
 horizontal_alignment = 1
 
+[node name="Interactive_Hider1" type="ColorRect" parent="Control" unique_id=1637577445]
+layout_mode = 0
+offset_left = 963.0
+offset_top = 697.0
+offset_right = 1478.0
+offset_bottom = 1082.0
+color = Color(0, 0, 0, 1)
+
 [node name="Presents" type="Label" parent="Control" unique_id=1055637969]
 layout_mode = 0
-offset_left = 226.0
-offset_top = 600.0
-offset_right = 487.0
-offset_bottom = 675.0
+offset_left = 831.0
+offset_top = 500.0
+offset_right = 1092.0
+offset_bottom = 575.0
 text = "PRESENTS"
 label_settings = SubResource("LabelSettings_yw30v")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Interactive_Hider1" type="ColorRect" parent="." unique_id=1637577445]
-layout_mode = 0
-offset_left = 124.0
-offset_top = 780.0
-offset_right = 720.0
-offset_bottom = 1283.0
-color = Color(0, 0, 0, 1)
-
 [node name="Interactive_Hider2" type="ColorRect" parent="." unique_id=2011542128]
 layout_mode = 0
-offset_left = 122.0
-offset_top = -28.0
-offset_right = 718.0
-offset_bottom = 475.0
+offset_left = 168.0
+offset_top = -333.0
+offset_right = 764.0
+offset_bottom = 170.0
 color = Color(0, 0, 0, 1)
 
 [node name="GGEZ_Hider1" type="ColorRect" parent="." unique_id=1247611470]
 layout_mode = 0
-offset_left = -327.0
-offset_top = 476.0
-offset_right = 121.0
-offset_bottom = 777.0
+offset_left = -908.0
+offset_top = 248.0
+offset_right = 702.0
+offset_bottom = 864.0
 color = Color(0, 0, 0, 1)
 
 [node name="SplashCinematic" type="AnimationPlayer" parent="." unique_id=1584525861]
