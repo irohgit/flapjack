@@ -67,7 +67,7 @@ shader_parameter/deep_water = Color(0.24, 0.78, 0.82, 1)
 shader_parameter/wave_water = Color(0.32, 0.86, 0.88, 1)
 shader_parameter/rim_color = Color(0.62, 0.95, 0.95, 1)
 shader_parameter/foam_color = Color(0.97, 1, 1, 1)
-shader_parameter/design_size = Vector2(720, 1280)
+shader_parameter/design_size = Vector2(1920, 1080)
 shader_parameter/water_pixel_size = 6.0
 shader_parameter/animation_speed = 4.0
 shader_parameter/cell_size = 13.0
@@ -103,22 +103,22 @@ script = ExtResource("3_o4h3a")
 [node name="World" type="Node2D" parent="." unique_id=19047034]
 
 [node name="EnemyShip" parent="World" unique_id=1035340143 instance=ExtResource("2_h6hye")]
-position = Vector2(600, 300)
+position = Vector2(1600, 253)
 projectile_scene = ExtResource("3_odipc")
 ammo = ExtResource("4_67i2g")
 drift_speed = 0.0
 
 [node name="EnemyShip2" parent="World" unique_id=1573959086 instance=ExtResource("2_h6hye")]
-position = Vector2(121, 604)
+position = Vector2(323, 510)
 projectile_scene = ExtResource("3_odipc")
 ammo = ExtResource("4_67i2g")
 drift_speed = 0.0
 
 [node name="Hazard" parent="World" unique_id=90124748 instance=ExtResource("1_wu73u")]
-position = Vector2(360, 500)
+position = Vector2(960, 422)
 
 [node name="Player" parent="World" unique_id=1105456395 node_paths=PackedStringArray("camera") instance=ExtResource("1_e8ii7")]
-position = Vector2(360, 1200)
+position = Vector2(960, 960)
 scale = Vector2(1, 1)
 collision_mask = 26
 camera = NodePath("../../Camera2D")
@@ -127,7 +127,7 @@ weapons = Array[ExtResource("15_weapon_data")]([ExtResource("16_cannon")])
 [node name="CoinSpawner" parent="World" unique_id=1386735529 instance=ExtResource("17_coin_spawner")]
 
 [node name="Homing" parent="World" unique_id=169920597 instance=ExtResource("18_pickup")]
-position = Vector2(344, 783)
+position = Vector2(917, 661)
 data = ExtResource("19_homing_pickup")
 
 [node name="HUD" parent="." unique_id=228684140 instance=ExtResource("14_bx7yv")]
