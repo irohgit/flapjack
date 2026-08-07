@@ -76,11 +76,13 @@ drift_speed = 0.0
 position = Vector2(360, 500)
 
 [node name="Player" parent="World" unique_id=1105456395 node_paths=PackedStringArray("camera") instance=ExtResource("9_nbhn6")]
-position = Vector2(360, 1200)
+position = Vector2(360, 996)
 scale = Vector2(1, 1)
 camera = NodePath("../../Camera2D")
 weapons = Array[ExtResource("10_nlrgj")]([ExtResource("11_c83nf")])
 
 [node name="HUD" parent="." unique_id=228684140 instance=ExtResource("13_yx5hh")]
+
+[node name="HUD" parent="HUD" unique_id=934379804 instance=ExtResource("13_yx5hh")]
 
 [node name="SettingsPanel" parent="." unique_id=217040426 instance=ExtResource("18_y3xa5")]
