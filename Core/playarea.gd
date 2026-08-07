@@ -2,10 +2,8 @@ extends Node
 
 # Do not change these values 
 # These values will support mobile
-const PLAY_WIDTH := 720.0
-const PLAY_HEIGHT := 1280.0 #minimum height
-
-# Variable Screen size. Width stays 720, height will grow.
+const PLAY_WIDTH := 1920
+const PLAY_HEIGHT := 1080.0 #minimum height
 
 var screen_size: Vector2
 
