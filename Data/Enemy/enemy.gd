@@ -1,11 +1,9 @@
-class_name EnemyShip
+class_name Enemy
 extends Area2D
 
+@export var data: EnemyData
 @export var projectile_scene: PackedScene
 @export var ammo: ProjectileData
-
-@export var contact_damage := 1
-@export var drift_speed := 220.0
 
 # Randomised so a row of ships does not fire in lockstep. Used for engagement, where continous fire will follow its set fire intervals
 @export var min_interval := 2.0
@@ -25,7 +23,6 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	position.y += drift_speed * delta
 
 	_fire_timer -= delta
 	if _fire_timer <= 0.0:
@@ -37,12 +34,13 @@ func _physics_process(delta: float) -> void:
 
 
 func _reset_timer() -> void:
-	_fire_timer = randf_range(min_interval, max_interval)
+	_fire_timer = data.projectile_fire_rate
 
 
 func _fire() -> void:
 	var shot := projectile_scene.instantiate() as Projectile
 	shot.data = ammo
+	shot.data.damage = data.projectile_damage
 	shot.direction = Vector2.DOWN
 
 	# Same parent as this ship, so shots shake with the world.
@@ -56,7 +54,7 @@ func take_damage(amount: int) -> void:
 
 
 func get_contact_damage() -> int:
-	return contact_damage
+	return data.contact_damage
 
 func _on_damaged() -> void:
 	modulate = Color(1.0, 0.0, 0.157, 1.0)
