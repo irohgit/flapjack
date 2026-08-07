@@ -3,7 +3,7 @@ extends Node
 # Do not change these values 
 # These values will support mobile
 const PLAY_WIDTH := 1920
-const PLAY_HEIGHT := 1080.0 #minimum height
+const PLAY_HEIGHT := 1080.0
 
 var screen_size: Vector2
 
@@ -24,7 +24,7 @@ func _assert_contract() -> void:
 	assert(w == PLAY_WIDTH,  "viewport_width is %d, contract says %d" % [w, PLAY_WIDTH])
 	assert(h == PLAY_HEIGHT, "viewport_height is %d, contract says %d" % [h, PLAY_HEIGHT])
 
-# Sizes the desktop window to fill most of the monitor, keeping the locked aspect.
+# Sizes the desktop window to fill most of the monitor, keeping the locked 16:9 aspect.
 # Mobile and web get their window from the OS or the browser, so we skip them.
 func _fit_window_to_screen() -> void:
 	if OS.has_feature("mobile") or OS.has_feature("web"):
@@ -33,10 +33,14 @@ func _fit_window_to_screen() -> void:
 	var screen_id := DisplayServer.window_get_current_screen()
 	var usable := DisplayServer.screen_get_usable_rect(screen_id)
 
-	# Height is the scarce axis for a portrait game, so height drives the maths.
-	var h := int(usable.size.y * 0.9)
-	var w := int(h * (PLAY_WIDTH / PLAY_HEIGHT))
-	var size := Vector2i(w, h)
+	var scale_factor := minf(
+		float(usable.size.x) / PLAY_WIDTH,
+		float(usable.size.y) / PLAY_HEIGHT
+	) * 0.9
+	var size := Vector2i(
+		int(round(PLAY_WIDTH * scale_factor)),
+		int(round(PLAY_HEIGHT * scale_factor))
+	)
 
 	DisplayServer.window_set_size(size)
 	DisplayServer.window_set_position(usable.position + (usable.size - size) / 2)
@@ -48,9 +52,9 @@ func _update_screen_size() -> void:
 func clamp_to_play_area(pos: Vector2, margin: float = 0.0) -> Vector2:
 	return Vector2(
 		clampf(pos.x, margin, PLAY_WIDTH - margin),
-		clampf(pos.y, margin, screen_size.y - margin)
+		clampf(pos.y, margin, PLAY_HEIGHT - margin)
 	)
 
 func is_near_screen(pos: Vector2, margin: float = 0.0) -> bool:
 	return pos.x > -margin and pos.x < PLAY_WIDTH + margin \
-		and pos.y > -margin and pos.y < screen_size.y + margin
+		and pos.y > -margin and pos.y < PLAY_HEIGHT + margin

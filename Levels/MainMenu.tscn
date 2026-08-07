@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=3 uid="uid://dfgiunphxmxmr"]
 
 [ext_resource type="Script" uid="uid://duntr73s38siv" path="res://Levels/main_menu.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://Assets/UI/MainMenu/background.png" id="2_background"]
+[ext_resource type="Texture2D" path="res://Assets/UI/MainMenu/background_landscape.png" id="2_background"]
 [ext_resource type="Texture2D" path="res://Assets/UI/MainMenu/title.png" id="3_title"]
 [ext_resource type="Texture2D" path="res://Assets/UI/MainMenu/play_button.png" id="4_play"]
 [ext_resource type="Texture2D" path="res://Assets/UI/MainMenu/play_button_hover.png" id="5_play_hover"]
@@ -38,10 +38,10 @@ stretch_mode = 6
 [node name="Title" type="TextureRect" parent="."]
 texture_filter = 1
 layout_mode = 0
-offset_left = 60.0
-offset_top = 220.0
-offset_right = 660.0
-offset_bottom = 520.0
+offset_left = 600.0
+offset_top = 80.0
+offset_right = 1320.0
+offset_bottom = 440.0
 mouse_filter = 2
 texture = ExtResource("3_title")
 expand_mode = 1
@@ -49,10 +49,10 @@ expand_mode = 1
 [node name="PlayButton" type="TextureButton" parent="."]
 texture_filter = 1
 layout_mode = 0
-offset_left = 110.0
-offset_top = 585.0
-offset_right = 610.0
-offset_bottom = 725.0
+offset_left = 710.0
+offset_top = 470.0
+offset_right = 1210.0
+offset_bottom = 610.0
 mouse_default_cursor_shape = 2
 focus_mode = 0
 texture_normal = ExtResource("4_play")
@@ -63,10 +63,10 @@ ignore_texture_size = true
 [node name="SettingsButton" type="TextureButton" parent="."]
 texture_filter = 1
 layout_mode = 0
-offset_left = 110.0
-offset_top = 740.0
-offset_right = 610.0
-offset_bottom = 880.0
+offset_left = 710.0
+offset_top = 630.0
+offset_right = 1210.0
+offset_bottom = 770.0
 mouse_default_cursor_shape = 2
 focus_mode = 0
 texture_normal = ExtResource("7_settings")
@@ -77,10 +77,10 @@ ignore_texture_size = true
 [node name="ExitButton" type="TextureButton" parent="."]
 texture_filter = 1
 layout_mode = 0
-offset_left = 110.0
-offset_top = 895.0
-offset_right = 610.0
-offset_bottom = 1035.0
+offset_left = 710.0
+offset_top = 790.0
+offset_right = 1210.0
+offset_bottom = 930.0
 mouse_default_cursor_shape = 2
 focus_mode = 0
 texture_normal = ExtResource("10_exit")
