@@ -7,18 +7,12 @@
 [ext_resource type="PackedScene" uid="uid://dsf0q5lcpr0mh" path="res://Actors/Camera/ScrollDirector.tscn" id="3_o28ls"]
 [ext_resource type="PackedScene" uid="uid://c1hug03muahmo" path="res://Actors/Camera/water_background.tscn" id="3_utqb5"]
 [ext_resource type="PackedScene" uid="uid://cclwwsegfn8rr" path="res://Actors/Player/player.tscn" id="4_nx2dg"]
-[ext_resource type="Resource" uid="uid://bsk4oh4u6bnhe" path="res://Data/Enemy/BulwarkEnemy.tres" id="5_fkloy"]
-[ext_resource type="Resource" uid="uid://cnxtqo5woe8ja" path="res://Data/Enemy/HunterEnemy.tres" id="6_rvay1"]
 [ext_resource type="Script" uid="uid://dfww4fxipct38" path="res://Data/Weapons/weapon_data.gd" id="7_bsnqn"]
 [ext_resource type="Resource" uid="uid://b7nwwwfmfkswx" path="res://Data/Weapons/Cannon.tres" id="8_thckm"]
 [ext_resource type="PackedScene" uid="uid://b27tvj4v653m2" path="res://Levels/enemy_controller.tscn" id="10_8p85k"]
-[ext_resource type="Script" uid="uid://bo6li876odoia" path="res://Data/Enemy/enemy_data.gd" id="12_fkloy"]
-[ext_resource type="PackedScene" uid="uid://luquvycpj4hd" path="res://Actors/Pickup/coin_spawner.tscn" id="14_rvay1"]
 
-[node name="Stage1" type="Node2D" unique_id=1126219472 node_paths=PackedStringArray("scroll_director", "enemy_controller")]
+[node name="Stage1" type="Node2D" unique_id=1126219472]
 script = ExtResource("1_thckm")
-scroll_director = NodePath("ScrollDirector")
-enemy_controller = NodePath("EnemyController")
 
 [node name="ShakeCamera" type="Camera2D" parent="." unique_id=628624149]
 script = ExtResource("1_utqb5")
@@ -26,13 +20,11 @@ max_offset = Vector2(0, 0)
 metadata/_custom_type_script = "uid://tsoi3lwff5mf"
 
 [node name="EnemyController" parent="." unique_id=335274421 node_paths=PackedStringArray("spawn_parent") instance=ExtResource("10_8p85k")]
-enemy_types = Array[ExtResource("12_fkloy")]([ExtResource("5_fkloy"), ExtResource("6_rvay1")])
 spawn_parent = NodePath("../World")
-horizontal_spacing = 250.0
 
 [node name="ScrollDirector" parent="." unique_id=1595117280 node_paths=PackedStringArray("camera") instance=ExtResource("3_o28ls")]
 camera = NodePath("../ShakeCamera")
-scroll_speed = 50.0
+scroll_speed = 15.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1686435467]
 layer = -100
@@ -50,5 +42,3 @@ camera = NodePath("../../ShakeCamera")
 weapons = Array[ExtResource("7_bsnqn")]([ExtResource("8_thckm")])
 
 [node name="SettingsPanel" parent="." unique_id=217040426 instance=ExtResource("2_nx2dg")]
-
-[node name="CoinSpawner" parent="." unique_id=1386735529 instance=ExtResource("14_rvay1")]

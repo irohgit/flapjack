@@ -3,7 +3,8 @@ extends Area2D
 
 @export var data: EnemyData
 
-# Randomised so a row of ships does not fire in lockstep. Used for engagement, where continous fire will follow its set fire intervals
+# Randomise the opening delay so a newly revealed row does not fire in lockstep.
+# After engagement begins, EnemyData.projectile_fire_rate controls each interval.
 @export var min_interval := 2.0
 @export var max_interval := 5.0
 
@@ -25,23 +26,36 @@ func _ready() -> void:
 	_health.current_health = data.health
 	_health.damaged.connect(_on_damaged)
 	_health.died.connect(_on_died)
-	_reset_timer()
+	_reset_initial_timer()
 
 
 func _physics_process(delta: float) -> void:
-	position.y += data.move_speed * delta
+	_move(delta)
+
+	if Playarea.has_passed_below_screen(global_position, 200.0):
+		queue_free()
+		return
+
+	# Enemies waiting above the camera do not count down or shoot. Their opening
+	# delay begins on the first frame that they are actually visible.
+	if not Playarea.is_near_screen(global_position):
+		return
+
 	_fire_timer -= delta
 	if _fire_timer <= 0.0:
 		_fire()
 		_reset_timer()
 
-	if Playarea.has_passed_below_screen(global_position, 200.0):
-		queue_free()
+
+func _reset_initial_timer() -> void:
+	_fire_timer = randf_range(min_interval, max_interval)
 
 
 func _reset_timer() -> void:
 	_fire_timer = maxf(float(data.projectile_fire_rate), 0.05)
 
+func _move(delta: float) -> void:
+	pass
 
 func _fire() -> void:
 	var shot := data.projectile_scene.instantiate() as Projectile

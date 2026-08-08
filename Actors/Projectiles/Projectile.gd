@@ -26,6 +26,7 @@ func _ready() -> void:
 func _apply_data() -> void:
 	assert(data.texture != null, "ProjectileData has no texture assigned")
 	_sprite.texture = data.texture
+	self.apply_scale(Vector2(1, 1) * data.scale)
 	
 	var circle := CircleShape2D.new()
 	circle.radius = data.hitbox_radius

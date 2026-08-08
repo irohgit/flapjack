@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://br55a5ydf4qlm"]
+
+[ext_resource type="Script" uid="uid://ccrdo53clm5pg" path="res://Levels/Stage2/stage_2.gd" id="1_1bb5f"]
+[ext_resource type="Script" uid="uid://tsoi3lwff5mf" path="res://Actors/Camera/shake_camera.gd" id="2_mjwon"]
+[ext_resource type="PackedScene" uid="uid://b27tvj4v653m2" path="res://Levels/enemy_controller.tscn" id="3_8awud"]
+[ext_resource type="PackedScene" uid="uid://dsf0q5lcpr0mh" path="res://Actors/Camera/ScrollDirector.tscn" id="4_esojt"]
+[ext_resource type="PackedScene" uid="uid://c1hug03muahmo" path="res://Actors/Camera/water_background.tscn" id="5_2ahl2"]
+[ext_resource type="PackedScene" uid="uid://t7alddeyjrep" path="res://Levels/hud.tscn" id="6_1ue76"]
+[ext_resource type="Shader" uid="uid://cq85abjo4x30h" path="res://Assets/Shaders/Water/water.gdshader" id="6_lcqkj"]
+[ext_resource type="Texture2D" uid="uid://conqv6viso2ly" path="res://Assets/Shaders/Water/water_noise.tres" id="7_ha8ls"]
+[ext_resource type="PackedScene" uid="uid://cclwwsegfn8rr" path="res://Actors/Player/player.tscn" id="7_wnqgr"]
+[ext_resource type="Script" uid="uid://dfww4fxipct38" path="res://Data/Weapons/weapon_data.gd" id="8_3kyq3"]
+[ext_resource type="Resource" uid="uid://b7nwwwfmfkswx" path="res://Data/Weapons/Cannon.tres" id="9_0coer"]
+[ext_resource type="PackedScene" uid="uid://cstesilwdvxw5" path="res://Levels/settings_panel.tscn" id="10_ejwf3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e5gsb"]
+shader = ExtResource("6_lcqkj")
+shader_parameter/noise_texture = ExtResource("7_ha8ls")
+shader_parameter/deep_water = Color(0.6156863, 0, 0, 1)
+shader_parameter/wave_water = Color(0.83137256, 0, 0, 1)
+shader_parameter/rim_color = Color(0.91764706, 0, 0, 1)
+shader_parameter/foam_color = Color(1, 0, 0, 1)
+shader_parameter/design_size = Vector2(1920, 1080)
+shader_parameter/camera_offset = Vector2(0, 0)
+shader_parameter/water_pixel_size = 6.0
+shader_parameter/animation_speed = 4.0
+shader_parameter/cell_size = 17.0
+shader_parameter/cell_irregularity = 0.0
+shader_parameter/cell_motion = 0.249999994412
+shader_parameter/edge_warp = 3.5
+shader_parameter/wave_width = 0.28
+shader_parameter/rim_width = 0.12
+shader_parameter/foam_width = 0.05
+shader_parameter/foam_coverage = 0.58
+
+[node name="Stage2" type="Node2D" unique_id=1126219472 node_paths=PackedStringArray("scroll_director", "enemy_controller")]
+script = ExtResource("1_1bb5f")
+scroll_director = NodePath("ScrollDirector")
+enemy_controller = NodePath("EnemyController")
+
+[node name="ShakeCamera" type="Camera2D" parent="." unique_id=628624149]
+script = ExtResource("2_mjwon")
+max_offset = Vector2(0, 0)
+metadata/_custom_type_script = "uid://tsoi3lwff5mf"
+
+[node name="EnemyController" parent="." unique_id=335274421 node_paths=PackedStringArray("spawn_parent") instance=ExtResource("3_8awud")]
+spawn_parent = NodePath("../World")
+
+[node name="ScrollDirector" parent="." unique_id=1595117280 node_paths=PackedStringArray("camera") instance=ExtResource("4_esojt")]
+camera = NodePath("../ShakeCamera")
+scroll_speed = 50.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1686435467]
+layer = -100
+
+[node name="WaterBack" parent="CanvasLayer" unique_id=364615905 node_paths=PackedStringArray("camera") instance=ExtResource("5_2ahl2")]
+material = SubResource("ShaderMaterial_e5gsb")
+camera = NodePath("../../ShakeCamera")
+
+[node name="HUD" parent="." unique_id=228684140 instance=ExtResource("6_1ue76")]
+
+[node name="World" type="Node2D" parent="." unique_id=790454155]
+
+[node name="Player" parent="World" unique_id=2109576054 node_paths=PackedStringArray("camera") instance=ExtResource("7_wnqgr")]
+max_speed = 400.0
+camera = NodePath("../../ShakeCamera")
+weapons = Array[ExtResource("8_3kyq3")]([ExtResource("9_0coer")])
+
+[node name="SettingsPanel" parent="." unique_id=217040426 instance=ExtResource("10_ejwf3")]

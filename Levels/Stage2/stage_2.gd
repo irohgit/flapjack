@@ -8,8 +8,7 @@ func _ready() -> void:
 	assert(not enemy_controller.enemy_types.is_empty(), "Level 1 needs an enemy type")
 	
 	var basic_enemy := enemy_controller.enemy_types[0]
-	var hunter := enemy_controller.enemy_types[1]
-	var first_wave: Array[EnemyData] = [basic_enemy, basic_enemy, hunter, basic_enemy, basic_enemy]
+	var first_wave: Array[EnemyData] = [basic_enemy, basic_enemy, basic_enemy, basic_enemy, basic_enemy]
 	
 	scroll_director.move_to(Vector2(0, -10000))
 	await wait_until(func() -> bool:
