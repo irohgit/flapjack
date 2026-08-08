@@ -12,24 +12,26 @@
 [node name="Stage1" type="Node2D" unique_id=1126219472]
 
 [node name="ShakeCamera" type="Camera2D" parent="." unique_id=628624149]
-position = Vector2(960, 540)
 script = ExtResource("1_utqb5")
 max_offset = Vector2(0, 0)
 metadata/_custom_type_script = "uid://tsoi3lwff5mf"
 
-[node name="WaterBack" parent="." unique_id=364615905 instance=ExtResource("3_utqb5")]
-offset_right = 1920.0
-offset_bottom = 1080.0
-
 [node name="ScrollDirector" parent="." unique_id=1595117280 node_paths=PackedStringArray("camera") instance=ExtResource("3_o28ls")]
 camera = NodePath("../ShakeCamera")
+end_point = Vector2(0, -1000)
+scroll_speed = 15.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1686435467]
+layer = -100
+
+[node name="WaterBack" parent="CanvasLayer" unique_id=364615905 node_paths=PackedStringArray("camera") instance=ExtResource("3_utqb5")]
+camera = NodePath("../../ShakeCamera")
 
 [node name="HUD" parent="." unique_id=228684140 instance=ExtResource("1_s0w88")]
 
-[node name="SettingsPanel" parent="." unique_id=217040426 instance=ExtResource("2_nx2dg")]
-
 [node name="Player" parent="." unique_id=2109576054 node_paths=PackedStringArray("camera") instance=ExtResource("4_nx2dg")]
-position = Vector2(960, 540)
 max_speed = 400.0
 camera = NodePath("../ShakeCamera")
 weapons = Array[ExtResource("7_bsnqn")]([ExtResource("8_thckm")])
+
+[node name="SettingsPanel" parent="." unique_id=217040426 instance=ExtResource("2_nx2dg")]

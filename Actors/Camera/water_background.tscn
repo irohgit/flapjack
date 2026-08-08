@@ -2,6 +2,7 @@
 
 [ext_resource type="Shader" uid="uid://cq85abjo4x30h" path="res://Assets/Shaders/Water/water.gdshader" id="1_o3frl"]
 [ext_resource type="Texture2D" uid="uid://conqv6viso2ly" path="res://Assets/Shaders/Water/water_noise.tres" id="2_pfjoy"]
+[ext_resource type="Script" path="res://Actors/Camera/water_background.gd" id="3_script"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_63c11"]
 shader = ExtResource("1_o3frl")
@@ -11,6 +12,7 @@ shader_parameter/wave_water = Color(0.32, 0.86, 0.88, 1)
 shader_parameter/rim_color = Color(0.62, 0.95, 0.95, 1)
 shader_parameter/foam_color = Color(0.97, 1, 1, 1)
 shader_parameter/design_size = Vector2(1920, 1080)
+shader_parameter/camera_offset = Vector2(0, 0)
 shader_parameter/water_pixel_size = 6.0
 shader_parameter/animation_speed = 4.0
 shader_parameter/cell_size = 17.0
@@ -29,3 +31,4 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("3_script")
