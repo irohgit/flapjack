@@ -1,12 +1,15 @@
-class_name level_manager
+class_name LevelManager
 extends Node
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+signal sequence_completed
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+@export var scroll_director: ScrollDirector
+@export var enemy_controller: EnemyController
+
+
+# Pause the level script until an ordinary boolean expression becomes true.
+func wait_until(condition: Callable) -> void:
+	while is_inside_tree() and not condition.call():
+		await get_tree().process_frame

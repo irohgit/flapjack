@@ -75,7 +75,8 @@ weapons = Array[ExtResource("10_nlrgj")]([ExtResource("11_c83nf")])
 
 [node name="SettingsPanel" parent="." unique_id=217040426 instance=ExtResource("18_y3xa5")]
 
-[node name="EnemyController" type="Node" parent="." unique_id=897350340]
+[node name="EnemyController" type="Node" parent="." unique_id=897350340 node_paths=PackedStringArray("spawn_parent")]
 script = ExtResource("12_im6i0")
 enemy_scene = ExtResource("5_ndx46")
 enemy_types = Array[ExtResource("14_yx5hh")]([ExtResource("15_ndx46")])
+spawn_parent = NodePath("../World")
