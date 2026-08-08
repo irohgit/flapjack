@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://buoclsm4meh3f"]
 
 [ext_resource type="Script" uid="uid://cv0v6ynhg51ei" path="res://Systems/Combat/HealthComponent.gd" id="1_2v41r"]
-[ext_resource type="Script" uid="uid://bhpylveyd3agl" path="res://Actors/Enemies/enemy_ship.gd" id="1_8k4sg"]
+[ext_resource type="Script" uid="uid://bokjl1r7po7pc" path="res://Data/Enemy/enemy.gd" id="1_8k4sg"]
 [ext_resource type="Texture2D" uid="uid://cv04hsa45l3hf" path="res://Assets/Enemies/Blackbeard_Pirates/Enemy_Ship_5.png" id="1_m1alp"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_odipc"]
@@ -12,8 +12,6 @@ height = 130.0
 collision_layer = 2
 collision_mask = 4
 script = ExtResource("1_8k4sg")
-min_interval = 1.2
-max_interval = 3.5
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=435719709]
 texture = ExtResource("1_m1alp")

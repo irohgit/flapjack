@@ -2,8 +2,6 @@ class_name Enemy
 extends Area2D
 
 @export var data: EnemyData
-@export var projectile_scene: PackedScene
-@export var ammo: ProjectileData
 
 # Randomised so a row of ships does not fire in lockstep. Used for engagement, where continous fire will follow its set fire intervals
 @export var min_interval := 2.0
@@ -15,8 +13,8 @@ var _fire_timer := 0.0
 
 
 func _ready() -> void:
-	assert(projectile_scene != null, "EnemyShip has no projectile_scene assigned")
-	assert(ammo != null, "EnemyShip has no ammo assigned")
+	assert(data.projectile_scene != null, "EnemyShip has no projectile_scene assigned")
+	assert(data.ammo != null, "EnemyShip has no ammo assigned")
 	_health.damaged.connect(_on_damaged)
 	_health.died.connect(_on_died)
 	_reset_timer()
@@ -38,8 +36,8 @@ func _reset_timer() -> void:
 
 
 func _fire() -> void:
-	var shot := projectile_scene.instantiate() as Projectile
-	shot.data = ammo
+	var shot := data.projectile_scene.instantiate() as Projectile
+	shot.data = data.ammo
 	shot.data.damage = data.projectile_damage
 	shot.direction = Vector2.DOWN
 

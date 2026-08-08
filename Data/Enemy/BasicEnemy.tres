@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://bsk4oh4u6bnhe"]
+
+[ext_resource type="Resource" uid="uid://dk3d73cdpoumi" path="res://Data/Projectiles/enemy_cannonball.tres" id="1_dul8q"]
+[ext_resource type="Script" uid="uid://bo6li876odoia" path="res://Data/Enemy/enemy_data.gd" id="1_rl34p"]
+[ext_resource type="Texture2D" uid="uid://cv04hsa45l3hf" path="res://Assets/Enemies/Blackbeard_Pirates/Enemy_Ship_5.png" id="2_kc4w4"]
+[ext_resource type="PackedScene" uid="uid://bl12qi0n68b6i" path="res://Actors/Projectiles/projectile.tscn" id="2_v7pu7"]
+
+[resource]
+script = ExtResource("1_rl34p")
+texture = ExtResource("2_kc4w4")
+projectile_scene = ExtResource("2_v7pu7")
+ammo = ExtResource("1_dul8q")
+metadata/_custom_type_script = "uid://bo6li876odoia"

@@ -9,3 +9,5 @@ extends Resource
 @export var move_speed := 0.0
 @export var texture: Texture2D
 @export var visual_scale := 1.0 # Sprite scale, so one texture can serve small and large variants.
+@export var projectile_scene: PackedScene
+@export var ammo: ProjectileData
