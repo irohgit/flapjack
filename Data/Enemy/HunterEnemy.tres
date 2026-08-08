@@ -4,9 +4,12 @@
 [ext_resource type="PackedScene" uid="uid://bl12qi0n68b6i" path="res://Actors/Projectiles/projectile.tscn" id="2_gc5rt"]
 [ext_resource type="Script" uid="uid://bo6li876odoia" path="res://Data/Enemy/enemy_data.gd" id="3_i4h7m"]
 [ext_resource type="Texture2D" uid="uid://c1i4w0rfv82dy" path="res://Assets/Enemies/Blackbeard_Pirates/Enemy_Ship_Hunter.png" id="4_yl1jh"]
+[ext_resource type="PackedScene" path="res://Actors/Enemies/hunter_enemy.tscn" id="5_hunter_scene"]
 
 [resource]
 script = ExtResource("3_i4h7m")
+scene = ExtResource("5_hunter_scene")
+move_speed = 16.74
 texture = ExtResource("4_yl1jh")
 projectile_scene = ExtResource("2_gc5rt")
 ammo = ExtResource("1_yl1jh")

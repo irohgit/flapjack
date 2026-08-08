@@ -30,12 +30,20 @@ func spawn_pack(
 	pos: Vector2,
 	formation: Formation = Formation.LINE
 ) -> void:
-	assert(enemy_scene != null, "EnemyController needs an enemy scene")
 	assert(spawn_parent != null, "EnemyController needs a spawn parent")
 
 	for index in pack.size():
-		var enemy := enemy_scene.instantiate() as Enemy
-		enemy.data = pack[index]
+		var enemy_data := pack[index]
+		var scene_to_spawn := (
+			enemy_data.scene
+			if enemy_data.scene != null
+			else enemy_scene
+		)
+		assert(scene_to_spawn != null, "EnemyData needs an enemy scene")
+
+		var enemy := scene_to_spawn.instantiate() as Enemy
+		assert(enemy != null, "Enemy scenes must inherit from Enemy")
+		enemy.data = enemy_data
 
 		_active_enemies += 1
 		enemy.tree_exited.connect(_on_enemy_exited)
