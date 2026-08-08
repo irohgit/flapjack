@@ -2,9 +2,11 @@ class_name EnemyHunter
 extends Enemy
 
 
-@export var follow_offset := Vector2(0.0, -200.0)
+@export var patrol_distance := 250.0
 
-@onready var _player := get_tree().get_first_node_in_group("player") as Player
+var _spawn_position := Vector2.ZERO
+var _patrol_direction := 1.0
+var _has_spawn_position := false
 
 #func _fire() -> void:
 	#var shot := data.projectile_scene.instantiate() as Projectile
@@ -19,13 +21,19 @@ extends Enemy
 	#shot.global_position = global_position + Vector2(0, 60)
 
 func _move(delta: float) -> void:
-	if not is_instance_valid(_player):
-		return
+	# Capture this after spawning because the controller assigns the enemy's
+	# global position after adding it to the scene tree.
+	if not _has_spawn_position:
+		_spawn_position = global_position
+		_has_spawn_position = true
 
-	# The offset is relative to the player. Using global positions keeps this
-	# correct even when the player and enemy have different parent nodes.
-	var target_position := _player.global_position + follow_offset
+	# This offset is relative to where the Hunter originally spawned.
+	var patrol_offset := Vector2(patrol_distance * _patrol_direction, 0.0)
+	var target_position := _spawn_position + patrol_offset
 	global_position = global_position.move_toward(
 		target_position,
 		data.move_speed * delta
 	)
+
+	if global_position.is_equal_approx(target_position):
+		_patrol_direction *= -1.0

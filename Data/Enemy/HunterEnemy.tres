@@ -9,7 +9,7 @@
 [resource]
 script = ExtResource("3_i4h7m")
 scene = ExtResource("5_hunter_scene")
-move_speed = 16.74
+move_speed = 50.0
 texture = ExtResource("4_yl1jh")
 projectile_scene = ExtResource("2_gc5rt")
 ammo = ExtResource("1_yl1jh")
