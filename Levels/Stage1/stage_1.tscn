@@ -1,3 +1,35 @@
 [gd_scene format=3 uid="uid://gj63c1k4m7w"]
 
+[ext_resource type="PackedScene" uid="uid://t7alddeyjrep" path="res://Levels/hud.tscn" id="1_s0w88"]
+[ext_resource type="Script" uid="uid://tsoi3lwff5mf" path="res://Actors/Camera/shake_camera.gd" id="1_utqb5"]
+[ext_resource type="PackedScene" uid="uid://cstesilwdvxw5" path="res://Levels/settings_panel.tscn" id="2_nx2dg"]
+[ext_resource type="PackedScene" uid="uid://dsf0q5lcpr0mh" path="res://Actors/Camera/ScrollDirector.tscn" id="3_o28ls"]
+[ext_resource type="PackedScene" uid="uid://c1hug03muahmo" path="res://Actors/Camera/water_background.tscn" id="3_utqb5"]
+[ext_resource type="PackedScene" uid="uid://cclwwsegfn8rr" path="res://Actors/Player/player.tscn" id="4_nx2dg"]
+[ext_resource type="Script" uid="uid://dfww4fxipct38" path="res://Data/Weapons/weapon_data.gd" id="7_bsnqn"]
+[ext_resource type="Resource" uid="uid://b7nwwwfmfkswx" path="res://Data/Weapons/Cannon.tres" id="8_thckm"]
+
 [node name="Stage1" type="Node2D" unique_id=1126219472]
+
+[node name="ShakeCamera" type="Camera2D" parent="." unique_id=628624149]
+position = Vector2(960, 540)
+script = ExtResource("1_utqb5")
+max_offset = Vector2(0, 0)
+metadata/_custom_type_script = "uid://tsoi3lwff5mf"
+
+[node name="WaterBack" parent="." unique_id=364615905 instance=ExtResource("3_utqb5")]
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="ScrollDirector" parent="." unique_id=1595117280 node_paths=PackedStringArray("camera") instance=ExtResource("3_o28ls")]
+camera = NodePath("../ShakeCamera")
+
+[node name="HUD" parent="." unique_id=228684140 instance=ExtResource("1_s0w88")]
+
+[node name="SettingsPanel" parent="." unique_id=217040426 instance=ExtResource("2_nx2dg")]
+
+[node name="Player" parent="." unique_id=2109576054 node_paths=PackedStringArray("camera") instance=ExtResource("4_nx2dg")]
+position = Vector2(960, 540)
+max_speed = 400.0
+camera = NodePath("../ShakeCamera")
+weapons = Array[ExtResource("7_bsnqn")]([ExtResource("8_thckm")])
