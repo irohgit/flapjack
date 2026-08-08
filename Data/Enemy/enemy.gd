@@ -2,28 +2,34 @@ class_name Enemy
 extends Area2D
 
 @export var data: EnemyData
-@export var projectile_scene: PackedScene
-@export var ammo: ProjectileData
 
 # Randomised so a row of ships does not fire in lockstep. Used for engagement, where continous fire will follow its set fire intervals
 @export var min_interval := 2.0
 @export var max_interval := 5.0
 
 @onready var _health: HealthComponent = $HealthComponent
+@onready var _sprite: Sprite2D = $Sprite2D
 
 var _fire_timer := 0.0
 
 
 func _ready() -> void:
-	assert(projectile_scene != null, "EnemyShip has no projectile_scene assigned")
-	assert(ammo != null, "EnemyShip has no ammo assigned")
+	assert(data != null, "Enemy spawned with no EnemyData assigned")
+	assert(data.projectile_scene != null, "EnemyShip has no projectile_scene assigned")
+	assert(data.ammo != null, "EnemyShip has no ammo assigned")
+	assert(data.texture != null, "EnemyData has no texture assigned")
+
+	_sprite.texture = data.texture
+	_sprite.scale = Vector2.ONE * data.visual_scale
+	_health.max_health = data.health
+	_health.current_health = data.health
 	_health.damaged.connect(_on_damaged)
 	_health.died.connect(_on_died)
 	_reset_timer()
 
 
 func _physics_process(delta: float) -> void:
-
+	position.y += data.move_speed * delta
 	_fire_timer -= delta
 	if _fire_timer <= 0.0:
 		_fire()
@@ -34,13 +40,15 @@ func _physics_process(delta: float) -> void:
 
 
 func _reset_timer() -> void:
-	_fire_timer = data.projectile_fire_rate
+	_fire_timer = maxf(float(data.projectile_fire_rate), 0.05)
 
 
 func _fire() -> void:
-	var shot := projectile_scene.instantiate() as Projectile
-	shot.data = ammo
-	shot.data.damage = data.projectile_damage
+	var shot := data.projectile_scene.instantiate() as Projectile
+	var shot_data := data.ammo.duplicate() as ProjectileData
+	shot_data.damage = data.projectile_damage
+	shot_data.speed *= data.projectile_speed
+	shot.data = shot_data
 	shot.direction = Vector2.DOWN
 
 	# Same parent as this ship, so shots shake with the world.

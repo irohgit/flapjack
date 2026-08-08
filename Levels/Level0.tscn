@@ -5,14 +5,15 @@
 [ext_resource type="Texture2D" uid="uid://conqv6viso2ly" path="res://Assets/Shaders/Water/water_noise.tres" id="3_i4luy"]
 [ext_resource type="Script" uid="uid://tsoi3lwff5mf" path="res://Actors/Camera/shake_camera.gd" id="4_yx5hh"]
 [ext_resource type="PackedScene" uid="uid://dsf0q5lcpr0mh" path="res://Actors/Camera/ScrollDirector.tscn" id="5_im6i0"]
-[ext_resource type="PackedScene" uid="uid://buoclsm4meh3f" path="res://Actors/Enemies/enemy_ship.tscn" id="5_ndx46"]
-[ext_resource type="PackedScene" uid="uid://bl12qi0n68b6i" path="res://Actors/Projectiles/projectile.tscn" id="6_nf6vt"]
-[ext_resource type="Resource" uid="uid://dk3d73cdpoumi" path="res://Data/Projectiles/enemy_cannonball.tres" id="7_aa3m5"]
+[ext_resource type="PackedScene" uid="uid://buoclsm4meh3f" path="res://Actors/Enemies/enemy.tscn" id="5_ndx46"]
 [ext_resource type="PackedScene" uid="uid://cuwj1wdixoj3p" path="res://Actors/Hazards/hazard.tscn" id="8_y3xa5"]
 [ext_resource type="PackedScene" uid="uid://cclwwsegfn8rr" path="res://Actors/Player/player.tscn" id="9_nbhn6"]
 [ext_resource type="Script" uid="uid://dfww4fxipct38" path="res://Data/Weapons/weapon_data.gd" id="10_nlrgj"]
 [ext_resource type="Resource" uid="uid://b7nwwwfmfkswx" path="res://Data/Weapons/Cannon.tres" id="11_c83nf"]
+[ext_resource type="Script" uid="uid://p8fik3y061fg" path="res://Levels/enemy_controller.gd" id="12_im6i0"]
 [ext_resource type="PackedScene" uid="uid://t7alddeyjrep" path="res://Levels/hud.tscn" id="13_yx5hh"]
+[ext_resource type="Script" uid="uid://bo6li876odoia" path="res://Data/Enemy/enemy_data.gd" id="14_yx5hh"]
+[ext_resource type="Resource" uid="uid://bsk4oh4u6bnhe" path="res://Data/Enemy/BasicEnemy.tres" id="15_ndx46"]
 [ext_resource type="PackedScene" uid="uid://cstesilwdvxw5" path="res://Levels/settings_panel.tscn" id="18_y3xa5"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n48ea"]
@@ -34,9 +35,10 @@ shader_parameter/rim_width = 0.12
 shader_parameter/foam_width = 0.05
 shader_parameter/foam_coverage = 0.58
 
-[node name="Game" type="Node2D" unique_id=141585991 node_paths=PackedStringArray("scroll_director")]
+[node name="Game" type="Node2D" unique_id=141585991 node_paths=PackedStringArray("scroll_director", "enemy_controller")]
 script = ExtResource("1_y3xa5")
 scroll_director = NodePath("ScrollDirector")
+enemy_controller = NodePath("EnemyController")
 
 [node name="ScrollDirector" parent="." unique_id=1595117280 node_paths=PackedStringArray("camera") instance=ExtResource("5_im6i0")]
 camera = NodePath("../Camera2D")
@@ -60,18 +62,6 @@ mouse_filter = 2
 
 [node name="World" type="Node2D" parent="." unique_id=19047034]
 
-[node name="EnemyShip" parent="World" unique_id=1035340143 instance=ExtResource("5_ndx46")]
-position = Vector2(600, 300)
-projectile_scene = ExtResource("6_nf6vt")
-ammo = ExtResource("7_aa3m5")
-drift_speed = 0.0
-
-[node name="EnemyShip2" parent="World" unique_id=1573959086 instance=ExtResource("5_ndx46")]
-position = Vector2(121, 604)
-projectile_scene = ExtResource("6_nf6vt")
-ammo = ExtResource("7_aa3m5")
-drift_speed = 0.0
-
 [node name="Hazard" parent="World" unique_id=90124748 instance=ExtResource("8_y3xa5")]
 position = Vector2(360, 500)
 
@@ -83,6 +73,10 @@ weapons = Array[ExtResource("10_nlrgj")]([ExtResource("11_c83nf")])
 
 [node name="HUD" parent="." unique_id=228684140 instance=ExtResource("13_yx5hh")]
 
-[node name="HUD" parent="HUD" unique_id=934379804 instance=ExtResource("13_yx5hh")]
-
 [node name="SettingsPanel" parent="." unique_id=217040426 instance=ExtResource("18_y3xa5")]
+
+[node name="EnemyController" type="Node" parent="." unique_id=897350340 node_paths=PackedStringArray("spawn_parent")]
+script = ExtResource("12_im6i0")
+enemy_scene = ExtResource("5_ndx46")
+enemy_types = Array[ExtResource("14_yx5hh")]([ExtResource("15_ndx46")])
+spawn_parent = NodePath("../World")
