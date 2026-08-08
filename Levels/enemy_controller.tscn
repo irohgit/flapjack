@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://b27tvj4v653m2"]
+
+[ext_resource type="Script" uid="uid://p8fik3y061fg" path="res://Levels/enemy_controller.gd" id="1_i88pw"]
+[ext_resource type="PackedScene" uid="uid://buoclsm4meh3f" path="res://Actors/Enemies/enemy.tscn" id="2_w1ujh"]
+[ext_resource type="Script" uid="uid://bo6li876odoia" path="res://Data/Enemy/enemy_data.gd" id="3_te6wa"]
+[ext_resource type="Resource" uid="uid://bsk4oh4u6bnhe" path="res://Data/Enemy/BasicEnemy.tres" id="4_k3r8d"]
+
+[node name="EnemyController" type="Node" unique_id=335274421]
+script = ExtResource("1_i88pw")
+enemy_scene = ExtResource("2_w1ujh")
+enemy_types = Array[ExtResource("3_te6wa")]([ExtResource("4_k3r8d")])

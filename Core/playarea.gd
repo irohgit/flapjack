@@ -55,6 +55,36 @@ func clamp_to_play_area(pos: Vector2, margin: float = 0.0) -> Vector2:
 		clampf(pos.y, margin, PLAY_HEIGHT - margin)
 	)
 
+
+# Return the part of the world currently visible through the active camera.
+# Converting all four viewport corners also keeps this correct if the camera is
+# later zoomed or rotated. With no active camera, the canvas transform is the
+# identity and this resolves to the original (0, 0, 1920, 1080) play area.
+func get_visible_world_rect() -> Rect2:
+	var viewport := get_viewport()
+	var viewport_rect := viewport.get_visible_rect()
+	var screen_to_world := viewport.get_canvas_transform().affine_inverse()
+
+	var world_rect := Rect2(
+		screen_to_world * viewport_rect.position,
+		Vector2.ZERO
+	)
+	world_rect = world_rect.expand(
+		screen_to_world * Vector2(viewport_rect.end.x, viewport_rect.position.y)
+	)
+	world_rect = world_rect.expand(
+		screen_to_world * Vector2(viewport_rect.position.x, viewport_rect.end.y)
+	)
+	world_rect = world_rect.expand(screen_to_world * viewport_rect.end)
+	return world_rect
+
+
 func is_near_screen(pos: Vector2, margin: float = 0.0) -> bool:
-	return pos.x > -margin and pos.x < PLAY_WIDTH + margin \
-		and pos.y > -margin and pos.y < PLAY_HEIGHT + margin
+	return get_visible_world_rect().grow(margin).has_point(pos)
+
+
+# Scrolling actors are allowed to wait anywhere above the viewport so the
+# camera can reveal them naturally. They are disposable only after they have
+# travelled beyond the bottom edge.
+func has_passed_below_screen(pos: Vector2, margin: float = 0.0) -> bool:
+	return pos.y > get_visible_world_rect().end.y + margin

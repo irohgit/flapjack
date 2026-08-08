@@ -11,10 +11,8 @@
 [ext_resource type="Resource" uid="uid://b7nwwwfmfkswx" path="res://Data/Weapons/Cannon.tres" id="8_thckm"]
 [ext_resource type="PackedScene" uid="uid://b27tvj4v653m2" path="res://Levels/enemy_controller.tscn" id="10_8p85k"]
 
-[node name="Stage1" type="Node2D" unique_id=1126219472 node_paths=PackedStringArray("scroll_director", "enemy_controller")]
+[node name="Stage1" type="Node2D" unique_id=1126219472]
 script = ExtResource("1_thckm")
-scroll_director = NodePath("ScrollDirector")
-enemy_controller = NodePath("EnemyController")
 
 [node name="ShakeCamera" type="Camera2D" parent="." unique_id=628624149]
 script = ExtResource("1_utqb5")

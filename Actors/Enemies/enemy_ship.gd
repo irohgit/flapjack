@@ -42,7 +42,7 @@ func _physics_process(delta: float) -> void:
 		_fire()
 		_reset_timer()
 
-	if not Playarea.is_near_screen(position, 200.0):
+	if Playarea.has_passed_below_screen(global_position, 200.0):
 		queue_free()
 
 
