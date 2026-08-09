@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bsnhbxaafpryt"
-path="res://.godot/imported/Cannonball.png-e31b5696c7e5b30bf659cab78a8fb385.ctex"
+uid="uid://decedubcfymmg"
+path="res://.godot/imported/PlasmaAugmentPickup.png-4e5fd17f25af61fa11f8bb855debd325.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Projectiles/Cannonball.png"
-dest_files=["res://.godot/imported/Cannonball.png-e31b5696c7e5b30bf659cab78a8fb385.ctex"]
+source_file="res://Assets/Pickups/PlasmaAugmentPickup.png"
+dest_files=["res://.godot/imported/PlasmaAugmentPickup.png-4e5fd17f25af61fa11f8bb855debd325.ctex"]
 
 [params]
 

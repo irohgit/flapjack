@@ -1,6 +1,8 @@
 class_name Enemy
 extends Area2D
 
+enum Effects {STUN}
+
 @export var data: EnemyData
 
 # Randomise the opening delay so a newly revealed row does not fire in lockstep.
@@ -10,6 +12,8 @@ extends Area2D
 
 @onready var _health: HealthComponent = $HealthComponent
 @onready var _sprite: Sprite2D = $Sprite2D
+
+@export var effects: Dictionary[Effects, float] = {}
 
 var _fire_timer := 0.0
 
@@ -30,7 +34,14 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	_move(delta)
+	_tick_effects(delta)
+
+	var final_speed: float = data.move_speed
+
+	if _effect_active(Effects.STUN):
+		final_speed *= 0.25
+
+	_move(delta, final_speed)
 
 	if Playarea.has_passed_below_screen(global_position, 200.0):
 		queue_free()
@@ -54,7 +65,7 @@ func _reset_initial_timer() -> void:
 func _reset_timer() -> void:
 	_fire_timer = maxf(float(data.projectile_fire_rate), 0.05)
 
-func _move(delta: float) -> void:
+func _move(delta: float, speed: float) -> void:
 	pass
 
 func _fire() -> void:
@@ -81,12 +92,32 @@ func get_contact_damage() -> int:
 func _on_damaged() -> void:
 	modulate = Color(1.0, 0.0, 0.157, 1.0)
 	create_tween().tween_property(self, "modulate", Color.WHITE, 0.15)
-	
+
+
 func _on_died() -> void:
 	GameEvents.enemy_died.emit(global_position)
-	
+
 	for cam in get_tree().get_nodes_in_group("shake_camera"):
 		if cam is ShakeCamera:
 			cam.add_trauma(0.15)
 			break
 	queue_free()
+
+
+func _tick_effects(delta: float) -> void:
+	for effect: Effects in effects.keys():
+		var remaining := maxf(effects[effect] - delta, 0.0)
+		if remaining <= 0.0:
+			effects.erase(effect)
+		else:
+			effects[effect] = remaining
+
+
+func _effect_active(effect: Effects) -> bool:
+	var remaining: float = effects.get(effect, 0.0)
+	return remaining > 0.0
+
+
+func apply_effect(effect: Effects, time: float) -> void:
+	var remaining: float = effects.get(effect, 0.0)
+	effects[effect] = maxf(remaining, time)

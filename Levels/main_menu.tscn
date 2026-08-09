@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dfgiunphxmxmr"]
+[gd_scene format=3 uid="uid://dfgiunphxmxmr"]
 
 [ext_resource type="Script" uid="uid://duntr73s38siv" path="res://Levels/main_menu.gd" id="1_script"]
 [ext_resource type="Texture2D" path="res://Assets/UI/MainMenu/background_landscape.png" id="2_background"]

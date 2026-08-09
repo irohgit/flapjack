@@ -14,6 +14,10 @@
 [ext_resource type="PackedScene" uid="uid://b27tvj4v653m2" path="res://Levels/enemy_controller.tscn" id="10_8p85k"]
 [ext_resource type="Script" uid="uid://bo6li876odoia" path="res://Data/Enemy/enemy_data.gd" id="12_fkloy"]
 [ext_resource type="PackedScene" uid="uid://luquvycpj4hd" path="res://Actors/Pickup/coin_spawner.tscn" id="14_rvay1"]
+[ext_resource type="PackedScene" uid="uid://dgp73phtjophn" path="res://Actors/Pickup/pickup.tscn" id="15_6vwij"]
+[ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="16_m3y4m"]
+[ext_resource type="Resource" uid="uid://c8prjyekwi7hm" path="res://Data/Pickups/HomingCannonPickup.tres" id="17_uwhja"]
+[ext_resource type="Resource" uid="uid://5vagi0atsu3m" path="res://Data/Pickups/PlasmaAugmentPickup.tres" id="18_p2t5c"]
 
 [node name="Stage1" type="Node2D" unique_id=1126219472 node_paths=PackedStringArray("scroll_director", "enemy_controller")]
 script = ExtResource("1_thckm")
@@ -52,3 +56,5 @@ weapons = Array[ExtResource("7_bsnqn")]([ExtResource("8_thckm")])
 [node name="SettingsPanel" parent="." unique_id=217040426 instance=ExtResource("2_nx2dg")]
 
 [node name="CoinSpawner" parent="." unique_id=1386735529 instance=ExtResource("14_rvay1")]
+pickup_scene = ExtResource("15_6vwij")
+augments = Array[ExtResource("16_m3y4m")]([ExtResource("17_uwhja"), ExtResource("18_p2t5c")])

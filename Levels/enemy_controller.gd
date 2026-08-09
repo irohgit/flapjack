@@ -30,6 +30,7 @@ func spawn_pack(
 	pos: Vector2,
 	formation: Formation = Formation.LINE
 ) -> void:
+	print("SPAWN_PROBE pack=", pack.size(), " position=", pos, " formation=", formation)
 	assert(spawn_parent != null, "EnemyController needs a spawn parent")
 
 	for index in pack.size():
@@ -42,6 +43,7 @@ func spawn_pack(
 		assert(scene_to_spawn != null, "EnemyData needs an enemy scene")
 
 		var enemy := scene_to_spawn.instantiate() as Enemy
+		print("SPAWN_PROBE index=", index, " scene=", scene_to_spawn, " enemy=", enemy)
 		assert(enemy != null, "Enemy scenes must inherit from Enemy")
 		enemy.data = enemy_data
 
@@ -53,6 +55,7 @@ func spawn_pack(
 			pack.size(),
 			formation
 		)
+		print("SPAWN_PROBE added index=", index, " global_position=", enemy.global_position)
 
 
 func has_active_enemies() -> bool:

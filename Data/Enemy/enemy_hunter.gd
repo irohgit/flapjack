@@ -20,7 +20,7 @@ var _has_spawn_position := false
 	#get_parent().add_child(shot)
 	#shot.global_position = global_position + Vector2(0, 60)
 
-func _move(delta: float) -> void:
+func _move(delta: float, speed: float) -> void:
 	# Capture this after spawning because the controller assigns the enemy's
 	# global position after adding it to the scene tree.
 	if not _has_spawn_position:
@@ -32,7 +32,7 @@ func _move(delta: float) -> void:
 	var target_position := _spawn_position + patrol_offset
 	global_position = global_position.move_toward(
 		target_position,
-		data.move_speed * delta
+		speed * delta
 	)
 
 	if global_position.is_equal_approx(target_position):
