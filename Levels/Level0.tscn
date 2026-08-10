@@ -6,16 +6,16 @@
 [ext_resource type="Script" uid="uid://tsoi3lwff5mf" path="res://Actors/Camera/shake_camera.gd" id="4_yx5hh"]
 [ext_resource type="PackedScene" uid="uid://dsf0q5lcpr0mh" path="res://Actors/Camera/ScrollDirector.tscn" id="5_im6i0"]
 [ext_resource type="PackedScene" uid="uid://buoclsm4meh3f" path="res://Actors/Enemies/enemy.tscn" id="5_ndx46"]
+[ext_resource type="Script" uid="uid://bpr8v8sl141c1" path="res://Actors/Player/player.gd" id="8_aa3m5"]
 [ext_resource type="PackedScene" uid="uid://cuwj1wdixoj3p" path="res://Actors/Hazards/hazard.tscn" id="8_y3xa5"]
 [ext_resource type="PackedScene" uid="uid://cclwwsegfn8rr" path="res://Actors/Player/player.tscn" id="9_nbhn6"]
 [ext_resource type="Script" uid="uid://dfww4fxipct38" path="res://Data/Weapons/weapon_data.gd" id="10_nlrgj"]
-[ext_resource type="Resource" uid="uid://b7nwwwfmfkswx" path="res://Data/Weapons/Cannon.tres" id="11_c83nf"]
 [ext_resource type="Script" uid="uid://p8fik3y061fg" path="res://Levels/enemy_controller.gd" id="12_im6i0"]
 [ext_resource type="PackedScene" uid="uid://t7alddeyjrep" path="res://Levels/hud.tscn" id="13_yx5hh"]
 [ext_resource type="Script" uid="uid://bo6li876odoia" path="res://Data/Enemy/enemy_data.gd" id="14_yx5hh"]
 [ext_resource type="Resource" uid="uid://bsk4oh4u6bnhe" path="res://Data/Enemy/BasicEnemy.tres" id="15_ndx46"]
 [ext_resource type="PackedScene" uid="uid://dgp73phtjophn" path="res://Actors/Pickup/pickup.tscn" id="16_aa3m5"]
-[ext_resource type="Resource" uid="uid://bkqumwc6jcphy" path="res://Data/Pickups/HealthPotion.tres" id="17_y3xa5"]
+[ext_resource type="Resource" uid="uid://bcj4lyhuitxi2" path="res://Data/Pickups/ShieldPotion.tres" id="17_aa3m5"]
 [ext_resource type="PackedScene" uid="uid://cstesilwdvxw5" path="res://Levels/settings_panel.tscn" id="18_y3xa5"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n48ea"]
@@ -70,8 +70,13 @@ position = Vector2(360, 500)
 [node name="Player" parent="World" unique_id=1105456395 node_paths=PackedStringArray("camera") instance=ExtResource("9_nbhn6")]
 position = Vector2(360, 996)
 scale = Vector2(1, 1)
+script = ExtResource("8_aa3m5")
+max_speed = 700.0
+responsiveness = 25.0
+half_width = 32.0
 camera = NodePath("../../Camera2D")
-weapons = Array[ExtResource("10_nlrgj")]([ExtResource("11_c83nf")])
+coin_count = 0
+weapons = Array[ExtResource("10_nlrgj")]([])
 
 [node name="HUD" parent="." unique_id=228684140 instance=ExtResource("13_yx5hh")]
 
@@ -85,4 +90,8 @@ spawn_parent = NodePath("../World")
 
 [node name="Pickup" parent="." unique_id=169920597 instance=ExtResource("16_aa3m5")]
 position = Vector2(893, 635)
-data = ExtResource("17_y3xa5")
+data = ExtResource("17_aa3m5")
+
+[node name="Pickup2" parent="." unique_id=1759771685 instance=ExtResource("16_aa3m5")]
+position = Vector2(482, 744)
+data = ExtResource("17_aa3m5")
