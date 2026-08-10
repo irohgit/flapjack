@@ -14,6 +14,7 @@ extends Area2D
 var _weapon_states: Array[WeaponState] = []
 
 @onready var _health: HealthComponent = $HealthComponent
+@onready var _shield: ShieldComponent = $ShieldComponent
 
 var velocity := Vector2.ZERO
 var _move_intent := Vector2.ZERO
@@ -101,7 +102,17 @@ func _update_weapons(delta: float) -> void:
 			state.cooldown = 0.0
 
 func take_damage(amount: int) -> void:
+	if _shield.try_block_hit():
+		DebugHud.flash("Shield absorbed hit")
+		return
 	_health.take_damage(amount)
+
+func add_shield(amount: int) -> bool:
+	_shield.add_stack(amount)
+	return true
+	
+func heal(amount: int) -> void:
+	_health.heal(amount)
 
 ## Combat Private
 func _on_damaged() -> void:
