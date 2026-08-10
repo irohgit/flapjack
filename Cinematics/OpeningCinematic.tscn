@@ -1,72 +1,238 @@
 [gd_scene format=3 uid="uid://cbwqh8cwq0yhh"]
 
-[ext_resource type="Texture2D" uid="uid://cbqieer4t24dn" path="res://Assets/Cinematics/Intro_Sky.png" id="1_fmc7a"]
-[ext_resource type="Texture2D" uid="uid://dfqkb1jbysrx5" path="res://Assets/Cinematics/Intro_Sun.png" id="2_ili7r"]
-[ext_resource type="Texture2D" uid="uid://cm2n6ajesu1nb" path="res://Assets/Cinematics/Opening_Sea.png" id="3_p3qoy"]
-[ext_resource type="Texture2D" uid="uid://k8c8yvdm24q2" path="res://Assets/Cinematics/Flapjack_Octopus.png" id="4_spo4w"]
+[ext_resource type="Script" uid="uid://cl0ckeyoy7l1p" path="res://Cinematics/OpeningCinematic.gd" id="1_spo4w"]
+[ext_resource type="Texture2D" uid="uid://cu450e8rm8ej3" path="res://Assets/Cinematics/Cinematic_BG_169.png" id="2_gfuhc"]
 [ext_resource type="FontFile" uid="uid://bu8hjs3v2sok3" path="res://Assets/Fonts/TreasureMap/Treasuremapj.ttf" id="5_pes2o"]
+[ext_resource type="Texture2D" uid="uid://dsfm27q55ofy2" path="res://Assets/Cinematics/Cinematic_Boat_Blackbeard_512.png" id="5_spo4w"]
+[ext_resource type="Script" uid="uid://0sn3lr1eqht8" path="res://Assets/Cinematics/cinematic_boat.gd" id="6_gfuhc"]
+[ext_resource type="PackedScene" uid="uid://d1o3o7q7jqcmt" path="res://Actors/NPC/flapjack.tscn" id="6_pes2o"]
+[ext_resource type="AudioStream" uid="uid://b26jxdn3o7cv4" path="res://Audio/Cinematics/intro_water_1.mp3" id="6_spo4w"]
+[ext_resource type="Texture2D" uid="uid://dtiy0uv6wfc0o" path="res://Assets/Cinematics/Cinematic_Sky_Intro_169.png" id="7_pes2o"]
+[ext_resource type="Texture2D" uid="uid://cfb3xrl3cns5i" path="res://Assets/Cinematics/cinematic_ocean_overlay1.png" id="8_86m75"]
+[ext_resource type="Script" uid="uid://b4ekoobotgfd2" path="res://Assets/Cinematics/ocean_overlay.gd" id="9_1osp8"]
+[ext_resource type="Texture2D" uid="uid://c7nrfo8p77k5u" path="res://Assets/Cinematics/cinematic_ocean_overlay2.png.png" id="9_4n84t"]
+[ext_resource type="Texture2D" uid="uid://dm50aac3ciri5" path="res://Assets/Cinematics/cinematic_ocean_overlay3.png" id="10_1osp8"]
 
 [sub_resource type="Animation" id="Animation_fmc7a"]
 resource_name = "OpeningCinematic"
+length = 13.8
+tracks/0/type = "audio"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AudioStreamPlayer2D")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": [{
+"end_offset": 119.17897,
+"start_offset": 8.539412,
+"stream": ExtResource("6_spo4w")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/0/use_blend = true
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("GameTitle:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.53333336, 4.233333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Background:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(3.666666, 7.8333335),
+"transitions": PackedFloat32Array(1, 0.1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Boat")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(7.9333334),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"approach"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_p3qoy"]
+length = 4.766667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GameTitle:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Background:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ili7r"]
 _data = {
-&"OpeningCinematic": SubResource("Animation_fmc7a")
+&"OpeningCinematic": SubResource("Animation_fmc7a"),
+&"RESET": SubResource("Animation_p3qoy")
 }
-
-[sub_resource type="LabelSettings" id="LabelSettings_xrivr"]
-font = ExtResource("5_pes2o")
-font_size = 128
 
 [node name="OpeningCinematic" type="Control" unique_id=196866118]
 layout_mode = 3
-anchors_preset = 0
-metadata/_edit_vertical_guides_ = [-109.0]
-metadata/_edit_horizontal_guides_ = [-112.0]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_spo4w")
+metadata/_edit_vertical_guides_ = [-109.0, 960.0]
+metadata/_edit_horizontal_guides_ = [-112.0, 540.0, 620.0]
 
-[node name="Sky" type="TextureRect" parent="." unique_id=2111773608]
-layout_mode = 0
-offset_left = -1007.0
-offset_top = 37.0
-offset_right = -287.0
-offset_bottom = 1317.0
-texture = ExtResource("1_fmc7a")
+[node name="CinematicBG" type="Sprite2D" parent="." unique_id=2102182428]
+position = Vector2(0, -1)
+texture = ExtResource("2_gfuhc")
+centered = false
 
-[node name="Sun" type="TextureRect" parent="." unique_id=1969274000]
-layout_mode = 0
-offset_left = 51.0
-offset_top = 62.0
-offset_right = 391.0
-offset_bottom = 402.0
-texture = ExtResource("2_ili7r")
+[node name="Sky" type="Sprite2D" parent="." unique_id=1686921079]
+position = Vector2(0, -1)
+scale = Vector2(1, 0.618)
+texture = ExtResource("7_pes2o")
+centered = false
 
-[node name="SeaMiddle" type="TextureRect" parent="." unique_id=1570186092]
-modulate = Color(1, 1, 1, 0.42745098)
-layout_mode = 0
-offset_left = 1993.0
-offset_top = 455.0
-offset_right = 2714.0
-offset_bottom = 945.0
-texture = ExtResource("3_p3qoy")
+[node name="Ocean" type="Sprite2D" parent="." unique_id=1488993460]
+position = Vector2(0, -1)
+scale = Vector2(1, 0.618)
+texture = ExtResource("7_pes2o")
+centered = false
 
-[node name="SeaFront" type="TextureRect" parent="." unique_id=946588342]
-modulate = Color(1, 1, 1, 0.101960786)
-layout_mode = 0
-offset_left = -713.0
-offset_top = 579.0
-offset_right = 8.0
-offset_bottom = 1069.0
-texture = ExtResource("3_p3qoy")
+[node name="Boat" type="Sprite2D" parent="." unique_id=432668972]
+position = Vector2(960, 633)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("5_spo4w")
+script = ExtResource("6_gfuhc")
+impact_bottom_y = 800.0
 
-[node name="SeaFront2" type="TextureRect" parent="." unique_id=1164817416]
-layout_mode = 0
-offset_left = 1956.0
-offset_top = 111.0
-offset_right = 2284.0
-offset_bottom = 439.0
-texture = ExtResource("4_spo4w")
+[node name="Flapjacks" parent="." unique_id=1499076201 instance=ExtResource("6_pes2o")]
+z_index = 10
+position = Vector2(871, 734)
+
+[node name="Flapjack_gd2" parent="Flapjacks" unique_id=872768519 instance=ExtResource("6_pes2o")]
+position = Vector2(120, 88)
+flip_h = true
+
+[node name="Flapjack_gd3" parent="Flapjacks" unique_id=1831337748 instance=ExtResource("6_pes2o")]
+position = Vector2(232, 29)
+scale = Vector2(1.1375, 1.1625)
+
+[node name="Flapjack_gd4" parent="Flapjacks" unique_id=1811055226 instance=ExtResource("6_pes2o")]
+position = Vector2(-59.00006, 110)
+scale = Vector2(1.7859378, 1.8082967)
+flip_h = true
+
+[node name="Flapjack_gd5" parent="Flapjacks" unique_id=1081729478 instance=ExtResource("6_pes2o")]
+position = Vector2(78, 244)
+flip_h = true
+
+[node name="Flapjack_gd6" parent="Flapjacks" unique_id=1090482643 instance=ExtResource("6_pes2o")]
+position = Vector2(254, 180)
+scale = Vector2(1.66875, 1.66875)
+
+[node name="Flapjack_gd7" parent="Flapjacks" unique_id=1186483058 instance=ExtResource("6_pes2o")]
+position = Vector2(-208, 128)
+
+[node name="Flapjack_gd8" parent="Flapjacks" unique_id=2092739479 instance=ExtResource("6_pes2o")]
+position = Vector2(-518, -10)
+flip_h = true
+
+[node name="Flapjack_gd9" parent="Flapjacks" unique_id=364410044 instance=ExtResource("6_pes2o")]
+position = Vector2(-407, 62.00006)
+scale = Vector2(1.13125, 1.13125)
+
+[node name="Flapjack_gd10" parent="Flapjacks" unique_id=122448623 instance=ExtResource("6_pes2o")]
+position = Vector2(-286, 19)
+scale = Vector2(1.1375, 1.1625)
+
+[node name="Flapjack_gd11" parent="Flapjacks" unique_id=1483659325 instance=ExtResource("6_pes2o")]
+position = Vector2(-540, 90)
+scale = Vector2(1.2558596, 1.2715822)
+
+[node name="Flapjack_gd12" parent="Flapjacks" unique_id=2073068361 instance=ExtResource("6_pes2o")]
+position = Vector2(-440, 234)
+flip_h = true
+
+[node name="Flapjack_gd13" parent="Flapjacks" unique_id=123536039 instance=ExtResource("6_pes2o")]
+position = Vector2(-320, 189)
+scale = Vector2(1.1406258, 1.1406258)
+flip_h = true
+
+[node name="Flapjack_gd15" parent="Flapjacks" unique_id=142768897 instance=ExtResource("6_pes2o")]
+position = Vector2(809, 41)
+scale = Vector2(1.1406258, 1.1406258)
+
+[node name="Flapjack_gd21" parent="Flapjacks" unique_id=2078265233 instance=ExtResource("6_pes2o")]
+position = Vector2(551.90576, 21.343628)
+scale = Vector2(0.66926396, 0.66926396)
+
+[node name="Flapjack_gd16" parent="Flapjacks" unique_id=485719623 instance=ExtResource("6_pes2o")]
+position = Vector2(456.50024, 28.250061)
+scale = Vector2(1.1406258, 1.1406258)
+flip_h = true
+
+[node name="Flapjack_gd17" parent="Flapjacks" unique_id=1395749346 instance=ExtResource("6_pes2o")]
+position = Vector2(729, 206)
+scale = Vector2(1.290333, 1.290333)
+flip_h = true
+
+[node name="Flapjack_gd18" parent="Flapjacks" unique_id=416841626 instance=ExtResource("6_pes2o")]
+position = Vector2(617, 46)
+scale = Vector2(1.297462, 1.3259776)
+
+[node name="Flapjack_gd19" parent="Flapjacks" unique_id=368366029 instance=ExtResource("6_pes2o")]
+position = Vector2(455, 131)
+scale = Vector2(0.81623304, 0.8264518)
+flip_h = true
+
+[node name="Flapjack_gd20" parent="Flapjacks" unique_id=1539945910 instance=ExtResource("6_pes2o")]
+position = Vector2(584, 239)
+scale = Vector2(1.1406258, 1.1406258)
+
+[node name="Flapjack_gd22" parent="Flapjacks" unique_id=1812480733 instance=ExtResource("6_pes2o")]
+position = Vector2(413, 246.99994)
+scale = Vector2(1.1406258, 1.1406258)
+flip_h = true
+
+[node name="Flapjack_gd14" parent="Flapjacks" unique_id=12442256 instance=ExtResource("6_pes2o")]
+position = Vector2(-726, 118)
+flip_h = true
 
 [node name="Background" type="ColorRect" parent="." unique_id=1055800026]
+z_index = 50
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -75,26 +241,63 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=316160357]
-libraries/ = SubResource("AnimationLibrary_ili7r")
-
-[node name="Flapjack Game Title" type="Label" parent="." unique_id=110138183]
-visible = false
+[node name="GameTitle" type="RichTextLabel" parent="." unique_id=1048153146]
+z_index = 100
 layout_mode = 0
-offset_left = -33.0
-offset_top = 585.0
-offset_right = 778.0
-offset_bottom = 726.0
-text = "FLAPJACK"
-label_settings = SubResource("LabelSettings_xrivr")
-
-[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1048153146]
-layout_mode = 0
-offset_left = 660.0
-offset_top = 482.0
-offset_right = 1456.0
-offset_bottom = 627.0
+offset_left = 458.0
+offset_top = 473.0
+offset_right = 1527.0
+offset_bottom = 664.0
 theme_override_fonts/normal_font = ExtResource("5_pes2o")
-theme_override_font_sizes/normal_font_size = 120
+theme_override_font_sizes/normal_font_size = 160
 bbcode_enabled = true
 text = "[color=#d99741][wave]FLAPJACK[wave]"
+
+[node name="OceanOverlay1_Far" type="Sprite2D" parent="." unique_id=1771212272]
+modulate = Color(1, 1, 1, 0.5686275)
+z_index = 20
+position = Vector2(4, 257)
+scale = Vector2(1, 0.618)
+texture = ExtResource("8_86m75")
+centered = false
+script = ExtResource("9_1osp8")
+drift_width = 12.0
+drift_speed = 0.22
+swell_height = 5.0
+swell_speed = 0.45
+breathe_amount = 0.01
+breathe_speed = 0.28
+
+[node name="OceanOverlay2_Mid" type="Sprite2D" parent="." unique_id=711488915]
+modulate = Color(1, 1, 1, 0.5686275)
+z_index = 20
+position = Vector2(-6, 418.00003)
+scale = Vector2(1, 0.618)
+texture = ExtResource("9_4n84t")
+centered = false
+script = ExtResource("9_1osp8")
+drift_width = 22.0
+breathe_speed = 0.41
+phase_offset = 2.1
+
+[node name="OceanOverlay3_Close" type="Sprite2D" parent="." unique_id=1857083085]
+modulate = Color(1, 1, 1, 0.5686275)
+z_index = 20
+position = Vector2(-214, 406)
+scale = Vector2(1.3, 0.618)
+texture = ExtResource("10_1osp8")
+centered = false
+script = ExtResource("9_1osp8")
+drift_width = 38.0
+drift_speed = 0.5
+swell_height = 18.0
+swell_speed = 0.95
+breathe_amount = 0.035
+breathe_speed = 0.6
+phase_offset = 4.7
+
+[node name="OpeningCinematic" type="AnimationPlayer" parent="." unique_id=316160357]
+libraries/ = SubResource("AnimationLibrary_ili7r")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1303464129]
+autoplay = true

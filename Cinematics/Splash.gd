@@ -6,8 +6,8 @@
 # =============================================================================
 
 extends Control
-
-@export var next_scene: PackedScene
+signal finished
+#@export var next_scene: PackedScene
 
 @onready var _anim: AnimationPlayer = $SplashCinematic
 
@@ -31,9 +31,9 @@ func _finish() -> void:
 	if _finished:
 		return
 	_finished = true
-
-	if next_scene:
-		get_tree().change_scene_to_packed(next_scene)
+	finished.emit()
+	#if next_scene:
+	#	get_tree().change_scene_to_packed(next_scene)
 
 
 func _unhandled_input(event: InputEvent) -> void:
