@@ -149,13 +149,9 @@ _data = {
 &"SplashCinematic": SubResource("Animation_8wdq7")
 }
 
-[node name="Splash" type="Control" unique_id=2075085553]
+[node name="Splash" type="Control" unique_id=115144885]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
 script = ExtResource("1_wslet")
 metadata/_edit_vertical_guides_ = [2157.0, 2001.0, -161.0, 960.0]
 metadata/_edit_horizontal_guides_ = [540.0]

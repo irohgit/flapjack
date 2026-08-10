@@ -1,13 +1,13 @@
 # =============================================================================
 # Splash
 #
-# Studio title card. Plays the logo animation, then the "presents" beat, then
-# hands off. Any input skips the whole thing.
+# Studio title card. Plays the logo animation, then reports done.
+# Any input skips it.
 # =============================================================================
 
 extends Control
+
 signal finished
-#@export var next_scene: PackedScene
 
 @onready var _anim: AnimationPlayer = $SplashCinematic
 
@@ -15,15 +15,14 @@ var _finished := false
 
 
 func _ready() -> void:
-	#_anim.animation_finished.connect(_on_animation_finished)
+	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_anim.animation_finished.connect(_on_animation_finished)
 	_anim.play("SplashCinematic")
-	#_anim.queue("presents")
 
 
-#func _on_animation_finished(anim_name: StringName) -> void:
-	# Fires after every animation, so only advance on the last one.
-	#if anim_name == "presents":
-		#_finish()
+# Only one animation plays here, so any completion means the splash is done.
+func _on_animation_finished(_anim_name: StringName) -> void:
+	_finish()
 
 
 func _finish() -> void:
@@ -32,8 +31,6 @@ func _finish() -> void:
 		return
 	_finished = true
 	finished.emit()
-	#if next_scene:
-	#	get_tree().change_scene_to_packed(next_scene)
 
 
 func _unhandled_input(event: InputEvent) -> void:

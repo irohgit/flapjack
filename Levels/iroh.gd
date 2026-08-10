@@ -29,6 +29,9 @@ func _ready() -> void:
 func _run(scene: PackedScene) -> void:
 	var stage := scene.instantiate()
 	add_child(stage)
+	#print("added: ", stage.name, " | children: ", stage.get_child_count())
 	await stage.finished
+	#print("finished: ", stage.name)
+	await get_tree().process_frame
 	stage.queue_free()
-	await get_tree().process_frame   # let the free complete before the next stage
+	

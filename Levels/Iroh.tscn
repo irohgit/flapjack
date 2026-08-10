@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cbwqh8cwq0yhh" path="res://Cinematics/OpeningCinematic.tscn" id="3_cq3fk"]
 [ext_resource type="PackedScene" uid="uid://0js1ghbsjvcd" path="res://Levels/Level0.tscn" id="4_odipc"]
 
-[node name="Game" type="Node2D" unique_id=141585991]
+[node name="Game" type="CanvasLayer" unique_id=1353436997]
 script = ExtResource("1_e8ii7")
 splash_scene = ExtResource("2_h6hye")
 cinematic_scene = ExtResource("3_cq3fk")
