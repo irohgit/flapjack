@@ -102,6 +102,9 @@ func _update_weapons(delta: float) -> void:
 
 func take_damage(amount: int) -> void:
 	_health.take_damage(amount)
+	
+func heal(amount: int) -> void:
+	_health.heal(amount)
 
 ## Combat Private
 func _on_damaged() -> void:

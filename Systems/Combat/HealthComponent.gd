@@ -48,7 +48,7 @@ func _ready() -> void:
 	current_health = max_health
 
 
-func _process(delta: float) -> void:
+func _process(delta: float) -> void:\
 	_invincible_for = maxf(_invincible_for - delta, 0.0)
 
 
@@ -64,6 +64,14 @@ func take_damage(amount: int) -> void:
 	if current_health == 0:
 		died.emit()
 
+func heal(amount: int) -> void:
+	if current_health <= 0:
+		return
+	var old_health := current_health
+	# mini clamps at max_health so overheal can't push past the cap.
+	current_health = mini(current_health + amount, max_health)
+	if current_health != old_health:
+		health_changed.emit(current_health, max_health)
 
 # Stable read API for observers such as UI. UI should listen to health_changed
 # for live updates, then use these methods once when it first connects.

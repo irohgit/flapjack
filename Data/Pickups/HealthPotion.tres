@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="PickupData" format=3 uid="uid://bkqumwc6jcphy"]
+
+[ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="1_a6b40"]
+[ext_resource type="Texture2D" uid="uid://c0wuehgoy3qp1" path="res://Assets/Pickups/29.png" id="2_vfhu1"]
+
+[resource]
+script = ExtResource("1_a6b40")
+pickup_type = 3
+texture = ExtResource("2_vfhu1")
+heal_amount = 1
+metadata/_custom_type_script = "uid://rau2jwiqd0pd"
