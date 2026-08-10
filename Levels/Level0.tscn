@@ -15,6 +15,7 @@
 [ext_resource type="Script" uid="uid://bo6li876odoia" path="res://Data/Enemy/enemy_data.gd" id="14_yx5hh"]
 [ext_resource type="Resource" uid="uid://bsk4oh4u6bnhe" path="res://Data/Enemy/BasicEnemy.tres" id="15_ndx46"]
 [ext_resource type="PackedScene" uid="uid://dgp73phtjophn" path="res://Actors/Pickup/pickup.tscn" id="16_aa3m5"]
+[ext_resource type="Resource" uid="uid://bcj4lyhuitxi2" path="res://Data/Pickups/ShieldPotion.tres" id="17_aa3m5"]
 [ext_resource type="Resource" uid="uid://bkqumwc6jcphy" path="res://Data/Pickups/HealthPotion.tres" id="17_y3xa5"]
 [ext_resource type="PackedScene" uid="uid://cstesilwdvxw5" path="res://Levels/settings_panel.tscn" id="18_y3xa5"]
 
@@ -92,10 +93,6 @@ spawn_parent = NodePath("../World")
 position = Vector2(265, 781)
 data = ExtResource("17_y3xa5")
 
-[node name="Pickup2" parent="." unique_id=411384262 instance=ExtResource("16_aa3m5")]
-position = Vector2(242, 581)
-data = ExtResource("17_y3xa5")
-
-[node name="Pickup3" parent="." unique_id=1133990424 instance=ExtResource("16_aa3m5")]
-position = Vector2(867, 849)
-data = ExtResource("17_y3xa5")
+[node name="Pickup2" parent="." unique_id=42963610 instance=ExtResource("16_aa3m5")]
+position = Vector2(716, 880)
+data = ExtResource("17_aa3m5")
