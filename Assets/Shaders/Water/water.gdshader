@@ -11,6 +11,10 @@ uniform vec4 rim_color : source_color = vec4(0.62, 0.95, 0.95, 1.0);
 uniform vec4 foam_color : source_color = vec4(0.97, 1.0, 1.0, 1.0);
 
 uniform vec2 design_size = vec2(320.0, 180.0);
+// The fullscreen rectangle stays fixed to the viewport, while this offset
+// makes the generated pattern occupy world space. Sampling at screen position
+// plus camera position makes the pattern move opposite the camera on screen.
+uniform vec2 camera_offset = vec2(0.0);
 uniform float water_pixel_size : hint_range(1.0, 6.0, 1.0) = 2.0;
 uniform float animation_speed : hint_range(1.0, 12.0, 1.0) = 4.0;
 
@@ -88,7 +92,7 @@ vec2 sample_cells(vec2 position, float animation_frame) {
 
 void fragment() {
     vec2 screen_pixel = floor(UV * design_size);
-    vec2 water_pixel = floor(screen_pixel / water_pixel_size);
+    vec2 water_pixel = floor((screen_pixel + camera_offset) / water_pixel_size);
     float animation_frame = floor(TIME * animation_speed);
 
     // Slowly translate the full network while its individual cells deform.

@@ -36,7 +36,7 @@ func _physics_process(delta: float) -> void:
 	position.y += drift_speed * delta
 	rotation += data.spin * delta
 
-	if not Playarea.is_near_screen(position, 200.0):
+	if Playarea.has_passed_below_screen(global_position, 200.0):
 		queue_free()
 
 

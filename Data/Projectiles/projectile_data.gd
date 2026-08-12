@@ -8,6 +8,7 @@ enum Allegiance { PLAYER, ENEMY }
 @export var allegiance: Allegiance = Allegiance.PLAYER
 
 @export var texture: Texture2D
+@export var scale := 1.0
 @export var speed := 1100.0
 @export var damage := 1
 @export var hitbox_radius := 8.0

@@ -37,13 +37,17 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	position.y += drift_speed * delta
 
+	if Playarea.has_passed_below_screen(global_position, 200.0):
+		queue_free()
+		return
+
+	if not Playarea.is_near_screen(global_position):
+		return
+
 	_fire_timer -= delta
 	if _fire_timer <= 0.0:
 		_fire()
 		_reset_timer()
-
-	if not Playarea.is_near_screen(position, 200.0):
-		queue_free()
 
 
 func _reset_timer() -> void:
