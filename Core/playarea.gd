@@ -1,8 +1,7 @@
 extends Node
 
-# Do not change these values 
-# These values will support mobile
-const PLAY_WIDTH := 1920
+#16:9 Cinematic 
+const PLAY_WIDTH := 1920.0
 const PLAY_HEIGHT := 1080.0
 
 var screen_size: Vector2
