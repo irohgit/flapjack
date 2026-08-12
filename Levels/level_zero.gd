@@ -5,8 +5,6 @@ const FIRST_CAMERA_POSITION := Vector2(0, -100)
 const FIRST_WAVE_POSITION := Vector2(960, 100)
 const SECOND_CAMERA_POSITION := Vector2(0, -300)
 const SECOND_WAVE_POSITION := Vector2(960, -100)
-
-
 func _ready() -> void:
 	assert(scroll_director != null, "Level 0 needs a ScrollDirector")
 	assert(enemy_controller != null, "Level 0 needs an EnemyController")

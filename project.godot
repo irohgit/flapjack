@@ -35,6 +35,9 @@ hazard="Anything that damages the player on contact. Must expose get_contact_dam
 enemy="Destructible enemy. Counted by the wave system for level completion."
 pickup="Collected by the player on contact. Must expose collect(player)."
 shake_camera="The active gameplay camera. Anything requesting screenshake calls add_trauma() on this. Expect exactly one member."
+flapjack_fx=""
+player=""
+
 
 [input]
 

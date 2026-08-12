@@ -1,0 +1,102 @@
+[gd_scene format=3 uid="uid://0js1ghbsjvcd"]
+
+[ext_resource type="Script" uid="uid://dfgolp8yapr4n" path="res://Levels/level_zero.gd" id="1_y3xa5"]
+[ext_resource type="Shader" uid="uid://cq85abjo4x30h" path="res://Assets/Shaders/Water/water.gdshader" id="2_im6i0"]
+[ext_resource type="Texture2D" uid="uid://conqv6viso2ly" path="res://Assets/Shaders/Water/water_noise.tres" id="3_i4luy"]
+[ext_resource type="Script" uid="uid://tsoi3lwff5mf" path="res://Actors/Camera/shake_camera.gd" id="4_yx5hh"]
+[ext_resource type="PackedScene" uid="uid://dsf0q5lcpr0mh" path="res://Actors/Camera/ScrollDirector.tscn" id="5_im6i0"]
+[ext_resource type="PackedScene" uid="uid://buoclsm4meh3f" path="res://Actors/Enemies/enemy.tscn" id="5_ndx46"]
+[ext_resource type="Script" uid="uid://bpr8v8sl141c1" path="res://Actors/Player/player.gd" id="8_aa3m5"]
+[ext_resource type="PackedScene" uid="uid://cuwj1wdixoj3p" path="res://Actors/Hazards/hazard.tscn" id="8_y3xa5"]
+[ext_resource type="PackedScene" uid="uid://cclwwsegfn8rr" path="res://Actors/Player/player.tscn" id="9_nbhn6"]
+[ext_resource type="Script" uid="uid://dfww4fxipct38" path="res://Data/Weapons/weapon_data.gd" id="10_nlrgj"]
+[ext_resource type="Script" uid="uid://p8fik3y061fg" path="res://Levels/enemy_controller.gd" id="12_im6i0"]
+[ext_resource type="PackedScene" uid="uid://t7alddeyjrep" path="res://Levels/hud.tscn" id="13_yx5hh"]
+[ext_resource type="Script" uid="uid://bo6li876odoia" path="res://Data/Enemy/enemy_data.gd" id="14_yx5hh"]
+[ext_resource type="Resource" uid="uid://bsk4oh4u6bnhe" path="res://Data/Enemy/BasicEnemy.tres" id="15_ndx46"]
+[ext_resource type="PackedScene" uid="uid://dgp73phtjophn" path="res://Actors/Pickup/pickup.tscn" id="16_aa3m5"]
+[ext_resource type="Resource" uid="uid://bcj4lyhuitxi2" path="res://Data/Pickups/ShieldPotion.tres" id="17_aa3m5"]
+[ext_resource type="Resource" uid="uid://bkqumwc6jcphy" path="res://Data/Pickups/HealthPotion.tres" id="17_y3xa5"]
+[ext_resource type="PackedScene" uid="uid://cstesilwdvxw5" path="res://Levels/settings_panel.tscn" id="18_y3xa5"]
+[ext_resource type="PackedScene" uid="uid://dyx6252lck76u" path="res://Actors/Environment/wind_zone.tscn" id="19_nbhn6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n48ea"]
+shader = ExtResource("2_im6i0")
+shader_parameter/noise_texture = ExtResource("3_i4luy")
+shader_parameter/deep_water = Color(0.24, 0.78, 0.82, 1)
+shader_parameter/wave_water = Color(0.32, 0.86, 0.88, 1)
+shader_parameter/rim_color = Color(0.62, 0.95, 0.95, 1)
+shader_parameter/foam_color = Color(0.97, 1, 1, 1)
+shader_parameter/design_size = Vector2(1920, 1080)
+shader_parameter/water_pixel_size = 6.0
+shader_parameter/animation_speed = 4.0
+shader_parameter/cell_size = 17.0
+shader_parameter/cell_irregularity = 0.0
+shader_parameter/cell_motion = 0.249999994412
+shader_parameter/edge_warp = 3.5
+shader_parameter/wave_width = 0.28
+shader_parameter/rim_width = 0.12
+shader_parameter/foam_width = 0.05
+shader_parameter/foam_coverage = 0.58
+
+[node name="Game" type="Node2D" unique_id=141585991 node_paths=PackedStringArray("scroll_director", "enemy_controller")]
+script = ExtResource("1_y3xa5")
+scroll_director = NodePath("ScrollDirector")
+enemy_controller = NodePath("EnemyController")
+
+[node name="ScrollDirector" parent="." unique_id=1595117280 node_paths=PackedStringArray("camera") instance=ExtResource("5_im6i0")]
+camera = NodePath("../Camera2D")
+scroll_speed = 15.0
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1873851463 groups=["shake_camera"]]
+anchor_mode = 0
+script = ExtResource("4_yx5hh")
+
+[node name="WaterBackground" type="CanvasLayer" parent="." unique_id=474036332]
+layer = -100
+
+[node name="Water" type="ColorRect" parent="WaterBackground" unique_id=1833802365]
+material = SubResource("ShaderMaterial_n48ea")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="World" type="Node2D" parent="." unique_id=19047034]
+
+[node name="Hazard" parent="World" unique_id=90124748 instance=ExtResource("8_y3xa5")]
+position = Vector2(360, 500)
+
+[node name="Player" parent="World" unique_id=1105456395 node_paths=PackedStringArray("camera") groups=["player"] instance=ExtResource("9_nbhn6")]
+position = Vector2(360, 996)
+scale = Vector2(1, 1)
+script = ExtResource("8_aa3m5")
+max_speed = 700.0
+responsiveness = 25.0
+half_width = 32.0
+camera = NodePath("../../Camera2D")
+coin_count = 0
+weapons = Array[ExtResource("10_nlrgj")]([])
+
+[node name="HUD" parent="." unique_id=228684140 instance=ExtResource("13_yx5hh")]
+
+[node name="SettingsPanel" parent="." unique_id=217040426 instance=ExtResource("18_y3xa5")]
+
+[node name="EnemyController" type="Node" parent="." unique_id=897350340 node_paths=PackedStringArray("spawn_parent")]
+script = ExtResource("12_im6i0")
+enemy_scene = ExtResource("5_ndx46")
+enemy_types = Array[ExtResource("14_yx5hh")]([ExtResource("15_ndx46")])
+spawn_parent = NodePath("../World")
+
+[node name="Pickup" parent="." unique_id=169920597 instance=ExtResource("16_aa3m5")]
+position = Vector2(265, 781)
+data = ExtResource("17_y3xa5")
+
+[node name="Pickup2" parent="." unique_id=42963610 instance=ExtResource("16_aa3m5")]
+position = Vector2(716, 880)
+data = ExtResource("17_aa3m5")
+
+[node name="wind_zone" parent="." unique_id=963280108 instance=ExtResource("19_nbhn6")]
+position = Vector2(203, 685)

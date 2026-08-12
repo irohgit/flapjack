@@ -27,8 +27,6 @@ func spawn_coin(position: Vector2):
 	var coin = pickup_scene.instantiate() as WorldPickup
 	coin.scale = Vector2.ONE * 3.0
 	
-	coin.global_position = position
-	
 	# Random number between 0.0 and 1.0
 	var roll = randf()
 	# 10% Gold
@@ -40,15 +38,18 @@ func spawn_coin(position: Vector2):
 	# 60% Bronze
 	else:
 		coin.data = bronze_coin_data
-		
-	add_child(coin)
+
+	_add_pickup.call_deferred(coin, position)
 
 func spawn_augment(position: Vector2):
 	print("spawning augment")
 	var augment = pickup_scene.instantiate() as WorldPickup
-	
-	augment.global_position = position
-	
+
 	augment.data = augments.pick_random()
-		
-	add_child(augment)
+
+	_add_pickup.call_deferred(augment, position)
+
+
+func _add_pickup(pickup: WorldPickup, position: Vector2) -> void:
+	add_child(pickup)
+	pickup.global_position = position

@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://bws0ib2ep02xb"]
+
+[ext_resource type="Script" uid="uid://bbyhm04jcgos" path="res://Systems/Environment/cloud_overlay.gd" id="1_c8t0e"]
+[ext_resource type="Texture2D" uid="uid://dxqaqqg1qlar6" path="res://Assets/Environment/Cloud Tileset.png" id="2_r8r7i"]
+
+[node name="CloudOverlay" type="Node2D" unique_id=593505672]
+script = ExtResource("1_c8t0e")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=688771810]
+scale = Vector2(10, 10)
+texture = ExtResource("2_r8r7i")
+region_enabled = true
+region_rect = Rect2(0, 0, 80, 63.925926)

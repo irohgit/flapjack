@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Background_Layer_1_SpawnData" format=3 uid="uid://dhiqookd4keu3"]
+
+[ext_resource type="Script" uid="uid://cqpy0n4w0ma22" path="res://Data/Environment/bg_layer_1_spawn_data.gd" id="1_5h2ij"]
+[ext_resource type="PackedScene" uid="uid://de1bc11i6qosg" path="res://Actors/Environment/bg_layer_1_fish.tscn" id="1_p4j5n"]
+
+[resource]
+script = ExtResource("1_5h2ij")
+scene = ExtResource("1_p4j5n")
+metadata/_custom_type_script = "uid://cqpy0n4w0ma22"

@@ -14,9 +14,11 @@ extends Area2D
 var _weapon_states: Array[WeaponState] = []
 
 @onready var _health: HealthComponent = $HealthComponent
+@onready var _shield: ShieldComponent = $ShieldComponent
 
 var velocity := Vector2.ZERO
 var _move_intent := Vector2.ZERO
+var _external_force := Vector2.ZERO
 
 func _ready() -> void:
 	area_entered.connect(_on_area_entered)
@@ -33,8 +35,9 @@ func _process(_delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	var target := _move_intent * max_speed
 	velocity = velocity.lerp(target, 1.0 - exp(-responsiveness * delta))
-	position += velocity * delta
+	position += (velocity + _external_force) * delta
 	position = _clamp_to_camera(position)
+	_external_force = Vector2.ZERO
 	_update_weapons(delta)
 	
 func _clamp_to_camera(pos: Vector2) -> Vector2:
@@ -100,8 +103,22 @@ func _update_weapons(delta: float) -> void:
 		elif not should_fire and state.data.weaponType == WeaponData.WeaponType.PASSIVE and state.cooldown < 0.0:
 			state.cooldown = 0.0
 
+#Wind
+func apply_wind_force(force: Vector2) -> void:
+	_external_force += force
+
 func take_damage(amount: int) -> void:
+	if _shield.try_block_hit():
+		DebugHud.flash("Shield absorbed hit")
+		return
 	_health.take_damage(amount)
+
+func add_shield(amount: int) -> bool:
+	_shield.add_stack(amount)
+	return true
+	
+func heal(amount: int) -> void:
+	_health.heal(amount)
 
 ## Combat Private
 func _on_damaged() -> void:
