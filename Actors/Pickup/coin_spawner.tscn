@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://luquvycpj4hd"]
 
-[ext_resource type="Script" uid="uid://bxtriexoiepnq" path="res://Levels/coin_spawner.gd" id="1_v2g50"]
+[ext_resource type="Script" uid="uid://bxtriexoiepnq" path="res://Levels/item_spawner.gd" id="1_v2g50"]
 [ext_resource type="Resource" uid="uid://c2mlimi5p04hl" path="res://Data/Pickups/GoldCoin.tres" id="2_qynok"]
 [ext_resource type="Resource" uid="uid://bro26dstx3iic" path="res://Data/Pickups/SilverCoin.tres" id="3_ntgxf"]
 [ext_resource type="Resource" uid="uid://dbvcpemefqpmm" path="res://Data/Pickups/BronzeCoin.tres" id="4_j2f6a"]
@@ -11,4 +11,4 @@ script = ExtResource("1_v2g50")
 gold_coin_data = ExtResource("2_qynok")
 silver_coin_data = ExtResource("3_ntgxf")
 bronze_coin_data = ExtResource("4_j2f6a")
-coin_scene = ExtResource("5_bwofr")
+pickup_scene = ExtResource("5_bwofr")

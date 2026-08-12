@@ -11,6 +11,10 @@ var homing = false
 var homing_turn_speed := 6.0
 var _homing_target: Node2D
 
+var plasma := false
+var plasma_stun_duration := 0.0
+var texture_override: Texture2D
+
 var direction := Vector2.UP
 
 
@@ -25,7 +29,8 @@ func _ready() -> void:
 
 func _apply_data() -> void:
 	assert(data.texture != null, "ProjectileData has no texture assigned")
-	_sprite.texture = data.texture
+	_sprite.texture = texture_override if texture_override != null else data.texture
+	self.apply_scale(Vector2(1, 1) * data.scale)
 	
 	var circle := CircleShape2D.new()
 	circle.radius = data.hitbox_radius
@@ -112,6 +117,10 @@ func _update_trail() -> void:
 
 
 func _on_area_entered(area: Area2D) -> void:
+	if plasma and area is Enemy:
+		var enemy := area as Enemy
+		enemy.apply_effect(Enemy.Effects.STUN, plasma_stun_duration)
+
 	if area.has_method("take_damage"):
 		area.take_damage(data.damage)
 	_on_impact()

@@ -5,6 +5,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_b77r1"]
 
 [node name="Pickup" type="Area2D" unique_id=169920597 groups=["pickup"]]
+texture_filter = 1
 collision_layer = 16
 script = ExtResource("1_dxqhr")
 

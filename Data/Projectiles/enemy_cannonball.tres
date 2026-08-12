@@ -8,6 +8,7 @@
 script = ExtResource("1_khvej")
 allegiance = 1
 texture = ExtResource("3_0xt0f")
+scale = 0.5
 trail_colour = Color(1.307195, 0.5989421, 0.374208, 0.32156864)
 trail_length = 20
 impact_sound = ExtResource("1_p4iuf")
