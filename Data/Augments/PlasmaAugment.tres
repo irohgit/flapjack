@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="AugmentData" format=3 uid="uid://cepoytsvun1sb"]
 
+[ext_resource type="Texture2D" uid="uid://ttbluqtxlpok" path="res://Assets/Projectiles/PlasmaProjectile.png" id="1_36kjf"]
 [ext_resource type="Script" uid="uid://cpp3oou337x" path="res://Data/Augments/augment_data.gd" id="1_a3ywa"]
 [ext_resource type="Script" uid="uid://8lobgpjn42re" path="res://Data/Augments/plasma_augment_effect.gd" id="1_j42j8"]
 [ext_resource type="Resource" uid="uid://b7nwwwfmfkswx" path="res://Data/Weapons/Cannon.tres" id="2_ejb6y"]

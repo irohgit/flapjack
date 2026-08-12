@@ -38,7 +38,6 @@ shake_camera="The active gameplay camera. Anything requesting screenshake calls 
 flapjack_fx=""
 player=""
 
-
 [input]
 
 move_forward={
