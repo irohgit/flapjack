@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://b0uqnqks41txj"]
+
+[ext_resource type="PackedScene" uid="uid://3gxxy4myod8b" path="res://Actors/Enemies/PatternEnemyWaveSpawner.tscn" id="1_bkyu2"]
+[ext_resource type="Script" uid="uid://dyavx03adfhd4" path="res://Actors/Enemies/butcherbird_wave_spawner.gd" id="2_cbxy2"]
+[ext_resource type="PackedScene" uid="uid://bq1hohq82ovyn" path="res://Actors/Enemies/enemy_pattern_butcherbird.tscn" id="3_nnnox"]
+[ext_resource type="Resource" uid="uid://b1t8pmt6xip8x" path="res://Data/Enemy/ButcherBird_Black.tres" id="4_7s71g"]
+
+[node name="IrohSandbox" type="Node2D" unique_id=88146748]
+
+[node name="PatternEnemyWaveSpawner" parent="." unique_id=1438365835 instance=ExtResource("1_bkyu2")]
+position = Vector2(629, 405)
+script = ExtResource("2_cbxy2")
+bird_scene = ExtResource("3_nnnox")
+bird_data = ExtResource("4_7s71g")
+bird_count = 10
+warning_duration = 1.5
+min_spawn_interval = 0.3
+max_spawn_interval = 0.3
+jiggle_duration = 1000.0

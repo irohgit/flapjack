@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://3gxxy4myod8b"]
+
+[ext_resource type="PackedScene" uid="uid://d2m8u4bps1hve" path="res://Actors/Environment/butcherbird_warning.tscn" id="1_3l5m7"]
+
+[node name="PatternEnemyWaveSpawner" type="Node2D" unique_id=1438365835]
+
+[node name="WarningSign" parent="." unique_id=387023932 instance=ExtResource("1_3l5m7")]
+
+[node name="LaunchPoint" type="Marker2D" parent="." unique_id=1416897910]
+
+[node name="SpawnTimer" type="Timer" parent="." unique_id=2004999906]
