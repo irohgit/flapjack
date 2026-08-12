@@ -18,6 +18,7 @@ var _weapon_states: Array[WeaponState] = []
 
 var velocity := Vector2.ZERO
 var _move_intent := Vector2.ZERO
+var _external_force := Vector2.ZERO
 
 func _ready() -> void:
 	area_entered.connect(_on_area_entered)
@@ -34,8 +35,9 @@ func _process(_delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	var target := _move_intent * max_speed
 	velocity = velocity.lerp(target, 1.0 - exp(-responsiveness * delta))
-	position += velocity * delta
+	position += (velocity + _external_force) * delta
 	position = _clamp_to_camera(position)
+	_external_force = Vector2.ZERO
 	_update_weapons(delta)
 	
 func _clamp_to_camera(pos: Vector2) -> Vector2:
@@ -100,6 +102,10 @@ func _update_weapons(delta: float) -> void:
 			state.cooldown += maxf(state.data.firerate, 0.001)
 		elif not should_fire and state.data.weaponType == WeaponData.WeaponType.PASSIVE and state.cooldown < 0.0:
 			state.cooldown = 0.0
+
+#Wind
+func apply_wind_force(force: Vector2) -> void:
+	_external_force += force
 
 func take_damage(amount: int) -> void:
 	if _shield.try_block_hit():
