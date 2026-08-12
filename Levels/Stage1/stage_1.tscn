@@ -12,19 +12,21 @@
 [ext_resource type="Script" uid="uid://dfww4fxipct38" path="res://Data/Weapons/weapon_data.gd" id="7_bsnqn"]
 [ext_resource type="Resource" uid="uid://b7nwwwfmfkswx" path="res://Data/Weapons/Cannon.tres" id="8_thckm"]
 [ext_resource type="PackedScene" uid="uid://b27tvj4v653m2" path="res://Levels/enemy_controller.tscn" id="10_8p85k"]
+[ext_resource type="Script" uid="uid://bpr8v8sl141c1" path="res://Actors/Player/player.gd" id="11_yvgdk"]
 [ext_resource type="Script" uid="uid://bo6li876odoia" path="res://Data/Enemy/enemy_data.gd" id="12_fkloy"]
 [ext_resource type="PackedScene" uid="uid://luquvycpj4hd" path="res://Actors/Pickup/coin_spawner.tscn" id="14_rvay1"]
-[ext_resource type="PackedScene" uid="uid://dgp73phtjophn" path="res://Actors/Pickup/pickup.tscn" id="15_6vwij"]
 [ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="16_m3y4m"]
 [ext_resource type="Resource" uid="uid://c8prjyekwi7hm" path="res://Data/Pickups/HomingCannonPickup.tres" id="17_uwhja"]
 [ext_resource type="Resource" uid="uid://5vagi0atsu3m" path="res://Data/Pickups/PlasmaAugmentPickup.tres" id="18_p2t5c"]
+[ext_resource type="PackedScene" uid="uid://3gxxy4myod8b" path="res://Actors/Enemies/PatternEnemyWaveSpawner.tscn" id="19_m3y4m"]
+[ext_resource type="Script" uid="uid://dyavx03adfhd4" path="res://Actors/Enemies/butcherbird_wave_spawner.gd" id="20_uwhja"]
 
 [node name="Stage1" type="Node2D" unique_id=1126219472 node_paths=PackedStringArray("scroll_director", "enemy_controller")]
 script = ExtResource("1_thckm")
 scroll_director = NodePath("ScrollDirector")
 enemy_controller = NodePath("EnemyController")
 
-[node name="ShakeCamera" type="Camera2D" parent="." unique_id=628624149]
+[node name="ShakeCamera" type="Camera2D" parent="." unique_id=628624149 groups=["shake_camera"]]
 script = ExtResource("1_utqb5")
 max_offset = Vector2(0, 0)
 metadata/_custom_type_script = "uid://tsoi3lwff5mf"
@@ -49,12 +51,19 @@ camera = NodePath("../../ShakeCamera")
 [node name="World" type="Node2D" parent="." unique_id=790454155]
 
 [node name="Player" parent="World" unique_id=2109576054 node_paths=PackedStringArray("camera") instance=ExtResource("4_nx2dg")]
-max_speed = 400.0
+script = ExtResource("11_yvgdk")
+max_speed = 700.0
+responsiveness = 25.0
+half_width = 32.0
 camera = NodePath("../../ShakeCamera")
+coin_count = 0
 weapons = Array[ExtResource("7_bsnqn")]([ExtResource("8_thckm")])
 
 [node name="SettingsPanel" parent="." unique_id=217040426 instance=ExtResource("2_nx2dg")]
 
 [node name="CoinSpawner" parent="." unique_id=1386735529 instance=ExtResource("14_rvay1")]
-pickup_scene = ExtResource("15_6vwij")
 augments = Array[ExtResource("16_m3y4m")]([ExtResource("17_uwhja"), ExtResource("18_p2t5c")])
+
+[node name="PatternEnemyWaveSpawner" parent="." unique_id=1438365835 instance=ExtResource("19_m3y4m")]
+position = Vector2(384, 201)
+script = ExtResource("20_uwhja")

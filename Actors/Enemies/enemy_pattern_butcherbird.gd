@@ -7,20 +7,22 @@ extends Area2D
 
 var time_alive: float = 0.0
 var start_position: Vector2
+var horizontal_direction: float = 1.0
 
 
-func _ready():
-	start_position = global_position
+func _ready() -> void:
+	pass
 
-	if data == null:
-		push_warning("PatternBird has no data")
-		return
-
+func setup(new_data: PatternButcherBirdData,spawn_position: Vector2,direction: float) -> void:
+	data = new_data
+	global_position = spawn_position
+	start_position = spawn_position
+	horizontal_direction = direction
 	sprite.sprite_frames = data.sprite_frames
+	sprite.flip_h = horizontal_direction < 0.0
 	sprite.play("fly")
-
-
-func _process(delta):
+	
+func _process(delta: float) -> void:
 	if data == null:
 		return
 
@@ -36,25 +38,51 @@ func _process(delta):
 		PatternButcherBirdData.MovementPattern.SWOOP:
 			move_swoop(delta)
 
-func move_sine(delta):
-	global_position.y += data.speed * delta
 
-	global_position.x = (
-		start_position.x
-		+ sin(time_alive * data.frequency) * data.amplitude
+func move_sine(delta: float) -> void:
+	# Travel horizontally.
+	global_position.x += (
+		data.speed
+		* delta
+		* horizontal_direction
 	)
-	
-func move_zigzag(delta):
-	# Always travel downward
-	global_position.x += data.speed * delta
 
-	# Create a repeating triangle wave from -1 to +1
-	var phase = fmod(time_alive * data.frequency, 2.0)
-	var zigzag = 1.0 - 2.0 * abs(phase - 1.0)
-
-	# Move left and right around the original spawn position
-	global_position.y = start_position.y + zigzag * data.amplitude
+	# Wave vertically while travelling.
+	global_position.y = (
+		start_position.y
+		+ sin(time_alive * data.frequency)
+		* data.amplitude
+	)
 
 
-func move_swoop(delta):
-	global_position.y += data.speed * delta
+func move_zigzag(delta: float) -> void:
+	# Travel horizontally.
+	global_position.x += (
+		data.speed
+		* delta
+		* horizontal_direction
+	)
+
+	# Sharp repeating up/down pattern.
+	var phase: float = fmod(
+		time_alive * data.frequency,
+		2.0
+	)
+
+	var zigzag: float = (
+		1.0
+		- 2.0 * abs(phase - 1.0)
+	)
+
+	global_position.y = (
+		start_position.y
+		+ zigzag * data.amplitude
+	)
+
+
+func move_swoop(delta: float) -> void:
+	global_position.x += (
+		data.speed
+		* delta
+		* horizontal_direction
+	)
