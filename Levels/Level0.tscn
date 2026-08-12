@@ -18,6 +18,7 @@
 [ext_resource type="Resource" uid="uid://bcj4lyhuitxi2" path="res://Data/Pickups/ShieldPotion.tres" id="17_aa3m5"]
 [ext_resource type="Resource" uid="uid://bkqumwc6jcphy" path="res://Data/Pickups/HealthPotion.tres" id="17_y3xa5"]
 [ext_resource type="PackedScene" uid="uid://cstesilwdvxw5" path="res://Levels/settings_panel.tscn" id="18_y3xa5"]
+[ext_resource type="PackedScene" uid="uid://dyx6252lck76u" path="res://Actors/Environment/wind_zone.tscn" id="19_nbhn6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n48ea"]
 shader = ExtResource("2_im6i0")
@@ -68,7 +69,7 @@ mouse_filter = 2
 [node name="Hazard" parent="World" unique_id=90124748 instance=ExtResource("8_y3xa5")]
 position = Vector2(360, 500)
 
-[node name="Player" parent="World" unique_id=1105456395 node_paths=PackedStringArray("camera") instance=ExtResource("9_nbhn6")]
+[node name="Player" parent="World" unique_id=1105456395 node_paths=PackedStringArray("camera") groups=["player"] instance=ExtResource("9_nbhn6")]
 position = Vector2(360, 996)
 scale = Vector2(1, 1)
 script = ExtResource("8_aa3m5")
@@ -96,3 +97,6 @@ data = ExtResource("17_y3xa5")
 [node name="Pickup2" parent="." unique_id=42963610 instance=ExtResource("16_aa3m5")]
 position = Vector2(716, 880)
 data = ExtResource("17_aa3m5")
+
+[node name="wind_zone" parent="." unique_id=963280108 instance=ExtResource("19_nbhn6")]
+position = Vector2(187, 618)
