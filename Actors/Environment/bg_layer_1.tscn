@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://c35hftkankkmi"]
+
+[ext_resource type="Script" uid="uid://dsb3qpo7ujm8d" path="res://Actors/Environment/bg_layer_1.gd" id="1_7wd1u"]
+[ext_resource type="Script" uid="uid://cqpy0n4w0ma22" path="res://Data/Environment/bg_layer_1_spawn_data.gd" id="2_vihmr"]
+[ext_resource type="Resource" uid="uid://dhiqookd4keu3" path="res://Data/Environment/fish.tres" id="3_ysmei"]
+
+[node name="BgLayer1" type="Node2D" unique_id=2110895448]
+script = ExtResource("1_7wd1u")
+spawn_pool = Array[ExtResource("2_vihmr")]([ExtResource("3_ysmei")])
+
+[node name="SpawnedObjects" type="Node2D" parent="." unique_id=1816951471]
+
+[node name="SpawnTimer" type="Timer" parent="." unique_id=242655952]
+wait_time = 2.0
+autostart = true
