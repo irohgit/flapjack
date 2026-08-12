@@ -18,7 +18,7 @@
 [ext_resource type="Resource" uid="uid://bcj4lyhuitxi2" path="res://Data/Pickups/ShieldPotion.tres" id="17_aa3m5"]
 [ext_resource type="Resource" uid="uid://bkqumwc6jcphy" path="res://Data/Pickups/HealthPotion.tres" id="17_y3xa5"]
 [ext_resource type="PackedScene" uid="uid://cstesilwdvxw5" path="res://Levels/settings_panel.tscn" id="18_y3xa5"]
-[ext_resource type="PackedScene" uid="uid://dyx6252lck76u" path="res://Actors/Environment/wind_zone.tscn" id="19_nbhn6"]
+[ext_resource type="PackedScene" uid="uid://bws0ib2ep02xb" path="res://Actors/Environment/cloud_overlay.tscn" id="19_nbhn6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n48ea"]
 shader = ExtResource("2_im6i0")
@@ -98,5 +98,5 @@ data = ExtResource("17_y3xa5")
 position = Vector2(716, 880)
 data = ExtResource("17_aa3m5")
 
-[node name="wind_zone" parent="." unique_id=963280108 instance=ExtResource("19_nbhn6")]
-position = Vector2(187, 618)
+[node name="CloudOverlay" parent="." unique_id=593505672 instance=ExtResource("19_nbhn6")]
+position = Vector2(446, 575)

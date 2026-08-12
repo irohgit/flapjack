@@ -1,11 +1,15 @@
-extends Node
+class_name CloudOverlay
+extends Node2D
 
+@export var texture: Texture2D
+@export var opacity := 1
+@export var drift_speed := Vector2(20, 0)
 
-# Called when the node enters the scene tree for the first time.
+@onready var _sprite: Sprite2D = $Sprite2D
+
 func _ready() -> void:
-	pass # Replace with function body.
+	_sprite.modulate.a = opacity
+	z_index = 50  # draws above player/enemies; UI stays clear since it's a separate CanvasLayer
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	position += drift_speed * delta
