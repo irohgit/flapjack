@@ -16,6 +16,8 @@ var _weapon_states: Array[WeaponState] = []
 @onready var _health: HealthComponent = $HealthComponent
 @onready var _shield: ShieldComponent = $ShieldComponent
 
+signal coin_changed(amount: int)
+
 var velocity := Vector2.ZERO
 var _move_intent := Vector2.ZERO
 var _external_force := Vector2.ZERO
@@ -25,6 +27,7 @@ func _ready() -> void:
 	_health.damaged.connect(_on_damaged)
 	_health.health_changed.connect(func(c, m): DebugHud.watch("health", "%d/%d" % [c, m]))
 	_health.died.connect(func(): DebugHud.flash("PLAYER DESTROYED"))
+	coin_changed.emit(coin_count)
 	
 	for weapon in weapons:
 		_weapon_states.append(WeaponState.new(weapon))
@@ -72,7 +75,7 @@ func _shake(amount: float) -> void:
 ## Collected item
 func _add_coins(amount: int):
 	coin_count += amount
-	print("Coins:", coin_count)
+	coin_changed.emit(coin_count)
 
 func add_augment(augment: AugmentData) -> bool:
 	for state in _weapon_states:
@@ -119,6 +122,9 @@ func add_shield(amount: int) -> bool:
 	
 func heal(amount: int) -> void:
 	_health.heal(amount)
+
+func get_health_component() -> HealthComponent:
+	return _health
 
 ## Combat Private
 func _on_damaged() -> void:
