@@ -46,7 +46,9 @@ pieces of combat state.
 The game uses a strict two-source-pixel art grid. Every logical art pixel is a
 uniform `2x2` block at the `1920x1080` design resolution. The Player texture is
 the one exception: it uses `4x4` source blocks because its parent scene renders
-at `0.5` scale, resulting in the same `2x2` screen pixels.
+at `0.5` scale, resulting in the same `2x2` screen pixels. Main-menu, pause,
+and death-screen PNGs also use a deliberate `4x4` UI grid so their pixels stay
+readable against the full-resolution gameplay canvas.
 
 - Draw and export sprites on the existing grid; do not resize finished PNGs
   with smooth or fractional scaling.
@@ -56,10 +58,12 @@ at `0.5` scale, resulting in the same `2x2` screen pixels.
 - Display PNGs at their authored size. If a different size is needed, bake
   that final size into the asset and keep the scene scale at `1`.
 - Keep authored positions on the `2x2` design grid. Godot's nearest filtering,
-  transform snapping, viewport stretch, and integer display scaling are
-  configured globally.
+  transform snapping, and viewport stretching are configured globally.
 - The global `PixelArtRenderer` composites the finished frame back onto that
-  grid, so animated rotations and zooms cannot leave uneven screen pixels.
+  grid before the finished viewport is scaled to the current window.
+- The desktop window is resizable. The game always renders a complete 16:9
+  canvas and adds letterboxing or pillarboxing when the window has another
+  shape; it never stretches or crops gameplay to fill the window.
 
 After adding or changing PNG artwork, run the authoring check (requires
 [Pillow](https://pillow.readthedocs.io/)):

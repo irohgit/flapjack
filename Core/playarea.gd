@@ -3,6 +3,10 @@ extends Node
 #16:9 Cinematic 
 const PLAY_WIDTH := 1920.0
 const PLAY_HEIGHT := 1080.0
+const ASPECT_WIDTH := 16
+const ASPECT_HEIGHT := 9
+const INITIAL_SCREEN_COVERAGE := 0.9
+const MIN_WINDOW_SIZE := Vector2i(960, 540)
 
 var screen_size: Vector2
 
@@ -11,7 +15,7 @@ signal screen_resized(new_size: Vector2) #
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_assert_contract()
-	_fit_window_to_screen()
+	_configure_desktop_window()
 	_update_screen_size()
 	get_viewport().size_changed.connect(_update_screen_size)
 	print("play area is %s x %s" % [Playarea.PLAY_WIDTH, Playarea.PLAY_HEIGHT])
@@ -20,31 +24,36 @@ func _ready() -> void:
 func _assert_contract() -> void:
 	var w: float = ProjectSettings.get_setting("display/window/size/viewport_width")
 	var h: float = ProjectSettings.get_setting("display/window/size/viewport_height")
+	var resizable: bool = ProjectSettings.get_setting("display/window/size/resizable")
+	var stretch_aspect: String = ProjectSettings.get_setting("display/window/stretch/aspect")
 	assert(w == PLAY_WIDTH,  "viewport_width is %d, contract says %d" % [w, PLAY_WIDTH])
 	assert(h == PLAY_HEIGHT, "viewport_height is %d, contract says %d" % [h, PLAY_HEIGHT])
+	assert(resizable, "desktop window must remain resizable")
+	assert(stretch_aspect == "keep", "stretch aspect must remain 'keep'")
 
-# Sizes the desktop window to the largest exact multiple of the design viewport.
-# Fractional window scales produce uneven screen pixels even when every source
-# texture is clean. Mobile and web get their window from the OS/browser.
-func _fit_window_to_screen() -> void:
+# Starts in a centred 16:9 window that fits the monitor. After this one-time
+# setup the user can resize freely; viewport stretch="keep" preserves the game
+# canvas with letterboxing or pillarboxing instead of stretching or cropping it.
+func _configure_desktop_window() -> void:
 	if OS.has_feature("mobile") or OS.has_feature("web"):
 		return
 
 	var screen_id := DisplayServer.window_get_current_screen()
 	var usable := DisplayServer.screen_get_usable_rect(screen_id)
-
-	var scale_factor := floori(minf(
-		float(usable.size.x) / PLAY_WIDTH,
-		float(usable.size.y) / PLAY_HEIGHT
-	))
-	if scale_factor < 1:
-		push_warning("Display is smaller than the 1920x1080 pixel-art viewport")
-		return
-
-	var size := Vector2i(
-		int(PLAY_WIDTH) * scale_factor,
-		int(PLAY_HEIGHT) * scale_factor
+	var available := Vector2i(
+		floori(usable.size.x * INITIAL_SCREEN_COVERAGE),
+		floori(usable.size.y * INITIAL_SCREEN_COVERAGE)
 	)
+	var width := mini(
+		available.x,
+		floori(float(available.y) * ASPECT_WIDTH / ASPECT_HEIGHT)
+	)
+	# A width divisible by 16 gives an exact integer 16:9 window size.
+	width = maxi(width - (width % ASPECT_WIDTH), ASPECT_WIDTH)
+	var size := Vector2i(width, width * ASPECT_HEIGHT / ASPECT_WIDTH)
+
+	if usable.size.x >= MIN_WINDOW_SIZE.x and usable.size.y >= MIN_WINDOW_SIZE.y:
+		get_window().min_size = MIN_WINDOW_SIZE
 
 	DisplayServer.window_set_size(size)
 	DisplayServer.window_set_position(usable.position + (usable.size - size) / 2)

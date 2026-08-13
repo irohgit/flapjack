@@ -1,17 +1,17 @@
 [gd_scene format=3 uid="uid://dfgiunphxmxmr"]
 
 [ext_resource type="Script" uid="uid://duntr73s38siv" path="res://Levels/main_menu.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://Assets/UI/MainMenu/background_landscape.png" id="2_background"]
-[ext_resource type="Texture2D" path="res://Assets/UI/MainMenu/title.png" id="3_title"]
-[ext_resource type="Texture2D" path="res://Assets/UI/MainMenu/play_button.png" id="4_play"]
-[ext_resource type="Texture2D" path="res://Assets/UI/MainMenu/play_button_hover.png" id="5_play_hover"]
-[ext_resource type="Texture2D" path="res://Assets/UI/MainMenu/play_button_pressed.png" id="6_play_pressed"]
-[ext_resource type="Texture2D" path="res://Assets/UI/MainMenu/settings_button.png" id="7_settings"]
-[ext_resource type="Texture2D" path="res://Assets/UI/MainMenu/settings_button_hover.png" id="8_settings_hover"]
-[ext_resource type="Texture2D" path="res://Assets/UI/MainMenu/settings_button_pressed.png" id="9_settings_pressed"]
-[ext_resource type="Texture2D" path="res://Assets/UI/MainMenu/exit_button.png" id="10_exit"]
-[ext_resource type="Texture2D" path="res://Assets/UI/MainMenu/exit_button_hover.png" id="11_exit_hover"]
-[ext_resource type="Texture2D" path="res://Assets/UI/MainMenu/exit_button_pressed.png" id="12_exit_pressed"]
+[ext_resource type="Texture2D" uid="uid://bjrtqk23jc7jq" path="res://Assets/UI/MainMenu/background_landscape.png" id="2_background"]
+[ext_resource type="Texture2D" uid="uid://bin2vfn1q1sh" path="res://Assets/UI/MainMenu/title.png" id="3_title"]
+[ext_resource type="Texture2D" uid="uid://dxxtwk0363bv7" path="res://Assets/UI/MainMenu/play_button.png" id="4_play"]
+[ext_resource type="Texture2D" uid="uid://32nal43kjqf6" path="res://Assets/UI/MainMenu/play_button_hover.png" id="5_play_hover"]
+[ext_resource type="Texture2D" uid="uid://du08ikcxdlcmq" path="res://Assets/UI/MainMenu/play_button_pressed.png" id="6_play_pressed"]
+[ext_resource type="Texture2D" uid="uid://cbwj0khmdthdc" path="res://Assets/UI/MainMenu/settings_button.png" id="7_settings"]
+[ext_resource type="Texture2D" uid="uid://b76fg51ux8qpd" path="res://Assets/UI/MainMenu/settings_button_hover.png" id="8_settings_hover"]
+[ext_resource type="Texture2D" uid="uid://bxfmfrus8uw7o" path="res://Assets/UI/MainMenu/settings_button_pressed.png" id="9_settings_pressed"]
+[ext_resource type="Texture2D" uid="uid://jyhqfrhk2rf2" path="res://Assets/UI/MainMenu/exit_button.png" id="10_exit"]
+[ext_resource type="Texture2D" uid="uid://dk0dchqle0p77" path="res://Assets/UI/MainMenu/exit_button_hover.png" id="11_exit_hover"]
+[ext_resource type="Texture2D" uid="uid://myo8grbtavaj" path="res://Assets/UI/MainMenu/exit_button_pressed.png" id="12_exit_pressed"]
 
 [node name="MainMenu" type="Control" unique_id=578260770]
 layout_mode = 3
@@ -22,7 +22,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_script")
 
-[node name="Background" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="." unique_id=814415544]
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 15
@@ -35,7 +35,7 @@ texture = ExtResource("2_background")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="Title" type="TextureRect" parent="."]
+[node name="Title" type="TextureRect" parent="." unique_id=158629105]
 texture_filter = 1
 layout_mode = 0
 offset_left = 600.0
@@ -46,46 +46,46 @@ mouse_filter = 2
 texture = ExtResource("3_title")
 expand_mode = 1
 
-[node name="PlayButton" type="TextureButton" parent="."]
+[node name="PlayButton" type="TextureButton" parent="." unique_id=1010298058]
 texture_filter = 1
 layout_mode = 0
 offset_left = 710.0
 offset_top = 470.0
 offset_right = 1210.0
 offset_bottom = 610.0
-mouse_default_cursor_shape = 2
 focus_mode = 0
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource("4_play")
-texture_hover = ExtResource("5_play_hover")
 texture_pressed = ExtResource("6_play_pressed")
+texture_hover = ExtResource("5_play_hover")
 ignore_texture_size = true
 
-[node name="SettingsButton" type="TextureButton" parent="."]
+[node name="SettingsButton" type="TextureButton" parent="." unique_id=2107517355]
 texture_filter = 1
 layout_mode = 0
 offset_left = 710.0
 offset_top = 630.0
 offset_right = 1210.0
 offset_bottom = 770.0
-mouse_default_cursor_shape = 2
 focus_mode = 0
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource("7_settings")
-texture_hover = ExtResource("8_settings_hover")
 texture_pressed = ExtResource("9_settings_pressed")
+texture_hover = ExtResource("8_settings_hover")
 ignore_texture_size = true
 
-[node name="ExitButton" type="TextureButton" parent="."]
+[node name="ExitButton" type="TextureButton" parent="." unique_id=409606137]
 texture_filter = 1
 layout_mode = 0
 offset_left = 710.0
 offset_top = 790.0
 offset_right = 1210.0
 offset_bottom = 930.0
-mouse_default_cursor_shape = 2
 focus_mode = 0
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource("10_exit")
-texture_hover = ExtResource("11_exit_hover")
 texture_pressed = ExtResource("12_exit_pressed")
+texture_hover = ExtResource("11_exit_hover")
 ignore_texture_size = true
 
 [connection signal="button_up" from="PlayButton" to="." method="PlayPress"]

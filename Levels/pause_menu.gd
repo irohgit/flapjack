@@ -8,6 +8,8 @@ func _ready() -> void:
 
 
 func _input(event: InputEvent) -> void:
+	if DeathScreen.is_open():
+		return
 	if event.is_action_released("exit"):
 		_set_paused(not get_tree().paused)
 		get_viewport().set_input_as_handled()

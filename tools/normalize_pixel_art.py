@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Normalize every project PNG to Flapjack's canonical pixel-art grid.
 
-The checked-in PNGs use a two-source-pixel grid. At the 1920x1080 design
-resolution, each logical art pixel is therefore a uniform 2x2 block. The
-player source uses a 4x4 grid because its scene deliberately renders at 50%.
+Most checked-in PNGs use a two-source-pixel grid. At the 1920x1080 design
+resolution, each logical gameplay pixel is therefore a uniform 2x2 block.
+Menu art uses a coarser 4x4 grid so its pixels remain deliberate and readable,
+and the player source uses 4x4 blocks because its scene renders at 50%.
 
 This is an asset-authoring tool, not a runtime dependency. It requires Pillow:
 
@@ -26,16 +27,17 @@ ROOT = Path(__file__).resolve().parents[1]
 # These assets were previously stretched by Control/Sprite nodes. Baking the
 # final dimensions into the PNG keeps their scene scale at 1 and avoids mixels.
 OUTPUT_SIZES = {
+    "Assets/UI/DeathScreen/death_screen_background.png": (1920, 1080),
     "Assets/Cinematics/Cinematic_Sky_Intro_169.png": (1920, 668),
     "Assets/Cinematics/cinematic_ocean_overlay1.png": (1920, 668),
     "Assets/Cinematics/cinematic_ocean_overlay2.png.png": (1920, 668),
     "Assets/Cinematics/cinematic_ocean_overlay3.png": (2496, 668),
     "Assets/UI/MainMenu/title.png": (720, 360),
     "Assets/UI/Pause/panel_background.png": (640, 820),
-    "Assets/UI/Pause/bottom_text.png": (394, 72),
-    "Assets/UI/Pause/divider_skull.png": (434, 56),
-    "Assets/UI/Pause/divider_small.png": (354, 26),
-    "Assets/UI/Pause/resume_button.png": (444, 110),
+    "Assets/UI/Pause/bottom_text.png": (396, 72),
+    "Assets/UI/Pause/divider_skull.png": (436, 56),
+    "Assets/UI/Pause/divider_small.png": (356, 28),
+    "Assets/UI/Pause/resume_button.png": (444, 112),
     "Assets/UI/Pause/resume_icon.png": (68, 92),
     "Assets/UI/Coin/coin_frame.png": (206, 68),
     "Assets/UI/Coin/coin_icon.png": (48, 46),
@@ -67,15 +69,28 @@ def relative(path: Path) -> str:
 
 
 def grid_size(path: Path) -> int:
+    name = relative(path)
+    if name.startswith((
+        "Assets/UI/MainMenu/",
+        "Assets/UI/Pause/",
+        "Assets/UI/DeathScreen/",
+    )):
+        return 4
     # The Player scene renders its sprite through a 0.5 parent transform, so a
     # 4x4 source block becomes a uniform 2x2 screen pixel.
-    if relative(path) == "Assets/Boat/Player.png":
+    if name == "Assets/Boat/Player.png":
         return 4
     return 2
 
 
 def palette_size(path: Path, width: int, height: int) -> int:
     name = relative(path)
+    if name.startswith((
+        "Assets/UI/MainMenu/",
+        "Assets/UI/Pause/",
+        "Assets/UI/DeathScreen/",
+    )):
+        return 32
     if "/Backgrounds/" in name or width * height >= 500_000:
         return 64
     if "/UI/" in name or width * height >= 80_000:
