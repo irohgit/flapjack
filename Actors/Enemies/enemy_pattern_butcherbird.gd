@@ -18,7 +18,7 @@ func _ready() -> void:
 	
 func _on_damaged() -> void:
 	print("bird damaged fired")
-	Audio.play_sfx(hit_sfx, 1.0, 0.1)
+	Audio.play_sfx(hit_sfx, 5.0, 0.1)
 	modulate = Color(1, 0.4, 0.4)
 	create_tween().tween_property(self, "modulate", Color.WHITE, 0.15)
 
@@ -26,7 +26,7 @@ func take_damage(amount: int) -> void:
 	_health.take_damage(amount)
 	
 func _on_died() -> void:
-	Audio.play_sfx(explosion_sfx, 1.0)
+	Audio.play_sfx(explosion_sfx, 5.0)
 	queue_free()
 func setup(new_data: PatternButcherBirdData, spawn_position: Vector2, direction: float) -> void:
 	data = new_data

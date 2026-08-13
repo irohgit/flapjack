@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://ddmjy6ihgdk7k" path="res://Systems/Levels/level_generator.gd" id="1_nl7aw"]
 [ext_resource type="Script" uid="uid://btsph0giuw450" path="res://Levels/iroh_level.gd" id="1_wcl85"]
 [ext_resource type="Resource" uid="uid://b2xa4hm5ib5ca" path="res://Data/Levels/Stages/Stage1.tres" id="2_m5gh3"]
+[ext_resource type="AudioStream" uid="uid://b86afwbiwoubu" path="res://Audio/BGM/hesapirate.mp3" id="2_v8lbv"]
 [ext_resource type="Script" uid="uid://tsoi3lwff5mf" path="res://Actors/Camera/shake_camera.gd" id="3_ruiyd"]
 [ext_resource type="PackedScene" uid="uid://b27tvj4v653m2" path="res://Levels/enemy_controller.tscn" id="4_bksmr"]
 [ext_resource type="Script" uid="uid://bo6li876odoia" path="res://Data/Enemy/enemy_data.gd" id="5_wcl85"]
@@ -24,6 +25,8 @@
 script = ExtResource("1_wcl85")
 level_generator = NodePath("LevelGenerator")
 screen_encounter_parent = NodePath("ScrollRig/ScreenEncounters")
+stage_music = ExtResource("2_v8lbv")
+stage_music_db = -30.0
 scroll_director = NodePath("ScrollDirector")
 enemy_controller = NodePath("EnemyController")
 

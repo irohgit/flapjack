@@ -95,12 +95,12 @@ func _free_voice() -> AudioStreamPlayer:
 
 
 # --- Music ------------------------------------------------------------------
-func play_music(stream: AudioStream, fade_time := 1.5) -> void:
+func play_music(stream: AudioStream, volume_db := 0.0, fade_time := 1.5) -> void:
 	if stream == null:
 		return
-	# Already playing this track, so do nothing rather than restarting it.
 	if _music_active.stream == stream and _music_active.playing:
 		return
+
 	var incoming := _music_b if _music_active == _music_a else _music_a
 	var outgoing := _music_active
 
@@ -110,7 +110,7 @@ func play_music(stream: AudioStream, fade_time := 1.5) -> void:
 
 	var t := create_tween()
 	t.set_parallel(true)
-	t.tween_property(incoming, "volume_db", 0.0, fade_time)
+	t.tween_property(incoming, "volume_db", volume_db, fade_time)
 	t.tween_property(outgoing, "volume_db", -60.0, fade_time)
 	t.set_parallel(false)
 	t.tween_callback(outgoing.stop)

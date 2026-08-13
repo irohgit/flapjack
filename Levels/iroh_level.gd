@@ -2,8 +2,12 @@ extends LevelManager
 
 @export var level_generator: LevelGenerator
 @export var screen_encounter_parent: Node2D
+@export var stage_music: AudioStream
+@export_range(-40.0, 6.0, 0.5) var stage_music_db := -6.0
+@export_range(0.0, 8.0, 0.1) var music_fade_in := 2.0
 
 func _ready() -> void:
+	Audio.play_music(stage_music, stage_music_db, music_fade_in)
 	assert(scroll_director != null, "Stage 1 needs a ScrollDirector")
 	assert(enemy_controller != null, "Stage 1 needs an EnemyController")
 	assert(level_generator != null, "Stage 1 needs a LevelGenerator")
