@@ -9,6 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://cclwwsegfn8rr" path="res://Actors/Player/player.tscn" id="4_nx2dg"]
 [ext_resource type="Resource" uid="uid://bsk4oh4u6bnhe" path="res://Data/Enemy/BulwarkEnemy.tres" id="5_fkloy"]
 [ext_resource type="Resource" uid="uid://cnxtqo5woe8ja" path="res://Data/Enemy/HunterEnemy.tres" id="6_rvay1"]
+[ext_resource type="Script" uid="uid://dfww4fxipct38" path="res://Data/Weapons/weapon_data.gd" id="7_bsnqn"]
+[ext_resource type="Resource" uid="uid://b7nwwwfmfkswx" path="res://Data/Weapons/Cannon.tres" id="8_thckm"]
 [ext_resource type="PackedScene" uid="uid://b27tvj4v653m2" path="res://Levels/enemy_controller.tscn" id="10_8p85k"]
 [ext_resource type="Script" uid="uid://bo6li876odoia" path="res://Data/Enemy/enemy_data.gd" id="12_fkloy"]
 [ext_resource type="PackedScene" uid="uid://luquvycpj4hd" path="res://Actors/Pickup/coin_spawner.tscn" id="14_rvay1"]
@@ -45,7 +47,10 @@ camera = NodePath("../../ShakeCamera")
 
 [node name="World" type="Node2D" parent="." unique_id=790454155]
 
-[node name="Player" parent="World" unique_id=2109576054 instance=ExtResource("4_nx2dg")]
+[node name="Player" parent="World" unique_id=2109576054 node_paths=PackedStringArray("camera") instance=ExtResource("4_nx2dg")]
+max_speed = 400.0
+camera = NodePath("../../ShakeCamera")
+weapons = Array[ExtResource("7_bsnqn")]([ExtResource("8_thckm")])
 
 [node name="SettingsPanel" parent="." unique_id=217040426 instance=ExtResource("2_nx2dg")]
 
