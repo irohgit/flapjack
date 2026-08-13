@@ -41,6 +41,36 @@ components. For example, the Player node runs `Actors/Player/player.gd`, while
 its child `HealthComponent` and `ShieldComponent` nodes manage their individual
 pieces of combat state.
 
+## Pixel-art rules
+
+The game uses a strict two-source-pixel art grid. Every logical art pixel is a
+uniform `2x2` block at the `1920x1080` design resolution. The Player texture is
+the one exception: it uses `4x4` source blocks because its parent scene renders
+at `0.5` scale, resulting in the same `2x2` screen pixels.
+
+- Draw and export sprites on the existing grid; do not resize finished PNGs
+  with smooth or fractional scaling.
+- Use hard alpha edges for solid sprites and UI. Pixel effects may use only the
+  deliberate alpha steps `0`, `85`, `170`, and `255`.
+- Use limited palettes without color dithering or antialiasing.
+- Display PNGs at their authored size. If a different size is needed, bake
+  that final size into the asset and keep the scene scale at `1`.
+- Keep authored positions on the `2x2` design grid. Godot's nearest filtering,
+  transform snapping, viewport stretch, and integer display scaling are
+  configured globally.
+- The global `PixelArtRenderer` composites the finished frame back onto that
+  grid, so animated rotations and zooms cannot leave uneven screen pixels.
+
+After adding or changing PNG artwork, run the authoring check (requires
+[Pillow](https://pillow.readthedocs.io/)):
+
+```bash
+python3 tools/normalize_pixel_art.py --check
+```
+
+To normalize newly added art onto the canonical grid, run the same command
+without `--check`. Review the result in-game before committing it.
+
 ## Creating a new stage
 
 The simplest approach is to duplicate an existing stage in the Godot editor.

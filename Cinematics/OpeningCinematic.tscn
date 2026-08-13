@@ -97,13 +97,11 @@ centered = false
 
 [node name="Sky" type="Sprite2D" parent="." unique_id=1686921079]
 position = Vector2(0, -1)
-scale = Vector2(1, 0.618)
 texture = ExtResource("7_pes2o")
 centered = false
 
 [node name="Ocean" type="Sprite2D" parent="." unique_id=1488993460]
 position = Vector2(0, -1)
-scale = Vector2(1, 0.618)
 texture = ExtResource("7_pes2o")
 centered = false
 
@@ -233,7 +231,6 @@ text = "[color=#d99741][wave]FLAPJACK[wave]"
 modulate = Color(1, 1, 1, 0.5686275)
 z_index = 20
 position = Vector2(4, 257)
-scale = Vector2(1, 0.618)
 texture = ExtResource("8_86m75")
 centered = false
 script = ExtResource("9_1osp8")
@@ -248,7 +245,6 @@ breathe_speed = 0.28
 modulate = Color(1, 1, 1, 0.5686275)
 z_index = 20
 position = Vector2(-6, 418.00003)
-scale = Vector2(1, 0.618)
 texture = ExtResource("9_4n84t")
 centered = false
 script = ExtResource("9_1osp8")
@@ -260,7 +256,6 @@ phase_offset = 2.1
 modulate = Color(1, 1, 1, 0.5686275)
 z_index = 20
 position = Vector2(-214, 406)
-scale = Vector2(1.3, 0.618)
 texture = ExtResource("10_1osp8")
 centered = false
 script = ExtResource("9_1osp8")

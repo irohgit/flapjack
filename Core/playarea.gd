@@ -23,8 +23,9 @@ func _assert_contract() -> void:
 	assert(w == PLAY_WIDTH,  "viewport_width is %d, contract says %d" % [w, PLAY_WIDTH])
 	assert(h == PLAY_HEIGHT, "viewport_height is %d, contract says %d" % [h, PLAY_HEIGHT])
 
-# Sizes the desktop window to fill most of the monitor, keeping the locked 16:9 aspect.
-# Mobile and web get their window from the OS or the browser, so we skip them.
+# Sizes the desktop window to the largest exact multiple of the design viewport.
+# Fractional window scales produce uneven screen pixels even when every source
+# texture is clean. Mobile and web get their window from the OS/browser.
 func _fit_window_to_screen() -> void:
 	if OS.has_feature("mobile") or OS.has_feature("web"):
 		return
@@ -32,13 +33,17 @@ func _fit_window_to_screen() -> void:
 	var screen_id := DisplayServer.window_get_current_screen()
 	var usable := DisplayServer.screen_get_usable_rect(screen_id)
 
-	var scale_factor := minf(
+	var scale_factor := floori(minf(
 		float(usable.size.x) / PLAY_WIDTH,
 		float(usable.size.y) / PLAY_HEIGHT
-	) * 0.9
+	))
+	if scale_factor < 1:
+		push_warning("Display is smaller than the 1920x1080 pixel-art viewport")
+		return
+
 	var size := Vector2i(
-		int(round(PLAY_WIDTH * scale_factor)),
-		int(round(PLAY_HEIGHT * scale_factor))
+		int(PLAY_WIDTH) * scale_factor,
+		int(PLAY_HEIGHT) * scale_factor
 	)
 
 	DisplayServer.window_set_size(size)

@@ -20,13 +20,15 @@ config/icon="res://icon.svg"
 Playarea="*uid://kwik3usbaupe"
 DebugHud="*uid://b0uptuewb1atn"
 GameEvents="*uid://3lsfc782llap"
+PixelArtRenderer="*res://Systems/Rendering/pixel_art_renderer.gd"
 
 [display]
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
-window/stretch/mode="canvas_items"
-window/stretch/aspect="keep_width"
+window/stretch/mode="viewport"
+window/stretch/aspect="keep"
+window/stretch/scale_mode="integer"
 window/handheld/orientation=1
 
 [global_group]
@@ -98,7 +100,9 @@ exit={
 
 [rendering]
 
+2d/snap/snap_2d_transforms_to_pixel=true
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+textures/canvas_textures/default_texture_filter=0
 environment/defaults/default_clear_color=Color(0.6053508, 0.72031677, 0.94324833, 1)
