@@ -22,12 +22,13 @@ signal augment_added(augment: AugmentData)
 var velocity := Vector2.ZERO
 var _move_intent := Vector2.ZERO
 var _external_force := Vector2.ZERO
+var _is_dead := false
 
 func _ready() -> void:
 	area_entered.connect(_on_area_entered)
 	_health.damaged.connect(_on_damaged)
-	#_health.health_changed.connect(func(c, m): DebugHud.watch("health", "%d/%d" % [c, m]))
-	_health.died.connect(func(): DebugHud.flash("PLAYER DESTROYED"))
+	_health.health_changed.connect(func(c, m): DebugHud.watch("health", "%d/%d" % [c, m]))
+	_health.died.connect(_on_died)
 	coin_changed.emit(coin_count)
 	
 	for weapon in weapons:
@@ -139,6 +140,26 @@ func _on_damaged() -> void:
 	create_tween().tween_property(self, "modulate", Color.WHITE, _health.invincibility_time)
 	
 func _on_died() -> void:
+	if _is_dead:
+		return
+	_is_dead = true
+	set_process(false)
+	set_physics_process(false)
+	set_deferred("monitoring", false)
+	set_deferred("monitorable", false)
 	_shake(0.8) #Camera Shake
 	DebugHud.flash("PLAYER DESTROYED")
+	GameEvents.player_died.emit(_get_retry_scene_path())
 	queue_free()
+
+
+func _get_retry_scene_path() -> String:
+	# Use the nearest instanced stage, not an outer sequence wrapper such as Iroh.
+	var ancestor := get_parent()
+	while ancestor != null:
+		if not ancestor.scene_file_path.is_empty():
+			return ancestor.scene_file_path
+		ancestor = ancestor.get_parent()
+
+	var current_scene := get_tree().current_scene
+	return current_scene.scene_file_path if current_scene != null else ""

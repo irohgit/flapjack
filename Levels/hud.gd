@@ -52,3 +52,11 @@ func _on_health_changed(current: int, maximum: int) -> void:
 func _on_shield_changed(amount: int) -> void:
 	shield_label.text = str(amount)
 	
+extends Node
+
+@export var player: Player
+@export var heart_icon: TextureRect
+@export var shield_icon: TextureRect
+
+func _process(delta: float) -> void:
+	pass
