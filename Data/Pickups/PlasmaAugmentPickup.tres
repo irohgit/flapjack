@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="PickupData" format=3 uid="uid://5vagi0atsu3m"]
 
 [ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="1_qmc68"]
+[ext_resource type="AudioStream" uid="uid://bhp3mqd4ya5te" path="res://Audio/SFX/plasma_pickup.mp3" id="2_f42f2"]
 [ext_resource type="Texture2D" uid="uid://decedubcfymmg" path="res://Assets/Pickups/PlasmaAugmentPickup.png" id="2_iqpjv"]
 [ext_resource type="Resource" uid="uid://cepoytsvun1sb" path="res://Data/Augments/PlasmaAugment.tres" id="3_plasma"]
 
@@ -8,4 +9,5 @@
 script = ExtResource("1_qmc68")
 texture = ExtResource("2_iqpjv")
 augment = ExtResource("3_plasma")
+pickup_sfx = ExtResource("2_f42f2")
 metadata/_custom_type_script = "uid://rau2jwiqd0pd"

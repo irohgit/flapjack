@@ -16,6 +16,9 @@ extends Area2D
 @onready var _sprite: Sprite2D = $Sprite2D
 @onready var _shape: CollisionShape2D = $CollisionShape2D
 
+#SFX
+@export var hit_sfx: AudioStream
+
 
 func _ready() -> void:
 	assert(data != null, "Hazard spawned with no HazardData assigned")
@@ -42,6 +45,7 @@ func _physics_process(delta: float) -> void:
 
 # Indestructible. Absorbs the shot so the player learns it is solid.
 func take_damage(_amount: int) -> void:
+	Audio.play_sfx(hit_sfx, -14.0, 0.08)
 	pass
 
 

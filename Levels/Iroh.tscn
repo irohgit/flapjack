@@ -3,10 +3,10 @@
 [ext_resource type="Script" uid="uid://dtnr6irh8ywl8" path="res://Levels/iroh.gd" id="1_e8ii7"]
 [ext_resource type="PackedScene" uid="uid://clbb7gk5jgf0g" path="res://Cinematics/SplashCinematic.tscn" id="2_h6hye"]
 [ext_resource type="PackedScene" uid="uid://cbwqh8cwq0yhh" path="res://Cinematics/OpeningCinematic.tscn" id="3_cq3fk"]
-[ext_resource type="PackedScene" uid="uid://0js1ghbsjvcd" path="res://Levels/Level0.tscn" id="4_odipc"]
+[ext_resource type="PackedScene" uid="uid://b0lip6bxy10wr" path="res://Levels/iroh_level.tscn" id="4_h6hye"]
 
 [node name="Game" type="CanvasLayer" unique_id=1353436997]
 script = ExtResource("1_e8ii7")
 splash_scene = ExtResource("2_h6hye")
 cinematic_scene = ExtResource("3_cq3fk")
-level_scene = ExtResource("4_odipc")
+level_scene = ExtResource("4_h6hye")

@@ -8,4 +8,6 @@
 script = ExtResource("1_dbaf8")
 sprite_frames = ExtResource("2_pnrgs")
 warning_texture = ExtResource("3_b6bvp")
+speed = 120.0
+frequency = 1.0
 metadata/_custom_type_script = "uid://b3vcm10hop7vv"

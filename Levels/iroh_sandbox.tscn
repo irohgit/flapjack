@@ -1,32 +1,20 @@
 [gd_scene format=3 uid="uid://b0uqnqks41txj"]
 
 [ext_resource type="PackedScene" uid="uid://3gxxy4myod8b" path="res://Actors/Enemies/PatternEnemyWaveSpawner.tscn" id="1_bkyu2"]
-[ext_resource type="Script" uid="uid://dyavx03adfhd4" path="res://Actors/Enemies/butcherbird_wave_spawner.gd" id="2_cbxy2"]
-[ext_resource type="PackedScene" uid="uid://bq1hohq82ovyn" path="res://Actors/Enemies/enemy_pattern_butcherbird.tscn" id="3_nnnox"]
-[ext_resource type="Resource" uid="uid://b1t8pmt6xip8x" path="res://Data/Enemy/ButcherBird_Black.tres" id="4_7s71g"]
-[ext_resource type="Resource" uid="uid://cklo8eixg31" path="res://Data/Enemy/ButcherBird_Red.tres" id="5_bruf6"]
-[ext_resource type="Resource" uid="uid://c5rytdcdk7abo" path="res://Data/Enemy/ButcherBird_Gold.tres" id="6_mhdj5"]
 
 [node name="IrohSandbox" type="Node2D" unique_id=88146748]
 
 [node name="PatternEnemyWaveSpawner" parent="." unique_id=1438365835 instance=ExtResource("1_bkyu2")]
 position = Vector2(1676, 220)
 scale = Vector2(4, 4)
-script = ExtResource("2_cbxy2")
-bird_scene = ExtResource("3_nnnox")
-bird_data = ExtResource("4_7s71g")
 bird_count = 10
 warning_duration = 1.5
 min_spawn_interval = 0.3
 max_spawn_interval = 0.3
-flip_horizontal = true
 
 [node name="PatternEnemyWaveSpawner2" parent="." unique_id=1205764541 instance=ExtResource("1_bkyu2")]
 position = Vector2(139, 574)
 scale = Vector2(4, 4)
-script = ExtResource("2_cbxy2")
-bird_scene = ExtResource("3_nnnox")
-bird_data = ExtResource("5_bruf6")
 bird_count = 30
 warning_duration = 1.5
 min_spawn_interval = 0.3
@@ -36,12 +24,17 @@ jiggle_duration = 1.0
 [node name="PatternEnemyWaveSpawner3" parent="." unique_id=885973115 instance=ExtResource("1_bkyu2")]
 position = Vector2(1723, 866)
 scale = Vector2(4, 4)
-script = ExtResource("2_cbxy2")
-bird_scene = ExtResource("3_nnnox")
-bird_data = ExtResource("6_mhdj5")
 bird_count = 10
 warning_duration = 1.5
 min_spawn_interval = 0.3
 max_spawn_interval = 0.3
 jiggle_duration = 3.0
-flip_horizontal = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1795994413]
+offset_left = 295.0
+offset_top = 364.0
+offset_right = 1768.0
+offset_bottom = 790.0
+theme_override_font_sizes/normal_font_size = 95
+bbcode_enabled = true
+text = "[color=#000000][wave amp=50 freq=2]HELLO YOU HAVE REACHED THE END... CONGRATULATIONS![/wave][/color]"

@@ -17,3 +17,5 @@ func fire(shooter: Node2D, weapon: WeaponState) -> void:
 
 	shooter.get_parent().add_child(shot)
 	shot.global_position = shooter.global_position + Vector2(0, -40)
+	#SFX
+	_play_fire_sound(weapon)

@@ -1,22 +1,35 @@
 extends Node2D
 
 @export var bird_scene: PackedScene
-@export var bird_data: PatternButcherBirdData
+@export var bird_data_pool: Array[PatternButcherBirdData] = []
 
 @export var bird_count: int = 3
 @export var warning_duration: float = 1.0
 @export var min_spawn_interval: float = 0.8
 @export var max_spawn_interval: float = 1.2
 @export var jiggle_duration: float = 0.32
-@export var flip_horizontal: bool = false
+
+
 @onready var launch_point: Marker2D = $LaunchPoint
 @onready var warning_sign: ButcherBirdWarning = $WarningSign
 
+var bird_data: PatternButcherBirdData
 var birds_spawned: int = 0
+var flip_horizontal: bool = false
 
+func begin(spawn_from_right: bool) -> void:
+	if bird_data_pool.is_empty():
+		push_warning("PatternEnemyWaveSpawner has no bird data")
+		return
 
-func _ready():
+	bird_data = bird_data_pool.pick_random()
+
+	flip_horizontal = spawn_from_right
+	birds_spawned = 0
 	start_wave()
+	
+#func _ready():
+	
 
 
 func start_wave():
@@ -34,19 +47,28 @@ func start_wave():
 	spawn_bird()
 
 
-func spawn_bird():
+func spawn_bird() -> void:
 	if birds_spawned >= bird_count:
 		return
 
-	var bird = bird_scene.instantiate() as PatternBird
-	get_tree().current_scene.add_child(bird)
+	var bird: PatternBird = bird_scene.instantiate() as PatternBird
+
+	if bird == null:
+		push_error("Bird scene must inherit from PatternBird")
+		return
+
+	var screen_parent: Node2D = get_parent()
+	screen_parent.add_child(bird)
+
+	var spawn_position: Vector2 = screen_parent.to_local(launch_point.global_position)
 	var direction: float = -1.0 if flip_horizontal else 1.0
-	bird.setup(bird_data,launch_point.global_position,direction)
-	
+
+	bird.setup(bird_data, spawn_position, direction)
+
 	birds_spawned += 1
 
 	if birds_spawned < bird_count:
-		var interval: float = randf_range(min_spawn_interval,max_spawn_interval)
+		var interval: float = randf_range(min_spawn_interval, max_spawn_interval)
 		await get_tree().create_timer(interval).timeout
 		spawn_bird()
 

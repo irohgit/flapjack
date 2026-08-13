@@ -15,11 +15,16 @@ run/main_scene="uid://dfgiunphxmxmr"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="uid://bv2vqdlsn4dlf"
+
 [autoload]
 
 Playarea="*uid://kwik3usbaupe"
 DebugHud="*uid://b0uptuewb1atn"
 GameEvents="*uid://3lsfc782llap"
+Audio="*uid://d316g6l1ugkiy"
 
 [display]
 

@@ -20,6 +20,11 @@ var velocity := Vector2.ZERO
 var _move_intent := Vector2.ZERO
 var _external_force := Vector2.ZERO
 
+#SFX
+@export var cannon_sfx: AudioStream
+@export var hit_sfx: AudioStream
+@export var death_sfx: AudioStream
+
 func _ready() -> void:
 	area_entered.connect(_on_area_entered)
 	_health.damaged.connect(_on_damaged)
@@ -41,14 +46,16 @@ func _physics_process(delta: float) -> void:
 	_update_weapons(delta)
 	
 func _clamp_to_camera(pos: Vector2) -> Vector2:
-	var camera_center = camera.get_screen_center_position()
-	var view_size = camera.get_viewport_rect().size
-	var margin: float = 0.0
-	
-	var left = camera_center.x - view_size.x * 0.5
-	var right = camera_center.x + view_size.x * 0.5
-	var top = camera_center.y - view_size.y * 0.5
-	var bottom = camera_center.y + view_size.y * 0.5
+	var camera_center_global: Vector2 = camera.get_screen_center_position()
+	var camera_center_local: Vector2 = get_parent().to_local(camera_center_global)
+
+	var view_size: Vector2 = camera.get_viewport_rect().size / camera.zoom
+	var margin: float = half_width
+
+	var left: float = camera_center_local.x - view_size.x * 0.5
+	var right: float = camera_center_local.x + view_size.x * 0.5
+	var top: float = camera_center_local.y - view_size.y * 0.5
+	var bottom: float = camera_center_local.y + view_size.y * 0.5
 
 	return Vector2(
 		clampf(pos.x, left + margin, right - margin),
@@ -122,12 +129,14 @@ func heal(amount: int) -> void:
 
 ## Combat Private
 func _on_damaged() -> void:
+	Audio.play_sfx(hit_sfx, 0.0)
 	DebugHud.flash("Player Took 1 Damage")
 	_shake(0.4) #Camera Shake
 	modulate = Color(1, 0.4, 0.4)
 	create_tween().tween_property(self, "modulate", Color.WHITE, _health.invincibility_time)
 	
 func _on_died() -> void:
+	Audio.play_sfx(death_sfx, 0.0)
 	_shake(0.8) #Camera Shake
 	DebugHud.flash("PLAYER DESTROYED")
 	queue_free()

@@ -25,11 +25,7 @@ signal enemies_cleared
 var _active_enemies := 0
 
 
-func spawn_pack(
-	pack: Array[EnemyData],
-	pos: Vector2,
-	formation: Formation = Formation.LINE
-) -> void:
+func spawn_pack(pack: Array[EnemyData],pos: Vector2,formation: Formation = Formation.LINE) -> void:
 	assert(spawn_parent != null, "EnemyController needs a spawn parent")
 
 	for index in pack.size():
@@ -85,13 +81,18 @@ func _formation_offset(index: int, count: int, formation: Formation) -> Vector2:
 				return Vector2.ZERO
 			var angle := TAU * float(index) / float(count) - PI * 0.5
 			return Vector2.RIGHT.rotated(angle) * formation_radius
-
-		_: # LINE
-			return Vector2(
-				(float(index) - float(count - 1) * 0.5) * horizontal_spacing,
-				0.0
-			)
-
+		
+		Formation.LINE:
+			var x_offset: float = (float(index) - float(count - 1) * 0.5) * horizontal_spacing
+			return Vector2(x_offset, 0.0)
+		
+		#IROH: Commented this out to insert explicit Formation.LINE (Maths is the same) - Lines 89 to 91
+		#_: # LINE
+			#return Vector2(
+				#(float(index) - float(count - 1) * 0.5) * horizontal_spacing,
+				#0.0
+			#)
+	return Vector2.ZERO
 
 func _on_enemy_exited() -> void:
 	_active_enemies -= 1

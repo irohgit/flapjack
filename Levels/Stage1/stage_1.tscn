@@ -18,8 +18,6 @@
 [ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="16_m3y4m"]
 [ext_resource type="Resource" uid="uid://c8prjyekwi7hm" path="res://Data/Pickups/HomingCannonPickup.tres" id="17_uwhja"]
 [ext_resource type="Resource" uid="uid://5vagi0atsu3m" path="res://Data/Pickups/PlasmaAugmentPickup.tres" id="18_p2t5c"]
-[ext_resource type="PackedScene" uid="uid://3gxxy4myod8b" path="res://Actors/Enemies/PatternEnemyWaveSpawner.tscn" id="19_m3y4m"]
-[ext_resource type="Script" uid="uid://dyavx03adfhd4" path="res://Actors/Enemies/butcherbird_wave_spawner.gd" id="20_uwhja"]
 
 [node name="Stage1" type="Node2D" unique_id=1126219472 node_paths=PackedStringArray("scroll_director", "enemy_controller")]
 script = ExtResource("1_thckm")
@@ -36,8 +34,7 @@ enemy_types = Array[ExtResource("12_fkloy")]([ExtResource("5_fkloy"), ExtResourc
 spawn_parent = NodePath("../World")
 horizontal_spacing = 250.0
 
-[node name="ScrollDirector" parent="." unique_id=1595117280 node_paths=PackedStringArray("camera") instance=ExtResource("3_o28ls")]
-camera = NodePath("../ShakeCamera")
+[node name="ScrollDirector" parent="." unique_id=1595117280 instance=ExtResource("3_o28ls")]
 scroll_speed = 50.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1686435467]
@@ -45,6 +42,7 @@ layer = -100
 
 [node name="WaterBack" parent="CanvasLayer" unique_id=364615905 node_paths=PackedStringArray("camera") instance=ExtResource("3_utqb5")]
 camera = NodePath("../../ShakeCamera")
+metadata/_edit_use_anchors_ = true
 
 [node name="HUD" parent="." unique_id=228684140 instance=ExtResource("1_s0w88")]
 
@@ -63,7 +61,3 @@ weapons = Array[ExtResource("7_bsnqn")]([ExtResource("8_thckm")])
 
 [node name="CoinSpawner" parent="." unique_id=1386735529 instance=ExtResource("14_rvay1")]
 augments = Array[ExtResource("16_m3y4m")]([ExtResource("17_uwhja"), ExtResource("18_p2t5c")])
-
-[node name="PatternEnemyWaveSpawner" parent="." unique_id=1438365835 instance=ExtResource("19_m3y4m")]
-position = Vector2(384, 201)
-script = ExtResource("20_uwhja")

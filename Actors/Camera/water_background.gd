@@ -18,7 +18,9 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
+	var scaled_camera_offset: Vector2 = camera.global_position
+
 	_shader_material.set_shader_parameter(
 		&"camera_offset",
-		camera.global_position
+		scaled_camera_offset
 	)

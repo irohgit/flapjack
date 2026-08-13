@@ -117,6 +117,7 @@ func _update_trail() -> void:
 
 
 func _on_area_entered(area: Area2D) -> void:
+	Audio.play_sfx(data.impact_sound, -8.0)
 	if plasma and area is Enemy:
 		var enemy := area as Enemy
 		enemy.apply_effect(Enemy.Effects.STUN, plasma_stun_duration)
