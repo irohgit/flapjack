@@ -12,7 +12,6 @@
 [ext_resource type="PackedScene" uid="uid://c1hug03muahmo" path="res://Actors/Camera/water_background.tscn" id="9_dpxfw"]
 [ext_resource type="PackedScene" uid="uid://t7alddeyjrep" path="res://Levels/hud.tscn" id="10_hn8e3"]
 [ext_resource type="PackedScene" uid="uid://cclwwsegfn8rr" path="res://Actors/Player/player.tscn" id="11_h2ifs"]
-[ext_resource type="Script" uid="uid://bpr8v8sl141c1" path="res://Actors/Player/player.gd" id="12_2mufh"]
 [ext_resource type="Script" uid="uid://dfww4fxipct38" path="res://Data/Weapons/weapon_data.gd" id="13_md5ru"]
 [ext_resource type="Resource" uid="uid://b7nwwwfmfkswx" path="res://Data/Weapons/Cannon.tres" id="14_n4d5t"]
 [ext_resource type="PackedScene" uid="uid://cstesilwdvxw5" path="res://Levels/settings_panel.tscn" id="15_4h1ux"]
@@ -67,15 +66,7 @@ metadata/_custom_type_script = "uid://tsoi3lwff5mf"
 
 [node name="Player" parent="ScrollRig" unique_id=2109576054 node_paths=PackedStringArray("camera") instance=ExtResource("11_h2ifs")]
 position = Vector2(960, 1000)
-script = ExtResource("12_2mufh")
-max_speed = 700.0
-responsiveness = 25.0
-half_width = 32.0
 camera = NodePath("../ShakeCamera")
-coin_count = 0
 weapons = Array[ExtResource("13_md5ru")]([ExtResource("14_n4d5t")])
-cannon_sfx = null
-hit_sfx = null
-death_sfx = null
 
 [node name="ScreenEncounters" type="Node2D" parent="ScrollRig" unique_id=1914844107]
