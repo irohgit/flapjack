@@ -16,6 +16,9 @@ var _weapon_states: Array[WeaponState] = []
 @onready var _health: HealthComponent = $HealthComponent
 @onready var _shield: ShieldComponent = $ShieldComponent
 
+signal coin_changed(amount: int)
+signal augment_added(augment: AugmentData)
+
 var velocity := Vector2.ZERO
 var _move_intent := Vector2.ZERO
 var _external_force := Vector2.ZERO
@@ -24,8 +27,9 @@ var _is_dead := false
 func _ready() -> void:
 	area_entered.connect(_on_area_entered)
 	_health.damaged.connect(_on_damaged)
-	_health.health_changed.connect(func(c, m): DebugHud.watch("health", "%d/%d" % [c, m]))
+	#_health.health_changed.connect(func(c, m): DebugHud.watch("health", "%d/%d" % [c, m]))
 	_health.died.connect(_on_died)
+	coin_changed.emit(coin_count)
 	
 	for weapon in weapons:
 		_weapon_states.append(WeaponState.new(weapon))
@@ -66,19 +70,20 @@ func _on_area_entered(area: Area2D) -> void:
 ## Camera
 func _shake(amount: float) -> void:
 	var cams := get_tree().get_nodes_in_group("shake_camera")
-	print("cameras found: ", cams.size())
+	#print("cameras found: ", cams.size())
 	if not cams.is_empty():
 		cams[0].add_trauma(amount)
 
 ## Collected item
 func _add_coins(amount: int):
 	coin_count += amount
-	print("Coins:", coin_count)
+	coin_changed.emit(coin_count)
 
 func add_augment(augment: AugmentData) -> bool:
 	for state in _weapon_states:
 		if state.data == augment.targetWeapon:
 			state.augments.append(augment)
+			augment_added.emit(augment)
 			return true
 	return false
 
@@ -110,7 +115,7 @@ func apply_wind_force(force: Vector2) -> void:
 
 func take_damage(amount: int) -> void:
 	if _shield.try_block_hit():
-		DebugHud.flash("Shield absorbed hit")
+		#DebugHud.flash("Shield absorbed hit")
 		return
 	_health.take_damage(amount)
 
@@ -118,12 +123,18 @@ func add_shield(amount: int) -> bool:
 	_shield.add_stack(amount)
 	return true
 	
+func get_shield_component() -> ShieldComponent:
+	return _shield
+	
 func heal(amount: int) -> void:
 	_health.heal(amount)
 
+func get_health_component() -> HealthComponent:
+	return _health
+
 ## Combat Private
 func _on_damaged() -> void:
-	DebugHud.flash("Player Took 1 Damage")
+	#DebugHud.flash("Player Took 1 Damage")
 	_shake(0.4) #Camera Shake
 	modulate = Color(1, 0.4, 0.4)
 	create_tween().tween_property(self, "modulate", Color.WHITE, _health.invincibility_time)
