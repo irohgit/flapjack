@@ -17,6 +17,7 @@ var _weapon_states: Array[WeaponState] = []
 @onready var _shield: ShieldComponent = $ShieldComponent
 
 signal coin_changed(amount: int)
+signal augment_added(augment: AugmentData)
 
 var velocity := Vector2.ZERO
 var _move_intent := Vector2.ZERO
@@ -81,6 +82,7 @@ func add_augment(augment: AugmentData) -> bool:
 	for state in _weapon_states:
 		if state.data == augment.targetWeapon:
 			state.augments.append(augment)
+			augment_added.emit(augment)
 			return true
 	return false
 

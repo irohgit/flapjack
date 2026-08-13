@@ -12,6 +12,7 @@ metadata/_custom_type_script = "uid://8lobgpjn42re"
 
 [resource]
 script = ExtResource("1_a3ywa")
+name = "Plasma cannon"
 targetWeapon = ExtResource("2_ejb6y")
 texture = ExtResource("3_j42j8")
 augmentEffect = SubResource("Resource_ejb6y")
