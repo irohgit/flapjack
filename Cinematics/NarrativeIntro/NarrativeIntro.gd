@@ -6,6 +6,9 @@ const INPUT_DEBOUNCE_MS := 450
 
 const PIXEL_FONT := preload("res://Assets/Fonts/PixelOperator.ttf")
 
+const MUSIC_STORY := preload("res://Assets/Audio/Cinematics/song_of_the_sea.ogg")
+const AMBIENCE_OCEAN := preload("res://Assets/Audio/Cinematics/ocean_waves.wav")
+
 const BG_HARBOR := preload("res://Assets/Cinematics/NarrativeIntro/Backgrounds/harbor.png")
 const BG_ISLAND := preload("res://Assets/Cinematics/NarrativeIntro/Backgrounds/distant_island.png")
 const BG_JOURNEY := preload("res://Assets/Cinematics/NarrativeIntro/Backgrounds/journey_ocean.png")
@@ -65,6 +68,12 @@ var _stage: Control
 var _subtitle_panel: Panel
 var _subtitle_label: Label
 var _fade: ColorRect
+var _music: AudioStreamPlayer
+var _ocean_ambience: AudioStreamPlayer
+var _speech_blip: AudioStreamPlayer
+var _typewriter_timer: Timer
+var _typewriter_text := ""
+var _typewriter_index := 0
 var _scenes: Array[Control] = []
 var _scene_nodes: Array[Dictionary] = []
 var _running_tweens: Array[Tween] = []
@@ -79,7 +88,9 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	set_process_input(true)
 	_build_shell()
+	_build_audio()
 	_build_all_scenes()
+	_start_audio()
 	call_deferred("_run_intro")
 
 
@@ -160,6 +171,46 @@ func _build_shell() -> void:
 	add_child(_fade)
 
 
+func _build_audio() -> void:
+	_music = AudioStreamPlayer.new()
+	_music.name = "StoryMusic"
+	_music.stream = MUSIC_STORY
+	_music.volume_db = -14.0
+	add_child(_music)
+
+	_ocean_ambience = AudioStreamPlayer.new()
+	_ocean_ambience.name = "OceanAmbience"
+	_ocean_ambience.stream = AMBIENCE_OCEAN
+	_ocean_ambience.volume_db = -22.0
+	add_child(_ocean_ambience)
+
+	_speech_blip = AudioStreamPlayer.new()
+	_speech_blip.name = "FakeSpeech"
+	_speech_blip.stream = _make_speech_blip()
+	_speech_blip.volume_db = -18.0
+	_speech_blip.max_polyphony = 4
+	add_child(_speech_blip)
+
+	_typewriter_timer = Timer.new()
+	_typewriter_timer.name = "TypewriterTimer"
+	_typewriter_timer.wait_time = 0.045
+	_typewriter_timer.timeout.connect(_advance_typewriter)
+	add_child(_typewriter_timer)
+
+func _start_audio() -> void:
+	_music.play()
+	_ocean_ambience.play()
+	_loop_audio(_music)
+	_loop_audio(_ocean_ambience)
+
+
+func _loop_audio(player: AudioStreamPlayer) -> void:
+	player.finished.connect(func() -> void:
+		if not _leaving:
+			player.play()
+	)
+
+
 func _build_all_scenes() -> void:
 	var result := _build_scene_1()
 	_scenes.append(result[0])
@@ -218,26 +269,29 @@ func _build_scene_2() -> Array:
 	var scene := _new_scene("Scene2_BlackbeardsRaid")
 	_background(scene, BG_HARBOR)
 	_overlay(scene, Color(0.015, 0.07, 0.09, 0.18), 1)
+	var danger_tint := _overlay(scene, Color(0.40, 0.0, 0.0, 0.0), 7)
 	var pirate_ship := _sprite(scene, TEX_PIRATE_SHIP, Vector2(-350, 440), Vector2(1.45, 1.45), 3)
 	var flag := _sprite(scene, TEX_PIRATE_FLAG, Vector2(-390, 245), Vector2(0.8, 0.8), 4)
 	var ship_wake := _sprite(scene, TEX_SHIP_WAKE, Vector2(-450, 600), Vector2(1.6, 1.3), 2)
-	var crowd := _sprite(scene, TEX_CROWD, Vector2(1350, 700), Vector2(1.15, 1.15), 4)
-	var guard := _sprite(scene, TEX_GUARD, Vector2(1590, 700), Vector2(1.0, 1.0), 4)
-	var happy := _sprite(scene, TEX_FLAPJACK_HAPPY, Vector2(1110, 750), Vector2(0.85, 0.85), 5)
-	var jumping := _sprite(scene, TEX_FLAPJACK_JUMP, Vector2(1280, 820), Vector2(0.82, 0.82), 5)
-	var surprised := _sprite(scene, TEX_FLAPJACK_SURPRISED, Vector2(1480, 830), Vector2(0.82, 0.82), 5)
-	var blackbeard := _sprite(scene, TEX_BLACKBEARD, Vector2(610, 680), Vector2(1.10, 1.10), 5)
-	var princess := _sprite(scene, TEX_PRINCESS, Vector2(880, 700), Vector2(1.04, 1.04), 5)
-	var amulet := _sprite(scene, TEX_AMULET, Vector2(980, 650), Vector2(0.72, 0.72), 6)
-	var dust := _sprite(scene, TEX_DUST, Vector2(1260, 870), Vector2(1.25, 1.25), 3)
+	var crowd := _sprite(scene, TEX_CROWD, Vector2(1570, 700), Vector2(1.15, 1.15), 4)
+	var guard := _sprite(scene, TEX_GUARD, Vector2(1740, 700), Vector2(1.0, 1.0), 4)
+	var happy := _sprite(scene, TEX_FLAPJACK_HAPPY, Vector2(340, 520), Vector2(0.85, 0.85), 5)
+	var jumping := _sprite(scene, TEX_FLAPJACK_JUMP, Vector2(255, 530), Vector2(0.82, 0.82), 5)
+	var surprised := _sprite(scene, TEX_FLAPJACK_SURPRISED, Vector2(430, 530), Vector2(0.82, 0.82), 5)
+	var blackbeard := _sprite(scene, TEX_BLACKBEARD, Vector2(285, 520), Vector2(1.10, 1.10), 5)
+	var princess := _sprite(scene, TEX_PRINCESS, Vector2(920, 700), Vector2(1.04, 1.04), 5)
+	var amulet := _sprite(scene, TEX_AMULET, Vector2(1050, 650), Vector2(0.72, 0.72), 6)
+	var dust := _sprite(scene, TEX_DUST, Vector2(1220, 870), Vector2(1.25, 1.25), 3)
 	dust.modulate.a = 0.0
-	var flash := _sprite(scene, TEX_FLASH, Vector2(955, 635), Vector2(1.2, 1.2), 7)
+	var flash := _sprite(scene, TEX_FLASH, Vector2(1030, 635), Vector2(1.2, 1.2), 8)
 	flash.modulate.a = 0.0
+	for hidden_actor in [happy, jumping, surprised, blackbeard]:
+		hidden_actor.modulate.a = 0.0
 	return [scene, {
 		"ship": pirate_ship, "flag": flag, "ship_wake": ship_wake,
 		"crowd": crowd, "guard": guard, "flapjacks": [happy, jumping, surprised],
 		"blackbeard": blackbeard, "princess": princess, "amulet": amulet,
-		"dust": dust, "flash": flash
+		"dust": dust, "flash": flash, "danger_tint": danger_tint
 	}]
 
 
@@ -324,7 +378,7 @@ func _build_scene_6() -> Array:
 func _run_intro() -> void:
 	await _present_story_scene(0, "The Amulet of Azure keeps Mama sleeping.", 4.8, Callable(self, "_animate_scene_1"))
 	if not _skip_story:
-		await _present_story_scene(1, "Blackbeard took the amulet. And the princess.", 5.2, Callable(self, "_animate_scene_2"))
+		await _present_story_scene(1, "Blackbeard took the amulet. And the princess.", 6.8, Callable(self, "_animate_scene_2"))
 	if not _skip_story:
 		await _present_story_scene(2, "Lieutenant Des Martin. You have a ship.", 4.8, Callable(self, "_animate_scene_3"))
 	if not _skip_story:
@@ -348,6 +402,7 @@ func _present_story_scene(index: int, subtitle: String, duration: float, animati
 		var subtitle_tween := _new_tween()
 		subtitle_tween.tween_interval(0.28)
 		subtitle_tween.tween_property(_subtitle_panel, "modulate:a", 1.0, 0.45)
+		_type_subtitle(subtitle)
 	await _wait_for(duration)
 	if _leaving:
 		return
@@ -365,6 +420,8 @@ func _show_title_screen() -> void:
 	nodes["skull"].modulate.a = 0.0
 	nodes["prompt"].modulate.a = 0.0
 	_animate_scene_6(nodes)
+	var title_music := _new_tween()
+	title_music.tween_property(_music, "volume_db", -19.0, 1.5)
 	await _fade_overlay_to(0.0, 0.8)
 	while not _title_confirmed and not _leaving:
 		await get_tree().process_frame
@@ -389,24 +446,41 @@ func _animate_scene_1(nodes: Dictionary) -> void:
 
 
 func _animate_scene_2(nodes: Dictionary) -> void:
-	for flapjack in nodes["flapjacks"]:
-		_bob(flapjack, 24.0, 0.55 + randf_range(0.0, 0.18))
-	_pulse(nodes["dust"], Vector2(0.8, 0.8), Vector2(1.35, 1.35), 0.75, 0.0, 0.52)
 	var arrival := _new_tween()
 	arrival.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	arrival.tween_property(nodes["ship"], "position:x", 340.0, 1.55)
 	arrival.parallel().tween_property(nodes["flag"], "position:x", 300.0, 1.55)
 	arrival.parallel().tween_property(nodes["ship_wake"], "position:x", 235.0, 1.55)
+	arrival.tween_callback(func() -> void:
+		for flapjack in nodes["flapjacks"]:
+			flapjack.modulate.a = 1.0
+	)
+	arrival.tween_property(nodes["flapjacks"][0], "position", Vector2(1110, 770), 0.65)
+	arrival.parallel().tween_property(nodes["flapjacks"][1], "position", Vector2(1320, 815), 0.72)
+	arrival.parallel().tween_property(nodes["flapjacks"][2], "position", Vector2(1490, 815), 0.78)
+	arrival.parallel().tween_property(nodes["dust"], "modulate:a", 0.55, 0.35)
+	arrival.tween_property(nodes["dust"], "modulate:a", 0.0, 0.35)
+	arrival.tween_property(nodes["crowd"], "position:x", 1375.0, 0.65)
+	arrival.parallel().tween_property(nodes["guard"], "position:x", 1570.0, 0.65)
+	arrival.tween_callback(func() -> void:
+		for flapjack in nodes["flapjacks"]:
+			_bob(flapjack, 24.0, 0.55 + randf_range(0.0, 0.18))
+	)
 	var action := _new_tween()
-	action.tween_interval(1.25)
-	action.tween_property(nodes["blackbeard"], "position:x", 875.0, 0.65)
-	action.parallel().tween_property(nodes["amulet"], "position", Vector2(835, 590), 0.65)
+	action.tween_interval(3.05)
+	action.tween_callback(func() -> void:
+		nodes["blackbeard"].modulate.a = 1.0
+	)
+	action.tween_property(nodes["blackbeard"], "position", Vector2(875, 640), 0.72)
+	action.parallel().tween_property(nodes["amulet"], "position", Vector2(835, 585), 0.72)
+	action.parallel().tween_property(nodes["danger_tint"], "color:a", 0.26, 0.18)
 	action.parallel().tween_property(nodes["flash"], "modulate:a", 1.0, 0.18)
 	action.tween_property(nodes["flash"], "modulate:a", 0.0, 0.28)
-	action.tween_interval(0.35)
-	action.tween_property(nodes["princess"], "position", Vector2(520, 560), 0.65)
+	action.parallel().tween_property(nodes["danger_tint"], "color:a", 0.0, 0.35)
+	action.tween_interval(0.16)
+	action.tween_property(nodes["princess"], "position", Vector2(520, 555), 0.62)
 	action.parallel().tween_property(nodes["blackbeard"], "position", Vector2(410, 550), 0.65)
-	action.tween_interval(0.25)
+	action.tween_interval(0.12)
 	action.tween_property(nodes["ship"], "position:x", 2260.0, 1.35)
 	action.parallel().tween_property(nodes["flag"], "position:x", 2220.0, 1.35)
 	action.parallel().tween_property(nodes["ship_wake"], "position:x", 2130.0, 1.35)
@@ -485,6 +559,8 @@ func _animate_scene_6(nodes: Dictionary) -> void:
 
 func _show_only_scene(index: int) -> void:
 	_kill_scene_tweens()
+	_typewriter_timer.stop()
+	_speech_blip.stop()
 	for scene in _scenes:
 		scene.hide()
 		scene.scale = Vector2.ONE
@@ -494,11 +570,35 @@ func _show_only_scene(index: int) -> void:
 
 func _set_subtitle(text: String) -> void:
 	if text == "":
+		_typewriter_timer.stop()
+		_speech_blip.stop()
 		_subtitle_panel.hide()
 		return
 	_subtitle_label.text = text
+	_subtitle_label.visible_ratio = 0.0
 	_subtitle_panel.modulate.a = 0.0
 	_subtitle_panel.show()
+
+
+func _type_subtitle(text: String) -> void:
+	_subtitle_label.text = text
+	_subtitle_label.visible_characters = 0
+	_typewriter_text = text
+	_typewriter_index = 0
+	_typewriter_timer.start(0.38)
+
+
+func _advance_typewriter() -> void:
+	if _typewriter_index >= _typewriter_text.length():
+		_typewriter_timer.stop()
+		return
+	_typewriter_index += 1
+	_subtitle_label.visible_characters = _typewriter_index
+	var character := _typewriter_text.substr(_typewriter_index - 1, 1)
+	if character not in " .,!?;:'-":
+		_speech_blip.pitch_scale = randf_range(0.88, 1.12)
+		_speech_blip.play()
+	_typewriter_timer.wait_time = 0.045
 
 
 func _wait_for(seconds: float) -> void:
@@ -523,6 +623,11 @@ func _go_to_main_menu() -> void:
 	_title_confirmed = true
 	_at_title = false
 	_kill_scene_tweens()
+	_typewriter_timer.stop()
+	_speech_blip.stop()
+	var audio_fade := create_tween()
+	audio_fade.tween_property(_music, "volume_db", -40.0, 0.32)
+	audio_fade.parallel().tween_property(_ocean_ambience, "volume_db", -40.0, 0.32)
 	get_tree().paused = false
 	await _fade_overlay_to(1.0, 0.35)
 	get_tree().change_scene_to_file(MAIN_MENU_SCENE)
@@ -538,6 +643,23 @@ func _new_scene(scene_name: String) -> Control:
 	scene.hide()
 	_stage.add_child(scene)
 	return scene
+
+
+func _make_speech_blip() -> AudioStreamWAV:
+	var stream := AudioStreamWAV.new()
+	stream.format = AudioStreamWAV.FORMAT_16_BITS
+	stream.mix_rate = 22050
+	stream.stereo = false
+	var frame_count := 800
+	var pcm := PackedByteArray()
+	pcm.resize(frame_count * 2)
+	for frame in range(frame_count):
+		var time := float(frame) / float(stream.mix_rate)
+		var envelope := 1.0 - (float(frame) / float(frame_count))
+		var tone := sin(TAU * 245.0 * time) * 0.72 + sin(TAU * 368.0 * time) * 0.28
+		pcm.encode_s16(frame * 2, int(tone * envelope * 8500.0))
+	stream.data = pcm
+	return stream
 
 
 func _background(parent: CanvasItem, texture: Texture2D, z: int = 0) -> Sprite2D:
