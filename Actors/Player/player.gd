@@ -27,7 +27,7 @@ var _is_dead := false
 func _ready() -> void:
 	area_entered.connect(_on_area_entered)
 	_health.damaged.connect(_on_damaged)
-	_health.health_changed.connect(func(c, m): DebugHud.watch("health", "%d/%d" % [c, m]))
+	#_health.health_changed.connect(func(c, m): DebugHud.watch("health", "%d/%d" % [c, m]))
 	_health.died.connect(_on_died)
 	coin_changed.emit(coin_count)
 	

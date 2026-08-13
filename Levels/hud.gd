@@ -1,12 +1,17 @@
 extends CanvasLayer
 
 @onready var coin_label: Label = $Coin/Amount
-@onready var health_label: Label = $"health and shield icon/VBoxContainer/HealthRow/HealthLabel"
-@onready var shield_label: Label = $"health and shield icon/VBoxContainer/ShieldRow/ShieldLabel"
+@onready var health_shield_icons: HBoxContainer = $"health and shield icon/HealthRow"
 
 var _player: Player
 var _health: HealthComponent
 var _shield: ShieldComponent
+
+var _current_health: int = 0
+var _shield_amount: int = 0
+
+@export var heart_icon: Texture2D
+@export var shield_icon: Texture2D
 
 func _ready() -> void:
 	_player = get_tree().get_first_node_in_group("player")
@@ -47,16 +52,29 @@ func _on_coin_changed(amount: int) -> void:
 	coin_label.text = str(amount)
 
 func _on_health_changed(current: int, maximum: int) -> void:
-	health_label.text = "%d/%d" % [current, maximum]
+	_current_health = current
+	_update_health_shield_icons()
 
 func _on_shield_changed(amount: int) -> void:
-	shield_label.text = str(amount)
-	
-extends Node
+	_shield_amount = amount
+	_update_health_shield_icons()
 
-@export var player: Player
-@export var heart_icon: TextureRect
-@export var shield_icon: TextureRect
+func _update_health_shield_icons() -> void:
+	# Remove existing icons
+	for child in health_shield_icons.get_children():
+		child.queue_free()
+	# Add hearts first
+	for i in range(_current_health):
+		_add_icon(heart_icon)
+	# Add shields after hearts
+	for i in range(_shield_amount):
+		_add_icon(shield_icon)
 
-func _process(delta: float) -> void:
-	pass
+func _add_icon(texture: Texture2D) -> void:
+
+	var icon := TextureRect.new()
+	icon.texture = texture
+	icon.custom_minimum_size = Vector2(24, 24)
+	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	health_shield_icons.add_child(icon)
