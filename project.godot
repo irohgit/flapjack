@@ -31,7 +31,6 @@ DeathScreen="*res://UI/DeathScreen/death_screen.tscn"
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
-window/stretch/mode="viewport"
 window/handheld/orientation=1
 
 [global_group]
