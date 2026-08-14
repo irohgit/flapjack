@@ -18,14 +18,13 @@ var _finished := false
 func _ready() -> void:
 	assign_colours()
 	_boat.impact.connect(_on_boat_impact)
+	_anim.animation_finished.connect(_on_animation_finished)
 	_anim.play("OpeningCinematic")
-	#_boat.approach()
-				   
-	# boat starts closing
-#func _on_animation_finished(anim_name: StringName) -> void:
-	# Fires after every animation, so only advance on the last one.
-	#if anim_name == "presents":
-		#_finish()
+
+
+func _on_animation_finished(anim_name: StringName) -> void:
+	if anim_name == &"OpeningCinematic":
+		_finish()
 
 
 func _finish() -> void:
@@ -37,10 +36,8 @@ func _finish() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	print("input received")
-	if event.is_action_pressed("ui_accept"):
-		print("accept pressed")
-		_scatter_all(get_viewport_rect().size * 0.5)
+	if event.is_pressed():
+		_finish()
 		
 func _on_boat_impact(point: Vector2) -> void:
 	_shake(0.7)

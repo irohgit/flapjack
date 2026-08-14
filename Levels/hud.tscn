@@ -1,74 +1,27 @@
 [gd_scene format=3 uid="uid://t7alddeyjrep"]
 
-[ext_resource type="Texture2D" uid="uid://s6xw6m0b8tim" path="res://Assets/UI/Health/frame.png" id="1_cnagx"]
-[ext_resource type="Texture2D" uid="uid://bu3rw4aqk4uoi" path="res://Assets/UI/Health/red_fill_alt.png" id="2_iqaem"]
-[ext_resource type="Texture2D" uid="uid://cjacv7cbjjpdy" path="res://Assets/UI/Health/blue_fill_alt.png" id="3_sse4t"]
+[ext_resource type="Script" uid="uid://c7yy08nmcm5ot" path="res://Levels/hud.gd" id="1_otg58"]
 [ext_resource type="Texture2D" uid="uid://bih4j810dbm77" path="res://Assets/UI/Health/heart.png" id="4_sn1ph"]
 [ext_resource type="Texture2D" uid="uid://ef3klwck2tmi" path="res://Assets/UI/Health/shield.png" id="5_6qxyw"]
 [ext_resource type="Texture2D" uid="uid://cwvav4wx32kj3" path="res://Assets/UI/Coin/coin_frame.png" id="6_1wnoe"]
 [ext_resource type="Texture2D" uid="uid://bivaxkwiet2pe" path="res://Assets/UI/Coin/coin_icon.png" id="7_2lib2"]
 [ext_resource type="FontFile" uid="uid://1qarew2on3k7" path="res://Assets/Fonts/PixelOperator.ttf" id="8_uu2l2"]
+[ext_resource type="Script" uid="uid://bbph172n7vkmh" path="res://Levels/augments_panel.gd" id="10_sse4t"]
+[ext_resource type="PackedScene" uid="uid://bs3yk1cg3vc6b" path="res://Actors/HUD/augment_entry.tscn" id="11_sn1ph"]
 
 [node name="HUD" type="CanvasLayer" unique_id=228684140]
-
-[node name="Health and shield bar" type="VBoxContainer" parent="." unique_id=390229496]
-offset_left = 36.0
-offset_top = 12.0
-offset_right = 292.0
-offset_bottom = 81.0
-theme_override_constants/separation = 13
-
-[node name="HealthBar" type="TextureProgressBar" parent="Health and shield bar" unique_id=1883597778]
-layout_mode = 2
-max_value = 3.0
-value = 3.0
-texture_under = ExtResource("1_cnagx")
-texture_over = ExtResource("2_iqaem")
-
-[node name="ShieldBar" type="TextureProgressBar" parent="Health and shield bar" unique_id=442650765]
-layout_mode = 2
-max_value = 3.0
-value = 3.0
-texture_under = ExtResource("1_cnagx")
-texture_over = ExtResource("3_sse4t")
+script = ExtResource("1_otg58")
+heart_icon = ExtResource("4_sn1ph")
+shield_icon = ExtResource("5_6qxyw")
 
 [node name="health and shield icon" type="MarginContainer" parent="." unique_id=751079110]
-offset_top = 10.0
-offset_right = 297.0
-offset_bottom = 78.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 317.0
+offset_bottom = 88.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="health and shield icon" unique_id=917575727]
+[node name="HealthRow" type="HBoxContainer" parent="health and shield icon" unique_id=2119128913]
 layout_mode = 2
-
-[node name="HealthRow" type="HBoxContainer" parent="health and shield icon/VBoxContainer" unique_id=2119128913]
-layout_mode = 2
-
-[node name="HeartIcon" type="TextureRect" parent="health and shield icon/VBoxContainer/HealthRow" unique_id=402219231]
-layout_mode = 2
-texture = ExtResource("4_sn1ph")
-
-[node name="HealthLabel" type="Label" parent="health and shield icon/VBoxContainer/HealthRow" unique_id=2026923085]
-layout_mode = 2
-offset_transform_enabled = true
-offset_transform_position = Vector2(113, -4)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-text = "3/3"
-
-[node name="ShieldRow" type="HBoxContainer" parent="health and shield icon/VBoxContainer" unique_id=1410289416]
-layout_mode = 2
-
-[node name="ShieldIcon" type="TextureRect" parent="health and shield icon/VBoxContainer/ShieldRow" unique_id=1102201546]
-layout_mode = 2
-texture = ExtResource("5_6qxyw")
-
-[node name="ShieldLabel" type="Label" parent="health and shield icon/VBoxContainer/ShieldRow" unique_id=1411276239]
-layout_mode = 2
-offset_transform_enabled = true
-offset_transform_position = Vector2(113, -2)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-text = "2/2"
 
 [node name="Coin" type="Control" parent="." unique_id=1004159780]
 layout_mode = 3
@@ -85,30 +38,50 @@ grow_horizontal = 0
 layout_mode = 0
 offset_left = -97.0
 offset_top = 2.0
-offset_right = 415.0
-offset_bottom = 210.0
-scale = Vector2(0.4, 0.32000262)
+offset_right = 109.0
+offset_bottom = 70.0
 texture = ExtResource("6_1wnoe")
 
 [node name="CoinIcon" type="TextureRect" parent="Coin" unique_id=525282589]
 layout_mode = 0
 offset_left = -66.0
 offset_top = 11.0
-offset_right = 62.0
-offset_bottom = 139.0
-scale = Vector2(0.37334305, 0.3595906)
+offset_right = -18.0
+offset_bottom = 57.0
 texture = ExtResource("7_2lib2")
 
 [node name="Amount" type="Label" parent="Coin" unique_id=195701409]
 layout_mode = 0
 offset_left = -9.0
 offset_top = 4.0
-offset_right = 42.0
-offset_bottom = 44.0
-scale = Vector2(1.5600097, 1.3999994)
+offset_right = 71.0
+offset_bottom = 60.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 6
 theme_override_fonts/font = ExtResource("8_uu2l2")
 theme_override_font_sizes/font_size = 39
-text = "000"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AugmentsPanel" type="PanelContainer" parent="." unique_id=1116543594]
+anchors_preset = -1
+offset_left = 20.0
+offset_top = 800.0
+offset_right = 250.0
+offset_bottom = 880.0
+script = ExtResource("10_sse4t")
+augment_entry_scene = ExtResource("11_sn1ph")
+
+[node name="MarginContainer" type="MarginContainer" parent="AugmentsPanel" unique_id=5311761]
+layout_mode = 2
+
+[node name="AugmentList" type="VBoxContainer" parent="AugmentsPanel/MarginContainer" unique_id=1849694087]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="AugmentsPanel/MarginContainer/AugmentList" unique_id=1251416145]
+layout_mode = 2
+vertical_alignment = 2
+
+[node name="AugmentList" type="VBoxContainer" parent="AugmentsPanel/MarginContainer/AugmentList" unique_id=2044023818]
+layout_mode = 2
