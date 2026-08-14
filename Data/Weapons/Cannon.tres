@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="WeaponData" format=3 uid="uid://b7nwwwfmfkswx"]
 
 [ext_resource type="Script" uid="uid://dfww4fxipct38" path="res://Data/Weapons/weapon_data.gd" id="1_c1qbg"]
-[ext_resource type="AudioStream" uid="uid://ceh8vejpx46ar" path="res://Audio/player_cannon.mp3" id="1_creru"]
+[ext_resource type="AudioStream" uid="uid://byy7pb1556tpq" path="res://Audio/distant_cannon.mp3" id="1_creru"]
 [ext_resource type="PackedScene" uid="uid://bl12qi0n68b6i" path="res://Actors/Projectiles/projectile.tscn" id="2_kvlpv"]
 [ext_resource type="Resource" uid="uid://c41c24mr6dvlc" path="res://Data/Projectiles/cannonball.tres" id="2_lekde"]
 [ext_resource type="Script" uid="uid://dos0tbtxfdq3x" path="res://Data/Weapons/cannon_behaviour.gd" id="2_s7wxh"]

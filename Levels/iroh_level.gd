@@ -12,7 +12,6 @@ func _ready() -> void:
 	assert(enemy_controller != null, "Stage 1 needs an EnemyController")
 	assert(level_generator != null, "Stage 1 needs a LevelGenerator")
 	assert(level_generator.level_data != null, "LevelGenerator needs LevelData")
-
 	var plan: Array[GeneratedEncounter] = level_generator.generate_plan()
 	
 	print("RUNTIME PLAN GENERATED: ", plan.size(), " encounters")

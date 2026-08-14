@@ -23,6 +23,7 @@ func begin(spawn_from_right: bool) -> void:
 		return
 
 	bird_data = bird_data_pool.pick_random()
+	print(bird_data)
 
 	flip_horizontal = spawn_from_right
 	birds_spawned = 0

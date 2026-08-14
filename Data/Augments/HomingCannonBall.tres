@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://cpp3oou337x" path="res://Data/Augments/augment_data.gd" id="1_p66wx"]
 [ext_resource type="Script" uid="uid://comcyui77kncb" path="res://Data/Augments/cannon_homing_effect.gd" id="1_r6bh5"]
 [ext_resource type="Resource" uid="uid://b7nwwwfmfkswx" path="res://Data/Weapons/Cannon.tres" id="2_pifml"]
-[ext_resource type="Texture2D" uid="uid://f7yb4m18lai5" path="res://Assets/Pickups/22.png" id="4_o0miv"]
+[ext_resource type="Texture2D" uid="uid://ouhei4r1fnl8" path="res://Assets/BoatWeapon/Cannon3_color3_3.png" id="4_o0miv"]
 
 [sub_resource type="Resource" id="Resource_5fhce"]
 script = ExtResource("1_r6bh5")

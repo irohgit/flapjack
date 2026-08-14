@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://p4ssfrvfj0uw" path="res://Data/Levels/level_data.gd" id="4_iy8op"]
 [ext_resource type="Script" uid="uid://bgt6cqxd8jifw" path="res://Data/Levels/weighted_encounter_data.gd" id="5_74al8"]
 [ext_resource type="PackedScene" uid="uid://b0uqnqks41txj" path="res://Levels/iroh_sandbox.tscn" id="5_hcrxh"]
-[ext_resource type="PackedScene" uid="uid://3gxxy4myod8b" path="res://Actors/Enemies/PatternEnemyWaveSpawner.tscn" id="9_qllpl"]
+[ext_resource type="PackedScene" uid="uid://bq1hohq82ovyn" path="res://Actors/Enemies/enemy_pattern_butcherbird.tscn" id="9_74al8"]
 
 [sub_resource type="Resource" id="Resource_hcrxh"]
 script = ExtResource("1_0jwiu")
@@ -47,7 +47,7 @@ metadata/_custom_type_script = "uid://dgn1ppeend4i1"
 
 [sub_resource type="Resource" id="Resource_1l6y5"]
 script = ExtResource("5_74al8")
-encounter_scene = ExtResource("9_qllpl")
+encounter_scene = ExtResource("9_74al8")
 metadata/_custom_type_script = "uid://bgt6cqxd8jifw"
 
 [resource]
