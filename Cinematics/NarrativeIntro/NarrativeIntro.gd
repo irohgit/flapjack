@@ -3,6 +3,7 @@ extends Control
 const DESIGN_SIZE := Vector2(1920.0, 1080.0)
 const MAIN_MENU_SCENE := "res://Levels/main_menu.tscn"
 const INPUT_DEBOUNCE_MS := 450
+const PIXEL_SPRITE_SCALE_STEP := 0.5
 
 const PIXEL_FONT := preload("res://Assets/Fonts/PixelOperator.ttf")
 
@@ -440,9 +441,6 @@ func _animate_scene_1(nodes: Dictionary) -> void:
 	var eyes_tween := _new_tween()
 	eyes_tween.tween_interval(1.7)
 	eyes_tween.tween_property(nodes["eyes"], "modulate:a", 1.0, 1.3)
-	var zoom := _new_tween()
-	zoom.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	zoom.tween_property(_scenes[0], "scale", Vector2(1.055, 1.055), 5.4)
 
 
 func _animate_scene_2(nodes: Dictionary) -> void:
@@ -521,7 +519,6 @@ func _animate_scene_4(nodes: Dictionary) -> void:
 	departure.tween_property(nodes["ship"], "position:y", 490.0, 4.5)
 	departure.parallel().tween_property(nodes["shadow"], "position:y", 520.0, 4.5)
 	departure.parallel().tween_property(nodes["wake"], "position:y", 675.0, 4.5)
-	departure.parallel().tween_property(_scenes[3], "scale", Vector2(1.045, 1.045), 4.5)
 
 
 func _animate_scene_5(nodes: Dictionary) -> void:
@@ -535,7 +532,6 @@ func _animate_scene_5(nodes: Dictionary) -> void:
 	sailing.parallel().tween_property(nodes["wake"], "position:y", 700.0, 4.2)
 	sailing.parallel().tween_property(nodes["swimmer"], "position:x", 2080.0, 4.2)
 	sailing.parallel().tween_property(nodes["bubbles"], "position:x", 2000.0, 4.2)
-	sailing.parallel().tween_property(_scenes[4], "scale", Vector2(1.06, 1.06), 4.2)
 	_bob(nodes["swimmer"], 18.0, 0.65)
 
 
@@ -544,7 +540,6 @@ func _animate_scene_6(nodes: Dictionary) -> void:
 	reveal.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	reveal.tween_property(nodes["skull"], "modulate:a", 1.0, 0.55)
 	reveal.parallel().tween_property(nodes["logo"], "modulate:a", 1.0, 0.9)
-	reveal.parallel().tween_property(nodes["logo"], "scale", Vector2(2.18, 2.18), 1.0)
 	reveal.tween_interval(0.25)
 	reveal.tween_property(nodes["prompt"], "modulate:a", 1.0, 0.45)
 	_pulse(nodes["blue_glow"], Vector2(6.4, 5.0), Vector2(7.5, 5.9), 1.65, 0.18, 0.42)
@@ -665,6 +660,7 @@ func _make_speech_blip() -> AudioStreamWAV:
 func _background(parent: CanvasItem, texture: Texture2D, z: int = 0) -> Sprite2D:
 	var background := _sprite(parent, texture, Vector2.ZERO, Vector2.ONE, z)
 	background.centered = false
+	background.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	return background
 
 
@@ -672,11 +668,18 @@ func _sprite(parent: CanvasItem, texture: Texture2D, position: Vector2, sprite_s
 	var sprite := Sprite2D.new()
 	sprite.texture = texture
 	sprite.position = position
-	sprite.scale = sprite_scale
+	sprite.scale = _pixel_aligned_scale(sprite_scale)
 	sprite.z_index = z
 	sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	parent.add_child(sprite)
 	return sprite
+
+
+func _pixel_aligned_scale(value: Vector2) -> Vector2:
+	return Vector2(
+		maxf(PIXEL_SPRITE_SCALE_STEP, snappedf(value.x, PIXEL_SPRITE_SCALE_STEP)),
+		maxf(PIXEL_SPRITE_SCALE_STEP, snappedf(value.y, PIXEL_SPRITE_SCALE_STEP))
+	)
 
 
 func _overlay(parent: CanvasItem, color: Color, z: int = 0) -> ColorRect:
@@ -725,13 +728,14 @@ func _float_up(node: Node2D, distance: float, duration: float) -> void:
 	)
 
 
-func _pulse(node: Node2D, min_scale: Vector2, max_scale: Vector2, duration: float, min_alpha: float, max_alpha: float) -> void:
-	node.scale = min_scale
+func _pulse(node: Node2D, _min_scale: Vector2, _max_scale: Vector2, duration: float, min_alpha: float, max_alpha: float) -> void:
+	# These textures are authored on an exact 2x source grid. Continuously
+	# tweening their scale makes nearest filtering discard and duplicate rows on
+	# every frame, so pulse opacity while keeping geometry on a whole-pixel size.
+	node.scale = _pixel_aligned_scale(node.scale)
 	node.modulate.a = min_alpha
 	var tween := _new_tween()
 	tween.set_loops()
 	tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	tween.tween_property(node, "scale", max_scale, duration)
-	tween.parallel().tween_property(node, "modulate:a", max_alpha, duration)
-	tween.tween_property(node, "scale", min_scale, duration)
-	tween.parallel().tween_property(node, "modulate:a", min_alpha, duration)
+	tween.tween_property(node, "modulate:a", max_alpha, duration)
+	tween.tween_property(node, "modulate:a", min_alpha, duration)

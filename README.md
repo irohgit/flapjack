@@ -41,39 +41,33 @@ components. For example, the Player node runs `Actors/Player/player.gd`, while
 its child `HealthComponent` and `ShieldComponent` nodes manage their individual
 pieces of combat state.
 
-## Pixel-art rules
+## Art fidelity and pixel rendering
 
-The game uses a strict two-source-pixel art grid. Every logical art pixel is a
-uniform `2x2` block at the `1920x1080` design resolution. The Player texture is
-the one exception: it uses `4x4` source blocks because its parent scene renders
-at `0.5` scale, resulting in the same `2x2` screen pixels. Main-menu, pause,
-and death-screen PNGs also use a deliberate `4x4` UI grid so their pixels stay
-readable against the full-resolution gameplay canvas.
+The project contains several independently authored art families: native
+one-pixel sprites, larger repeated-pixel sprites, high-resolution UI, and soft
+cinematic effects. There is no safe universal source grid or palette limit.
 
-- Draw and export sprites on the existing grid; do not resize finished PNGs
-  with smooth or fractional scaling.
-- Use hard alpha edges for solid sprites and UI. Pixel effects may use only the
-  deliberate alpha steps `0`, `85`, `170`, and `255`.
-- Use limited palettes without color dithering or antialiasing.
-- Display PNGs at their authored size. If a different size is needed, bake
-  that final size into the asset and keep the scene scale at `1`.
-- Keep authored positions on the `2x2` design grid. Godot's nearest filtering,
-  transform snapping, and viewport stretching are configured globally.
-- The global `PixelArtRenderer` composites the finished frame back onto that
-  grid before the finished viewport is scaled to the current window.
-- The desktop window is resizable. The game always renders a complete 16:9
-  canvas and adds letterboxing or pillarboxing when the window has another
-  shape; it never stretches or crops gameplay to fill the window.
+- Keep original PNG dimensions, colours, and alpha levels. Never run a blanket
+  downsample, palette reduction, or alpha-threshold pass over the asset tree.
+- Use nearest-neighbour filtering and whole-number transforms for authored
+  pixel art. Smooth or painterly assets may opt into linear filtering on their
+  scene node when they need to be scaled.
+- Prefer displaying pixel-art textures at their authored size or an integer
+  multiple. If another size is required, create and review a dedicated export
+  rather than overwriting the source artwork.
+- Godot globally uses nearest texture filtering and snaps 2D translations to
+  pixel boundaries. These runtime settings do not rewrite the PNG files.
+- The desktop window is resizable. The complete 16:9 canvas is preserved with
+  letterboxing or pillarboxing instead of stretching or cropping gameplay.
+  Fractional window sizes can make physical pixels uneven, but never alter the
+  checked-in source assets.
 
-After adding or changing PNG artwork, run the authoring check (requires
-[Pillow](https://pillow.readthedocs.io/)):
+The optional Pillow-based audit reports dimensions, colour counts, alpha
+levels, and exact repeated-block grids without changing anything:
 
 ```bash
-python3 tools/normalize_pixel_art.py --check
+python3 tools/audit_pixel_art.py --verbose
 ```
-
-To normalize newly added art onto the canonical grid, run the same command
-without `--check`. Review the result in-game before committing it.
 
 ## Creating a new stage
 
