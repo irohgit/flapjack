@@ -5,7 +5,6 @@ const PLAY_WIDTH := 1920.0
 const PLAY_HEIGHT := 1080.0
 const ASPECT_WIDTH := 16
 const ASPECT_HEIGHT := 9
-const INITIAL_SCREEN_COVERAGE := 0.9
 const MIN_WINDOW_SIZE := Vector2i(960, 540)
 
 var screen_size: Vector2
@@ -31,7 +30,8 @@ func _assert_contract() -> void:
 	assert(resizable, "desktop window must remain resizable")
 	assert(stretch_aspect == "keep", "stretch aspect must remain 'keep'")
 
-# Starts in a centred 16:9 window that fits the monitor. After this one-time
+# Starts at the native 1920x1080 canvas whenever the monitor can fit it. On a
+# smaller display it uses the largest fitting 16:9 window. After this one-time
 # setup the user can resize freely; viewport stretch="keep" preserves the game
 # canvas with letterboxing or pillarboxing instead of stretching or cropping it.
 func _configure_desktop_window() -> void:
@@ -40,17 +40,15 @@ func _configure_desktop_window() -> void:
 
 	var screen_id := DisplayServer.window_get_current_screen()
 	var usable := DisplayServer.screen_get_usable_rect(screen_id)
-	var available := Vector2i(
-		floori(usable.size.x * INITIAL_SCREEN_COVERAGE),
-		floori(usable.size.y * INITIAL_SCREEN_COVERAGE)
-	)
-	var width := mini(
-		available.x,
-		floori(float(available.y) * ASPECT_WIDTH / ASPECT_HEIGHT)
-	)
-	# A width divisible by 16 gives an exact integer 16:9 window size.
-	width = maxi(width - (width % ASPECT_WIDTH), ASPECT_WIDTH)
-	var size := Vector2i(width, width * ASPECT_HEIGHT / ASPECT_WIDTH)
+	var size := Vector2i(int(PLAY_WIDTH), int(PLAY_HEIGHT))
+	if usable.size.x < size.x or usable.size.y < size.y:
+		var width := mini(
+			usable.size.x,
+			floori(float(usable.size.y) * ASPECT_WIDTH / ASPECT_HEIGHT)
+		)
+		# A width divisible by 16 gives an exact 16:9 fallback size.
+		width = maxi(width - (width % ASPECT_WIDTH), ASPECT_WIDTH)
+		size = Vector2i(width, width * ASPECT_HEIGHT / ASPECT_WIDTH)
 
 	if usable.size.x >= MIN_WINDOW_SIZE.x and usable.size.y >= MIN_WINDOW_SIZE.y:
 		get_window().min_size = MIN_WINDOW_SIZE

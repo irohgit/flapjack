@@ -26,7 +26,6 @@ DebugHud="*uid://b0uptuewb1atn"
 GameEvents="*uid://3lsfc782llap"
 Audio="*uid://d316g6l1ugkiy"
 DeathScreen="*res://UI/DeathScreen/death_screen.tscn"
-PixelArtRenderer="*res://Systems/Rendering/pixel_art_renderer.gd"
 
 [display]
 

@@ -38,16 +38,18 @@ grow_horizontal = 0
 layout_mode = 0
 offset_left = -97.0
 offset_top = 2.0
-offset_right = 109.0
-offset_bottom = 70.0
+offset_right = 415.0
+offset_bottom = 210.0
+scale = Vector2(0.4, 0.32000262)
 texture = ExtResource("6_1wnoe")
 
 [node name="CoinIcon" type="TextureRect" parent="Coin" unique_id=525282589]
 layout_mode = 0
 offset_left = -66.0
 offset_top = 11.0
-offset_right = -18.0
-offset_bottom = 57.0
+offset_right = 62.0
+offset_bottom = 139.0
+scale = Vector2(0.37334305, 0.3595906)
 texture = ExtResource("7_2lib2")
 
 [node name="Amount" type="Label" parent="Coin" unique_id=195701409]
