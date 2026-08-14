@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://duntr73s38siv" path="res://Levels/main_menu.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://bjrtqk23jc7jq" path="res://Assets/UI/MainMenu/background_landscape.png" id="2_background"]
+[ext_resource type="AudioStream" uid="uid://dc263ntmf6iew" path="res://Audio/SFX/ui_click_stylized.mp3" id="2_mkm6k"]
 [ext_resource type="Texture2D" uid="uid://bin2vfn1q1sh" path="res://Assets/UI/MainMenu/title.png" id="3_title"]
 [ext_resource type="Texture2D" uid="uid://dxxtwk0363bv7" path="res://Assets/UI/MainMenu/play_button.png" id="4_play"]
 [ext_resource type="Texture2D" uid="uid://32nal43kjqf6" path="res://Assets/UI/MainMenu/play_button_hover.png" id="5_play_hover"]
@@ -21,8 +22,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_script")
+click_sfx = ExtResource("2_mkm6k")
 
-[node name="Background" type="TextureRect" parent="." unique_id=814415544]
+[node name="Background" type="TextureRect" parent="." unique_id=667153104]
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 15
@@ -35,7 +37,7 @@ texture = ExtResource("2_background")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="Title" type="TextureRect" parent="." unique_id=158629105]
+[node name="Title" type="TextureRect" parent="." unique_id=1608253843]
 texture_filter = 1
 layout_mode = 0
 offset_left = 600.0
@@ -46,7 +48,7 @@ mouse_filter = 2
 texture = ExtResource("3_title")
 expand_mode = 1
 
-[node name="PlayButton" type="TextureButton" parent="." unique_id=1010298058]
+[node name="PlayButton" type="TextureButton" parent="." unique_id=1743092716]
 texture_filter = 1
 layout_mode = 0
 offset_left = 710.0
@@ -60,7 +62,7 @@ texture_pressed = ExtResource("6_play_pressed")
 texture_hover = ExtResource("5_play_hover")
 ignore_texture_size = true
 
-[node name="SettingsButton" type="TextureButton" parent="." unique_id=2107517355]
+[node name="SettingsButton" type="TextureButton" parent="." unique_id=261349963]
 texture_filter = 1
 layout_mode = 0
 offset_left = 710.0
@@ -74,7 +76,7 @@ texture_pressed = ExtResource("9_settings_pressed")
 texture_hover = ExtResource("8_settings_hover")
 ignore_texture_size = true
 
-[node name="ExitButton" type="TextureButton" parent="." unique_id=409606137]
+[node name="ExitButton" type="TextureButton" parent="." unique_id=1340645817]
 texture_filter = 1
 layout_mode = 0
 offset_left = 710.0

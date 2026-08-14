@@ -2,9 +2,12 @@
 
 [ext_resource type="Resource" uid="uid://dk3d73cdpoumi" path="res://Data/Projectiles/enemy_cannonball.tres" id="1_yl1jh"]
 [ext_resource type="PackedScene" uid="uid://bl12qi0n68b6i" path="res://Actors/Projectiles/projectile.tscn" id="2_gc5rt"]
+[ext_resource type="AudioStream" uid="uid://bcf81qxqc8nxo" path="res://Audio/SFX/ship_destroyed.mp3" id="2_kyuee"]
 [ext_resource type="Script" uid="uid://bo6li876odoia" path="res://Data/Enemy/enemy_data.gd" id="3_i4h7m"]
+[ext_resource type="AudioStream" uid="uid://bhsyrchp0xgu8" path="res://Audio/enemy_cannon.mp3" id="3_pxotl"]
+[ext_resource type="AudioStream" uid="uid://cbplby7nfcsyw" path="res://Audio/SFX/ship_hit.mp3" id="4_l6i6k"]
 [ext_resource type="Texture2D" uid="uid://c1i4w0rfv82dy" path="res://Assets/Enemies/Blackbeard_Pirates/Enemy_Ship_Hunter.png" id="4_yl1jh"]
-[ext_resource type="PackedScene" path="res://Actors/Enemies/hunter_enemy.tscn" id="5_hunter_scene"]
+[ext_resource type="PackedScene" uid="uid://dp8ghl50f4y6s" path="res://Actors/Enemies/hunter_enemy.tscn" id="5_hunter_scene"]
 
 [resource]
 script = ExtResource("3_i4h7m")
@@ -13,4 +16,7 @@ move_speed = 50.0
 texture = ExtResource("4_yl1jh")
 projectile_scene = ExtResource("2_gc5rt")
 ammo = ExtResource("1_yl1jh")
+hit_sfx = ExtResource("4_l6i6k")
+death_sfx = ExtResource("2_kyuee")
+fire_sfx = ExtResource("3_pxotl")
 metadata/_custom_type_script = "uid://bo6li876odoia"

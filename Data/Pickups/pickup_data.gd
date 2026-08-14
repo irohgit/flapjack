@@ -13,7 +13,13 @@ enum PickupType {AUGMENT, WEAPON, COIN, HEALTH, SHIELD}
 @export var coin_amount := 0
 @export var heal_amount := 0
 @export var shield_amount := 0
-
+#SFX
+# --- Audio ---
+# Per-variant so a gold coin can sound different from a bronze one. 
+@export var pickup_sfx: AudioStream
+@export var pickup_volume_db := -6.0
+@export_range(0.0, 0.5, 0.01) var pickup_pitch_spread := 0.04
+@export_range(0.3, 2.0, 0.01) var pickup_pitch := 1.0
 
 func apply_to(player: Player) -> bool:
 	match pickup_type:

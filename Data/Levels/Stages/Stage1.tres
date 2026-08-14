@@ -1,0 +1,68 @@
+[gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://b2xa4hm5ib5ca"]
+
+[ext_resource type="Script" uid="uid://brpre4byem6tx" path="res://Data/Levels/weighted_enemy_data.gd" id="1_0jwiu"]
+[ext_resource type="Script" uid="uid://bhsc86o70es47" path="res://Data/Levels/weighted_end_event_data.gd" id="2_4mj3y"]
+[ext_resource type="Resource" uid="uid://bsk4oh4u6bnhe" path="res://Data/Enemy/BulwarkEnemy.tres" id="2_oihka"]
+[ext_resource type="Resource" uid="uid://cnxtqo5woe8ja" path="res://Data/Enemy/HunterEnemy.tres" id="3_iy8op"]
+[ext_resource type="Script" uid="uid://dgn1ppeend4i1" path="res://Data/Levels/weighted_formation_data.gd" id="3_oihka"]
+[ext_resource type="Script" uid="uid://p4ssfrvfj0uw" path="res://Data/Levels/level_data.gd" id="4_iy8op"]
+[ext_resource type="Script" uid="uid://bgt6cqxd8jifw" path="res://Data/Levels/weighted_encounter_data.gd" id="5_74al8"]
+[ext_resource type="PackedScene" uid="uid://b0uqnqks41txj" path="res://Levels/iroh_sandbox.tscn" id="5_hcrxh"]
+[ext_resource type="PackedScene" uid="uid://3gxxy4myod8b" path="res://Actors/Enemies/PatternEnemyWaveSpawner.tscn" id="9_qllpl"]
+
+[sub_resource type="Resource" id="Resource_hcrxh"]
+script = ExtResource("1_0jwiu")
+enemy = ExtResource("2_oihka")
+metadata/_custom_type_script = "uid://brpre4byem6tx"
+
+[sub_resource type="Resource" id="Resource_qllpl"]
+script = ExtResource("1_0jwiu")
+enemy = ExtResource("3_iy8op")
+metadata/_custom_type_script = "uid://brpre4byem6tx"
+
+[sub_resource type="Resource" id="Resource_gj6f6"]
+script = ExtResource("2_4mj3y")
+event_name = "Boss"
+encounter_scene = ExtResource("5_hcrxh")
+metadata/_custom_type_script = "uid://bhsc86o70es47"
+
+[sub_resource type="Resource" id="Resource_de3ok"]
+script = ExtResource("3_oihka")
+metadata/_custom_type_script = "uid://dgn1ppeend4i1"
+
+[sub_resource type="Resource" id="Resource_psoqc"]
+script = ExtResource("3_oihka")
+formation = 1
+metadata/_custom_type_script = "uid://dgn1ppeend4i1"
+
+[sub_resource type="Resource" id="Resource_g4ecr"]
+script = ExtResource("3_oihka")
+formation = 2
+metadata/_custom_type_script = "uid://dgn1ppeend4i1"
+
+[sub_resource type="Resource" id="Resource_mreyg"]
+script = ExtResource("3_oihka")
+formation = 3
+metadata/_custom_type_script = "uid://dgn1ppeend4i1"
+
+[sub_resource type="Resource" id="Resource_1l6y5"]
+script = ExtResource("5_74al8")
+encounter_scene = ExtResource("9_qllpl")
+metadata/_custom_type_script = "uid://bgt6cqxd8jifw"
+
+[resource]
+script = ExtResource("4_iy8op")
+level_name = "Stage1"
+end_position = Vector2(-600, -10000)
+min_encounters = 15
+max_encounters = 20
+min_special_encounters = 3
+max_special_encounters = 5
+min_pack_size = 5
+max_pack_size = 10
+guaranteed_normal_start_count = 1
+enemy_pool = Array[ExtResource("1_0jwiu")]([SubResource("Resource_hcrxh"), SubResource("Resource_qllpl")])
+formation_pool = Array[ExtResource("3_oihka")]([SubResource("Resource_de3ok"), SubResource("Resource_psoqc"), SubResource("Resource_g4ecr"), SubResource("Resource_mreyg")])
+special_encounter_pool = Array[ExtResource("5_74al8")]([SubResource("Resource_1l6y5")])
+finale_pool = Array[ExtResource("2_4mj3y")]([SubResource("Resource_gj6f6")])
+metadata/_custom_type_script = "uid://p4ssfrvfj0uw"

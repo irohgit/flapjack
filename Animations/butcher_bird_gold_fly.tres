@@ -1,0 +1,67 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://cwisq6isq7i4e"]
+
+[ext_resource type="Texture2D" uid="uid://ctop0kl4wo20p" path="res://Assets/Enemies/Pattern_ButcherBird/butcher_bird_gold_spritesheet_280x150.png" id="1_evvvi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ntyxp"]
+atlas = ExtResource("1_evvvi")
+region = Rect2(0, 0, 70, 75)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j26e3"]
+atlas = ExtResource("1_evvvi")
+region = Rect2(70, 0, 70, 75)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e8oe2"]
+atlas = ExtResource("1_evvvi")
+region = Rect2(140, 0, 70, 75)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_df1cg"]
+atlas = ExtResource("1_evvvi")
+region = Rect2(210, 0, 70, 75)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gdcgg"]
+atlas = ExtResource("1_evvvi")
+region = Rect2(0, 75, 70, 75)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yqwof"]
+atlas = ExtResource("1_evvvi")
+region = Rect2(70, 75, 70, 75)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0et4u"]
+atlas = ExtResource("1_evvvi")
+region = Rect2(140, 75, 70, 75)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fk3jr"]
+atlas = ExtResource("1_evvvi")
+region = Rect2(210, 75, 70, 75)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ntyxp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j26e3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e8oe2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_df1cg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gdcgg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yqwof")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0et4u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fk3jr")
+}],
+"loop": 1,
+"name": &"fly",
+"speed": 8.0
+}]

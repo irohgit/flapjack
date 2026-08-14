@@ -12,3 +12,10 @@ extends Resource
 @export var visual_scale := 1.0 # Sprite scale, so one texture can serve small and large variants.
 @export var projectile_scene: PackedScene
 @export var ammo: ProjectileData
+
+
+# --- Audio ---
+@export var hit_sfx: AudioStream
+@export var death_sfx: AudioStream
+@export var fire_sfx: AudioStream
+@export var fire_pitch := 1.0

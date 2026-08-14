@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://3gxxy4myod8b"]
+
+[ext_resource type="PackedScene" uid="uid://d2m8u4bps1hve" path="res://Actors/Environment/butcherbird_warning.tscn" id="1_3l5m7"]
+[ext_resource type="Script" uid="uid://dyavx03adfhd4" path="res://Actors/Enemies/butcherbird_wave_spawner.gd" id="1_y1d6y"]
+[ext_resource type="PackedScene" uid="uid://bq1hohq82ovyn" path="res://Actors/Enemies/enemy_pattern_butcherbird.tscn" id="2_iulec"]
+[ext_resource type="Script" uid="uid://b3vcm10hop7vv" path="res://Data/Enemy/pattern_butcherbird_data.gd" id="3_kn4c7"]
+[ext_resource type="Resource" uid="uid://b1t8pmt6xip8x" path="res://Data/Enemy/ButcherBird_Black.tres" id="4_25lcy"]
+[ext_resource type="Resource" uid="uid://cklo8eixg31" path="res://Data/Enemy/ButcherBird_Red.tres" id="6_o4udu"]
+
+[node name="PatternEnemyWaveSpawner" type="Node2D" unique_id=1438365835]
+script = ExtResource("1_y1d6y")
+bird_scene = ExtResource("2_iulec")
+bird_data_pool = Array[ExtResource("3_kn4c7")]([ExtResource("4_25lcy"), ExtResource("6_o4udu"), ExtResource("6_o4udu")])
+bird_count = 12
+
+[node name="WarningSign" parent="." unique_id=387023932 instance=ExtResource("1_3l5m7")]
+
+[node name="LaunchPoint" type="Marker2D" parent="." unique_id=1416897910]
+
+[node name="SpawnTimer" type="Timer" parent="." unique_id=2004999906]

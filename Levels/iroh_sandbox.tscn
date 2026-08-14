@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://b0uqnqks41txj"]
+
+[ext_resource type="PackedScene" uid="uid://3gxxy4myod8b" path="res://Actors/Enemies/PatternEnemyWaveSpawner.tscn" id="1_bkyu2"]
+
+[node name="IrohSandbox" type="Node2D" unique_id=88146748]
+
+[node name="PatternEnemyWaveSpawner" parent="." unique_id=1438365835 instance=ExtResource("1_bkyu2")]
+position = Vector2(1676, 220)
+scale = Vector2(4, 4)
+bird_count = 10
+warning_duration = 1.5
+min_spawn_interval = 0.3
+max_spawn_interval = 0.3
+
+[node name="PatternEnemyWaveSpawner2" parent="." unique_id=1205764541 instance=ExtResource("1_bkyu2")]
+position = Vector2(139, 574)
+scale = Vector2(4, 4)
+bird_count = 30
+warning_duration = 1.5
+min_spawn_interval = 0.3
+max_spawn_interval = 0.3
+jiggle_duration = 1.0
+
+[node name="PatternEnemyWaveSpawner3" parent="." unique_id=885973115 instance=ExtResource("1_bkyu2")]
+position = Vector2(1723, 866)
+scale = Vector2(4, 4)
+bird_count = 10
+warning_duration = 1.5
+min_spawn_interval = 0.3
+max_spawn_interval = 0.3
+jiggle_duration = 3.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1795994413]
+offset_left = 295.0
+offset_top = 364.0
+offset_right = 1768.0
+offset_bottom = 790.0
+theme_override_font_sizes/normal_font_size = 95
+bbcode_enabled = true
+text = "[color=#000000][wave amp=50 freq=2]HELLO YOU HAVE REACHED THE END... CONGRATULATIONS![/wave][/color]"

@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://d2m8u4bps1hve"]
+
+[ext_resource type="Script" uid="uid://bmfj34lwjjyj7" path="res://Actors/Environment/butcherbird_warning.gd" id="1_s4ob1"]
+
+[node name="ButcherbirdWarning" type="Node2D" unique_id=387023932]
+script = ExtResource("1_s4ob1")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1916712219]

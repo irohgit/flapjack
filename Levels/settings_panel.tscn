@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bfj0o35a1xwhy" path="res://Levels/pause_menu.gd" id="1_fybpk"]
 [ext_resource type="Texture2D" uid="uid://bs3wx17nvbe6u" path="res://Assets/UI/Pause/panel_background.png" id="2_ip50u"]
+[ext_resource type="AudioStream" uid="uid://dc263ntmf6iew" path="res://Audio/SFX/ui_click_stylized.mp3" id="2_uao6l"]
 [ext_resource type="Texture2D" uid="uid://cj5u5luaksf6b" path="res://Assets/UI/Pause/skull_decoration.png" id="3_uao6l"]
 [ext_resource type="Texture2D" uid="uid://dxfv1oulrrd4b" path="res://Assets/UI/Pause/paused_title.png" id="4_tawvq"]
 [ext_resource type="Texture2D" uid="uid://c8ophc3sd7r0m" path="res://Assets/UI/Pause/resume_button.png" id="5_txnva"]
@@ -14,6 +15,9 @@ process_mode = 3
 layer = 100
 visible = false
 script = ExtResource("1_fybpk")
+pause_sfx = ExtResource("2_uao6l")
+unpause_sfx = ExtResource("2_uao6l")
+click_sfx = ExtResource("2_uao6l")
 
 [node name="Dimmer" type="ColorRect" parent="." unique_id=1222659845]
 anchors_preset = 15

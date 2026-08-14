@@ -6,6 +6,7 @@ extends Area2D
 @onready var _sprite := $Sprite2D
 @onready var _animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
+
 func _ready() -> void:
 	assert(data != null, "WorldPickup has no PickupData")
 
@@ -22,4 +23,5 @@ func _ready() -> void:
 
 func collect(player: Player) -> void:
 	if data.apply_to(player):
+		Audio.play_sfx(data.pickup_sfx, data.pickup_volume_db, data.pickup_pitch_spread, data.pickup_pitch)
 		queue_free()

@@ -10,6 +10,7 @@
 [ext_resource type="Resource" uid="uid://bsk4oh4u6bnhe" path="res://Data/Enemy/BulwarkEnemy.tres" id="5_fkloy"]
 [ext_resource type="Resource" uid="uid://cnxtqo5woe8ja" path="res://Data/Enemy/HunterEnemy.tres" id="6_rvay1"]
 [ext_resource type="PackedScene" uid="uid://b27tvj4v653m2" path="res://Levels/enemy_controller.tscn" id="10_8p85k"]
+[ext_resource type="Script" uid="uid://bpr8v8sl141c1" path="res://Actors/Player/player.gd" id="11_yvgdk"]
 [ext_resource type="Script" uid="uid://bo6li876odoia" path="res://Data/Enemy/enemy_data.gd" id="12_fkloy"]
 [ext_resource type="PackedScene" uid="uid://luquvycpj4hd" path="res://Actors/Pickup/coin_spawner.tscn" id="14_rvay1"]
 [ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="16_m3y4m"]
@@ -21,7 +22,7 @@ script = ExtResource("1_thckm")
 scroll_director = NodePath("ScrollDirector")
 enemy_controller = NodePath("EnemyController")
 
-[node name="ShakeCamera" type="Camera2D" parent="." unique_id=628624149]
+[node name="ShakeCamera" type="Camera2D" parent="." unique_id=628624149 groups=["shake_camera"]]
 script = ExtResource("1_utqb5")
 max_offset = Vector2(0, 0)
 metadata/_custom_type_script = "uid://tsoi3lwff5mf"
@@ -31,8 +32,7 @@ enemy_types = Array[ExtResource("12_fkloy")]([ExtResource("5_fkloy"), ExtResourc
 spawn_parent = NodePath("../World")
 horizontal_spacing = 250.0
 
-[node name="ScrollDirector" parent="." unique_id=1595117280 node_paths=PackedStringArray("camera") instance=ExtResource("3_o28ls")]
-camera = NodePath("../ShakeCamera")
+[node name="ScrollDirector" parent="." unique_id=1595117280 instance=ExtResource("3_o28ls")]
 scroll_speed = 50.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1686435467]
@@ -40,14 +40,20 @@ layer = -100
 
 [node name="WaterBack" parent="CanvasLayer" unique_id=364615905 node_paths=PackedStringArray("camera") instance=ExtResource("3_utqb5")]
 camera = NodePath("../../ShakeCamera")
+metadata/_edit_use_anchors_ = true
 
 [node name="HUD" parent="." unique_id=228684140 instance=ExtResource("1_s0w88")]
 
 [node name="World" type="Node2D" parent="." unique_id=790454155]
 
 [node name="Player" parent="World" unique_id=2109576054 node_paths=PackedStringArray("camera") instance=ExtResource("4_nx2dg")]
-max_speed = 400.0
+script = ExtResource("11_yvgdk")
+max_speed = 700.0
+responsiveness = 25.0
+half_width = 32.0
 camera = NodePath("../../ShakeCamera")
+coin_count = 0
+weapons = Array[ExtResource("7_bsnqn")]([ExtResource("8_thckm")])
 
 [node name="SettingsPanel" parent="." unique_id=217040426 instance=ExtResource("2_nx2dg")]
 
