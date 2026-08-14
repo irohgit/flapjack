@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dgp73phtjophn" path="res://Actors/Pickup/pickup.tscn" id="5_bwofr"]
 
 [node name="CoinSpawner" type="Node2D" unique_id=1386735529]
+texture_filter = 2
 script = ExtResource("1_v2g50")
 gold_coin_data = ExtResource("2_qynok")
 silver_coin_data = ExtResource("3_ntgxf")

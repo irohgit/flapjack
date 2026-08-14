@@ -19,6 +19,7 @@ weapons = Array[ExtResource("2_isd1h")]([ExtResource("3_8gtf5")])
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1889078999]
 texture = ExtResource("3_b63gh")
+flip_v = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1588285206]
 shape = SubResource("CapsuleShape2D_5st54")
