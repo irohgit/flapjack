@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://de1bc11i6qosg"]
+
+[ext_resource type="SpriteFrames" uid="uid://t2mg6ve5rv3l" path="res://Animations/fish_background_swim.tres" id="1_ce8mq"]
+
+[node name="BgLayer1Fish" type="Node2D" unique_id=513696111]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=824631223]
+sprite_frames = ExtResource("1_ce8mq")
+animation = &"swim"
+autoplay = "swim"

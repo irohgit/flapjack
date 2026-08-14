@@ -1,0 +1,56 @@
+[gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://862x5sptm8w2"]
+
+[ext_resource type="Script" uid="uid://brpre4byem6tx" path="res://Data/Levels/weighted_enemy_data.gd" id="1_nj72p"]
+[ext_resource type="Resource" uid="uid://bsk4oh4u6bnhe" path="res://Data/Enemy/BulwarkEnemy.tres" id="2_5467k"]
+[ext_resource type="Script" uid="uid://bhsc86o70es47" path="res://Data/Levels/weighted_end_event_data.gd" id="2_h7gg0"]
+[ext_resource type="Script" uid="uid://dgn1ppeend4i1" path="res://Data/Levels/weighted_formation_data.gd" id="3_5467k"]
+[ext_resource type="Resource" uid="uid://cnxtqo5woe8ja" path="res://Data/Enemy/HunterEnemy.tres" id="3_ygboy"]
+[ext_resource type="Script" uid="uid://p4ssfrvfj0uw" path="res://Data/Levels/level_data.gd" id="4_ygboy"]
+[ext_resource type="Script" uid="uid://bgt6cqxd8jifw" path="res://Data/Levels/weighted_encounter_data.gd" id="5_d14ko"]
+[ext_resource type="PackedScene" uid="uid://b0uqnqks41txj" path="res://Levels/iroh_sandbox.tscn" id="5_t13e2"]
+[ext_resource type="PackedScene" uid="uid://bq1hohq82ovyn" path="res://Actors/Enemies/enemy_pattern_butcherbird.tscn" id="8_ygboy"]
+
+[sub_resource type="Resource" id="Resource_ygboy"]
+script = ExtResource("1_nj72p")
+enemy = ExtResource("2_5467k")
+metadata/_custom_type_script = "uid://brpre4byem6tx"
+
+[sub_resource type="Resource" id="Resource_d14ko"]
+script = ExtResource("1_nj72p")
+enemy = ExtResource("3_ygboy")
+metadata/_custom_type_script = "uid://brpre4byem6tx"
+
+[sub_resource type="Resource" id="Resource_f2hv8"]
+script = ExtResource("2_h7gg0")
+event_name = "FinaleBoss"
+encounter_scene = ExtResource("5_t13e2")
+metadata/_custom_type_script = "uid://bhsc86o70es47"
+
+[sub_resource type="Resource" id="Resource_5467k"]
+script = ExtResource("3_5467k")
+metadata/_custom_type_script = "uid://dgn1ppeend4i1"
+
+[sub_resource type="Resource" id="Resource_t13e2"]
+script = ExtResource("3_5467k")
+formation = 1
+metadata/_custom_type_script = "uid://dgn1ppeend4i1"
+
+[sub_resource type="Resource" id="Resource_1otnj"]
+script = ExtResource("3_5467k")
+formation = 3
+metadata/_custom_type_script = "uid://dgn1ppeend4i1"
+
+[sub_resource type="Resource" id="Resource_mfcow"]
+script = ExtResource("5_d14ko")
+encounter_scene = ExtResource("8_ygboy")
+metadata/_custom_type_script = "uid://bgt6cqxd8jifw"
+
+[resource]
+script = ExtResource("4_ygboy")
+level_name = "Stage2"
+spawn_ahead_distance = -600.0
+enemy_pool = Array[ExtResource("1_nj72p")]([SubResource("Resource_ygboy"), SubResource("Resource_d14ko")])
+formation_pool = Array[ExtResource("3_5467k")]([SubResource("Resource_5467k"), SubResource("Resource_t13e2"), SubResource("Resource_1otnj")])
+special_encounter_pool = Array[ExtResource("5_d14ko")]([SubResource("Resource_mfcow")])
+finale_pool = Array[ExtResource("2_h7gg0")]([SubResource("Resource_f2hv8")])
+metadata/_custom_type_script = "uid://p4ssfrvfj0uw"

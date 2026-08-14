@@ -1,0 +1,53 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://t2mg6ve5rv3l"]
+
+[ext_resource type="Texture2D" uid="uid://cfoft8s07mttm" path="res://Assets/Environment/bg_fish_swim.png" id="1_t3y8h"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wqatm"]
+atlas = ExtResource("1_t3y8h")
+region = Rect2(0, 0, 20, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_an37q"]
+atlas = ExtResource("1_t3y8h")
+region = Rect2(20, 0, 20, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y7vry"]
+atlas = ExtResource("1_t3y8h")
+region = Rect2(40, 0, 20, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_apc1i"]
+atlas = ExtResource("1_t3y8h")
+region = Rect2(60, 0, 20, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b70yl"]
+atlas = ExtResource("1_t3y8h")
+region = Rect2(80, 0, 20, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8j0m3"]
+atlas = ExtResource("1_t3y8h")
+region = Rect2(100, 0, 20, 32)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wqatm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_an37q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y7vry")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_apc1i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b70yl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8j0m3")
+}],
+"loop": 1,
+"name": &"swim",
+"speed": 6.0
+}]

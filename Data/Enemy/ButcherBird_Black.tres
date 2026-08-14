@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PatternButcherBirdData" format=3 uid="uid://b1t8pmt6xip8x"]
+
+[ext_resource type="Script" uid="uid://b3vcm10hop7vv" path="res://Data/Enemy/pattern_butcherbird_data.gd" id="1_qalvr"]
+[ext_resource type="SpriteFrames" uid="uid://fekwl0bh3r7q" path="res://Animations/butcher_bird_black_fly.tres" id="2_ymj4p"]
+[ext_resource type="Texture2D" uid="uid://wiivv70ng08b" path="res://Assets/Environment/butcher_bird_black_sign.png" id="3_6og0p"]
+
+[resource]
+script = ExtResource("1_qalvr")
+sprite_frames = ExtResource("2_ymj4p")
+warning_texture = ExtResource("3_6og0p")
+movement_pattern = 1
+amplitude = 100.0
+frequency = 1.0
+metadata/_custom_type_script = "uid://b3vcm10hop7vv"

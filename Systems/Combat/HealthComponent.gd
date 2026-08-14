@@ -64,6 +64,25 @@ func take_damage(amount: int) -> void:
 	if current_health == 0:
 		died.emit()
 
+func heal(amount: int) -> void:
+	if current_health <= 0:
+		return
+	var old_health := current_health
+	# mini clamps at max_health so overheal can't push past the cap.
+	current_health = mini(current_health + amount, max_health)
+	if current_health != old_health:
+		health_changed.emit(current_health, max_health)
+	#print("health: ", current_health)
+
+# Stable read API for observers such as UI. UI should listen to health_changed
+# for live updates, then use these methods once when it first connects.
+func get_current_health() -> int:
+	return current_health
+
+
+func get_max_health() -> int:
+	return max_health
+
 
 # Public read of the private timer. Feedback and HUD code asks through this
 # rather than reaching into _invincible_for directly.

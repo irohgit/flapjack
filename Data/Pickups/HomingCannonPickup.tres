@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PickupData" format=3 uid="uid://c8prjyekwi7hm"]
+
+[ext_resource type="Resource" uid="uid://bucpo6djf7l6m" path="res://Data/Augments/HomingCannonBall.tres" id="1_15c5x"]
+[ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="2_15c5x"]
+[ext_resource type="AudioStream" uid="uid://pf5op5wqp6p5" path="res://Audio/SFX/weapon_augment_pickup.mp3" id="2_qrkgb"]
+[ext_resource type="Texture2D" uid="uid://dypelm4js72f1" path="res://Assets/BoatWeapon/Cannon3_color3_1.png" id="4_qrkgb"]
+
+[resource]
+script = ExtResource("2_15c5x")
+texture = ExtResource("4_qrkgb")
+augment = ExtResource("1_15c5x")
+pickup_sfx = ExtResource("2_qrkgb")
+metadata/_custom_type_script = "uid://rau2jwiqd0pd"

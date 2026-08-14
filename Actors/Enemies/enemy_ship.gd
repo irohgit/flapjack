@@ -25,6 +25,10 @@ extends Area2D
 
 var _fire_timer := 0.0
 
+#SFX
+@export var cannon_sfx: AudioStream
+@export var hit_sfx: AudioStream
+@export var explosion_sfx: AudioStream
 
 func _ready() -> void:
 	assert(projectile_scene != null, "EnemyShip has no projectile_scene assigned")
@@ -37,13 +41,17 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	position.y += drift_speed * delta
 
+	if Playarea.has_passed_below_screen(global_position, 200.0):
+		queue_free()
+		return
+
+	if not Playarea.is_near_screen(global_position):
+		return
+
 	_fire_timer -= delta
 	if _fire_timer <= 0.0:
 		_fire()
 		_reset_timer()
-
-	if not Playarea.is_near_screen(position, 200.0):
-		queue_free()
 
 
 func _reset_timer() -> void:
@@ -58,7 +66,7 @@ func _fire() -> void:
 	# Same parent as this ship, so shots shake with the world.
 	get_parent().add_child(shot)
 	shot.global_position = global_position + Vector2(0, 60)
-
+	Audio.play_sfx(cannon_sfx, -6.0, 0.06, 1.15)
 
 # Public entry point. Collision code finds methods on the Area2D, not children.
 func take_damage(amount: int) -> void:
@@ -69,12 +77,17 @@ func get_contact_damage() -> int:
 	return contact_damage
 
 func _on_damaged() -> void:
+	Audio.play_sfx(hit_sfx, -18.0, 0.1)
 	modulate = Color(1.0, 0.0, 0.157, 1.0)
 	create_tween().tween_property(self, "modulate", Color.WHITE, 0.15)
 	
 func _on_died() -> void:
+	Audio.play_sfx(explosion_sfx, -4.0)
+	GameEvents.enemy_died.emit(global_position)
+	
 	for cam in get_tree().get_nodes_in_group("shake_camera"):
 		if cam is ShakeCamera:
 			cam.add_trauma(0.15)
 			break
+	Audio.play_sfx(explosion_sfx, -4.0)
 	queue_free()

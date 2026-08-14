@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="AugmentData" format=3 uid="uid://cepoytsvun1sb"]
+
+[ext_resource type="Texture2D" uid="uid://ttbluqtxlpok" path="res://Assets/Projectiles/PlasmaProjectile.png" id="1_36kjf"]
+[ext_resource type="Script" uid="uid://cpp3oou337x" path="res://Data/Augments/augment_data.gd" id="1_a3ywa"]
+[ext_resource type="Script" uid="uid://8lobgpjn42re" path="res://Data/Augments/plasma_augment_effect.gd" id="1_j42j8"]
+[ext_resource type="Resource" uid="uid://b7nwwwfmfkswx" path="res://Data/Weapons/Cannon.tres" id="2_ejb6y"]
+[ext_resource type="Texture2D" uid="uid://decedubcfymmg" path="res://Assets/Pickups/PlasmaAugmentPickup.png" id="3_j42j8"]
+
+[sub_resource type="Resource" id="Resource_ejb6y"]
+script = ExtResource("1_j42j8")
+metadata/_custom_type_script = "uid://8lobgpjn42re"
+
+[resource]
+script = ExtResource("1_a3ywa")
+name = "Plasma cannon"
+targetWeapon = ExtResource("2_ejb6y")
+texture = ExtResource("3_j42j8")
+augmentEffect = SubResource("Resource_ejb6y")
+metadata/_custom_type_script = "uid://cpp3oou337x"

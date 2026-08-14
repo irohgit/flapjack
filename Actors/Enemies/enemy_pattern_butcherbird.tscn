@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://bq1hohq82ovyn"]
+
+[ext_resource type="Script" uid="uid://dhhvd30uxvag3" path="res://Actors/Enemies/enemy_pattern_butcherbird.gd" id="1_prcy0"]
+[ext_resource type="AudioStream" uid="uid://cjjm3p6o70cwu" path="res://Audio/SFX/bird_hit.mp3" id="2_2n1w6"]
+[ext_resource type="SpriteFrames" uid="uid://fekwl0bh3r7q" path="res://Animations/butcher_bird_black_fly.tres" id="2_uqecc"]
+[ext_resource type="Script" uid="uid://cv0v6ynhg51ei" path="res://Systems/Combat/HealthComponent.gd" id="3_uqecc"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5yy73"]
+radius = 18.027756
+
+[node name="EnemyPatternButcherbird" type="Area2D" unique_id=674548228]
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("1_prcy0")
+hit_sfx = ExtResource("2_2n1w6")
+explosion_sfx = ExtResource("2_2n1w6")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1069660223]
+sprite_frames = ExtResource("2_uqecc")
+animation = &"fly"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=771451109]
+shape = SubResource("CircleShape2D_5yy73")
+
+[node name="HealthComponent" type="Node" parent="." unique_id=836383568]
+script = ExtResource("3_uqecc")
+max_health = 5
+metadata/_custom_type_script = "uid://cv0v6ynhg51ei"
