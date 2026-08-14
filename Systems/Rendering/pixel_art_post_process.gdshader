@@ -4,7 +4,7 @@ render_mode unshaded;
 uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_nearest;
 
 // Every final art pixel occupies one exact 2x2 block in the design viewport.
-const float PIXEL_SIZE = 2.0;
+const float PIXEL_SIZE = .0;
 
 
 void fragment() {
