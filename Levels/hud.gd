@@ -1,6 +1,7 @@
 extends CanvasLayer
 
 @onready var coin_label: Label = $Coin/Amount
+@onready var gin_label: Label = $Gin/Amount
 @onready var health_shield_icons: HBoxContainer = $"health and shield icon/HealthRow"
 
 var _player: Player
@@ -21,6 +22,7 @@ func _ready() -> void:
 		return
 
 	_player.coin_changed.connect(_on_coin_changed)
+	_player.gin_changed.connect(_on_gin_changed)
 
 	call_deferred("_init_display_values")
 
@@ -40,6 +42,7 @@ func _init_display_values() -> void:
 	shield.stacks_changed.connect(_on_shield_changed)
 
 	_on_coin_changed(_player.coin_count)
+	_on_gin_changed(_player.gin_count)
 
 	_on_health_changed(
 		health.get_current_health(),
@@ -50,6 +53,9 @@ func _init_display_values() -> void:
 
 func _on_coin_changed(amount: int) -> void:
 	coin_label.text = str(amount)
+
+func _on_gin_changed(amount: int) -> void:
+	gin_label.text = str(amount)
 
 func _on_health_changed(current: int, maximum: int) -> void:
 	_current_health = current

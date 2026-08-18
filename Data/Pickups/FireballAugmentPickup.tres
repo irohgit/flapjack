@@ -8,6 +8,7 @@
 
 [resource]
 script = ExtResource("3_011jj")
+pickup_type = 3
 texture = ExtResource("4_011jj")
 augment = ExtResource("1_f438p")
 weapon = ExtResource("5_2apyp")

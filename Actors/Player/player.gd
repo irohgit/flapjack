@@ -9,9 +9,11 @@ extends Area2D
 @export var camera: Camera2D
 
 #Projectile Firing 
-@export var coin_count:= 0
 @export var weapons: Array[WeaponData]
 var _weapon_states: Array[WeaponState] = []
+
+@export var coin_count:= 0
+@export var gin_count:= 0
 
 @onready var _health: HealthComponent = $HealthComponent
 @onready var _shield: ShieldComponent = $ShieldComponent
@@ -20,6 +22,7 @@ var _weapon_states: Array[WeaponState] = []
 @onready var _pickup_range_shape: CollisionShape2D = $PickupRange/CollisionShape2D
 
 signal coin_changed(amount: int)
+signal gin_changed(amount: int)
 signal augment_added(augment: AugmentData)
 
 var velocity := Vector2.ZERO
@@ -39,6 +42,7 @@ func _ready() -> void:
 	#_health.health_changed.connect(func(c, m): DebugHud.watch("health", "%d/%d" % [c, m]))
 	_health.died.connect(_on_died)
 	coin_changed.emit(coin_count)
+	gin_changed.emit(gin_count)
 	
 	for weapon in weapons:
 		_weapon_states.append(WeaponState.new(weapon))
@@ -98,6 +102,10 @@ func _shake(amount: float) -> void:
 func _add_coins(amount: int):
 	coin_count += amount
 	coin_changed.emit(coin_count)
+
+func _add_gin(amount: int):
+	gin_count += amount
+	gin_changed.emit(gin_count)
 
 func add_augment(augment: AugmentData) -> bool:
 	if augment.targetWeapon == null:
