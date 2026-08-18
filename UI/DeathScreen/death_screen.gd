@@ -2,8 +2,10 @@ extends CanvasLayer
 
 
 const MAIN_MENU_SCENE := "res://Levels/MainMenu.tscn"
+const UPGRADE_SCREEN_SCENE :="res://Levels/UpgradeScreen.tscn"
 
 @onready var _retry_button: TextureButton = $Screen/RetryButton
+@onready var _upgrade_button: TextureButton = $Screen/UpgradeButton
 
 var _retry_scene_path := ""
 var _transitioning := false
@@ -51,6 +53,15 @@ func _retry() -> void:
 	if error != OK:
 		push_error("Could not retry scene %s (error %d)" % [_retry_scene_path, error])
 
+func _go_to_upgrades() -> void:
+	if _transitioning:
+		return
+	_transitioning = true
+	_leave_death_state()
+	var error := get_tree().change_scene_to_file(UPGRADE_SCREEN_SCENE)
+	if error != OK:
+		push_error("Could not open upgrade screen (error %d)" % error)
+
 
 func _go_to_main_menu() -> void:
 	if _transitioning:
@@ -70,6 +81,8 @@ func _leave_death_state() -> void:
 func _on_retry_pressed() -> void:
 	_retry()
 
+func _on_upgrade_button_pressed() -> void:
+	_go_to_upgrades()
 
 func _on_main_menu_pressed() -> void:
 	_go_to_main_menu()

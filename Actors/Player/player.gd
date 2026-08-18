@@ -178,6 +178,7 @@ func _on_died() -> void:
 	if _is_dead:
 		return
 	_is_dead = true
+	MetaProgress.add_gin(gin_count)
 	set_process(false)
 	set_physics_process(false)
 	set_deferred("monitoring", false)
