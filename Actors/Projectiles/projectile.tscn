@@ -21,6 +21,8 @@ script = ExtResource("1_sdwb2")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1875046026]
 shape = SubResource("CircleShape2D_wyght")
 
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2055281263]
+
 [node name="Line2D" type="Line2D" parent="." unique_id=1035360307]
 width = 13.0
 width_curve = SubResource("Curve_s6q3q")
