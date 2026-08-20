@@ -11,8 +11,8 @@
 [ext_resource type="FontFile" uid="uid://1qarew2on3k7" path="res://Assets/Fonts/PixelOperator.ttf" id="8_uu2l2"]
 [ext_resource type="Script" uid="uid://bbph172n7vkmh" path="res://Levels/augments_panel.gd" id="10_sse4t"]
 [ext_resource type="PackedScene" uid="uid://bs3yk1cg3vc6b" path="res://Actors/HUD/augment_entry.tscn" id="11_sn1ph"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Potions/potion_slot.png" id="12_potion_slot"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Potions/potion_slot_selector.png" id="13_potion_selector"]
+[ext_resource type="Texture2D" uid="uid://y2oh1hgogp4e" path="res://Assets/UI/Potions/potion_slot.png" id="12_potion_slot"]
+[ext_resource type="Texture2D" uid="uid://c2io1a0l25kwq" path="res://Assets/UI/Potions/potion_slot_selector.png" id="13_potion_selector"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_augments"]
 
@@ -122,7 +122,7 @@ theme_override_font_sizes/font_size = 39
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="PotionSlots" type="HBoxContainer" parent="."]
+[node name="PotionSlots" type="HBoxContainer" parent="." unique_id=539624042]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
