@@ -7,11 +7,16 @@ extends CanvasLayer
 var _player: Player
 
 var _current_health: int = 0
+var _maximum_health: int = 0
 var _shield_amount: int = 0
+var _heart_icons: Array[TextureRect] = []
+var _shield_icons: Array[TextureRect] = []
 
 @export var full_heart_icon: Texture2D
 @export var half_heart_icon: Texture2D
+@export var empty_heart_icon: Texture2D
 @export var shield_icon: Texture2D
+@export_range(24.0, 96.0, 4.0) var health_icon_size := 48.0
 
 func _ready() -> void:
 	_player = get_tree().get_first_node_in_group("player")
@@ -51,8 +56,9 @@ func _on_coin_changed(amount: int) -> void:
 func _on_gin_changed(amount: int) -> void:
 	gin_label.text = str(amount)
 
-func _on_health_changed(current: int, _maximum: int) -> void:
+func _on_health_changed(current: int, maximum: int) -> void:
 	_current_health = current
+	_maximum_health = maximum
 	_update_health_shield_icons()
 
 func _on_shield_changed(amount: int) -> void:
@@ -60,29 +66,57 @@ func _on_shield_changed(amount: int) -> void:
 	_update_health_shield_icons()
 
 func _update_health_shield_icons() -> void:
-	# Remove existing icons
-	for child in health_shield_icons.get_children():
-		child.queue_free()
-	# Two health units make one heart. Odd health leaves one half heart.
-	var full_heart_count := floori(
-		float(_current_health) / HealthComponent.UNITS_PER_HEART
+	var heart_slot_count := ceili(
+		float(_maximum_health) / HealthComponent.UNITS_PER_HEART
 	)
+	_ensure_heart_icon_count(heart_slot_count)
+	_ensure_shield_icon_count(_shield_amount)
 
-	for _i in range(full_heart_count):
-		_add_icon(full_heart_icon)
+	for index in range(_heart_icons.size()):
+		var icon := _heart_icons[index]
+		icon.visible = index < heart_slot_count
 
-	if _current_health % HealthComponent.UNITS_PER_HEART != 0:
-		_add_icon(half_heart_icon)
+		if not icon.visible:
+			continue
 
-	# Add shields after hearts
-	for _i in range(_shield_amount):
-		_add_icon(shield_icon)
+		var units_in_slot := clampi(
+			_current_health - index * HealthComponent.UNITS_PER_HEART,
+			0,
+			HealthComponent.UNITS_PER_HEART
+		)
 
-func _add_icon(texture: Texture2D) -> void:
+		if units_in_slot == HealthComponent.UNITS_PER_HEART:
+			icon.texture = full_heart_icon
+		elif units_in_slot == 1:
+			icon.texture = half_heart_icon
+		else:
+			icon.texture = empty_heart_icon
 
+	for index in range(_shield_icons.size()):
+		_shield_icons[index].visible = index < _shield_amount
+
+
+func _ensure_heart_icon_count(required_count: int) -> void:
+	while _heart_icons.size() < required_count:
+		var insert_index := _heart_icons.size()
+		var icon := _create_icon(empty_heart_icon)
+		health_shield_icons.add_child(icon)
+		health_shield_icons.move_child(icon, insert_index)
+		_heart_icons.append(icon)
+
+
+func _ensure_shield_icon_count(required_count: int) -> void:
+	while _shield_icons.size() < required_count:
+		var icon := _create_icon(shield_icon)
+		health_shield_icons.add_child(icon)
+		_shield_icons.append(icon)
+
+
+func _create_icon(texture: Texture2D) -> TextureRect:
 	var icon := TextureRect.new()
 	icon.texture = texture
-	icon.custom_minimum_size = Vector2(24, 24)
+	icon.custom_minimum_size = Vector2.ONE * health_icon_size
 	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	health_shield_icons.add_child(icon)
+	icon.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	return icon
