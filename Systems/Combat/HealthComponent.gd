@@ -1,13 +1,15 @@
 # =============================================================================
 # HealthComponent
 # Attach as a child of any Area2D that can die.
-# This component tracks health and announces changes.
+# This component owns both healable health and temporary shield points.
 # Listeners connect to the signals and choose their own feedback: the player flashes red, an enemy might puff smoke.
 # =============================================================================
 
 class_name HealthComponent
 extends Node
 
+
+const UNITS_PER_HEART := 2
 
 @export var max_health := 3
 
@@ -34,12 +36,15 @@ extends Node
 
 
 var current_health: int
+var shield_points := 0
 
 
 var _invincible_for := 0.0 # Seconds of immunity remaining. Counts down to zero, never negative.
 
 
 signal health_changed(current: int, maximum: int)
+signal shield_changed(current: int)
+signal shield_damaged(amount: int)
 signal damaged
 signal died
 
@@ -53,26 +58,48 @@ func _process(delta: float) -> void:
 
 
 func take_damage(amount: int) -> void:
-	if current_health <= 0 or _invincible_for > 0.0:
+	if amount <= 0 or current_health <= 0 or _invincible_for > 0.0:
 		return
+
 	_invincible_for = invincibility_time
-	# maxi clamps at zero so overkill damage cannot push health negative.
-	current_health = maxi(current_health - amount, 0)
-	health_changed.emit(current_health, max_health)
+
+	var remaining_damage := amount
+	var absorbed_damage := mini(shield_points, remaining_damage)
+
+	if absorbed_damage > 0:
+		shield_points -= absorbed_damage
+		remaining_damage -= absorbed_damage
+		shield_changed.emit(shield_points)
+		shield_damaged.emit(absorbed_damage)
+
+	if remaining_damage > 0:
+		# maxi clamps at zero so overkill damage cannot push health negative.
+		current_health = maxi(current_health - remaining_damage, 0)
+		health_changed.emit(current_health, max_health)
+
 	damaged.emit()
 
 	if current_health == 0:
 		died.emit()
 
+
 func heal(amount: int) -> void:
-	if current_health <= 0:
+	if amount <= 0 or current_health <= 0:
 		return
+
 	var old_health := current_health
 	# mini clamps at max_health so overheal can't push past the cap.
 	current_health = mini(current_health + amount, max_health)
 	if current_health != old_health:
 		health_changed.emit(current_health, max_health)
-	#print("health: ", current_health)
+
+
+func add_shield(amount: int) -> void:
+	if amount <= 0:
+		return
+
+	shield_points += amount
+	shield_changed.emit(shield_points)
 
 # Stable read API for observers such as UI. UI should listen to health_changed
 # for live updates, then use these methods once when it first connects.
@@ -82,6 +109,10 @@ func get_current_health() -> int:
 
 func get_max_health() -> int:
 	return max_health
+
+
+func get_shield_points() -> int:
+	return shield_points
 
 
 # Public read of the private timer. Feedback and HUD code asks through this

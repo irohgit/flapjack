@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c7yy08nmcm5ot" path="res://Levels/hud.gd" id="1_otg58"]
 [ext_resource type="Texture2D" uid="uid://bih4j810dbm77" path="res://Assets/UI/Health/heart.png" id="4_sn1ph"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Health/heart_half.png" id="5_half_heart"]
 [ext_resource type="Texture2D" uid="uid://ef3klwck2tmi" path="res://Assets/UI/Health/shield.png" id="5_6qxyw"]
 [ext_resource type="Texture2D" uid="uid://cwvav4wx32kj3" path="res://Assets/UI/Coin/coin_frame.png" id="6_1wnoe"]
 [ext_resource type="Texture2D" uid="uid://bivaxkwiet2pe" path="res://Assets/UI/Coin/coin_icon.png" id="7_2lib2"]
@@ -12,7 +13,8 @@
 
 [node name="HUD" type="CanvasLayer" unique_id=228684140]
 script = ExtResource("1_otg58")
-heart_icon = ExtResource("4_sn1ph")
+full_heart_icon = ExtResource("4_sn1ph")
+half_heart_icon = ExtResource("5_half_heart")
 shield_icon = ExtResource("5_6qxyw")
 
 [node name="health and shield icon" type="MarginContainer" parent="." unique_id=751079110]

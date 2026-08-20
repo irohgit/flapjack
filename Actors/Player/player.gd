@@ -16,7 +16,6 @@ var _weapon_states: Array[WeaponState] = []
 @export var gin_count:= 0
 
 @onready var _health: HealthComponent = $HealthComponent
-@onready var _shield: ShieldComponent = $ShieldComponent
 
 @onready var _pickup_range: Area2D = $PickupRange
 @onready var _pickup_range_shape: CollisionShape2D = $PickupRange/CollisionShape2D
@@ -146,17 +145,11 @@ func apply_wind_force(force: Vector2) -> void:
 	_external_force += force
 
 func take_damage(amount: int) -> void:
-	if _shield.try_block_hit():
-		#DebugHud.flash("Shield absorbed hit")
-		return
 	_health.take_damage(amount)
 
 func add_shield(amount: int) -> bool:
-	_shield.add_stack(amount)
+	_health.add_shield(amount)
 	return true
-	
-func get_shield_component() -> ShieldComponent:
-	return _shield
 	
 func heal(amount: int) -> void:
 	_health.heal(amount)
@@ -167,8 +160,7 @@ func get_health_component() -> HealthComponent:
 ## Combat Private
 func _on_damaged() -> void:
 	Audio.play_sfx(hit_sfx, 0.0)
-	DebugHud.flash("Player Took 1 Damage")
-	#DebugHud.flash("Player Took 1 Damage")
+	DebugHud.flash("Player Took Damage")
 	_shake(0.4) #Camera Shake
 	modulate = Color(1, 0.4, 0.4)
 	create_tween().tween_property(self, "modulate", Color.WHITE, _health.invincibility_time)

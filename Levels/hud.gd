@@ -5,13 +5,12 @@ extends CanvasLayer
 @onready var health_shield_icons: HBoxContainer = $"health and shield icon/HealthRow"
 
 var _player: Player
-var _health: HealthComponent
-var _shield: ShieldComponent
 
 var _current_health: int = 0
 var _shield_amount: int = 0
 
-@export var heart_icon: Texture2D
+@export var full_heart_icon: Texture2D
+@export var half_heart_icon: Texture2D
 @export var shield_icon: Texture2D
 
 func _ready() -> void:
@@ -28,18 +27,13 @@ func _ready() -> void:
 
 func _init_display_values() -> void:
 	var health = _player.get_health_component()
-	var shield = _player.get_shield_component()
 
 	if health == null:
 		push_warning("Health component not found")
 		return
-	
-	if shield == null:
-		push_warning("Health component not found")
-		return
 
 	health.health_changed.connect(_on_health_changed)
-	shield.stacks_changed.connect(_on_shield_changed)
+	health.shield_changed.connect(_on_shield_changed)
 
 	_on_coin_changed(_player.coin_count)
 	_on_gin_changed(_player.gin_count)
@@ -49,7 +43,7 @@ func _init_display_values() -> void:
 		health.get_max_health()
 	)
 	
-	_on_shield_changed(shield.get_stacks())
+	_on_shield_changed(health.get_shield_points())
 
 func _on_coin_changed(amount: int) -> void:
 	coin_label.text = str(amount)
@@ -57,7 +51,7 @@ func _on_coin_changed(amount: int) -> void:
 func _on_gin_changed(amount: int) -> void:
 	gin_label.text = str(amount)
 
-func _on_health_changed(current: int, maximum: int) -> void:
+func _on_health_changed(current: int, _maximum: int) -> void:
 	_current_health = current
 	_update_health_shield_icons()
 
@@ -69,11 +63,19 @@ func _update_health_shield_icons() -> void:
 	# Remove existing icons
 	for child in health_shield_icons.get_children():
 		child.queue_free()
-	# Add hearts first
-	for i in range(_current_health):
-		_add_icon(heart_icon)
+	# Two health units make one heart. Odd health leaves one half heart.
+	var full_heart_count := floori(
+		float(_current_health) / HealthComponent.UNITS_PER_HEART
+	)
+
+	for _i in range(full_heart_count):
+		_add_icon(full_heart_icon)
+
+	if _current_health % HealthComponent.UNITS_PER_HEART != 0:
+		_add_icon(half_heart_icon)
+
 	# Add shields after hearts
-	for i in range(_shield_amount):
+	for _i in range(_shield_amount):
 		_add_icon(shield_icon)
 
 func _add_icon(texture: Texture2D) -> void:
