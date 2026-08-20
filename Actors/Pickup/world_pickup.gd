@@ -23,5 +23,6 @@ func _ready() -> void:
 
 func collect(player: Player) -> void:
 	if data.apply_to(player):
+		player.pickup_collected.emit(data)
 		Audio.play_sfx(data.pickup_sfx, data.pickup_volume_db, data.pickup_pitch_spread, data.pickup_pitch)
 		queue_free()

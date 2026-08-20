@@ -16,6 +16,7 @@ enum PickupType {AUGMENT, WEAPON, COIN, HEALTH, SHIELD, GIN}
 @export var gin_amount := 0
 @export var heal_amount := 0
 @export var shield_amount := 0
+@export var notification_name: String
 #SFX
 # --- Audio ---
 # Per-variant so a gold coin can sound different from a bronze one. 
@@ -43,3 +44,24 @@ func apply_to(player: Player) -> bool:
 			player.add_shield(shield_amount)
 			return true
 	return false
+
+
+func get_notification_text() -> String:
+	if not notification_name.is_empty():
+		return notification_name
+
+	match pickup_type:
+		PickupType.AUGMENT:
+			return augment.name if augment != null else "Augment"
+		PickupType.WEAPON:
+			return weapon.name if weapon != null else "Weapon"
+		PickupType.COIN:
+			return "Coins +%d" % coin_amount
+		PickupType.GIN:
+			return "Gin +%d" % gin_amount
+		PickupType.HEALTH:
+			return "Health +%d" % heal_amount
+		PickupType.SHIELD:
+			return "Shield +%d" % shield_amount
+
+	return "Pickup"

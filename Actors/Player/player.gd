@@ -23,6 +23,7 @@ var _weapon_states: Array[WeaponState] = []
 signal coin_changed(amount: int)
 signal gin_changed(amount: int)
 signal augment_added(augment: AugmentData)
+signal pickup_collected(pickup: PickupData)
 
 var velocity := Vector2.ZERO
 var _move_intent := Vector2.ZERO

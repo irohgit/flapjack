@@ -11,9 +11,9 @@ func _ready() -> void:
 	get_tree().create_timer(display_duration).timeout.connect(_fade_out)
 
 
-func setup(augment: AugmentData) -> void:
-	icon.texture = augment.texture
-	name_label.text = augment.name
+func setup(pickup: PickupData) -> void:
+	icon.texture = pickup.texture
+	name_label.text = pickup.get_notification_text()
 
 
 func _fade_out() -> void:
