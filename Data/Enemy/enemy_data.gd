@@ -19,3 +19,4 @@ extends Resource
 @export var death_sfx: AudioStream
 @export var fire_sfx: AudioStream
 @export var fire_pitch := 1.0
+@export_range(-40.0, 6.0) var fire_sfx_volume_db := 0.0

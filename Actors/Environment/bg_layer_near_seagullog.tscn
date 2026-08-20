@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://blwcrrdy6twr8"]
+
+[ext_resource type="Texture2D" uid="uid://bvswa73g62ttp" path="res://Assets/Environment/Seagull.png" id="1_a2eow"]
+
+[node name="BgLayerNearSeagullog" type="Node2D" unique_id=71148679]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1188547666]
+scale = Vector2(0.618, 0.618)
+texture = ExtResource("1_a2eow")

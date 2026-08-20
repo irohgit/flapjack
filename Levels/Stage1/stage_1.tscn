@@ -3,7 +3,6 @@
 [ext_resource type="PackedScene" uid="uid://t7alddeyjrep" path="res://Levels/hud.tscn" id="1_s0w88"]
 [ext_resource type="Script" uid="uid://ldk65a2c6xgp" path="res://Levels/Stage1/stage_1.gd" id="1_thckm"]
 [ext_resource type="Script" uid="uid://tsoi3lwff5mf" path="res://Actors/Camera/shake_camera.gd" id="1_utqb5"]
-[ext_resource type="PackedScene" uid="uid://cstesilwdvxw5" path="res://Levels/settings_panel.tscn" id="2_nx2dg"]
 [ext_resource type="AudioStream" uid="uid://b86afwbiwoubu" path="res://Audio/BGM/hesapirate.mp3" id="2_yvgdk"]
 [ext_resource type="PackedScene" uid="uid://dsf0q5lcpr0mh" path="res://Actors/Camera/ScrollDirector.tscn" id="3_o28ls"]
 [ext_resource type="PackedScene" uid="uid://c1hug03muahmo" path="res://Actors/Camera/water_background.tscn" id="3_utqb5"]
@@ -18,6 +17,10 @@
 [ext_resource type="Resource" uid="uid://c8prjyekwi7hm" path="res://Data/Pickups/HomingCannonPickup.tres" id="17_uwhja"]
 [ext_resource type="Resource" uid="uid://b2xa4hm5ib5ca" path="res://Data/Levels/Stages/Stage1.tres" id="18_6vwij"]
 [ext_resource type="Resource" uid="uid://5vagi0atsu3m" path="res://Data/Pickups/PlasmaAugmentPickup.tres" id="18_p2t5c"]
+[ext_resource type="Script" uid="uid://bmy2fmsv1ku8m" path="res://Levels/Stage1/ParallaxDirector.gd" id="19_m3y4m"]
+[ext_resource type="PackedScene" uid="uid://de1bc11i6qosg" path="res://Actors/Environment/bg_layer_1_fish.tscn" id="20_p2t5c"]
+[ext_resource type="PackedScene" uid="uid://blwcrrdy6twr8" path="res://Actors/Environment/bg_layer_near_seagullog.tscn" id="21_aqmxt"]
+[ext_resource type="PackedScene" uid="uid://bws0ib2ep02xb" path="res://Actors/Environment/cloud_overlay.tscn" id="22_aqmxt"]
 
 [node name="Stage1" type="Node2D" unique_id=1126219472 node_paths=PackedStringArray("level_generator", "screen_encounter_parent", "scroll_director", "enemy_controller")]
 script = ExtResource("1_thckm")
@@ -41,8 +44,6 @@ scroll_speed = 50.0
 
 [node name="World" type="Node2D" parent="." unique_id=790454155]
 
-[node name="SettingsPanel" parent="." unique_id=217040426 instance=ExtResource("2_nx2dg")]
-
 [node name="CoinSpawner" parent="." unique_id=1386735529 instance=ExtResource("14_rvay1")]
 augments = Array[ExtResource("16_m3y4m")]([ExtResource("17_uwhja"), ExtResource("18_p2t5c")])
 
@@ -50,12 +51,33 @@ augments = Array[ExtResource("16_m3y4m")]([ExtResource("17_uwhja"), ExtResource(
 script = ExtResource("16_cvtwx")
 level_data = ExtResource("18_6vwij")
 
+[node name="ParallaxDirector" type="Node2D" parent="." unique_id=1266982156 node_paths=PackedStringArray("far_parent", "near_parent", "overlay_parent", "scroll_director")]
+script = ExtResource("19_m3y4m")
+far_objects = Array[PackedScene]([ExtResource("20_p2t5c")])
+near_objects = Array[PackedScene]([ExtResource("21_aqmxt")])
+overlay_objects = Array[PackedScene]([ExtResource("22_aqmxt")])
+far_parent = NodePath("Far")
+near_parent = NodePath("Near")
+overlay_parent = NodePath("Overlay")
+far_scroll_range = Vector2(4, 4)
+near_scroll_range = Vector2(3, 3)
+overlay_scroll_range = Vector2(20, 20)
+spawn_y = 0.0
+scroll_director = NodePath("../ScrollDirector")
+level_data = ExtResource("18_6vwij")
+
+[node name="Far" type="Node2D" parent="ParallaxDirector" unique_id=679556213]
+
+[node name="Near" type="Node2D" parent="ParallaxDirector" unique_id=1147739887]
+
+[node name="Overlay" type="Node2D" parent="ParallaxDirector" unique_id=1868737272]
+
 [node name="ScrollRig" type="Node2D" parent="." unique_id=873284287]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="ScrollRig" unique_id=261069038]
 layer = -100
 
-[node name="WaterBack" parent="ScrollRig/CanvasLayer" unique_id=364615905 node_paths=PackedStringArray("camera") instance=ExtResource("3_utqb5")]
+[node name="WaterBack" parent="ScrollRig/CanvasLayer" unique_id=106349697 node_paths=PackedStringArray("camera") instance=ExtResource("3_utqb5")]
 camera = NodePath("../../ShakeCamera")
 metadata/_edit_use_anchors_ = true
 
@@ -70,3 +92,45 @@ position = Vector2(960, 1000)
 camera = NodePath("../ShakeCamera")
 
 [node name="ScreenEncounters" type="Node2D" parent="ScrollRig" unique_id=1299489232]
+
+[node name="Parallax2D" type="Parallax2D" parent="." unique_id=783712484]
+scroll_scale = Vector2(0.92, 0.92)
+scroll_offset = Vector2(300, 0)
+
+[node name="BgLayerNearSeagullog" parent="Parallax2D" unique_id=71148679 instance=ExtResource("21_aqmxt")]
+
+[node name="Parallax2D2" type="Parallax2D" parent="." unique_id=595979866]
+scroll_scale = Vector2(0.78, 0.78)
+scroll_offset = Vector2(450, -80)
+
+[node name="BgLayerNearSeagullog" parent="Parallax2D2" unique_id=1362948557 instance=ExtResource("21_aqmxt")]
+
+[node name="Parallax2D3" type="Parallax2D" parent="." unique_id=2071698104]
+scroll_scale = Vector2(0.68, 0.68)
+scroll_offset = Vector2(600, -25)
+
+[node name="BgLayerNearSeagullog" parent="Parallax2D3" unique_id=153896908 instance=ExtResource("21_aqmxt")]
+
+[node name="Parallax2D4" type="Parallax2D" parent="." unique_id=1598058184]
+scroll_scale = Vector2(0.87, 0.87)
+scroll_offset = Vector2(777, 0)
+
+[node name="BgLayerNearSeagullog" parent="Parallax2D4" unique_id=1237715975 instance=ExtResource("21_aqmxt")]
+
+[node name="Parallax2D5" type="Parallax2D" parent="." unique_id=289531892]
+scroll_scale = Vector2(1.1, 1.1)
+scroll_offset = Vector2(980, 134)
+
+[node name="BgLayerNearSeagullog" parent="Parallax2D5" unique_id=271915560 instance=ExtResource("21_aqmxt")]
+
+[node name="Parallax2D6" type="Parallax2D" parent="." unique_id=1751610625]
+scroll_scale = Vector2(0.68, 0.68)
+scroll_offset = Vector2(125, -1)
+
+[node name="BgLayerNearSeagullog" parent="Parallax2D6" unique_id=1747041995 instance=ExtResource("21_aqmxt")]
+
+[node name="Parallax2D7" type="Parallax2D" parent="." unique_id=248772696]
+scroll_scale = Vector2(1.3, 1.3)
+scroll_offset = Vector2(1060, 4)
+
+[node name="BgLayerNearSeagullog" parent="Parallax2D7" unique_id=1218517804 instance=ExtResource("21_aqmxt")]

@@ -1,23 +1,24 @@
-[gd_scene load_steps=11 format=3]
+[gd_scene format=3 uid="uid://btdaigjltsc2m"]
 
-[ext_resource type="Script" path="res://UI/DeathScreen/death_screen.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://Assets/UI/DeathScreen/death_screen_background.png" id="2_background"]
-[ext_resource type="FontFile" path="res://Assets/Fonts/Montserrat/static/Montserrat-Black.ttf" id="3_title_font"]
-[ext_resource type="Texture2D" path="res://Assets/UI/MainMenu/play_button.png" id="4_play"]
-[ext_resource type="Texture2D" path="res://Assets/UI/MainMenu/play_button_hover.png" id="5_play_hover"]
-[ext_resource type="Texture2D" path="res://Assets/UI/MainMenu/play_button_pressed.png" id="6_play_pressed"]
-[ext_resource type="Texture2D" path="res://Assets/UI/MainMenu/exit_button.png" id="7_exit"]
-[ext_resource type="Texture2D" path="res://Assets/UI/MainMenu/exit_button_hover.png" id="8_exit_hover"]
-[ext_resource type="Texture2D" path="res://Assets/UI/MainMenu/exit_button_pressed.png" id="9_exit_pressed"]
-[ext_resource type="FontFile" path="res://Assets/Fonts/Montserrat/static/Montserrat-SemiBold.ttf" id="10_body_font"]
+[ext_resource type="Script" uid="uid://bst4l0rluxyls" path="res://UI/DeathScreen/death_screen.gd" id="1_lw348"]
+[ext_resource type="Texture2D" uid="uid://dfi4akwlw6hxo" path="res://Assets/UI/DeathScreen/death_screen_background.png" id="2_background"]
+[ext_resource type="FontFile" uid="uid://cvo681c1hvgca" path="res://Assets/Fonts/Montserrat/static/Montserrat-Black.ttf" id="3_title_font"]
+[ext_resource type="Texture2D" uid="uid://dxxtwk0363bv7" path="res://Assets/UI/MainMenu/play_button.png" id="4_play"]
+[ext_resource type="Texture2D" uid="uid://32nal43kjqf6" path="res://Assets/UI/MainMenu/play_button_hover.png" id="5_play_hover"]
+[ext_resource type="Texture2D" uid="uid://du08ikcxdlcmq" path="res://Assets/UI/MainMenu/play_button_pressed.png" id="6_play_pressed"]
+[ext_resource type="Texture2D" uid="uid://jyhqfrhk2rf2" path="res://Assets/UI/MainMenu/exit_button.png" id="7_exit"]
+[ext_resource type="Texture2D" uid="uid://dk0dchqle0p77" path="res://Assets/UI/MainMenu/exit_button_hover.png" id="8_exit_hover"]
+[ext_resource type="Script" uid="uid://8rpnf6p3wdqr" path="res://UI/nav_button.gd" id="8_lw348"]
+[ext_resource type="Texture2D" uid="uid://myo8grbtavaj" path="res://Assets/UI/MainMenu/exit_button_pressed.png" id="9_exit_pressed"]
+[ext_resource type="FontFile" uid="uid://p6nsf53xeqe8" path="res://Assets/Fonts/Montserrat/static/Montserrat-SemiBold.ttf" id="10_body_font"]
 
-[node name="DeathScreen" type="CanvasLayer"]
+[node name="DeathScreen" type="CanvasLayer" unique_id=34283215]
 process_mode = 3
 layer = 900
-visible = false
-script = ExtResource("1_script")
 
-[node name="Screen" type="Control" parent="."]
+[node name="Screen" type="Control" parent="." unique_id=318826695 node_paths=PackedStringArray("retry_button", "main_menu_button", "first_focus")]
+process_mode = 3
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -25,8 +26,14 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
+script = ExtResource("1_lw348")
+retry_button = NodePath("VBoxContainer/RetryButton")
+main_menu_button = NodePath("VBoxContainer/MainMenuButton")
+first_focus = NodePath("VBoxContainer/RetryButton")
+close_on_cancel = false
+pauses_tree = true
 
-[node name="Background" type="TextureRect" parent="Screen"]
+[node name="Background" type="TextureRect" parent="Screen" unique_id=356206368]
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 15
@@ -39,13 +46,12 @@ texture = ExtResource("2_background")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="Title" type="Label" parent="Screen"]
+[node name="Title" type="Label" parent="Screen" unique_id=1402522531]
 layout_mode = 0
 offset_left = 360.0
 offset_top = 216.0
 offset_right = 1560.0
 offset_bottom = 362.0
-mouse_filter = 2
 theme_override_colors/font_color = Color(0.980392, 0.839216, 0.54902, 1)
 theme_override_colors/font_outline_color = Color(0.0156863, 0.027451, 0.0352941, 1)
 theme_override_constants/outline_size = 8
@@ -55,13 +61,12 @@ text = "SHIPWRECKED"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Subtitle" type="Label" parent="Screen"]
+[node name="Subtitle" type="Label" parent="Screen" unique_id=1233710738]
 layout_mode = 0
 offset_left = 460.0
 offset_top = 372.0
 offset_right = 1460.0
 offset_bottom = 432.0
-mouse_filter = 2
 theme_override_colors/font_color = Color(0.572549, 0.823529, 0.819608, 1)
 theme_override_colors/font_outline_color = Color(0.00392157, 0.0156863, 0.027451, 1)
 theme_override_constants/outline_size = 4
@@ -71,33 +76,50 @@ text = "THE SEA CLAIMED YOUR SHIP"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="RetryButton" type="TextureButton" parent="Screen"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Screen" unique_id=1122974956]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_transform_enabled = true
+offset_transform_position_ratio = Vector2(0, 0.25)
+offset_transform_visual_only = false
+theme_override_constants/separation = 20
+
+[node name="RetryButton" type="TextureButton" parent="Screen/VBoxContainer" unique_id=503825902]
 texture_filter = 1
-layout_mode = 0
-offset_left = 710.0
-offset_top = 506.0
-offset_right = 1210.0
-offset_bottom = 646.0
+custom_minimum_size = Vector2(500, 140)
+layout_mode = 2
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("4_play")
 texture_pressed = ExtResource("6_play_pressed")
 texture_hover = ExtResource("5_play_hover")
 texture_focused = ExtResource("5_play_hover")
 ignore_texture_size = true
+script = ExtResource("8_lw348")
+act = 3
 
-[node name="MainMenuButton" type="TextureButton" parent="Screen"]
+[node name="MainMenuButton" type="TextureButton" parent="Screen/VBoxContainer" unique_id=1421824682]
 texture_filter = 1
-layout_mode = 0
-offset_left = 710.0
-offset_top = 666.0
-offset_right = 1210.0
-offset_bottom = 806.0
+custom_minimum_size = Vector2(500, 140)
+layout_mode = 2
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("7_exit")
 texture_pressed = ExtResource("9_exit_pressed")
 texture_hover = ExtResource("8_exit_hover")
 texture_focused = ExtResource("8_exit_hover")
 ignore_texture_size = true
+script = ExtResource("8_lw348")
+act = 0
+scene_to_load = "uid://dfgiunphxmxmr"
 
-[connection signal="pressed" from="Screen/RetryButton" to="." method="_on_retry_pressed"]
-[connection signal="pressed" from="Screen/MainMenuButton" to="." method="_on_main_menu_pressed"]
+[connection signal="pressed" from="Screen/VBoxContainer/RetryButton" to="." method="_on_retry_pressed"]
+[connection signal="pressed" from="Screen/VBoxContainer/MainMenuButton" to="." method="_on_main_menu_pressed"]

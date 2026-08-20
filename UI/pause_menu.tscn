@@ -1,23 +1,17 @@
-[gd_scene format=3 uid="uid://cstesilwdvxw5"]
+[gd_scene format=3 uid="uid://cq7rvdaul30k1"]
 
-[ext_resource type="Script" uid="uid://bfj0o35a1xwhy" path="res://Levels/pause_menu.gd" id="1_fybpk"]
-[ext_resource type="Texture2D" uid="uid://bs3wx17nvbe6u" path="res://Assets/UI/Pause/panel_background.png" id="2_ip50u"]
-[ext_resource type="AudioStream" uid="uid://dc263ntmf6iew" path="res://Audio/SFX/ui_click_stylized.mp3" id="2_uao6l"]
-[ext_resource type="Texture2D" uid="uid://cj5u5luaksf6b" path="res://Assets/UI/Pause/skull_decoration.png" id="3_uao6l"]
-[ext_resource type="Texture2D" uid="uid://dxfv1oulrrd4b" path="res://Assets/UI/Pause/paused_title.png" id="4_tawvq"]
-[ext_resource type="Texture2D" uid="uid://c8ophc3sd7r0m" path="res://Assets/UI/Pause/resume_button.png" id="5_txnva"]
-[ext_resource type="Texture2D" uid="uid://877eg4ixmb14" path="res://Assets/UI/Pause/exit_button.png" id="6_y0hbe"]
-[ext_resource type="Texture2D" uid="uid://dy0fwenve5ppb" path="res://Assets/UI/Pause/divider_small.png" id="7_xkncj"]
-[ext_resource type="Texture2D" uid="uid://d0tmpgqy4fwgk" path="res://Assets/UI/Pause/bottom_text.png" id="8_jrw5m"]
+[ext_resource type="Script" uid="uid://bfj0o35a1xwhy" path="res://UI/pause_menu.gd" id="1_pr0l1"]
+[ext_resource type="Texture2D" uid="uid://bs3wx17nvbe6u" path="res://Assets/UI/Pause/panel_background.png" id="3_flal6"]
+[ext_resource type="Texture2D" uid="uid://cj5u5luaksf6b" path="res://Assets/UI/Pause/skull_decoration.png" id="4_m0kdg"]
+[ext_resource type="Texture2D" uid="uid://dxfv1oulrrd4b" path="res://Assets/UI/Pause/paused_title.png" id="5_bo37y"]
+[ext_resource type="Texture2D" uid="uid://c8ophc3sd7r0m" path="res://Assets/UI/Pause/resume_button.png" id="6_wwhwl"]
+[ext_resource type="Texture2D" uid="uid://877eg4ixmb14" path="res://Assets/UI/Pause/exit_button.png" id="7_cfigd"]
+[ext_resource type="Texture2D" uid="uid://dy0fwenve5ppb" path="res://Assets/UI/Pause/divider_small.png" id="8_vvkpl"]
+[ext_resource type="Texture2D" uid="uid://d0tmpgqy4fwgk" path="res://Assets/UI/Pause/bottom_text.png" id="9_ucija"]
 
-[node name="SettingsPanel" type="CanvasLayer" unique_id=217040426]
+[node name="PausePanel" type="CanvasLayer" unique_id=217040426]
 process_mode = 3
 layer = 100
-visible = false
-script = ExtResource("1_fybpk")
-pause_sfx = ExtResource("2_uao6l")
-unpause_sfx = ExtResource("2_uao6l")
-click_sfx = ExtResource("2_uao6l")
 
 [node name="Dimmer" type="ColorRect" parent="." unique_id=1222659845]
 anchors_preset = 15
@@ -35,6 +29,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
+script = ExtResource("1_pr0l1")
 
 [node name="PanelBackground" type="TextureRect" parent="PauseMenu" unique_id=846444705]
 texture_filter = 1
@@ -44,7 +39,7 @@ offset_top = 130.0
 offset_right = 1280.0
 offset_bottom = 950.0
 mouse_filter = 2
-texture = ExtResource("2_ip50u")
+texture = ExtResource("3_flal6")
 expand_mode = 1
 
 [node name="SkullDecoration" type="TextureRect" parent="PauseMenu" unique_id=347786067]
@@ -55,7 +50,7 @@ offset_top = 105.0
 offset_right = 1177.0
 offset_bottom = 215.0
 mouse_filter = 2
-texture = ExtResource("3_uao6l")
+texture = ExtResource("4_m0kdg")
 expand_mode = 1
 
 [node name="PausedTitle" type="TextureRect" parent="PauseMenu" unique_id=958569790]
@@ -66,7 +61,7 @@ offset_top = 260.0
 offset_right = 1177.0
 offset_bottom = 448.0
 mouse_filter = 2
-texture = ExtResource("4_tawvq")
+texture = ExtResource("5_bo37y")
 expand_mode = 1
 
 [node name="Resume" type="TextureButton" parent="PauseMenu" unique_id=1674369934]
@@ -78,9 +73,9 @@ offset_right = 1182.0
 offset_bottom = 589.0
 focus_mode = 0
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource("5_txnva")
-texture_pressed = ExtResource("5_txnva")
-texture_hover = ExtResource("5_txnva")
+texture_normal = ExtResource("6_wwhwl")
+texture_pressed = ExtResource("6_wwhwl")
+texture_hover = ExtResource("6_wwhwl")
 ignore_texture_size = true
 
 [node name="Exit" type="TextureButton" parent="PauseMenu" unique_id=484579252]
@@ -92,9 +87,9 @@ offset_right = 1182.0
 offset_bottom = 730.0
 focus_mode = 0
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource("6_y0hbe")
-texture_pressed = ExtResource("6_y0hbe")
-texture_hover = ExtResource("6_y0hbe")
+texture_normal = ExtResource("7_cfigd")
+texture_pressed = ExtResource("7_cfigd")
+texture_hover = ExtResource("7_cfigd")
 ignore_texture_size = true
 
 [node name="BottomDivider" type="TextureRect" parent="PauseMenu" unique_id=194824001]
@@ -105,7 +100,7 @@ offset_top = 760.0
 offset_right = 1137.0
 offset_bottom = 785.0
 mouse_filter = 2
-texture = ExtResource("7_xkncj")
+texture = ExtResource("8_vvkpl")
 expand_mode = 1
 
 [node name="BottomInstruction" type="TextureRect" parent="PauseMenu" unique_id=1023534164]
@@ -116,7 +111,7 @@ offset_top = 805.0
 offset_right = 1157.0
 offset_bottom = 876.0
 mouse_filter = 2
-texture = ExtResource("8_jrw5m")
+texture = ExtResource("9_ucija")
 expand_mode = 1
 
 [connection signal="button_up" from="PauseMenu/Resume" to="." method="ResumePress"]

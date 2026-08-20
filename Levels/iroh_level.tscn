@@ -13,7 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://c1hug03muahmo" path="res://Actors/Camera/water_background.tscn" id="9_dpxfw"]
 [ext_resource type="PackedScene" uid="uid://t7alddeyjrep" path="res://Levels/hud.tscn" id="10_hn8e3"]
 [ext_resource type="PackedScene" uid="uid://cclwwsegfn8rr" path="res://Actors/Player/player.tscn" id="11_h2ifs"]
-[ext_resource type="PackedScene" uid="uid://cstesilwdvxw5" path="res://Levels/settings_panel.tscn" id="15_4h1ux"]
+[ext_resource type="PackedScene" uid="uid://cstesilwdvxw5" path="res://UI/settings_panel.tscn" id="15_4h1ux"]
 [ext_resource type="PackedScene" uid="uid://luquvycpj4hd" path="res://Actors/Pickup/coin_spawner.tscn" id="16_8pef5"]
 [ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="17_ybihq"]
 [ext_resource type="Resource" uid="uid://c8prjyekwi7hm" path="res://Data/Pickups/HomingCannonPickup.tres" id="18_22sru"]
