@@ -2,15 +2,17 @@
 
 [ext_resource type="Script" uid="uid://c7yy08nmcm5ot" path="res://Levels/hud.gd" id="1_otg58"]
 [ext_resource type="Texture2D" uid="uid://bih4j810dbm77" path="res://Assets/UI/Health/heart.png" id="4_sn1ph"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Health/heart_half.png" id="5_half_heart"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Health/heart_empty.png" id="5_empty_heart"]
 [ext_resource type="Texture2D" uid="uid://ef3klwck2tmi" path="res://Assets/UI/Health/shield.png" id="5_6qxyw"]
+[ext_resource type="Texture2D" uid="uid://c8xcs7qj43488" path="res://Assets/UI/Health/heart_empty.png" id="5_empty_heart"]
+[ext_resource type="Texture2D" uid="uid://b4ekttt61ejhe" path="res://Assets/UI/Health/heart_half.png" id="5_half_heart"]
 [ext_resource type="Texture2D" uid="uid://cwvav4wx32kj3" path="res://Assets/UI/Coin/coin_frame.png" id="6_1wnoe"]
 [ext_resource type="Texture2D" uid="uid://bivaxkwiet2pe" path="res://Assets/UI/Coin/coin_icon.png" id="7_2lib2"]
 [ext_resource type="Texture2D" uid="uid://dypxhdmtkar1y" path="res://Assets/Pickups/cocktail_2.png" id="7_iqaem"]
 [ext_resource type="FontFile" uid="uid://1qarew2on3k7" path="res://Assets/Fonts/PixelOperator.ttf" id="8_uu2l2"]
 [ext_resource type="Script" uid="uid://bbph172n7vkmh" path="res://Levels/augments_panel.gd" id="10_sse4t"]
 [ext_resource type="PackedScene" uid="uid://bs3yk1cg3vc6b" path="res://Actors/HUD/augment_entry.tscn" id="11_sn1ph"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_augments"]
 
 [node name="HUD" type="CanvasLayer" unique_id=228684140]
 script = ExtResource("1_otg58")
@@ -117,11 +119,16 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="AugmentsPanel" type="PanelContainer" parent="." unique_id=1116543594]
-anchors_preset = -1
-offset_left = 20.0
-offset_top = 800.0
-offset_right = 250.0
-offset_bottom = 880.0
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -230.0
+offset_top = -80.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_augments")
 script = ExtResource("10_sse4t")
 augment_entry_scene = ExtResource("11_sn1ph")
 

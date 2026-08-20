@@ -9,8 +9,9 @@ extends Area2D
 @onready var _trail: Line2D = $Line2D
 
 var homing = false
-var homing_turn_speed := 6.0
+var homing_turn_speed := 2.5
 var homing_time_remaining := 0.0
+var homing_range := 450.0
 var _homing_target: Node2D
 
 var plasma := false
@@ -113,15 +114,20 @@ func _update_homing(delta: float) -> void:
 
 
 func _has_valid_homing_target() -> bool:
-	return (
-		is_instance_valid(_homing_target)
-		and not _homing_target.is_queued_for_deletion()
-	)
+	if (
+		not is_instance_valid(_homing_target)
+		or _homing_target.is_queued_for_deletion()
+	):
+		return false
+
+	return global_position.distance_squared_to(
+		_homing_target.global_position
+	) <= homing_range * homing_range
 
 
 func _find_nearest_enemy() -> Node2D:
 	var nearest: Node2D
-	var nearest_distance_squared := INF
+	var nearest_distance_squared := homing_range * homing_range
 
 	for node in get_tree().get_nodes_in_group("enemy"):
 		var candidate := node as Node2D
