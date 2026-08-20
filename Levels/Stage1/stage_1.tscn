@@ -20,6 +20,8 @@
 [ext_resource type="Resource" uid="uid://5vagi0atsu3m" path="res://Data/Pickups/PlasmaAugmentPickup.tres" id="18_p2t5c"]
 [ext_resource type="PackedScene" uid="uid://dgp73phtjophn" path="res://Actors/Pickup/pickup.tscn" id="19_uwhja"]
 [ext_resource type="Resource" uid="uid://bvtbthku5smhg" path="res://Data/Pickups/Gin.tres" id="20_uwhja"]
+[ext_resource type="Resource" uid="uid://cpynird4edptk" path="res://Data/Pickups/FireballAugmentPickup.tres" id="21_fireball"]
+[ext_resource type="Resource" uid="uid://cesmcj6ctad" path="res://Data/Pickups/MagnetAugmentPickup.tres" id="22_magnet"]
 
 [node name="Stage1" type="Node2D" unique_id=1126219472 node_paths=PackedStringArray("level_generator", "screen_encounter_parent", "scroll_director", "enemy_controller")]
 script = ExtResource("1_thckm")
@@ -46,7 +48,7 @@ scroll_speed = 50.0
 [node name="SettingsPanel" parent="." unique_id=217040426 instance=ExtResource("2_nx2dg")]
 
 [node name="CoinSpawner" parent="." unique_id=1386735529 instance=ExtResource("14_rvay1")]
-augments = Array[ExtResource("16_m3y4m")]([ExtResource("17_uwhja"), ExtResource("18_p2t5c")])
+augments = Array[ExtResource("16_m3y4m")]([ExtResource("17_uwhja"), ExtResource("18_p2t5c"), ExtResource("21_fireball"), ExtResource("22_magnet")])
 
 [node name="LevelGenerator" type="Node2D" parent="." unique_id=593108892]
 script = ExtResource("16_cvtwx")

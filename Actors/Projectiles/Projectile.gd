@@ -10,6 +10,7 @@ extends Area2D
 
 var homing = false
 var homing_turn_speed := 6.0
+var homing_time_remaining := 0.0
 var _homing_target: Node2D
 
 var plasma := false
@@ -79,7 +80,16 @@ func _move(delta: float) -> void:
 	_animated_sprite.rotation = direction.angle()
 	
 	if homing:
-		_update_homing(delta)
+		var homing_delta := minf(delta, homing_time_remaining)
+
+		if homing_delta > 0.0:
+			_update_homing(homing_delta)
+
+		homing_time_remaining = maxf(homing_time_remaining - delta, 0.0)
+
+		if homing_time_remaining <= 0.0:
+			homing = false
+			_homing_target = null
 	
 	position += direction * data.speed * delta
 

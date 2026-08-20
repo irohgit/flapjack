@@ -1,7 +1,9 @@
 class_name PickupData
 extends Resource
 
-enum PickupType {AUGMENT, WEAPON, COIN, GIN, HEALTH, SHIELD}
+# Keep existing values stable because Godot serializes enum selections as
+# integers in .tres and .tscn files. New pickup types belong at the end.
+enum PickupType {AUGMENT, WEAPON, COIN, HEALTH, SHIELD, GIN}
 
 @export var pickup_type: PickupType
 @export var texture: Texture2D
