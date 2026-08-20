@@ -12,6 +12,12 @@ func _ready() -> void:
 
 
 func _on_pickup_collected(pickup: PickupData) -> void:
+	if (
+		pickup.pickup_type != PickupData.PickupType.AUGMENT
+		and pickup.pickup_type != PickupData.PickupType.WEAPON
+	):
+		return
+
 	var entry = augment_entry_scene.instantiate()
 
 	augment_list.add_child(entry)
