@@ -18,6 +18,8 @@
 [ext_resource type="Resource" uid="uid://c8prjyekwi7hm" path="res://Data/Pickups/HomingCannonPickup.tres" id="17_uwhja"]
 [ext_resource type="Resource" uid="uid://b2xa4hm5ib5ca" path="res://Data/Levels/Stages/Stage1.tres" id="18_6vwij"]
 [ext_resource type="Resource" uid="uid://5vagi0atsu3m" path="res://Data/Pickups/PlasmaAugmentPickup.tres" id="18_p2t5c"]
+[ext_resource type="PackedScene" uid="uid://dgp73phtjophn" path="res://Actors/Pickup/pickup.tscn" id="19_uwhja"]
+[ext_resource type="Resource" uid="uid://bvtbthku5smhg" path="res://Data/Pickups/Gin.tres" id="20_uwhja"]
 
 [node name="Stage1" type="Node2D" unique_id=1126219472 node_paths=PackedStringArray("level_generator", "screen_encounter_parent", "scroll_director", "enemy_controller")]
 script = ExtResource("1_thckm")
@@ -70,3 +72,7 @@ position = Vector2(960, 1000)
 camera = NodePath("../ShakeCamera")
 
 [node name="ScreenEncounters" type="Node2D" parent="ScrollRig" unique_id=1299489232]
+
+[node name="Pickup" parent="." unique_id=169920597 instance=ExtResource("19_uwhja")]
+position = Vector2(283, 480)
+data = ExtResource("20_uwhja")

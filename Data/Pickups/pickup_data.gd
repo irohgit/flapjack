@@ -1,7 +1,7 @@
 class_name PickupData
 extends Resource
 
-enum PickupType {AUGMENT, WEAPON, COIN, HEALTH, SHIELD}
+enum PickupType {AUGMENT, WEAPON, COIN, GIN, HEALTH, SHIELD}
 
 @export var pickup_type: PickupType
 @export var texture: Texture2D
@@ -11,6 +11,7 @@ enum PickupType {AUGMENT, WEAPON, COIN, HEALTH, SHIELD}
 @export var augment: AugmentData
 @export var weapon: WeaponData
 @export var coin_amount := 0
+@export var gin_amount := 0
 @export var heal_amount := 0
 @export var shield_amount := 0
 #SFX
@@ -29,6 +30,9 @@ func apply_to(player: Player) -> bool:
 			return player.add_weapon(weapon)
 		PickupType.COIN:
 			player._add_coins(coin_amount)
+			return true
+		PickupType.GIN:
+			player._add_gin(gin_amount)
 			return true
 		PickupType.HEALTH:
 			player.heal(heal_amount)

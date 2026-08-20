@@ -9,14 +9,20 @@ extends Area2D
 @export var camera: Camera2D
 
 #Projectile Firing 
-@export var coin_count:= 0
 @export var weapons: Array[WeaponData]
 var _weapon_states: Array[WeaponState] = []
+
+@export var coin_count:= 0
+@export var gin_count:= 0
 
 @onready var _health: HealthComponent = $HealthComponent
 @onready var _shield: ShieldComponent = $ShieldComponent
 
+@onready var _pickup_range: Area2D = $PickupRange
+@onready var _pickup_range_shape: CollisionShape2D = $PickupRange/CollisionShape2D
+
 signal coin_changed(amount: int)
+signal gin_changed(amount: int)
 signal augment_added(augment: AugmentData)
 
 var velocity := Vector2.ZERO
@@ -31,10 +37,12 @@ var _is_dead := false
 
 func _ready() -> void:
 	area_entered.connect(_on_area_entered)
+	_pickup_range.area_entered.connect(_on_pickup_range_entered)
 	_health.damaged.connect(_on_damaged)
 	#_health.health_changed.connect(func(c, m): DebugHud.watch("health", "%d/%d" % [c, m]))
 	_health.died.connect(_on_died)
 	coin_changed.emit(coin_count)
+	gin_changed.emit(gin_count)
 	
 	for weapon in weapons:
 		_weapon_states.append(WeaponState.new(weapon))
@@ -71,8 +79,17 @@ func _on_area_entered(area: Area2D) -> void:
 	# Overlap Function 
 	if area.is_in_group("hazard"):
 		take_damage(area.get_contact_damage())
+
+func _on_pickup_range_entered(area: Area2D) -> void:
 	if area.is_in_group("pickup") and area.has_method("collect"):
 		area.collect(self)
+
+func set_pickup_radius(radius: float) -> void:
+	print("set_pickup_radius called with: ", radius)
+	print("shape type: ", _pickup_range_shape.shape)
+	if _pickup_range_shape.shape is CircleShape2D:
+		print("radius after set: ", (_pickup_range_shape.shape as CircleShape2D).radius)
+		(_pickup_range_shape.shape as CircleShape2D).radius = radius
 
 ## Camera
 func _shake(amount: float) -> void:
@@ -86,7 +103,15 @@ func _add_coins(amount: int):
 	coin_count += amount
 	coin_changed.emit(coin_count)
 
+func _add_gin(amount: int):
+	gin_count += amount
+	gin_changed.emit(gin_count)
+
 func add_augment(augment: AugmentData) -> bool:
+	if augment.targetWeapon == null:
+		augment.augmentEffect.apply_to_player(self)
+		return true
+		
 	for state in _weapon_states:
 		if state.data == augment.targetWeapon:
 			state.augments.append(augment)
@@ -153,6 +178,7 @@ func _on_died() -> void:
 	if _is_dead:
 		return
 	_is_dead = true
+	MetaProgress.add_gin(gin_count)
 	set_process(false)
 	set_physics_process(false)
 	set_deferred("monitoring", false)

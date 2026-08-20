@@ -4,6 +4,7 @@ extends Area2D
 @export var data: ProjectileData
 
 @onready var _sprite: Sprite2D = $Sprite2D
+@onready var _animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var _shape: CollisionShape2D = $CollisionShape2D
 @onready var _trail: Line2D = $Line2D
 
@@ -14,6 +15,13 @@ var _homing_target: Node2D
 var plasma := false
 var plasma_stun_duration := 0.0
 var texture_override: Texture2D
+
+var fire := false
+var fire_damage_per_tick := 0
+var fire_tick_count := 0
+var fire_tick_interval := 0.5
+var sprite_frames_override: SpriteFrames
+var animation_name_override: StringName = &"default"
 
 var direction := Vector2.UP
 
@@ -29,7 +37,17 @@ func _ready() -> void:
 
 func _apply_data() -> void:
 	assert(data.texture != null, "ProjectileData has no texture assigned")
-	_sprite.texture = texture_override if texture_override != null else data.texture
+
+	if sprite_frames_override != null:
+		_sprite.visible = false
+		_animated_sprite.visible = true
+		_animated_sprite.sprite_frames = sprite_frames_override
+		_animated_sprite.play(animation_name_override)
+	else:
+		_sprite.visible = true
+		_animated_sprite.visible = false
+		_sprite.texture = texture_override if texture_override != null else data.texture
+
 	self.apply_scale(Vector2(1, 1) * data.scale)
 	
 	var circle := CircleShape2D.new()
@@ -58,6 +76,7 @@ func _physics_process(delta: float) -> void:
 
 # Override for homing, arcing, spiralling.
 func _move(delta: float) -> void:
+	_animated_sprite.rotation = direction.angle()
 	
 	if homing:
 		_update_homing(delta)
@@ -121,7 +140,9 @@ func _on_area_entered(area: Area2D) -> void:
 	if plasma and area is Enemy:
 		var enemy := area as Enemy
 		enemy.apply_effect(Enemy.Effects.STUN, plasma_stun_duration)
-
+	if fire and area is Enemy:
+		var enemy := area as Enemy
+		enemy.apply_burn(fire_damage_per_tick, fire_tick_count, fire_tick_interval)
 	if area.has_method("take_damage"):
 		area.take_damage(data.damage)
 	_on_impact()
