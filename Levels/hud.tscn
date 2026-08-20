@@ -11,6 +11,8 @@
 [ext_resource type="FontFile" uid="uid://1qarew2on3k7" path="res://Assets/Fonts/PixelOperator.ttf" id="8_uu2l2"]
 [ext_resource type="Script" uid="uid://bbph172n7vkmh" path="res://Levels/augments_panel.gd" id="10_sse4t"]
 [ext_resource type="PackedScene" uid="uid://bs3yk1cg3vc6b" path="res://Actors/HUD/augment_entry.tscn" id="11_sn1ph"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Potions/potion_slot.png" id="12_potion_slot"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Potions/potion_slot_selector.png" id="13_potion_selector"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_augments"]
 
@@ -20,6 +22,8 @@ full_heart_icon = ExtResource("4_sn1ph")
 half_heart_icon = ExtResource("5_half_heart")
 empty_heart_icon = ExtResource("5_empty_heart")
 shield_icon = ExtResource("5_6qxyw")
+potion_slot_texture = ExtResource("12_potion_slot")
+potion_selector_texture = ExtResource("13_potion_selector")
 
 [node name="health and shield icon" type="MarginContainer" parent="." unique_id=751079110]
 offset_left = 20.0
@@ -117,6 +121,20 @@ theme_override_fonts/font = ExtResource("8_uu2l2")
 theme_override_font_sizes/font_size = 39
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="PotionSlots" type="HBoxContainer" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -152.0
+offset_top = -120.0
+offset_right = 152.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 8
 
 [node name="AugmentsPanel" type="PanelContainer" parent="." unique_id=1116543594]
 anchors_preset = 3

@@ -38,12 +38,14 @@ func apply_to(player: Player) -> bool:
 			player._add_gin(gin_amount)
 			return true
 		PickupType.HEALTH:
-			player.heal(heal_amount)
-			return true
+			return player.add_potion(self)
 		PickupType.SHIELD:
-			player.add_shield(shield_amount)
-			return true
+			return player.add_potion(self)
 	return false
+
+
+func is_potion() -> bool:
+	return pickup_type in [PickupType.HEALTH, PickupType.SHIELD]
 
 
 func get_notification_text() -> String:

@@ -14,6 +14,7 @@ var _weapon_states: Array[WeaponState] = []
 
 @export var coin_count:= 0
 @export var gin_count:= 0
+@export_range(1, 5, 1) var potion_slot_count := 3
 
 @onready var _health: HealthComponent = $HealthComponent
 
@@ -24,11 +25,15 @@ signal coin_changed(amount: int)
 signal gin_changed(amount: int)
 signal augment_added(augment: AugmentData)
 signal pickup_collected(pickup: PickupData)
+signal potion_inventory_changed
+signal potion_selection_changed(index: int)
 
 var velocity := Vector2.ZERO
 var _move_intent := Vector2.ZERO
 var _external_force := Vector2.ZERO
 var _is_dead := false
+var _potion_slots: Array[PickupData] = []
+var _selected_potion_slot := 0
 
 #SFX
 @export var cannon_sfx: AudioStream
@@ -36,6 +41,7 @@ var _is_dead := false
 @export var death_sfx: AudioStream
 
 func _ready() -> void:
+	_potion_slots.resize(potion_slot_count)
 	area_entered.connect(_on_area_entered)
 	_pickup_range.area_entered.connect(_on_pickup_range_entered)
 	_health.damaged.connect(_on_damaged)
@@ -49,6 +55,13 @@ func _ready() -> void:
 	
 func _process(_delta: float) -> void:
 	_move_intent = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
+
+	if Input.is_action_just_pressed("potion_previous"):
+		select_potion_slot(_selected_potion_slot - 1)
+	if Input.is_action_just_pressed("potion_next"):
+		select_potion_slot(_selected_potion_slot + 1)
+	if Input.is_action_just_pressed("drink_potion"):
+		drink_selected_potion()
 
 func _physics_process(delta: float) -> void:
 	var target := _move_intent * max_speed
@@ -118,6 +131,65 @@ func add_augment(augment: AugmentData) -> bool:
 			augment_added.emit(augment)
 			return true
 	return false
+
+
+func add_potion(potion: PickupData) -> bool:
+	if potion == null or not potion.is_potion():
+		return false
+
+	for index in range(_potion_slots.size()):
+		if _potion_slots[index] == null:
+			_potion_slots[index] = potion
+			potion_inventory_changed.emit()
+			return true
+
+	return false
+
+
+func select_potion_slot(index: int) -> void:
+	if _potion_slots.is_empty():
+		return
+
+	var wrapped_index := posmod(index, _potion_slots.size())
+	if wrapped_index == _selected_potion_slot:
+		return
+
+	_selected_potion_slot = wrapped_index
+	potion_selection_changed.emit(_selected_potion_slot)
+
+
+func drink_selected_potion() -> bool:
+	var potion := get_potion_in_slot(_selected_potion_slot)
+	if potion == null:
+		return false
+
+	match potion.pickup_type:
+		PickupData.PickupType.HEALTH:
+			if _health.get_current_health() >= _health.get_max_health():
+				return false
+			_health.heal(potion.heal_amount)
+		PickupData.PickupType.SHIELD:
+			_health.add_shield(potion.shield_amount)
+		_:
+			return false
+
+	_potion_slots[_selected_potion_slot] = null
+	potion_inventory_changed.emit()
+	return true
+
+
+func get_potion_slot_count() -> int:
+	return _potion_slots.size()
+
+
+func get_potion_in_slot(index: int) -> PickupData:
+	if index < 0 or index >= _potion_slots.size():
+		return null
+	return _potion_slots[index]
+
+
+func get_selected_potion_slot() -> int:
+	return _selected_potion_slot
 
 ## Combat
 func _update_weapons(delta: float) -> void:
