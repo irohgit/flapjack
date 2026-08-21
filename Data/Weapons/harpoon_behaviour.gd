@@ -13,10 +13,13 @@ func fire(shooter: Node2D, weapon: WeaponState) -> void:
 			augment.augmentEffect.apply_to_projectile(shot)
 
 	shot.data = weapon.data.weaponProjectile
-	
+	shooter.get_parent().add_child(shot)
+	shot.global_position = shooter.global_position + Vector2(0, -40)
+
 	var target := shot._find_nearest_enemy(500)
 
 	if target == null:
+		shot.queue_free()
 		return
 
 
@@ -28,8 +31,5 @@ func fire(shooter: Node2D, weapon: WeaponState) -> void:
 		
 	shot.direction = shot.direction.rotated(angle_to_target).normalized()
 
-
-	shooter.get_parent().add_child(shot)
-	shot.global_position = shooter.global_position + Vector2(0, -40)
 	#SFX
 	_play_fire_sound(weapon)
