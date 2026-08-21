@@ -1,7 +1,7 @@
 class_name Enemy
 extends Area2D
 
-enum Effects {STUN}
+enum Effects {STUN, BURN}
 
 @export var data: EnemyData
 
@@ -16,6 +16,11 @@ enum Effects {STUN}
 @export var effects: Dictionary[Effects, float] = {}
 
 var _fire_timer := 0.0
+
+var _burn_damage := 0
+var _burn_ticks_remaining := 0
+var _burn_tick_timer := 0.0
+var _burn_tick_interval := 0.5
 
 func _ready() -> void:
 	assert(data != null, "Enemy spawned with no EnemyData assigned")
@@ -34,6 +39,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	_tick_effects(delta)
+	_tick_burn(delta)
 
 	var final_speed: float = data.move_speed
 
@@ -114,6 +120,20 @@ func _tick_effects(delta: float) -> void:
 		else:
 			effects[effect] = remaining
 
+func apply_burn(damage_per_tick: int, tick_count: int, tick_interval: float = 0.5) -> void:
+	_burn_damage = damage_per_tick
+	_burn_ticks_remaining = tick_count
+	_burn_tick_interval = tick_interval
+	_burn_tick_timer = tick_interval
+
+func _tick_burn(delta: float) -> void:
+	if _burn_ticks_remaining <= 0:
+		return
+	_burn_tick_timer -= delta
+	if _burn_tick_timer <= 0.0:
+		take_damage(_burn_damage)
+		_burn_ticks_remaining -= 1
+		_burn_tick_timer = _burn_tick_interval
 
 func _effect_active(effect: Effects) -> bool:
 	var remaining: float = effects.get(effect, 0.0)

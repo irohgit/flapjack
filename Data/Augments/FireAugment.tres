@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="AugmentData" format=3 uid="uid://c0vvnpjvepo3a"]
+
+[ext_resource type="Script" uid="uid://brfpufk0cr3cc" path="res://Data/Augments/fire_augment_effect.gd" id="1_767lb"]
+[ext_resource type="SpriteFrames" uid="uid://b33pxcdpd7u2q" path="res://Animations/fireball.tres" id="1_htchy"]
+[ext_resource type="Script" uid="uid://cpp3oou337x" path="res://Data/Augments/augment_data.gd" id="3_xa755"]
+[ext_resource type="Resource" uid="uid://b7nwwwfmfkswx" path="res://Data/Weapons/Cannon.tres" id="4_uqf4a"]
+[ext_resource type="Texture2D" uid="uid://bx5o4w04hmjw7" path="res://Assets/Pickups/FireBall/FB001.png" id="5_htchy"]
+
+[sub_resource type="Resource" id="Resource_sdwb2"]
+script = ExtResource("1_767lb")
+fireball_frames = ExtResource("1_htchy")
+metadata/_custom_type_script = "uid://brfpufk0cr3cc"
+
+[resource]
+script = ExtResource("3_xa755")
+name = "Fire cannon"
+targetWeapon = ExtResource("4_uqf4a")
+texture = ExtResource("5_htchy")
+augmentEffect = SubResource("Resource_sdwb2")
+metadata/_custom_type_script = "uid://cpp3oou337x"

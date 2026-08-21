@@ -16,6 +16,8 @@
 [ext_resource type="PackedScene" uid="uid://cstesilwdvxw5" path="res://UI/settings_panel.tscn" id="10_ejwf3"]
 [ext_resource type="Resource" uid="uid://c8prjyekwi7hm" path="res://Data/Pickups/HomingCannonPickup.tres" id="11_5w86b"]
 [ext_resource type="Resource" uid="uid://5vagi0atsu3m" path="res://Data/Pickups/PlasmaAugmentPickup.tres" id="12_8m7vp"]
+[ext_resource type="Resource" uid="uid://cpynird4edptk" path="res://Data/Pickups/FireballAugmentPickup.tres" id="13_fireball"]
+[ext_resource type="Resource" uid="uid://cesmcj6ctad" path="res://Data/Pickups/MagnetAugmentPickup.tres" id="14_magnet"]
 [ext_resource type="Script" uid="uid://ddmjy6ihgdk7k" path="res://Systems/Levels/level_generator.gd" id="13_d1opp"]
 [ext_resource type="Resource" uid="uid://862x5sptm8w2" path="res://Data/Levels/Stages/Stage2.tres" id="15_lr66y"]
 
@@ -43,7 +45,7 @@ scroll_speed = 50.0
 [node name="SettingsPanel" parent="." unique_id=217040426 instance=ExtResource("10_ejwf3")]
 
 [node name="CoinSpawner" parent="." unique_id=1386735529 instance=ExtResource("9_bq31y")]
-augments = Array[ExtResource("10_a3klg")]([ExtResource("11_5w86b"), ExtResource("12_8m7vp")])
+augments = Array[ExtResource("10_a3klg")]([ExtResource("11_5w86b"), ExtResource("12_8m7vp"), ExtResource("13_fireball"), ExtResource("14_magnet")])
 
 [node name="LevelGenerator" type="Node2D" parent="." unique_id=711120617]
 script = ExtResource("13_d1opp")
@@ -56,6 +58,10 @@ layer = -100
 
 [node name="WaterBack" parent="ScrollRig/CanvasLayer" unique_id=364615905 node_paths=PackedStringArray("camera") instance=ExtResource("5_2ahl2")]
 camera = NodePath("../../ShakeCamera")
+deep_water_color = Color(0.18039216, 0.2901961, 0.12156863, 1)
+wave_water_color = Color(0.23921569, 0.41960785, 0.15686275, 1)
+rim_color = Color(0.47843137, 0.6117647, 0.30588236, 1)
+foam_color = Color(0.76862746, 0.8392157, 0.627451, 1)
 metadata/_edit_use_anchors_ = true
 
 [node name="ShakeCamera" type="Camera2D" parent="ScrollRig" unique_id=1729136761 groups=["shake_camera"]]

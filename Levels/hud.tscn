@@ -3,16 +3,27 @@
 [ext_resource type="Script" uid="uid://c7yy08nmcm5ot" path="res://Levels/hud.gd" id="1_otg58"]
 [ext_resource type="Texture2D" uid="uid://bih4j810dbm77" path="res://Assets/UI/Health/heart.png" id="4_sn1ph"]
 [ext_resource type="Texture2D" uid="uid://ef3klwck2tmi" path="res://Assets/UI/Health/shield.png" id="5_6qxyw"]
+[ext_resource type="Texture2D" uid="uid://c8xcs7qj43488" path="res://Assets/UI/Health/heart_empty.png" id="5_empty_heart"]
+[ext_resource type="Texture2D" uid="uid://b4ekttt61ejhe" path="res://Assets/UI/Health/heart_half.png" id="5_half_heart"]
 [ext_resource type="Texture2D" uid="uid://cwvav4wx32kj3" path="res://Assets/UI/Coin/coin_frame.png" id="6_1wnoe"]
 [ext_resource type="Texture2D" uid="uid://bivaxkwiet2pe" path="res://Assets/UI/Coin/coin_icon.png" id="7_2lib2"]
+[ext_resource type="Texture2D" uid="uid://dypxhdmtkar1y" path="res://Assets/Pickups/cocktail_2.png" id="7_iqaem"]
 [ext_resource type="FontFile" uid="uid://1qarew2on3k7" path="res://Assets/Fonts/PixelOperator.ttf" id="8_uu2l2"]
 [ext_resource type="Script" uid="uid://bbph172n7vkmh" path="res://Levels/augments_panel.gd" id="10_sse4t"]
 [ext_resource type="PackedScene" uid="uid://bs3yk1cg3vc6b" path="res://Actors/HUD/augment_entry.tscn" id="11_sn1ph"]
+[ext_resource type="Texture2D" uid="uid://y2oh1hgogp4e" path="res://Assets/UI/Potions/potion_slot.png" id="12_potion_slot"]
+[ext_resource type="Texture2D" uid="uid://c2io1a0l25kwq" path="res://Assets/UI/Potions/potion_slot_selector.png" id="13_potion_selector"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_augments"]
 
 [node name="HUD" type="CanvasLayer" unique_id=228684140]
 script = ExtResource("1_otg58")
-heart_icon = ExtResource("4_sn1ph")
+full_heart_icon = ExtResource("4_sn1ph")
+half_heart_icon = ExtResource("5_half_heart")
+empty_heart_icon = ExtResource("5_empty_heart")
 shield_icon = ExtResource("5_6qxyw")
+potion_slot_texture = ExtResource("12_potion_slot")
+potion_selector_texture = ExtResource("13_potion_selector")
 
 [node name="health and shield icon" type="MarginContainer" parent="." unique_id=751079110]
 offset_left = 20.0
@@ -66,12 +77,76 @@ theme_override_font_sizes/font_size = 39
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Gin" type="Control" parent="." unique_id=1495590449]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -202.0
+offset_top = 12.0
+offset_right = -162.0
+offset_bottom = 52.0
+grow_horizontal = 0
+offset_transform_enabled = true
+offset_transform_position = Vector2(0, 80)
+
+[node name="Frame" type="TextureRect" parent="Gin" unique_id=2017084565]
+layout_mode = 0
+offset_left = -97.0
+offset_top = 2.0
+offset_right = 415.0
+offset_bottom = 210.0
+scale = Vector2(0.4, 0.32000262)
+texture = ExtResource("6_1wnoe")
+
+[node name="GinIcon" type="TextureRect" parent="Gin" unique_id=1722352701]
+layout_mode = 0
+offset_left = -66.0
+offset_top = 11.0
+offset_right = 62.0
+offset_bottom = 139.0
+scale = Vector2(0.37334305, 0.3595906)
+texture = ExtResource("7_iqaem")
+
+[node name="Amount" type="Label" parent="Gin" unique_id=493406975]
+layout_mode = 0
+offset_left = -9.0
+offset_top = 4.0
+offset_right = 71.0
+offset_bottom = 60.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("8_uu2l2")
+theme_override_font_sizes/font_size = 39
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PotionSlots" type="HBoxContainer" parent="." unique_id=539624042]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -152.0
+offset_top = -120.0
+offset_right = 152.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 8
+
 [node name="AugmentsPanel" type="PanelContainer" parent="." unique_id=1116543594]
-anchors_preset = -1
-offset_left = 20.0
-offset_top = 800.0
-offset_right = 250.0
-offset_bottom = 880.0
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -230.0
+offset_top = -80.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_augments")
 script = ExtResource("10_sse4t")
 augment_entry_scene = ExtResource("11_sn1ph")
 

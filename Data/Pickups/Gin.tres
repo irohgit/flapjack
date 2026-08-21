@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PickupData" format=3 uid="uid://bvtbthku5smhg"]
+
+[ext_resource type="AudioStream" uid="uid://d1t77v38kul38" path="res://Audio/SFX/pop_pickup_cute.mp3" id="1_croff"]
+[ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="2_cy0xc"]
+[ext_resource type="Texture2D" uid="uid://dypxhdmtkar1y" path="res://Assets/Pickups/cocktail_2.png" id="3_croff"]
+
+[resource]
+script = ExtResource("2_cy0xc")
+pickup_type = 5
+texture = ExtResource("3_croff")
+gin_amount = 1
+pickup_sfx = ExtResource("1_croff")
+metadata/_custom_type_script = "uid://rau2jwiqd0pd"

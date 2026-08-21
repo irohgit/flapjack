@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="AugmentData" format=3 uid="uid://dqcrvuh0gyty8"]
+
+[ext_resource type="Script" uid="uid://cpp3oou337x" path="res://Data/Augments/augment_data.gd" id="1_lbwfg"]
+[ext_resource type="Script" uid="uid://dka1bj5u8eq0v" path="res://Data/Augments/piercing_augment_effect.gd" id="1_lgbne"]
+[ext_resource type="Resource" uid="uid://b7nwwwfmfkswx" path="res://Data/Weapons/Cannon.tres" id="2_bsxdd"]
+[ext_resource type="Texture2D" uid="uid://bygt8tb1xwxtv" path="res://Assets/Pickups/18.png" id="4_vj15v"]
+
+[sub_resource type="Resource" id="Resource_l5fa5"]
+script = ExtResource("1_lgbne")
+metadata/_custom_type_script = "uid://dka1bj5u8eq0v"
+
+[resource]
+script = ExtResource("1_lbwfg")
+name = "Pierce"
+targetWeapon = ExtResource("2_bsxdd")
+texture = ExtResource("4_vj15v")
+augmentEffect = SubResource("Resource_l5fa5")
+metadata/_custom_type_script = "uid://cpp3oou337x"

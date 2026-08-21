@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://cclwwsegfn8rr"]
 
 [ext_resource type="Script" uid="uid://bpr8v8sl141c1" path="res://Actors/Player/player.gd" id="1_5ni5v"]
-[ext_resource type="Script" uid="uid://cwgppd8sjjvy5" path="res://Systems/Combat/ShieldComponent.gd" id="1_v1key"]
 [ext_resource type="Script" uid="uid://dfww4fxipct38" path="res://Data/Weapons/weapon_data.gd" id="2_isd1h"]
 [ext_resource type="Resource" uid="uid://b7nwwwfmfkswx" path="res://Data/Weapons/Cannon.tres" id="3_8gtf5"]
 [ext_resource type="Texture2D" uid="uid://bchf2yw8841go" path="res://Assets/Boat/Player.png" id="3_b63gh"]
@@ -11,9 +10,12 @@
 radius = 31.0
 height = 76.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_dxqhr"]
+radius = 62.03225
+
 [node name="Player" type="Area2D" unique_id=2109576054 groups=["player"]]
 scale = Vector2(0.5, 0.5)
-collision_mask = 22
+collision_mask = 6
 script = ExtResource("1_5ni5v")
 weapons = Array[ExtResource("2_isd1h")]([ExtResource("3_8gtf5")])
 
@@ -27,8 +29,12 @@ shape = SubResource("CapsuleShape2D_5st54")
 
 [node name="HealthComponent" type="Node" parent="." unique_id=1517013079]
 script = ExtResource("5_n7l8t")
+max_health = 6
 invincibility_time = 1.0
 
-[node name="ShieldComponent" type="Node" parent="." unique_id=1361993337]
-script = ExtResource("1_v1key")
-metadata/_custom_type_script = "uid://cwgppd8sjjvy5"
+[node name="PickupRange" type="Area2D" parent="." unique_id=675580203]
+collision_layer = 8
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupRange" unique_id=1601549884]
+shape = SubResource("CircleShape2D_dxqhr")

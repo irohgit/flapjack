@@ -120,3 +120,48 @@ press_sound = ExtResource("7_ht1cn")
 
 [node name="SettingsPanel" parent="." unique_id=514572451 instance=ExtResource("6_num61")]
 layout_mode = 0
+[node name="RetryButton" type="TextureButton" parent="Screen" unique_id=934566863]
+texture_filter = 1
+layout_mode = 0
+offset_left = 710.0
+offset_top = 506.0
+offset_right = 1210.0
+offset_bottom = 646.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("4_play")
+texture_pressed = ExtResource("6_play_pressed")
+texture_hover = ExtResource("5_play_hover")
+texture_focused = ExtResource("5_play_hover")
+ignore_texture_size = true
+
+[node name="UpgradeButton" type="TextureButton" parent="Screen" unique_id=2086508340]
+texture_filter = 1
+layout_mode = 0
+offset_left = 710.0
+offset_top = 650.0
+offset_right = 1210.0
+offset_bottom = 790.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("4_play")
+texture_pressed = ExtResource("6_play_pressed")
+texture_hover = ExtResource("5_play_hover")
+texture_focused = ExtResource("5_play_hover")
+ignore_texture_size = true
+
+[node name="MainMenuButton" type="TextureButton" parent="Screen" unique_id=657727306]
+texture_filter = 1
+layout_mode = 0
+offset_left = 710.0
+offset_top = 800.0
+offset_right = 1210.0
+offset_bottom = 940.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("7_exit")
+texture_pressed = ExtResource("9_exit_pressed")
+texture_hover = ExtResource("8_exit_hover")
+texture_focused = ExtResource("8_exit_hover")
+ignore_texture_size = true
+
+[connection signal="pressed" from="Screen/RetryButton" to="." method="_on_retry_pressed"]
+[connection signal="pressed" from="Screen/UpgradeButton" to="." method="_on_upgrade_button_pressed"]
+[connection signal="pressed" from="Screen/MainMenuButton" to="." method="_on_main_menu_pressed"]

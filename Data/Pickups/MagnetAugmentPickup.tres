@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="PickupData" format=3 uid="uid://cesmcj6ctad"]
+
+[ext_resource type="Script" uid="uid://doc7gd15frkr2" path="res://Data/Augments/magnet_augment_effect.gd" id="1_465hc"]
+[ext_resource type="AudioStream" uid="uid://bhp3mqd4ya5te" path="res://Audio/SFX/plasma_pickup.mp3" id="2_465hc"]
+[ext_resource type="Script" uid="uid://cpp3oou337x" path="res://Data/Augments/augment_data.gd" id="2_r08qc"]
+[ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="3_r08qc"]
+[ext_resource type="Texture2D" uid="uid://cb0n7v17pxqt3" path="res://Assets/Pickups/13.png" id="4_ms5j3"]
+
+[sub_resource type="Resource" id="Resource_isd1h"]
+script = ExtResource("1_465hc")
+metadata/_custom_type_script = "uid://dicm5hj6arprk"
+
+[sub_resource type="Resource" id="Resource_8jxyj"]
+script = ExtResource("2_r08qc")
+name = "Magnet"
+texture = ExtResource("4_ms5j3")
+augmentEffect = SubResource("Resource_isd1h")
+metadata/_custom_type_script = "uid://cpp3oou337x"
+
+[resource]
+script = ExtResource("3_r08qc")
+texture = ExtResource("4_ms5j3")
+augment = SubResource("Resource_8jxyj")
+pickup_sfx = ExtResource("2_465hc")
+metadata/_custom_type_script = "uid://rau2jwiqd0pd"
