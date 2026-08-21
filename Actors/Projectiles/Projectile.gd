@@ -32,6 +32,8 @@ var boost_speed_multiplier := 1.0
 var has_done_ricochet := false
 var age_time := 0.0
 
+var hit_list: Array[Node2D] = []
+
 var final_speed_boost := 1.0
 
 var direction := Vector2.UP
@@ -108,10 +110,10 @@ func _move(delta: float) -> void:
 	
 	position += direction * data.speed * final_speed_boost * delta
 
-func _chain_lightning(just_hit: Node2D) -> void:
-	var target := _find_nearest_enemy(500, just_hit)
-	if target == null || target == just_hit:
-		return
+func _chain_lightning() -> bool:
+	var target := _find_nearest_enemy(500, hit_list)
+	if target == null:
+		return false
 
 	_homing_target = target
 
@@ -123,13 +125,13 @@ func _chain_lightning(just_hit: Node2D) -> void:
 	
 	direction = direction.rotated(angle_to_target).normalized()
 	
-	final_speed_boost *= boost_speed_multiplier
 	has_done_ricochet = true
+	return true
 
-func _orbital_ricochet(_delta: float) -> void:
+func _orbital_ricochet(_delta: float) -> bool:
 	var target := _find_nearest_enemy(5000)
 	if target == null:
-		return
+		return false
 
 	_homing_target = target
 
@@ -143,6 +145,7 @@ func _orbital_ricochet(_delta: float) -> void:
 	
 	final_speed_boost *= boost_speed_multiplier
 	has_done_ricochet = true
+	return true
 
 func _update_homing(delta: float) -> void:
 	if not _has_valid_homing_target():
@@ -175,14 +178,14 @@ func _has_valid_homing_target() -> bool:
 	) <= homing_range * homing_range
 
 
-func _find_nearest_enemy(search_range: float, ignore_enemy: Node2D = null) -> Node2D:
+func _find_nearest_enemy(search_range: float, ignore_enemy: Array[Node2D] = []) -> Node2D:
 	var nearest: Node2D
 	var nearest_distance_squared := search_range * search_range
 
 	for node in get_tree().get_nodes_in_group("enemy"):
 		var candidate := node as Node2D
 
-		if candidate == null or candidate.is_queued_for_deletion() or candidate == ignore_enemy:
+		if candidate == null or candidate.is_queued_for_deletion() or ignore_enemy.has(candidate):
 			continue
 
 		var distance_squared := global_position.distance_squared_to(
@@ -211,7 +214,8 @@ func _on_area_entered(area: Area2D) -> void:
 		enemy.apply_burn(fire_damage_per_tick, fire_tick_count, fire_tick_interval)
 	if orbital_ricochet and plasma and area is Enemy:
 		if pierce != 0:
-			_chain_lightning(area)
+			hit_list.append(area)
+			_chain_lightning()
 			has_done_ricochet = true
 	if area.has_method("take_damage"):
 		area.take_damage(data.damage)
