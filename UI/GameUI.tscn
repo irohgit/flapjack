@@ -1,4 +1,6 @@
 [gd_scene format=3 uid="uid://cpy76lvb1x4cb"]
+[ext_resource type="PackedScene" uid="uid://cq7rvdaul30k1" path="res://UI/pause_menu.tscn" id="1_lwtm8"]
+[ext_resource type="PackedScene" uid="uid://btdaigjltsc2m" path="res://UI/DeathScreen/death_screen.tscn" id="2_hqqrp"]
 
 [node name="GameUI" type="CanvasLayer" unique_id=1532914546]
 
