@@ -5,6 +5,7 @@ extends VBoxContainer
 
 @onready var _icon: TextureRect = $CardBody/Margin/HBox/Icon
 @onready var _name_label: Label = $CardBody/Margin/HBox/InfoVBox/NameLabel
+@onready var _description_label: Label = $CardBody/Margin/HBox/InfoVBox/DescriptionLabel
 @onready var _progress_bar: ProgressBar = $CardBody/Margin/HBox/InfoVBox/ProgressBar
 @onready var _cost_label: Label = $CostRow/CostLabel
 @onready var _buy_button: Button = $CostRow/BuyButton
@@ -16,6 +17,7 @@ func _ready() -> void:
 	_buy_button.pressed.connect(_on_buy_pressed)
 	_icon.texture = node_data.icon
 	_name_label.text = node_data.display_name
+	_description_label.text = node_data.display_description
 	_refresh()
 
 func _on_buy_pressed() -> void:

@@ -57,6 +57,7 @@ func _go_to_upgrades() -> void:
 	if _transitioning:
 		return
 	_transitioning = true
+	MetaProgress.pending_retry_scene_path = _retry_scene_path
 	_leave_death_state()
 	var error := get_tree().change_scene_to_file(UPGRADE_SCREEN_SCENE)
 	if error != OK:

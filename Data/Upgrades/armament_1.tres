@@ -7,6 +7,7 @@
 script = ExtResource("1_2x4sl")
 id = &"6"
 display_name = "Armament 1"
+display_description = "+ Weapon"
 stat_type = 1
 icon = ExtResource("1_l0r5d")
 level_costs = Array[int]([0, 0, 0])

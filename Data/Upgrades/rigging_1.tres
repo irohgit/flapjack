@@ -7,6 +7,7 @@
 script = ExtResource("1_p74i8")
 id = &"3"
 display_name = "Rigging 1"
+display_description = "+ Speed"
 icon = ExtResource("1_82x5g")
 level_costs = Array[int]([0, 0, 0])
 metadata/_custom_type_script = "uid://syfvycgndo0d"

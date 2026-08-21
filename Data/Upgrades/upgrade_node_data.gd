@@ -5,6 +5,7 @@ enum StatType { RIGGING, ARMAMENT, HULL }
 
 @export var id: StringName            # unique key, e.g. "rigging_1"
 @export var display_name: String      # "Rigging I"
+@export var display_description: String
 @export var stat_type: StatType
 @export var tier: int = 1             # 1, 2, or 3
 @export var icon: Texture2D

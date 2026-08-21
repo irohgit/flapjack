@@ -1,8 +1,6 @@
 [gd_scene format=3 uid="uid://txmrd1xl2rsq"]
 
-[ext_resource type="Script" uid="uid://duntr73s38siv" path="res://Levels/main_menu.gd" id="1_4h7mw"]
-[ext_resource type="Script" uid="uid://syfvycgndo0d" path="res://Data/Upgrades/upgrade_node_data.gd" id="2_fx8qg"]
-[ext_resource type="Texture2D" uid="uid://blqktis1rglxm" path="res://Assets/Upgrades/GGEZ (7).png" id="3_d6pfb"]
+[ext_resource type="Script" path="res://Levels/upgrade_screen.gd" id="1_4h7mw"]
 [ext_resource type="Texture2D" uid="uid://dxxtwk0363bv7" path="res://Assets/UI/MainMenu/play_button.png" id="4_e3rie"]
 [ext_resource type="Texture2D" uid="uid://du08ikcxdlcmq" path="res://Assets/UI/MainMenu/play_button_pressed.png" id="5_7jifi"]
 [ext_resource type="Texture2D" uid="uid://32nal43kjqf6" path="res://Assets/UI/MainMenu/play_button_hover.png" id="6_7m6d7"]
@@ -20,6 +18,8 @@
 [ext_resource type="Resource" uid="uid://ext0rr45eml7" path="res://Data/Upgrades/armament_1.tres" id="15_mwjre"]
 [ext_resource type="Resource" uid="uid://d022k1elgh4w8" path="res://Data/Upgrades/armament_2.tres" id="16_b88na"]
 [ext_resource type="Resource" uid="uid://cyl0qv343v7ne" path="res://Data/Upgrades/armament_3.tres" id="17_o8ke0"]
+[ext_resource type="Script" uid="uid://syfvycgndo0d" path="res://Data/Upgrades/upgrade_node_data.gd" id="18_undata"]
+[ext_resource type="Texture2D" uid="uid://blqktis1rglxm" path="res://Assets/Upgrades/GGEZ (7).png" id="19_boattex"]
 
 [node name="UpgradeScreen" type="Control" unique_id=578260770]
 layout_mode = 3
@@ -29,11 +29,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_4h7mw")
-tier1_nodes = Array[ExtResource("2_fx8qg")]([ExtResource("12_cm27g"), ExtResource("9_t3him"), ExtResource("15_mwjre")])
-tier2_nodes = Array[ExtResource("2_fx8qg")]([ExtResource("10_d6pfb"), ExtResource("16_b88na"), ExtResource("13_rkbg3")])
+tier1_nodes = Array[ExtResource("18_undata")]([ExtResource("9_t3him"), ExtResource("12_cm27g"), ExtResource("15_mwjre")])
+tier2_nodes = Array[ExtResource("18_undata")]([ExtResource("10_d6pfb"), ExtResource("13_rkbg3"), ExtResource("16_b88na")])
 skiff_texture = ExtResource("7_fx8qg")
-schooner_texture = ExtResource("3_d6pfb")
-galleon_texture = ExtResource("3_d6pfb")
+schooner_texture = ExtResource("19_boattex")
+galleon_texture = ExtResource("19_boattex")
 
 [node name="Background" type="TextureRect" parent="." unique_id=1694574129]
 texture_filter = 1
@@ -240,4 +240,4 @@ offset_right = 1340.0
 offset_bottom = 685.0
 node_data = ExtResource("17_o8ke0")
 
-[connection signal="button_up" from="PlayButton" to="." method="PlayPress"]
+[connection signal="button_up" from="PlayButton" to="." method="_on_retry_pressed"]

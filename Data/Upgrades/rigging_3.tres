@@ -7,6 +7,7 @@
 script = ExtResource("1_gxkpy")
 id = &"5"
 display_name = "Rigging 3"
+display_description = "+ Speed"
 tier = 3
 icon = ExtResource("1_ku8v4")
 metadata/_custom_type_script = "uid://syfvycgndo0d"
