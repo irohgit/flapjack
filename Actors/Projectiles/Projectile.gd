@@ -103,13 +103,13 @@ func _move(delta: float) -> void:
 			_homing_target = null
 			
 	if orbital_ricochet and not has_done_ricochet:
-		if age_time >= 0:
+		if age_time >= 0.5:
 			_orbital_ricochet(delta)
 	
 	position += direction * data.speed * final_speed_boost * delta
 
 func _orbital_ricochet(_delta: float) -> void:
-	var target := _find_nearest_enemy()
+	var target := _find_nearest_enemy(5000)
 	if target == null:
 		return
 
@@ -128,7 +128,7 @@ func _orbital_ricochet(_delta: float) -> void:
 
 func _update_homing(delta: float) -> void:
 	if not _has_valid_homing_target():
-		_homing_target = _find_nearest_enemy()
+		_homing_target = _find_nearest_enemy(homing_range)
 
 	if _homing_target == null:
 		return
@@ -157,9 +157,9 @@ func _has_valid_homing_target() -> bool:
 	) <= homing_range * homing_range
 
 
-func _find_nearest_enemy() -> Node2D:
+func _find_nearest_enemy(search_range: float) -> Node2D:
 	var nearest: Node2D
-	var nearest_distance_squared := homing_range * homing_range
+	var nearest_distance_squared := search_range * search_range
 
 	for node in get_tree().get_nodes_in_group("enemy"):
 		var candidate := node as Node2D
