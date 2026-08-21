@@ -27,6 +27,9 @@ var animation_name_override: StringName = &"default"
 
 var pierce := 0
 
+var orbital_ricochet := false
+var boost_speed_multiplier := 1.0
+
 var direction := Vector2.UP
 
 
@@ -93,8 +96,14 @@ func _move(delta: float) -> void:
 		if homing_time_remaining <= 0.0:
 			homing = false
 			_homing_target = null
+			
+	if orbital_ricochet:
+		pass
 	
 	position += direction * data.speed * delta
+
+func _orbital_ricochet(delta: float) -> void:
+	_homing_target = _find_nearest_enemy()
 
 func _update_homing(delta: float) -> void:
 	if not _has_valid_homing_target():
