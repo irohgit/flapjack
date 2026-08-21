@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="UpgradeNodeData" format=3 uid="uid://bkgmdd1ddhx3s"]
+
+[ext_resource type="Texture2D" uid="uid://bn1gfg0t6encg" path="res://Assets/Upgrades/GGEZ (1).png" id="1_52ojq"]
+[ext_resource type="Script" uid="uid://syfvycgndo0d" path="res://Data/Upgrades/upgrade_node_data.gd" id="1_djsod"]
+
+[resource]
+script = ExtResource("1_djsod")
+id = &"4"
+display_name = "Rigging 2"
+tier = 2
+icon = ExtResource("1_52ojq")
+metadata/_custom_type_script = "uid://syfvycgndo0d"

@@ -1,0 +1,80 @@
+[gd_scene format=3 uid="uid://co6sij38mf2wj"]
+
+[ext_resource type="Script" uid="uid://bdk8hkdfpyigi" path="res://Data/Upgrades/upgrade_node_card.gd" id="1_yo4xl"]
+[ext_resource type="Texture2D" uid="uid://b3kl2lhqyvpvk" path="res://Assets/Upgrades/GGEZ.png" id="2_lspiq"]
+[ext_resource type="Texture2D" uid="uid://bn1gfg0t6encg" path="res://Assets/Upgrades/GGEZ (1).png" id="3_1gtk1"]
+
+[node name="UpgradeNodeCard" type="VBoxContainer" unique_id=1797027143]
+custom_minimum_size = Vector2(180, 140)
+script = ExtResource("1_yo4xl")
+
+[node name="CardBody" type="Control" parent="." unique_id=2088644815]
+custom_minimum_size = Vector2(180, 100)
+layout_mode = 2
+
+[node name="Background" type="TextureRect" parent="CardBody" unique_id=1220502623]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_lspiq")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Margin" type="MarginContainer" parent="CardBody" unique_id=1184490180]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 8
+
+[node name="HBox" type="HBoxContainer" parent="CardBody/Margin" unique_id=1792977939]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="CardBody/Margin/HBox" unique_id=1069268466]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+texture = ExtResource("3_1gtk1")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="InfoVBox" type="VBoxContainer" parent="CardBody/Margin/HBox" unique_id=1372526554]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="NameLabel" type="Label" parent="CardBody/Margin/HBox/InfoVBox" unique_id=468157158]
+layout_mode = 2
+text = "Example"
+horizontal_alignment = 1
+
+[node name="DescriptionLabel" type="Label" parent="CardBody/Margin/HBox/InfoVBox" unique_id=2082841295]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "+ extra info"
+horizontal_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="CardBody/Margin/HBox/InfoVBox" unique_id=626574284]
+layout_mode = 2
+
+[node name="CostRow" type="HBoxContainer" parent="." unique_id=1066680473]
+layout_mode = 2
+alignment = 1
+
+[node name="Icon" type="TextureRect" parent="CostRow" unique_id=1693598463]
+layout_mode = 2
+
+[node name="CostLabel" type="Label" parent="CostRow" unique_id=707281801]
+layout_mode = 2
+
+[node name="BuyButton" type="Button" parent="CostRow" unique_id=855545632]
+layout_mode = 2
+text = "+"
+flat = true

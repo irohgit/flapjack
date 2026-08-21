@@ -1,16 +1,69 @@
 extends Node
-# Autoload. Survives scene changes and player death - this is where
-# "between runs" state lives, since Player itself gets queue_free()'d.
+# Autoload. Survives scene changes and player death.
 
-var banked_gin := 0
-var bonus_max_health := 0
-var bonus_max_speed := 0.0
+signal gin_changed(amount: int)
+signal trust_changed(amount: int)
+signal upgrade_purchased(node_id: StringName, new_level: int)
+signal boat_tier_changed(new_tier: int)
+
+enum BoatTier { SKIFF, SCHOONER, GALLEON }
+
+var gin := 0
+var trust := 0   # lifetime total spend, never decreases - matches "Trust never goes down"
+var boat_tier: BoatTier = BoatTier.SKIFF
+var upgrade_levels: Dictionary = {}   # node_id -> current level
+var pending_retry_scene_path := ""
 
 func add_gin(amount: int) -> void:
-	banked_gin += amount
+	gin += amount
+	gin_changed.emit(gin)
 
-func spend_coins(amount: int) -> bool:
-	if banked_gin < amount:
+func get_level(node_id: StringName) -> int:
+	return upgrade_levels.get(node_id, 0)
+
+func get_next_cost(node: UpgradeNodeData) -> int:
+	var current_level := get_level(node.id)
+	if current_level >= node.max_level:
+		return -1
+	return node.level_costs[current_level]
+
+func can_purchase(node: UpgradeNodeData) -> bool:
+	if node.tier - 1 > boat_tier:
 		return false
-	banked_gin -= amount
+	var cost := get_next_cost(node)
+	return cost >= 0 and gin >= cost
+
+func purchase(node: UpgradeNodeData) -> bool:
+	if not can_purchase(node):
+		return false
+	var cost := get_next_cost(node)
+	gin -= cost
+	trust += cost
+	var new_level: int = get_level(node.id) + 1
+	upgrade_levels[node.id] = new_level
+
+	gin_changed.emit(gin)
+	trust_changed.emit(trust)
+	upgrade_purchased.emit(node.id, new_level)
+	return true
+
+func get_total_bonus(stat_type: UpgradeNodeData.StatType, all_nodes: Array[UpgradeNodeData]) -> float:
+	var total := 0.0
+	for node in all_nodes:
+		if node.stat_type == stat_type:
+			total += get_level(node.id) * node.bonus_per_level
+	return total
+
+func check_tier_transition(tier1_nodes: Array[UpgradeNodeData], tier2_nodes: Array[UpgradeNodeData]) -> void:
+	if boat_tier == BoatTier.SKIFF and _all_maxed(tier1_nodes):
+		boat_tier = BoatTier.SCHOONER
+		boat_tier_changed.emit(boat_tier)
+	elif boat_tier == BoatTier.SCHOONER and _all_maxed(tier2_nodes):
+		boat_tier = BoatTier.GALLEON
+		boat_tier_changed.emit(boat_tier)
+
+func _all_maxed(nodes: Array[UpgradeNodeData]) -> bool:
+	for node in nodes:
+		if get_level(node.id) < node.max_level:
+			return false
 	return true

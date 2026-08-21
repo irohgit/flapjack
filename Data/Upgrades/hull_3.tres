@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="UpgradeNodeData" format=3 uid="uid://bcsbx4yq5aan7"]
+
+[ext_resource type="Script" uid="uid://syfvycgndo0d" path="res://Data/Upgrades/upgrade_node_data.gd" id="1_764f2"]
+[ext_resource type="Texture2D" uid="uid://cxdopbr5sfsht" path="res://Assets/Upgrades/GGEZ (12).png" id="1_iroo8"]
+
+[resource]
+script = ExtResource("1_764f2")
+id = &"2"
+display_name = "Hull 3"
+stat_type = 2
+tier = 3
+icon = ExtResource("1_iroo8")
+bonus_per_level = 1.0
+metadata/_custom_type_script = "uid://syfvycgndo0d"
