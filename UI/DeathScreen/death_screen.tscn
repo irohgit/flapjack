@@ -9,7 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://dc263ntmf6iew" path="res://Audio/SFX/ui_click_stylized.mp3" id="7_ht1cn"]
 [ext_resource type="FontFile" uid="uid://p6nsf53xeqe8" path="res://Assets/Fonts/Montserrat/static/Montserrat-SemiBold.ttf" id="10_body_font"]
 
-[node name="DeathScreen" type="Control" unique_id=318826695 node_paths=PackedStringArray("first_focus")]
+[node name="DeathScreen" type="Control" unique_id=318826695 node_paths=PackedStringArray("first_focus", "retry_button", "upgrade_button", "main_menu_button")]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
@@ -22,6 +22,9 @@ script = ExtResource("1_lw348")
 first_focus = NodePath("VBoxContainer/Retry")
 close_on_cancel = false
 pauses_tree = true
+retry_button = NodePath("VBoxContainer/Retry")
+upgrade_button = NodePath("VBoxContainer/Upgrade")
+main_menu_button = NodePath("VBoxContainer/Main Menu")
 
 [node name="Background" type="TextureRect" parent="." unique_id=356206368]
 texture_filter = 1
@@ -92,6 +95,14 @@ focus_tint = Color(0.88833916, 0.73178285, 0.39407146, 1)
 focus_sound = ExtResource("6_dq2wr")
 press_sound = ExtResource("7_ht1cn")
 
+[node name="Upgrade" parent="VBoxContainer" instance=ExtResource("5_e4wqi")]
+layout_mode = 2
+act = 0
+label_text = "Upgrades"
+focus_tint = Color(0.88833916, 0.73178285, 0.39407146, 1)
+focus_sound = ExtResource("6_dq2wr")
+press_sound = ExtResource("7_ht1cn")
+
 [node name="Main Menu" parent="VBoxContainer" unique_id=5511419 instance=ExtResource("5_e4wqi")]
 layout_mode = 2
 act = 0
@@ -120,48 +131,3 @@ press_sound = ExtResource("7_ht1cn")
 
 [node name="SettingsPanel" parent="." unique_id=514572451 instance=ExtResource("6_num61")]
 layout_mode = 0
-[node name="RetryButton" type="TextureButton" parent="Screen" unique_id=934566863]
-texture_filter = 1
-layout_mode = 0
-offset_left = 710.0
-offset_top = 506.0
-offset_right = 1210.0
-offset_bottom = 646.0
-mouse_default_cursor_shape = 2
-texture_normal = ExtResource("4_play")
-texture_pressed = ExtResource("6_play_pressed")
-texture_hover = ExtResource("5_play_hover")
-texture_focused = ExtResource("5_play_hover")
-ignore_texture_size = true
-
-[node name="UpgradeButton" type="TextureButton" parent="Screen" unique_id=2086508340]
-texture_filter = 1
-layout_mode = 0
-offset_left = 710.0
-offset_top = 650.0
-offset_right = 1210.0
-offset_bottom = 790.0
-mouse_default_cursor_shape = 2
-texture_normal = ExtResource("4_play")
-texture_pressed = ExtResource("6_play_pressed")
-texture_hover = ExtResource("5_play_hover")
-texture_focused = ExtResource("5_play_hover")
-ignore_texture_size = true
-
-[node name="MainMenuButton" type="TextureButton" parent="Screen" unique_id=657727306]
-texture_filter = 1
-layout_mode = 0
-offset_left = 710.0
-offset_top = 800.0
-offset_right = 1210.0
-offset_bottom = 940.0
-mouse_default_cursor_shape = 2
-texture_normal = ExtResource("7_exit")
-texture_pressed = ExtResource("9_exit_pressed")
-texture_hover = ExtResource("8_exit_hover")
-texture_focused = ExtResource("8_exit_hover")
-ignore_texture_size = true
-
-[connection signal="pressed" from="Screen/RetryButton" to="." method="_on_retry_pressed"]
-[connection signal="pressed" from="Screen/UpgradeButton" to="." method="_on_upgrade_button_pressed"]
-[connection signal="pressed" from="Screen/MainMenuButton" to="." method="_on_main_menu_pressed"]
