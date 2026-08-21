@@ -88,7 +88,9 @@ func _spawn_tick() -> void:
 	_spawn_band(far_objects, far_scroll_range, far_parent)
 	_spawn_band(near_objects, near_scroll_range, near_parent)
 	_spawn_band(overlay_objects, overlay_scroll_range, overlay_parent)
-
+	DebugHud.watch("overlay", str(overlay_parent.get_child_count()))
+	DebugHud.watch("near", str(near_parent.get_child_count()))
+	DebugHud.watch("far", str(far_parent.get_child_count()))
 
 func _spawn_band(pool: Array[PackedScene], scroll_range: Vector2, parent: Node2D) -> void:
 	if pool.is_empty() or parent == null:
@@ -103,6 +105,7 @@ func _spawn_one(pool: Array[PackedScene], scroll_range: Vector2, parent: Node2D)
 	var layer := Parallax2D.new()
 	var depth := randf_range(scroll_range.x, scroll_range.y)
 	layer.scroll_scale = Vector2(depth, depth)
+	layer.repeat_size = Vector2.ZERO   # discrete props, not a tiling backdrop
 
 	var obj := pool.pick_random().instantiate() as Node2D
 	if obj == null:
@@ -110,15 +113,30 @@ func _spawn_one(pool: Array[PackedScene], scroll_range: Vector2, parent: Node2D)
 		layer.queue_free()
 		return
 
-	# Object carries the horizontal spread only.
-	obj.position = Vector2(randf_range(edge_margin, play_width - edge_margin), 0.0)
+	# Where we want it, expressed in world terms.
+	var top := Playarea.get_visible_world_rect().position.y
+	var lead := spawn_lead / maxf(depth, 0.1)
+	var target := Vector2(
+		randf_range(edge_margin, play_width - edge_margin),
+		top - lead - randf_range(0.0, 300.0)
+	)
+
 
 	layer.add_child(obj)
 	parent.add_child(layer)
 
-	# Ask the engine where the visible area actually is, rather than assuming
-	# a half-viewport offset from the camera. A layer at depth 0.3 closes on
-	# the camera at 70% of its speed, so it needs 3.3x the lead to survive.
-	var top := Playarea.get_visible_world_rect().position.y
-	var lead := spawn_lead / maxf(depth, 0.1)
-	layer.global_position.y = top - lead - randf_range(0.0, 300.0)
+	# A Parallax2D OWNS its transform and recomputes it every frame, so writing
+	# layer.global_position is discarded. Instead we let the layer settle, then
+	# convert the world target into the layer's local space and put the object
+	# there. From that point the layer carries it at scroll_scale, as intended.
+	_place_in_layer(layer, obj, target)
+
+
+func _place_in_layer(layer: Parallax2D, obj: Node2D, target: Vector2) -> void:
+	# One frame for the layer to compute its parallax transform.
+	await get_tree().process_frame
+	if not is_instance_valid(layer) or not is_instance_valid(obj):
+		print("place aborted")
+		return
+	obj.position = layer.to_local(target)
+	print("placed at ", obj.global_position)
