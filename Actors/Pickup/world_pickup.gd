@@ -28,20 +28,27 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if _target_player == null or not is_instance_valid(_target_player):
+	var target_player := _target_player
+
+	if target_player == null or not is_instance_valid(target_player):
 		_target_player = null
 		return
 
-	if not data.can_pickup(_target_player):
+	if not data.can_pickup(target_player):
 		return
 
+	var target_position := target_player.global_position
 	global_position = global_position.move_toward(
-		_target_player.global_position,
+		target_position,
 		attraction_speed * delta
 	)
 
-	if global_position.distance_to(_target_player.global_position) <= collection_distance:
-		collect(_target_player)
+	# Moving can emit area_exited synchronously and clear _target_player.
+	if _target_player != target_player or not is_instance_valid(target_player):
+		return
+
+	if global_position.distance_to(target_position) <= collection_distance:
+		collect(target_player)
 
 
 func attract_to(player: Player) -> void:

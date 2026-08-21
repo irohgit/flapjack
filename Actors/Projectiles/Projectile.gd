@@ -103,16 +103,20 @@ func _move(delta: float) -> void:
 			_homing_target = null
 			
 	if orbital_ricochet and not has_done_ricochet:
-		if age_time >= 3.0:
+		if age_time >= 0:
 			_orbital_ricochet(delta)
 	
 	position += direction * data.speed * final_speed_boost * delta
 
-func _orbital_ricochet(delta: float) -> void:
-	_homing_target = _find_nearest_enemy()
-	
+func _orbital_ricochet(_delta: float) -> void:
+	var target := _find_nearest_enemy()
+	if target == null:
+		return
+
+	_homing_target = target
+
 	var desired_direction := global_position.direction_to(
-		_homing_target.global_position
+		target.global_position
 	)
 	
 	var angle_to_target := direction.angle_to(desired_direction)
