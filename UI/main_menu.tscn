@@ -23,7 +23,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_bpm4f")
-first_focus = NodePath("\\][-p0/Play_btn")
+first_focus = NodePath("VBoxContainer/Play_btn")
 
 [node name="Background" type="TextureRect" parent="." unique_id=667153104]
 texture_filter = 1
@@ -49,7 +49,7 @@ mouse_filter = 2
 texture = ExtResource("2_bpm4f")
 expand_mode = 1
 
-[node name="\\][-p0" type="VBoxContainer" parent="." unique_id=1675025234]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1675025234]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -67,7 +67,7 @@ offset_transform_position_ratio = Vector2(0, 0.25)
 offset_transform_visual_only = false
 theme_override_constants/separation = 20
 
-[node name="Play_btn" parent="\\][-p0" unique_id=395615966 instance=ExtResource("15_7137b")]
+[node name="Play_btn" parent="VBoxContainer" unique_id=395615966 instance=ExtResource("15_7137b")]
 layout_mode = 2
 texture_normal = ExtResource("3_7137b")
 texture_pressed = ExtResource("4_voib7")
@@ -76,7 +76,7 @@ texture_focused = ExtResource("3_7137b")
 act = 0
 scene_to_load = "uid://gj63c1k4m7w"
 
-[node name="Settings_btn" parent="\\][-p0" unique_id=1501301728 node_paths=PackedStringArray("panel_to_open") instance=ExtResource("15_7137b")]
+[node name="Settings_btn" parent="VBoxContainer" unique_id=1501301728 node_paths=PackedStringArray("panel_to_open") instance=ExtResource("15_7137b")]
 layout_mode = 2
 texture_normal = ExtResource("8_c2iqt")
 texture_pressed = ExtResource("9_27vi8")
@@ -85,7 +85,7 @@ texture_focused = ExtResource("8_c2iqt")
 act = 1
 panel_to_open = NodePath("../../SettingsPanel")
 
-[node name="Exit_btn" parent="\\][-p0" unique_id=446071626 instance=ExtResource("15_7137b")]
+[node name="Exit_btn" parent="VBoxContainer" unique_id=446071626 instance=ExtResource("15_7137b")]
 layout_mode = 2
 texture_normal = ExtResource("11_dtq41")
 texture_pressed = ExtResource("12_b61ai")

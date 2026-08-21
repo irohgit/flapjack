@@ -29,6 +29,8 @@ var _is_dead := false
 @export var hit_sfx: AudioStream
 @export var death_sfx: AudioStream
 
+#Developer Tool
+
 func _ready() -> void:
 	area_entered.connect(_on_area_entered)
 	_health.damaged.connect(_on_damaged)
@@ -122,7 +124,7 @@ func apply_wind_force(force: Vector2) -> void:
 
 func take_damage(amount: int) -> void:
 	if _shield.try_block_hit():
-		#DebugHud.flash("Shield absorbed hit")
+		DebugHud.flash("Shield absorbed hit")
 		return
 	_health.take_damage(amount)
 
@@ -143,7 +145,6 @@ func get_health_component() -> HealthComponent:
 func _on_damaged() -> void:
 	Audio.play_sfx(hit_sfx, 0.0)
 	DebugHud.flash("Player Took 1 Damage")
-	#DebugHud.flash("Player Took 1 Damage")
 	_shake(0.4) #Camera Shake
 	modulate = Color(1, 0.4, 0.4)
 	create_tween().tween_property(self, "modulate", Color.WHITE, _health.invincibility_time)
