@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PickupData" format=3 uid="uid://bnh66tw3h3xk8"]
+
+[ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="1_utt5t"]
+[ext_resource type="Texture2D" uid="uid://g7lr3i0a17el" path="res://Assets/Projectiles/harpoon.png" id="2_jx40m"]
+[ext_resource type="Resource" uid="uid://gn4h7j4dka1t" path="res://Data/Weapons/Harpoon.tres" id="3_6a02i"]
+
+[resource]
+script = ExtResource("1_utt5t")
+pickup_type = 1
+texture = ExtResource("2_jx40m")
+weapon = ExtResource("3_6a02i")
+notification_name = "Harpoon"
+metadata/_custom_type_script = "uid://rau2jwiqd0pd"
