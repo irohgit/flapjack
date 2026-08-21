@@ -90,8 +90,6 @@ func _physics_process(delta: float) -> void:
 
 # Override for homing, arcing, spiralling.
 func _move(delta: float) -> void:
-	_animated_sprite.rotation = direction.angle()
-	
 	if homing:
 		var homing_delta := minf(delta, homing_time_remaining)
 
@@ -107,7 +105,11 @@ func _move(delta: float) -> void:
 	if orbital_ricochet and not has_done_ricochet:
 		if age_time >= 0.5:
 			_orbital_ricochet(delta)
-	
+
+	var direction_angle := direction.angle()
+	_sprite.rotation = direction_angle + PI / 2.0
+	_animated_sprite.rotation = direction_angle
+
 	position += direction * data.speed * final_speed_boost * delta
 
 func _chain_lightning() -> bool:
