@@ -9,7 +9,9 @@ extends Area2D
 @onready var _trail: Line2D = $Line2D
 
 var homing = false
-var homing_turn_speed := 6.0
+var homing_turn_speed := 2.5
+var homing_time_remaining := 0.0
+var homing_range := 450.0
 var _homing_target: Node2D
 
 var plasma := false
@@ -23,17 +25,29 @@ var fire_tick_interval := 0.5
 var sprite_frames_override: SpriteFrames
 var animation_name_override: StringName = &"default"
 
+var pierce := 0
+
+var orbital_ricochet := false
+var boost_speed_multiplier := 1.0
+var has_done_ricochet := false
+var age_time := 0.0
+
+var hit_list: Array[Node2D] = []
+
+var final_speed_boost := 1.0
+
 var direction := Vector2.UP
 
 
 func _ready() -> void:
 	assert(data != null, "Projectile spawned with no ProjectileData assigned")
 	_apply_data()
+	$VisibleOnScreenNotifier2D.screen_exited.connect(_on_screen_exited)
 	area_entered.connect(_on_area_entered)
 	_trail.top_level = true
 	_trail.clear_points()
 	get_tree().create_timer(data.expire_time).timeout.connect(queue_free)
-
+	
 
 func _apply_data() -> void:
 	assert(data.texture != null, "ProjectileData has no texture assigned")
@@ -70,22 +84,75 @@ func _apply_allegiance() -> void:
 		set_collision_mask_value(1, true)    # looks for player
 		
 func _physics_process(delta: float) -> void:
+	age_time += delta
 	_move(delta)
 	_update_trail()
 
 
 # Override for homing, arcing, spiralling.
 func _move(delta: float) -> void:
-	_animated_sprite.rotation = direction.angle()
-	
 	if homing:
-		_update_homing(delta)
+		var homing_delta := minf(delta, homing_time_remaining)
+
+		if homing_delta > 0.0:
+			_update_homing(homing_delta)
+
+		homing_time_remaining = maxf(homing_time_remaining - delta, 0.0)
+
+		if homing_time_remaining <= 0.0:
+			homing = false
+			_homing_target = null
+			
+	if orbital_ricochet and not has_done_ricochet:
+		if age_time >= 0.5:
+			_orbital_ricochet(delta)
+
+	var direction_angle := direction.angle()
+	_sprite.rotation = direction_angle + PI / 2.0
+	_animated_sprite.rotation = direction_angle
+
+	position += direction * data.speed * final_speed_boost * delta
+
+func _chain_lightning() -> bool:
+	var target := _find_nearest_enemy(500, hit_list)
+	if target == null:
+		return false
+
+	_homing_target = target
+
+	var desired_direction := global_position.direction_to(
+		target.global_position
+	)
 	
-	position += direction * data.speed * delta
+	var angle_to_target := direction.angle_to(desired_direction)
+	
+	direction = direction.rotated(angle_to_target).normalized()
+	
+	has_done_ricochet = true
+	return true
+
+func _orbital_ricochet(_delta: float) -> bool:
+	var target := _find_nearest_enemy(5000)
+	if target == null:
+		return false
+
+	_homing_target = target
+
+	var desired_direction := global_position.direction_to(
+		target.global_position
+	)
+	
+	var angle_to_target := direction.angle_to(desired_direction)
+	
+	direction = direction.rotated(angle_to_target).normalized()
+	
+	final_speed_boost *= boost_speed_multiplier
+	has_done_ricochet = true
+	return true
 
 func _update_homing(delta: float) -> void:
 	if not _has_valid_homing_target():
-		_homing_target = _find_nearest_enemy()
+		_homing_target = _find_nearest_enemy(homing_range)
 
 	if _homing_target == null:
 		return
@@ -103,20 +170,25 @@ func _update_homing(delta: float) -> void:
 
 
 func _has_valid_homing_target() -> bool:
-	return (
-		is_instance_valid(_homing_target)
-		and not _homing_target.is_queued_for_deletion()
-	)
+	if (
+		not is_instance_valid(_homing_target)
+		or _homing_target.is_queued_for_deletion()
+	):
+		return false
+
+	return global_position.distance_squared_to(
+		_homing_target.global_position
+	) <= homing_range * homing_range
 
 
-func _find_nearest_enemy() -> Node2D:
+func _find_nearest_enemy(search_range: float, ignore_enemy: Array[Node2D] = []) -> Node2D:
 	var nearest: Node2D
-	var nearest_distance_squared := INF
+	var nearest_distance_squared := search_range * search_range
 
 	for node in get_tree().get_nodes_in_group("enemy"):
 		var candidate := node as Node2D
 
-		if candidate == null or candidate.is_queued_for_deletion():
+		if candidate == null or candidate.is_queued_for_deletion() or ignore_enemy.has(candidate):
 			continue
 
 		var distance_squared := global_position.distance_squared_to(
@@ -143,12 +215,25 @@ func _on_area_entered(area: Area2D) -> void:
 	if fire and area is Enemy:
 		var enemy := area as Enemy
 		enemy.apply_burn(fire_damage_per_tick, fire_tick_count, fire_tick_interval)
+	if orbital_ricochet and plasma and area is Enemy:
+		if pierce != 0:
+			hit_list.append(area)
+			_chain_lightning()
+			has_done_ricochet = true
 	if area.has_method("take_damage"):
 		area.take_damage(data.damage)
 	_on_impact()
-	queue_free()
+	
+	if pierce == 0:
+		queue_free()
+	else:
+		pierce -= 1
 
 
 # Override for splitting, explosions, screen shake.
 func _on_impact() -> void:
 	pass
+
+func _on_screen_exited() -> void:
+	DebugHud.flash("bullet screen_exited fired")
+	queue_free()

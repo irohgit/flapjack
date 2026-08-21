@@ -18,7 +18,12 @@ func _ready() -> void:
 	_update_screen_size()
 	get_viewport().size_changed.connect(_update_screen_size)
 	print("play area is %s x %s" % [Playarea.PLAY_WIDTH, Playarea.PLAY_HEIGHT])
-	
+	print("window: ", DisplayServer.window_get_size())
+	print("viewport: ", get_viewport().get_visible_rect().size)
+	print("stretch mode: ", ProjectSettings.get_setting("display/window/stretch/mode"))
+	print("stretch aspect: ", ProjectSettings.get_setting("display/window/stretch/aspect"))
+	print("texture filter: ", ProjectSettings.get_setting("rendering/textures/canvas_textures/default_texture_filter"))
+	print("scale mode: ", ProjectSettings.get_setting("display/window/stretch/scale_mode"))
 	
 func _assert_contract() -> void:
 	var w: float = ProjectSettings.get_setting("display/window/size/viewport_width")

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ProjectileData" format=3 uid="uid://csly84awhfqjb"]
+
+[ext_resource type="AudioStream" uid="uid://cbplby7nfcsyw" path="res://Audio/SFX/ship_hit.mp3" id="1_fp7vk"]
+[ext_resource type="Script" uid="uid://cre7gs48pepsi" path="res://Data/Projectiles/projectile_data.gd" id="1_p6wsq"]
+[ext_resource type="Texture2D" uid="uid://g7lr3i0a17el" path="res://Assets/Projectiles/harpoon.png" id="2_0cyof"]
+
+[resource]
+script = ExtResource("1_p6wsq")
+texture = ExtResource("2_0cyof")
+scale = 1.5
+impact_sound = ExtResource("1_fp7vk")
+metadata/_custom_type_script = "uid://cre7gs48pepsi"

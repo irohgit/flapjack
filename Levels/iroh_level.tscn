@@ -13,11 +13,13 @@
 [ext_resource type="PackedScene" uid="uid://c1hug03muahmo" path="res://Actors/Camera/water_background.tscn" id="9_dpxfw"]
 [ext_resource type="PackedScene" uid="uid://t7alddeyjrep" path="res://Levels/hud.tscn" id="10_hn8e3"]
 [ext_resource type="PackedScene" uid="uid://cclwwsegfn8rr" path="res://Actors/Player/player.tscn" id="11_h2ifs"]
-[ext_resource type="PackedScene" uid="uid://cstesilwdvxw5" path="res://Levels/settings_panel.tscn" id="15_4h1ux"]
+[ext_resource type="PackedScene" uid="uid://cstesilwdvxw5" path="res://UI/settings_panel.tscn" id="15_4h1ux"]
 [ext_resource type="PackedScene" uid="uid://luquvycpj4hd" path="res://Actors/Pickup/coin_spawner.tscn" id="16_8pef5"]
 [ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="17_ybihq"]
 [ext_resource type="Resource" uid="uid://c8prjyekwi7hm" path="res://Data/Pickups/HomingCannonPickup.tres" id="18_22sru"]
 [ext_resource type="Resource" uid="uid://5vagi0atsu3m" path="res://Data/Pickups/PlasmaAugmentPickup.tres" id="19_msifs"]
+[ext_resource type="Resource" uid="uid://cpynird4edptk" path="res://Data/Pickups/FireballAugmentPickup.tres" id="20_fireball"]
+[ext_resource type="Resource" uid="uid://cesmcj6ctad" path="res://Data/Pickups/MagnetAugmentPickup.tres" id="21_magnet"]
 
 [node name="PseudoStage1" type="Node2D" unique_id=1744761033 node_paths=PackedStringArray("level_generator", "screen_encounter_parent", "scroll_director", "enemy_controller")]
 script = ExtResource("1_wcl85")
@@ -44,7 +46,7 @@ scroll_speed = 50.0
 [node name="SettingsPanel" parent="." unique_id=217040426 instance=ExtResource("15_4h1ux")]
 
 [node name="CoinSpawner" parent="." unique_id=1386735529 instance=ExtResource("16_8pef5")]
-augments = Array[ExtResource("17_ybihq")]([ExtResource("18_22sru"), ExtResource("19_msifs")])
+augments = Array[ExtResource("17_ybihq")]([ExtResource("18_22sru"), ExtResource("19_msifs"), ExtResource("20_fireball"), ExtResource("21_magnet")])
 
 [node name="LevelGenerator" type="Node2D" parent="." unique_id=55350591]
 script = ExtResource("1_nl7aw")

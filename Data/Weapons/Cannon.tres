@@ -2,9 +2,12 @@
 
 [ext_resource type="Script" uid="uid://dfww4fxipct38" path="res://Data/Weapons/weapon_data.gd" id="1_c1qbg"]
 [ext_resource type="AudioStream" uid="uid://byy7pb1556tpq" path="res://Audio/distant_cannon.mp3" id="1_creru"]
+[ext_resource type="AudioStream" uid="uid://bayxunlnnb5dx" path="res://Audio/SFX/cannon_shot_1.mp3" id="2_fw7e6"]
 [ext_resource type="PackedScene" uid="uid://bl12qi0n68b6i" path="res://Actors/Projectiles/projectile.tscn" id="2_kvlpv"]
 [ext_resource type="Resource" uid="uid://c41c24mr6dvlc" path="res://Data/Projectiles/cannonball.tres" id="2_lekde"]
 [ext_resource type="Script" uid="uid://dos0tbtxfdq3x" path="res://Data/Weapons/cannon_behaviour.gd" id="2_s7wxh"]
+[ext_resource type="AudioStream" uid="uid://ce6j1s6erjokh" path="res://Audio/SFX/cannon_shot_2.mp3" id="3_tspbc"]
+[ext_resource type="AudioStream" uid="uid://b4gqk45sugawl" path="res://Audio/SFX/cannon_shot_3.mp3" id="4_ajtky"]
 
 [sub_resource type="Resource" id="Resource_5fhce"]
 script = ExtResource("2_s7wxh")
@@ -19,6 +22,8 @@ firerate = 0.25
 weaponProjectile = ExtResource("2_lekde")
 weaponBehaviour = SubResource("Resource_5fhce")
 fire_sound = ExtResource("1_creru")
+fire_volume_db = -10.0
+fire_sounds = Array[AudioStream]([ExtResource("4_ajtky"), ExtResource("3_tspbc"), ExtResource("2_fw7e6")])
 fire_pitch_spread = 0.04
 fire_pitch = 0.8
 metadata/_custom_type_script = "uid://dfww4fxipct38"

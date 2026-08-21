@@ -10,13 +10,14 @@ extends Area2D
 
 #Projectile Firing 
 @export var weapons: Array[WeaponData]
+@export_range(1, 20, 1) var max_weapons := 3
 var _weapon_states: Array[WeaponState] = []
 
 @export var coin_count:= 0
 @export var gin_count:= 0
+@export_range(1, 5, 1) var potion_slot_count := 3
 
 @onready var _health: HealthComponent = $HealthComponent
-@onready var _shield: ShieldComponent = $ShieldComponent
 
 @onready var _pickup_range: Area2D = $PickupRange
 @onready var _pickup_range_shape: CollisionShape2D = $PickupRange/CollisionShape2D
@@ -24,20 +25,35 @@ var _weapon_states: Array[WeaponState] = []
 signal coin_changed(amount: int)
 signal gin_changed(amount: int)
 signal augment_added(augment: AugmentData)
+signal pickup_collected(pickup: PickupData)
+signal potion_inventory_changed
+signal potion_selection_changed(index: int)
 
 var velocity := Vector2.ZERO
 var _move_intent := Vector2.ZERO
 var _external_force := Vector2.ZERO
 var _is_dead := false
+var _potion_slots: Array[PickupData] = []
+var _selected_potion_slot := 0
 
 #SFX
 @export var cannon_sfx: AudioStream
 @export var hit_sfx: AudioStream
 @export var death_sfx: AudioStream
 
+#Developer Tool
+func _unhandled_input(event: InputEvent) -> void:
+	if not OS.is_debug_build():
+		return
+	if event.is_action_pressed("kill_self"):
+		get_viewport().set_input_as_handled()
+		_health.take_damage(9999)
+		
 func _ready() -> void:
+	_potion_slots.resize(potion_slot_count)
 	area_entered.connect(_on_area_entered)
 	_pickup_range.area_entered.connect(_on_pickup_range_entered)
+	_pickup_range.area_exited.connect(_on_pickup_range_exited)
 	_health.damaged.connect(_on_damaged)
 	#_health.health_changed.connect(func(c, m): DebugHud.watch("health", "%d/%d" % [c, m]))
 	_health.died.connect(_on_died)
@@ -45,10 +61,17 @@ func _ready() -> void:
 	gin_changed.emit(gin_count)
 	
 	for weapon in weapons:
-		_weapon_states.append(WeaponState.new(weapon))
+		add_weapon(weapon)
 	
 func _process(_delta: float) -> void:
 	_move_intent = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
+
+	if Input.is_action_just_pressed("potion_previous"):
+		select_potion_slot(_selected_potion_slot - 1)
+	if Input.is_action_just_pressed("potion_next"):
+		select_potion_slot(_selected_potion_slot + 1)
+	if Input.is_action_just_pressed("drink_potion"):
+		drink_selected_potion()
 
 func _physics_process(delta: float) -> void:
 	var target := _move_intent * max_speed
@@ -81,14 +104,16 @@ func _on_area_entered(area: Area2D) -> void:
 		take_damage(area.get_contact_damage())
 
 func _on_pickup_range_entered(area: Area2D) -> void:
-	if area.is_in_group("pickup") and area.has_method("collect"):
-		area.collect(self)
+	if area.is_in_group("pickup") and area.has_method("attract_to"):
+		area.attract_to(self)
+
+
+func _on_pickup_range_exited(area: Area2D) -> void:
+	if area.is_in_group("pickup") and area.has_method("stop_attracting"):
+		area.stop_attracting(self)
 
 func set_pickup_radius(radius: float) -> void:
-	print("set_pickup_radius called with: ", radius)
-	print("shape type: ", _pickup_range_shape.shape)
 	if _pickup_range_shape.shape is CircleShape2D:
-		print("radius after set: ", (_pickup_range_shape.shape as CircleShape2D).radius)
 		(_pickup_range_shape.shape as CircleShape2D).radius = radius
 
 ## Camera
@@ -107,7 +132,41 @@ func _add_gin(amount: int):
 	gin_count += amount
 	gin_changed.emit(gin_count)
 
+
+func can_add_weapon(weapon: WeaponData) -> bool:
+	return weapon != null and _weapon_states.size() < max_weapons
+
+
+func add_weapon(weapon: WeaponData) -> bool:
+	if not can_add_weapon(weapon):
+		return false
+
+	_weapon_states.append(WeaponState.new(weapon))
+	return true
+
+
+func get_weapon_count() -> int:
+	return _weapon_states.size()
+
+
+func can_add_augment(augment: AugmentData) -> bool:
+	if augment == null or augment.augmentEffect == null:
+		return false
+
+	if augment.targetWeapon == null:
+		return true
+
+	for state in _weapon_states:
+		if state.data == augment.targetWeapon:
+			return true
+
+	return false
+
+
 func add_augment(augment: AugmentData) -> bool:
+	if not can_add_augment(augment):
+		return false
+
 	if augment.targetWeapon == null:
 		augment.augmentEffect.apply_to_player(self)
 		return true
@@ -118,6 +177,73 @@ func add_augment(augment: AugmentData) -> bool:
 			augment_added.emit(augment)
 			return true
 	return false
+
+
+func can_add_potion(potion: PickupData) -> bool:
+	return potion != null and potion.is_potion() and has_potion_space()
+
+
+func has_potion_space() -> bool:
+	return _potion_slots.has(null)
+
+
+func add_potion(potion: PickupData) -> bool:
+	if not can_add_potion(potion):
+		return false
+
+	for index in range(_potion_slots.size()):
+		if _potion_slots[index] == null:
+			_potion_slots[index] = potion
+			potion_inventory_changed.emit()
+			return true
+
+	return false
+
+
+func select_potion_slot(index: int) -> void:
+	if _potion_slots.is_empty():
+		return
+
+	var wrapped_index := posmod(index, _potion_slots.size())
+	if wrapped_index == _selected_potion_slot:
+		return
+
+	_selected_potion_slot = wrapped_index
+	potion_selection_changed.emit(_selected_potion_slot)
+
+
+func drink_selected_potion() -> bool:
+	var potion := get_potion_in_slot(_selected_potion_slot)
+	if potion == null:
+		return false
+
+	match potion.pickup_type:
+		PickupData.PickupType.HEALTH:
+			if _health.get_current_health() >= _health.get_max_health():
+				return false
+			_health.heal(potion.heal_amount)
+		PickupData.PickupType.SHIELD:
+			_health.add_shield(potion.shield_amount)
+		_:
+			return false
+
+	_potion_slots[_selected_potion_slot] = null
+	potion_inventory_changed.emit()
+	return true
+
+
+func get_potion_slot_count() -> int:
+	return _potion_slots.size()
+
+
+func get_potion_in_slot(index: int) -> PickupData:
+	if index < 0 or index >= _potion_slots.size():
+		return null
+	return _potion_slots[index]
+
+
+func get_selected_potion_slot() -> int:
+	return _selected_potion_slot
 
 ## Combat
 func _update_weapons(delta: float) -> void:
@@ -146,17 +272,11 @@ func apply_wind_force(force: Vector2) -> void:
 	_external_force += force
 
 func take_damage(amount: int) -> void:
-	if _shield.try_block_hit():
-		#DebugHud.flash("Shield absorbed hit")
-		return
 	_health.take_damage(amount)
 
 func add_shield(amount: int) -> bool:
-	_shield.add_stack(amount)
+	_health.add_shield(amount)
 	return true
-	
-func get_shield_component() -> ShieldComponent:
-	return _shield
 	
 func heal(amount: int) -> void:
 	_health.heal(amount)
@@ -167,8 +287,7 @@ func get_health_component() -> HealthComponent:
 ## Combat Private
 func _on_damaged() -> void:
 	Audio.play_sfx(hit_sfx, 0.0)
-	DebugHud.flash("Player Took 1 Damage")
-	#DebugHud.flash("Player Took 1 Damage")
+	DebugHud.flash("Player Took Damage")
 	_shake(0.4) #Camera Shake
 	modulate = Color(1, 0.4, 0.4)
 	create_tween().tween_property(self, "modulate", Color.WHITE, _health.invincibility_time)

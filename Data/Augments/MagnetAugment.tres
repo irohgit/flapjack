@@ -1,12 +1,11 @@
 [gd_resource type="Resource" script_class="AugmentData" format=3 uid="uid://dm66rxqo2vo6"]
 
-[ext_resource type="Script" path="res://Data/Augments/magnet_augment_effect.gd" id="1_8fxyj"]
+[ext_resource type="Script" uid="uid://doc7gd15frkr2" path="res://Data/Augments/magnet_augment_effect.gd" id="1_8fxyj"]
 [ext_resource type="Script" uid="uid://cpp3oou337x" path="res://Data/Augments/augment_data.gd" id="2_rmnhm"]
 [ext_resource type="Texture2D" uid="uid://cb0n7v17pxqt3" path="res://Assets/Pickups/13.png" id="3_va00w"]
 
 [sub_resource type="Resource" id="Resource_isd1h"]
 script = ExtResource("1_8fxyj")
-metadata/_custom_type_script = "uid://dicm5hj6arprk"
 
 [resource]
 script = ExtResource("2_rmnhm")

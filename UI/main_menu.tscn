@@ -1,0 +1,107 @@
+[gd_scene format=3 uid="uid://dfgiunphxmxmr"]
+
+[ext_resource type="Script" uid="uid://ddlo7qo5acn8r" path="res://UI/menu_screen.gd" id="1_bpm4f"]
+[ext_resource type="Texture2D" uid="uid://cfohfwxs3eryg" path="res://Assets/UI/Backgrounds/main menu light.png" id="2_7137b"]
+[ext_resource type="Texture2D" uid="uid://bin2vfn1q1sh" path="res://Assets/UI/MainMenu/title.png" id="2_bpm4f"]
+[ext_resource type="Texture2D" uid="uid://dxxtwk0363bv7" path="res://Assets/UI/MainMenu/play_button.png" id="3_7137b"]
+[ext_resource type="Texture2D" uid="uid://du08ikcxdlcmq" path="res://Assets/UI/MainMenu/play_button_pressed.png" id="4_voib7"]
+[ext_resource type="Texture2D" uid="uid://32nal43kjqf6" path="res://Assets/UI/MainMenu/play_button_hover.png" id="5_t2nhh"]
+[ext_resource type="Texture2D" uid="uid://cbwj0khmdthdc" path="res://Assets/UI/MainMenu/settings_button.png" id="8_c2iqt"]
+[ext_resource type="AudioStream" uid="uid://dshox3m1impsv" path="res://Audio/SFX/soft_hover.mp3" id="8_voib7"]
+[ext_resource type="Texture2D" uid="uid://bxfmfrus8uw7o" path="res://Assets/UI/MainMenu/settings_button_pressed.png" id="9_27vi8"]
+[ext_resource type="AudioStream" uid="uid://dc263ntmf6iew" path="res://Audio/SFX/ui_click_stylized.mp3" id="9_t2nhh"]
+[ext_resource type="Texture2D" uid="uid://b76fg51ux8qpd" path="res://Assets/UI/MainMenu/settings_button_hover.png" id="10_xmcc3"]
+[ext_resource type="Texture2D" uid="uid://jyhqfrhk2rf2" path="res://Assets/UI/MainMenu/exit_button.png" id="11_dtq41"]
+[ext_resource type="Texture2D" uid="uid://myo8grbtavaj" path="res://Assets/UI/MainMenu/exit_button_pressed.png" id="12_b61ai"]
+[ext_resource type="Texture2D" uid="uid://dk0dchqle0p77" path="res://Assets/UI/MainMenu/exit_button_hover.png" id="13_0d8gf"]
+[ext_resource type="PackedScene" uid="uid://b2judmr242f45" path="res://UI/settings_menu.tscn" id="14_bpm4f"]
+[ext_resource type="PackedScene" uid="uid://das28foe55u6f" path="res://UI/navbutton.tscn" id="15_7137b"]
+
+[node name="MainMenu" type="Control" unique_id=578260770 node_paths=PackedStringArray("first_focus")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_bpm4f")
+first_focus = NodePath("VBoxContainer/Play_btn")
+close_on_cancel = false
+
+[node name="Background" type="TextureRect" parent="." unique_id=667153104]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 1.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_7137b")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1675025234]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -230.0
+offset_right = 250.0
+offset_bottom = 230.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_transform_enabled = true
+offset_transform_visual_only = false
+theme_override_constants/separation = 20
+
+[node name="Title" type="TextureRect" parent="VBoxContainer" unique_id=1608253843]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+texture = ExtResource("2_bpm4f")
+stretch_mode = 2
+
+[node name="Play_btn" parent="VBoxContainer" unique_id=395615966 instance=ExtResource("15_7137b")]
+layout_mode = 2
+size_flags_horizontal = 4
+texture_normal = ExtResource("3_7137b")
+texture_pressed = ExtResource("4_voib7")
+texture_hover = ExtResource("5_t2nhh")
+texture_focused = ExtResource("3_7137b")
+act = 0
+scene_to_load = "uid://gj63c1k4m7w"
+focus_sound = ExtResource("8_voib7")
+press_sound = ExtResource("9_t2nhh")
+
+[node name="Settings_btn" parent="VBoxContainer" unique_id=1501301728 node_paths=PackedStringArray("panel_to_open") instance=ExtResource("15_7137b")]
+layout_mode = 2
+size_flags_horizontal = 4
+texture_normal = ExtResource("8_c2iqt")
+texture_pressed = ExtResource("9_27vi8")
+texture_hover = ExtResource("10_xmcc3")
+texture_focused = ExtResource("8_c2iqt")
+act = 1
+panel_to_open = NodePath("../../SettingsMenu")
+focus_sound = ExtResource("8_voib7")
+press_sound = ExtResource("9_t2nhh")
+
+[node name="Exit_btn" parent="VBoxContainer" unique_id=446071626 instance=ExtResource("15_7137b")]
+layout_mode = 2
+size_flags_horizontal = 4
+texture_normal = ExtResource("11_dtq41")
+texture_pressed = ExtResource("12_b61ai")
+texture_hover = ExtResource("13_0d8gf")
+texture_focused = ExtResource("11_dtq41")
+act = 4
+focus_sound = ExtResource("8_voib7")
+press_sound = ExtResource("9_t2nhh")
+
+[node name="SettingsMenu" parent="." unique_id=831566919 instance=ExtResource("14_bpm4f")]
+layout_mode = 0

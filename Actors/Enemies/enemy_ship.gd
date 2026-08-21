@@ -89,5 +89,4 @@ func _on_died() -> void:
 		if cam is ShakeCamera:
 			cam.add_trauma(0.15)
 			break
-	Audio.play_sfx(explosion_sfx, -4.0)
 	queue_free()

@@ -1,6 +1,6 @@
-[gd_scene format=3 uid="uid://b2bguhaho38ql"]
+[gd_scene format=3 uid="uid://dfgiunphxmxmr"]
 
-[ext_resource type="Script" uid="uid://duntr73s38siv" path="res://Levels/main_menu.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://ddlo7qo5acn8r" path="res://UI/menu_screen.gd" id="1_b8u61"]
 [ext_resource type="Texture2D" uid="uid://bjrtqk23jc7jq" path="res://Assets/UI/MainMenu/background_landscape.png" id="2_background"]
 [ext_resource type="Texture2D" uid="uid://bin2vfn1q1sh" path="res://Assets/UI/MainMenu/title.png" id="3_title"]
 [ext_resource type="Texture2D" uid="uid://dxxtwk0363bv7" path="res://Assets/UI/MainMenu/play_button.png" id="4_play"]
@@ -20,9 +20,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_script")
+script = ExtResource("1_b8u61")
 
-[node name="Background" type="TextureRect" parent="." unique_id=1694574129]
+[node name="Background" type="TextureRect" parent="." unique_id=667153104]
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 15
@@ -35,7 +35,7 @@ texture = ExtResource("2_background")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="Title" type="TextureRect" parent="." unique_id=707306218]
+[node name="Title" type="TextureRect" parent="." unique_id=1608253843]
 texture_filter = 1
 layout_mode = 0
 offset_left = 660.0
@@ -46,13 +46,30 @@ mouse_filter = 2
 texture = ExtResource("3_title")
 expand_mode = 1
 
-[node name="PlayButton" type="TextureButton" parent="." unique_id=370105181]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1675025234]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -230.0
+offset_right = 250.0
+offset_bottom = 230.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_transform_enabled = true
+offset_transform_position_ratio = Vector2(0, 0.25)
+offset_transform_visual_only = false
+theme_override_constants/separation = 20
+
+[node name="PlayButton" type="TextureButton" parent="VBoxContainer" unique_id=1743092716]
 texture_filter = 1
-layout_mode = 0
-offset_left = 710.0
-offset_top = 470.0
-offset_right = 1210.0
-offset_bottom = 610.0
+custom_minimum_size = Vector2(500, 140)
+layout_mode = 2
+size_flags_horizontal = 4
+offset_transform_enabled = true
 focus_mode = 0
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("4_play")
@@ -60,13 +77,23 @@ texture_pressed = ExtResource("6_play_pressed")
 texture_hover = ExtResource("5_play_hover")
 ignore_texture_size = true
 
-[node name="SettingsButton" type="TextureButton" parent="." unique_id=1294340291]
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/PlayButton" unique_id=106595471]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_transform_enabled = true
+color = Color(1, 0.2205312, 0.7764403, 1)
+
+[node name="SettingsButton" type="TextureButton" parent="VBoxContainer" unique_id=261349963]
 texture_filter = 1
-layout_mode = 0
-offset_left = 710.0
-offset_top = 630.0
-offset_right = 1210.0
-offset_bottom = 770.0
+custom_minimum_size = Vector2(500, 140)
+layout_mode = 2
+size_flags_horizontal = 4
+offset_transform_enabled = true
 focus_mode = 0
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("7_settings")
@@ -74,13 +101,12 @@ texture_pressed = ExtResource("9_settings_pressed")
 texture_hover = ExtResource("8_settings_hover")
 ignore_texture_size = true
 
-[node name="ExitButton" type="TextureButton" parent="." unique_id=487462971]
+[node name="ExitButton" type="TextureButton" parent="VBoxContainer" unique_id=1340645817]
 texture_filter = 1
-layout_mode = 0
-offset_left = 710.0
-offset_top = 790.0
-offset_right = 1210.0
-offset_bottom = 930.0
+custom_minimum_size = Vector2(500, 140)
+layout_mode = 2
+size_flags_horizontal = 4
+offset_transform_enabled = true
 focus_mode = 0
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("10_exit")
@@ -88,6 +114,6 @@ texture_pressed = ExtResource("12_exit_pressed")
 texture_hover = ExtResource("11_exit_hover")
 ignore_texture_size = true
 
-[connection signal="button_up" from="PlayButton" to="." method="PlayPress"]
-[connection signal="button_up" from="SettingsButton" to="." method="SettingsPress"]
-[connection signal="button_up" from="ExitButton" to="." method="ExitPress"]
+[connection signal="button_up" from="VBoxContainer/PlayButton" to="." method="PlayPress"]
+[connection signal="button_up" from="VBoxContainer/SettingsButton" to="." method="SettingsPress"]
+[connection signal="button_up" from="VBoxContainer/ExitButton" to="." method="ExitPress"]

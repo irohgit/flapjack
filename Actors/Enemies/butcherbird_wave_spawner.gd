@@ -34,16 +34,17 @@ func begin(spawn_from_right: bool) -> void:
 
 
 func start_wave():
+	if not is_instance_valid(warning_sign):
+		return
 	warning_sign.setup(bird_data)
 	warning_sign.visible = true
-	#var jiggle_duration := 0.32
-	var hold_duration: float = maxf(0.0,warning_duration - jiggle_duration)
-	# Let the player first notice/read the warning.
+	var hold_duration: float = maxf(0.0, warning_duration - jiggle_duration)
 	await get_tree().create_timer(hold_duration).timeout
-
-	# Jiggle immediately before launch.
+	if not is_instance_valid(warning_sign):
+		return
 	await jiggle_warning()
-
+	if not is_instance_valid(warning_sign):
+		return
 	warning_sign.visible = false
 	spawn_bird()
 

@@ -1,7 +1,7 @@
 extends Control
 
 const DESIGN_SIZE := Vector2(1920.0, 1080.0)
-const MAIN_MENU_SCENE := "res://Levels/main_menu.tscn"
+const MAIN_MENU_SCENE := "res://UI/main_menu.tscn"
 const INPUT_DEBOUNCE_MS := 450
 const PIXEL_SPRITE_SCALE_STEP := 0.5
 

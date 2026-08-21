@@ -25,6 +25,6 @@ animations = [{
 "texture": ExtResource("5_wvcp1")
 }],
 "loop": 1,
-"name": &"idle",
+"name": &"burn",
 "speed": 5.0
 }]

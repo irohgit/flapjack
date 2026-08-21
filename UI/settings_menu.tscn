@@ -1,0 +1,90 @@
+[gd_scene format=3 uid="uid://b2judmr242f45"]
+
+[ext_resource type="Script" uid="uid://6g3u46bnt6da" path="res://UI/settings_menu.gd" id="1_0adsa"]
+[ext_resource type="Texture2D" uid="uid://cu450e8rm8ej3" path="res://Assets/Cinematics/Cinematic_BG_169.png" id="1_jkv84"]
+[ext_resource type="PackedScene" uid="uid://das28foe55u6f" path="res://UI/navbutton.tscn" id="2_0adsa"]
+[ext_resource type="AudioStream" uid="uid://dshox3m1impsv" path="res://Audio/SFX/soft_hover.mp3" id="4_bh3j5"]
+[ext_resource type="AudioStream" uid="uid://dc263ntmf6iew" path="res://Audio/SFX/ui_click_stylized.mp3" id="5_mn6w0"]
+
+[node name="SettingsMenu" type="Control" unique_id=514572451 node_paths=PackedStringArray("fullscreen_button", "back_button", "first_focus")]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_0adsa")
+fullscreen_button = NodePath("SettingsPanel/VBoxContainer/Fullscreen Toggle")
+back_button = NodePath("SettingsPanel/VBoxContainer/Return")
+first_focus = NodePath("SettingsPanel/VBoxContainer/Volume")
+
+[node name="Dimmer" type="ColorRect" parent="." unique_id=211885343]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.003921569, 0.015686275, 0.02745098, 0.84)
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=779817431]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("1_jkv84")
+
+[node name="SettingsPanel" type="Control" parent="." unique_id=1304270686]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsPanel" unique_id=1866112736]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 690.0
+offset_top = 234.0
+offset_right = 1190.0
+offset_bottom = 806.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Volume" parent="SettingsPanel/VBoxContainer" unique_id=395615966 instance=ExtResource("2_0adsa")]
+layout_mode = 2
+label_text = "Volume"
+label_size = 100
+focus_tint = Color(0.88833916, 0.73178285, 0.39407146, 1)
+focus_sound = ExtResource("4_bh3j5")
+press_sound = ExtResource("5_mn6w0")
+
+[node name="Brightness Slider" parent="SettingsPanel/VBoxContainer" unique_id=860370676 instance=ExtResource("2_0adsa")]
+layout_mode = 2
+label_text = "Brightness"
+label_size = 100
+focus_tint = Color(0.88833916, 0.73178285, 0.39407146, 1)
+focus_sound = ExtResource("4_bh3j5")
+press_sound = ExtResource("5_mn6w0")
+
+[node name="Resolution" parent="SettingsPanel/VBoxContainer" unique_id=1691588789 instance=ExtResource("2_0adsa")]
+layout_mode = 2
+label_text = "Display"
+label_size = 100
+focus_tint = Color(0.88833916, 0.73178285, 0.39407146, 1)
+focus_sound = ExtResource("4_bh3j5")
+press_sound = ExtResource("5_mn6w0")
+
+[node name="Fullscreen Toggle" parent="SettingsPanel/VBoxContainer" unique_id=606832188 instance=ExtResource("2_0adsa")]
+layout_mode = 2
+label_text = "Fullscreen"
+label_size = 100
+focus_tint = Color(0.88833916, 0.73178285, 0.39407146, 1)
+focus_sound = ExtResource("4_bh3j5")
+press_sound = ExtResource("5_mn6w0")
+
+[node name="Return" parent="SettingsPanel/VBoxContainer" unique_id=1581923216 instance=ExtResource("2_0adsa")]
+layout_mode = 2
+label_text = "Return"
+label_size = 100
+focus_tint = Color(0.88833916, 0.73178285, 0.39407146, 1)
+focus_sound = ExtResource("4_bh3j5")
+press_sound = ExtResource("5_mn6w0")

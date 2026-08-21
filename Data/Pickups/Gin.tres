@@ -6,7 +6,7 @@
 
 [resource]
 script = ExtResource("2_cy0xc")
-pickup_type = 3
+pickup_type = 5
 texture = ExtResource("3_croff")
 gin_amount = 1
 pickup_sfx = ExtResource("1_croff")

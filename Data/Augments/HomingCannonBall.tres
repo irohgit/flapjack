@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cpp3oou337x" path="res://Data/Augments/augment_data.gd" id="1_p66wx"]
 [ext_resource type="Script" uid="uid://comcyui77kncb" path="res://Data/Augments/cannon_homing_effect.gd" id="1_r6bh5"]
+[ext_resource type="AudioStream" uid="uid://dqwh8y7b5p1ro" path="res://Audio/SFX/homing_accent.mp3" id="2_jwqk0"]
 [ext_resource type="Resource" uid="uid://b7nwwwfmfkswx" path="res://Data/Weapons/Cannon.tres" id="2_pifml"]
 [ext_resource type="Texture2D" uid="uid://ouhei4r1fnl8" path="res://Assets/BoatWeapon/Cannon3_color3_3.png" id="4_o0miv"]
 
@@ -15,4 +16,5 @@ name = "Homing cannon"
 targetWeapon = ExtResource("2_pifml")
 texture = ExtResource("4_o0miv")
 augmentEffect = SubResource("Resource_5fhce")
+fire_accent_sfx = ExtResource("2_jwqk0")
 metadata/_custom_type_script = "uid://cpp3oou337x"
