@@ -7,5 +7,6 @@
 [resource]
 script = ExtResource("1_p6wsq")
 texture = ExtResource("2_0cyof")
+scale = 1.5
 impact_sound = ExtResource("1_fp7vk")
 metadata/_custom_type_script = "uid://cre7gs48pepsi"
