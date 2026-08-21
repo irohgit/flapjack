@@ -2,47 +2,49 @@
 
 [ext_resource type="Script" uid="uid://bfj0o35a1xwhy" path="res://UI/pause_menu.gd" id="1_pr0l1"]
 [ext_resource type="Texture2D" uid="uid://bs3wx17nvbe6u" path="res://Assets/UI/Pause/panel_background.png" id="3_flal6"]
+[ext_resource type="PackedScene" uid="uid://das28foe55u6f" path="res://UI/navbutton.tscn" id="3_xv4gp"]
 [ext_resource type="Texture2D" uid="uid://cj5u5luaksf6b" path="res://Assets/UI/Pause/skull_decoration.png" id="4_m0kdg"]
 [ext_resource type="Texture2D" uid="uid://dxfv1oulrrd4b" path="res://Assets/UI/Pause/paused_title.png" id="5_bo37y"]
 [ext_resource type="Texture2D" uid="uid://c8ophc3sd7r0m" path="res://Assets/UI/Pause/resume_button.png" id="6_wwhwl"]
+[ext_resource type="AudioStream" uid="uid://dshox3m1impsv" path="res://Audio/SFX/soft_hover.mp3" id="7_6b54m"]
 [ext_resource type="Texture2D" uid="uid://877eg4ixmb14" path="res://Assets/UI/Pause/exit_button.png" id="7_cfigd"]
-[ext_resource type="Texture2D" uid="uid://dy0fwenve5ppb" path="res://Assets/UI/Pause/divider_small.png" id="8_vvkpl"]
+[ext_resource type="Texture2D" uid="uid://cbwj0khmdthdc" path="res://Assets/UI/MainMenu/settings_button.png" id="7_fu28r"]
+[ext_resource type="AudioStream" uid="uid://dc263ntmf6iew" path="res://Audio/SFX/ui_click_stylized.mp3" id="8_ljfgm"]
+[ext_resource type="Texture2D" uid="uid://bxfmfrus8uw7o" path="res://Assets/UI/MainMenu/settings_button_pressed.png" id="8_pwekk"]
+[ext_resource type="Texture2D" uid="uid://b76fg51ux8qpd" path="res://Assets/UI/MainMenu/settings_button_hover.png" id="9_onkq6"]
 [ext_resource type="Texture2D" uid="uid://d0tmpgqy4fwgk" path="res://Assets/UI/Pause/bottom_text.png" id="9_ucija"]
+[ext_resource type="PackedScene" uid="uid://b2judmr242f45" path="res://UI/settings_menu.tscn" id="12_pwekk"]
 
-[node name="PausePanel" type="CanvasLayer" unique_id=217040426]
+[node name="PauseMenu" type="Control" unique_id=114401258 node_paths=PackedStringArray("first_focus")]
 process_mode = 3
-layer = 100
+visible = false
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_pr0l1")
+first_focus = NodePath("PausePanel/PanelBackground/CenterContainer/VBoxContainer/Resume")
+open_action = &"pause"
+pauses_tree = true
 
 [node name="Dimmer" type="ColorRect" parent="." unique_id=1222659845]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.003921569, 0.015686275, 0.02745098, 0.84)
+mouse_filter = 2
+color = Color(0, 0, 0, 0.47058824)
 
-[node name="PauseMenu" type="Control" parent="." unique_id=268142758]
-layout_mode = 3
+[node name="PausePanel" type="Control" parent="." unique_id=268142758]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
-script = ExtResource("1_pr0l1")
 
-[node name="PanelBackground" type="TextureRect" parent="PauseMenu" unique_id=846444705]
-texture_filter = 1
-layout_mode = 0
-offset_left = 640.0
-offset_top = 130.0
-offset_right = 1280.0
-offset_bottom = 950.0
-mouse_filter = 2
-texture = ExtResource("3_flal6")
-expand_mode = 1
-
-[node name="SkullDecoration" type="TextureRect" parent="PauseMenu" unique_id=347786067]
+[node name="SkullDecoration" type="TextureRect" parent="PausePanel" unique_id=347786067]
 texture_filter = 1
 layout_mode = 0
 offset_left = 743.0
@@ -53,57 +55,75 @@ mouse_filter = 2
 texture = ExtResource("4_m0kdg")
 expand_mode = 1
 
-[node name="PausedTitle" type="TextureRect" parent="PauseMenu" unique_id=958569790]
+[node name="PanelBackground" type="TextureRect" parent="PausePanel" unique_id=846444705]
 texture_filter = 1
 layout_mode = 0
-offset_left = 743.0
-offset_top = 260.0
-offset_right = 1177.0
-offset_bottom = 448.0
+offset_left = 640.0
+offset_top = 130.0
+offset_right = 1280.0
+offset_bottom = 950.0
+mouse_filter = 2
+texture = ExtResource("3_flal6")
+expand_mode = 1
+
+[node name="CenterContainer" type="CenterContainer" parent="PausePanel/PanelBackground" unique_id=756136047]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -214.0
+offset_right = 320.0
+offset_bottom = 214.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PausePanel/PanelBackground/CenterContainer" unique_id=1307329374]
+layout_mode = 2
+
+[node name="PausedTitle" type="TextureRect" parent="PausePanel/PanelBackground/CenterContainer/VBoxContainer" unique_id=958569790]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 4
 mouse_filter = 2
 texture = ExtResource("5_bo37y")
-expand_mode = 1
+stretch_mode = 2
 
-[node name="Resume" type="TextureButton" parent="PauseMenu" unique_id=1674369934]
-texture_filter = 1
-layout_mode = 0
-offset_left = 738.0
-offset_top = 480.0
-offset_right = 1182.0
-offset_bottom = 589.0
-focus_mode = 0
-mouse_default_cursor_shape = 2
+[node name="Resume" parent="PausePanel/PanelBackground/CenterContainer/VBoxContainer" unique_id=395615966 instance=ExtResource("3_xv4gp")]
+custom_minimum_size = Vector2(0, 0)
+layout_mode = 2
+size_flags_horizontal = 4
 texture_normal = ExtResource("6_wwhwl")
-texture_pressed = ExtResource("6_wwhwl")
-texture_hover = ExtResource("6_wwhwl")
-ignore_texture_size = true
+act = 2
+focus_sound = ExtResource("7_6b54m")
+press_sound = ExtResource("8_ljfgm")
 
-[node name="Exit" type="TextureButton" parent="PauseMenu" unique_id=484579252]
-texture_filter = 1
-layout_mode = 0
-offset_left = 738.0
-offset_top = 620.0
-offset_right = 1182.0
-offset_bottom = 730.0
-focus_mode = 0
-mouse_default_cursor_shape = 2
+[node name="Settings_btn" parent="PausePanel/PanelBackground/CenterContainer/VBoxContainer" unique_id=1018861040 node_paths=PackedStringArray("panel_to_open") instance=ExtResource("3_xv4gp")]
+layout_mode = 2
+size_flags_horizontal = 4
+texture_normal = ExtResource("7_fu28r")
+texture_pressed = ExtResource("8_pwekk")
+texture_hover = ExtResource("9_onkq6")
+act = 1
+label_size = 44
+panel_to_open = NodePath("../../../../../SettingsMenu")
+focus_sound = ExtResource("7_6b54m")
+press_sound = ExtResource("8_ljfgm")
+
+[node name="Return_Menu" parent="PausePanel/PanelBackground/CenterContainer/VBoxContainer" unique_id=1273572793 instance=ExtResource("3_xv4gp")]
+custom_minimum_size = Vector2(0, 0)
+layout_mode = 2
+size_flags_horizontal = 4
 texture_normal = ExtResource("7_cfigd")
-texture_pressed = ExtResource("7_cfigd")
-texture_hover = ExtResource("7_cfigd")
-ignore_texture_size = true
+act = 0
+label_size = 44
+scene_to_load = "uid://dfgiunphxmxmr"
+focus_sound = ExtResource("7_6b54m")
+press_sound = ExtResource("8_ljfgm")
 
-[node name="BottomDivider" type="TextureRect" parent="PauseMenu" unique_id=194824001]
-texture_filter = 1
-layout_mode = 0
-offset_left = 783.0
-offset_top = 760.0
-offset_right = 1137.0
-offset_bottom = 785.0
-mouse_filter = 2
-texture = ExtResource("8_vvkpl")
-expand_mode = 1
-
-[node name="BottomInstruction" type="TextureRect" parent="PauseMenu" unique_id=1023534164]
+[node name="BottomInstruction" type="TextureRect" parent="PausePanel" unique_id=1023534164]
 texture_filter = 1
 layout_mode = 0
 offset_left = 763.0
@@ -114,5 +134,5 @@ mouse_filter = 2
 texture = ExtResource("9_ucija")
 expand_mode = 1
 
-[connection signal="button_up" from="PauseMenu/Resume" to="." method="ResumePress"]
-[connection signal="button_up" from="PauseMenu/Exit" to="." method="ExitPress"]
+[node name="SettingsMenu" parent="." unique_id=514572451 instance=ExtResource("12_pwekk")]
+layout_mode = 0

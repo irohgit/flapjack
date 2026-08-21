@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://tsoi3lwff5mf" path="res://Actors/Camera/shake_camera.gd" id="1_utqb5"]
 [ext_resource type="AudioStream" uid="uid://b86afwbiwoubu" path="res://Audio/BGM/hesapirate.mp3" id="2_yvgdk"]
 [ext_resource type="PackedScene" uid="uid://dsf0q5lcpr0mh" path="res://Actors/Camera/ScrollDirector.tscn" id="3_o28ls"]
+[ext_resource type="PackedScene" uid="uid://cpy76lvb1x4cb" path="res://UI/GameUI.tscn" id="3_p2t5c"]
 [ext_resource type="PackedScene" uid="uid://c1hug03muahmo" path="res://Actors/Camera/water_background.tscn" id="3_utqb5"]
 [ext_resource type="PackedScene" uid="uid://cclwwsegfn8rr" path="res://Actors/Player/player.tscn" id="4_nx2dg"]
 [ext_resource type="Resource" uid="uid://bsk4oh4u6bnhe" path="res://Data/Enemy/BulwarkEnemy.tres" id="5_fkloy"]
@@ -29,6 +30,8 @@ stage_music = ExtResource("2_yvgdk")
 stage_music_db = -30.0
 scroll_director = NodePath("ScrollDirector")
 enemy_controller = NodePath("EnemyController")
+
+[node name="GameUI" parent="." unique_id=1532914546 instance=ExtResource("3_p2t5c")]
 
 [node name="EnemyController" parent="." unique_id=335274421 node_paths=PackedStringArray("spawn_parent") instance=ExtResource("10_8p85k")]
 enemy_types = Array[ExtResource("12_fkloy")]([ExtResource("5_fkloy"), ExtResource("6_rvay1")])

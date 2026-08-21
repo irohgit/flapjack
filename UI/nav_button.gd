@@ -104,6 +104,7 @@ func _notification(what: int) -> void:
 func _highlight(on: bool) -> void:
 	# scale is a render transform, so growing the button does not shove its
 	# siblings around inside the VBoxContainer.
+	pivot_offset = size / 2.0
 	var tw := create_tween().set_trans(Tween.TRANS_QUAD)
 	tw.tween_property(self, "scale", Vector2.ONE * (focus_scale if on else 1.0), 0.08)
 	tw.parallel().tween_property(self, "modulate", focus_tint if on else Color.WHITE, 0.08)

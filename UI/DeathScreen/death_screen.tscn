@@ -4,14 +4,12 @@
 [ext_resource type="Texture2D" uid="uid://dfi4akwlw6hxo" path="res://Assets/UI/DeathScreen/death_screen_background.png" id="2_background"]
 [ext_resource type="FontFile" uid="uid://cvo681c1hvgca" path="res://Assets/Fonts/Montserrat/static/Montserrat-Black.ttf" id="3_title_font"]
 [ext_resource type="PackedScene" uid="uid://das28foe55u6f" path="res://UI/navbutton.tscn" id="5_e4wqi"]
+[ext_resource type="AudioStream" uid="uid://dshox3m1impsv" path="res://Audio/SFX/soft_hover.mp3" id="6_dq2wr"]
 [ext_resource type="PackedScene" uid="uid://b2judmr242f45" path="res://UI/settings_menu.tscn" id="6_num61"]
+[ext_resource type="AudioStream" uid="uid://dc263ntmf6iew" path="res://Audio/SFX/ui_click_stylized.mp3" id="7_ht1cn"]
 [ext_resource type="FontFile" uid="uid://p6nsf53xeqe8" path="res://Assets/Fonts/Montserrat/static/Montserrat-SemiBold.ttf" id="10_body_font"]
 
-[node name="DeathScreen" type="CanvasLayer" unique_id=34283215]
-process_mode = 3
-layer = 900
-
-[node name="Screen" type="Control" parent="." unique_id=318826695 node_paths=PackedStringArray("first_focus")]
+[node name="DeathScreen" type="Control" unique_id=318826695 node_paths=PackedStringArray("first_focus")]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
@@ -25,7 +23,7 @@ first_focus = NodePath("VBoxContainer/Retry")
 close_on_cancel = false
 pauses_tree = true
 
-[node name="Background" type="TextureRect" parent="Screen" unique_id=356206368]
+[node name="Background" type="TextureRect" parent="." unique_id=356206368]
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 15
@@ -38,7 +36,7 @@ texture = ExtResource("2_background")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="Title" type="Label" parent="Screen" unique_id=1402522531]
+[node name="Title" type="Label" parent="." unique_id=1402522531]
 layout_mode = 0
 offset_left = 360.0
 offset_top = 216.0
@@ -53,7 +51,7 @@ text = "SHIPWRECKED"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Subtitle" type="Label" parent="Screen" unique_id=1233710738]
+[node name="Subtitle" type="Label" parent="." unique_id=1233710738]
 layout_mode = 0
 offset_left = 460.0
 offset_top = 372.0
@@ -68,7 +66,7 @@ text = "THE SEA CLAIMED YOUR SHIP"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Screen" unique_id=1122974956]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1122974956]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -86,26 +84,39 @@ offset_transform_position_ratio = Vector2(0, 0.25)
 offset_transform_visual_only = false
 theme_override_constants/separation = 20
 
-[node name="Retry" parent="Screen/VBoxContainer" unique_id=395615966 instance=ExtResource("5_e4wqi")]
+[node name="Retry" parent="VBoxContainer" unique_id=395615966 instance=ExtResource("5_e4wqi")]
 layout_mode = 2
 act = 3
 label_text = "Restart"
+focus_tint = Color(0.88833916, 0.73178285, 0.39407146, 1)
+focus_sound = ExtResource("6_dq2wr")
+press_sound = ExtResource("7_ht1cn")
 
-[node name="Main Menu" parent="Screen/VBoxContainer" unique_id=5511419 instance=ExtResource("5_e4wqi")]
+[node name="Main Menu" parent="VBoxContainer" unique_id=5511419 instance=ExtResource("5_e4wqi")]
 layout_mode = 2
+act = 0
 label_text = "Main Menu"
 scene_to_load = "uid://dfgiunphxmxmr"
+focus_tint = Color(0.88833916, 0.73178285, 0.39407146, 1)
+focus_sound = ExtResource("6_dq2wr")
+press_sound = ExtResource("7_ht1cn")
 
-[node name="Settings" parent="Screen/VBoxContainer" unique_id=529247863 node_paths=PackedStringArray("panel_to_open") instance=ExtResource("5_e4wqi")]
+[node name="Settings" parent="VBoxContainer" unique_id=529247863 node_paths=PackedStringArray("panel_to_open") instance=ExtResource("5_e4wqi")]
 layout_mode = 2
 act = 1
 label_text = "Settings"
-panel_to_open = NodePath("../../../SettingsPanel")
+panel_to_open = NodePath("../../SettingsPanel")
+focus_tint = Color(0.88833916, 0.73178285, 0.39407146, 1)
+focus_sound = ExtResource("6_dq2wr")
+press_sound = ExtResource("7_ht1cn")
 
-[node name="Exit Game" parent="Screen/VBoxContainer" unique_id=150139310 instance=ExtResource("5_e4wqi")]
+[node name="Exit Game" parent="VBoxContainer" unique_id=150139310 instance=ExtResource("5_e4wqi")]
 layout_mode = 2
 act = 4
 label_text = "Exit Game"
+focus_tint = Color(0.88833916, 0.73178285, 0.39407146, 1)
+focus_sound = ExtResource("6_dq2wr")
+press_sound = ExtResource("7_ht1cn")
 
 [node name="SettingsPanel" parent="." unique_id=514572451 instance=ExtResource("6_num61")]
-visible = false
+layout_mode = 0
