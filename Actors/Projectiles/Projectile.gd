@@ -42,11 +42,12 @@ var direction := Vector2.UP
 func _ready() -> void:
 	assert(data != null, "Projectile spawned with no ProjectileData assigned")
 	_apply_data()
+	$VisibleOnScreenNotifier2D.screen_exited.connect(_on_screen_exited)
 	area_entered.connect(_on_area_entered)
 	_trail.top_level = true
 	_trail.clear_points()
 	get_tree().create_timer(data.expire_time).timeout.connect(queue_free)
-
+	
 
 func _apply_data() -> void:
 	assert(data.texture != null, "ProjectileData has no texture assigned")
@@ -232,3 +233,7 @@ func _on_area_entered(area: Area2D) -> void:
 # Override for splitting, explosions, screen shake.
 func _on_impact() -> void:
 	pass
+
+func _on_screen_exited() -> void:
+	DebugHud.flash("bullet screen_exited fired")
+	queue_free()

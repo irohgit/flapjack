@@ -13,12 +13,11 @@
 [ext_resource type="PackedScene" uid="uid://cclwwsegfn8rr" path="res://Actors/Player/player.tscn" id="7_wnqgr"]
 [ext_resource type="PackedScene" uid="uid://luquvycpj4hd" path="res://Actors/Pickup/coin_spawner.tscn" id="9_bq31y"]
 [ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="10_a3klg"]
-[ext_resource type="PackedScene" uid="uid://cstesilwdvxw5" path="res://Levels/settings_panel.tscn" id="10_ejwf3"]
 [ext_resource type="Resource" uid="uid://c8prjyekwi7hm" path="res://Data/Pickups/HomingCannonPickup.tres" id="11_5w86b"]
 [ext_resource type="Resource" uid="uid://5vagi0atsu3m" path="res://Data/Pickups/PlasmaAugmentPickup.tres" id="12_8m7vp"]
+[ext_resource type="Script" uid="uid://ddmjy6ihgdk7k" path="res://Systems/Levels/level_generator.gd" id="13_d1opp"]
 [ext_resource type="Resource" uid="uid://cpynird4edptk" path="res://Data/Pickups/FireballAugmentPickup.tres" id="13_fireball"]
 [ext_resource type="Resource" uid="uid://cesmcj6ctad" path="res://Data/Pickups/MagnetAugmentPickup.tres" id="14_magnet"]
-[ext_resource type="Script" uid="uid://ddmjy6ihgdk7k" path="res://Systems/Levels/level_generator.gd" id="13_d1opp"]
 [ext_resource type="Resource" uid="uid://862x5sptm8w2" path="res://Data/Levels/Stages/Stage2.tres" id="15_lr66y"]
 
 [node name="Stage2" type="Node2D" unique_id=1126219472 node_paths=PackedStringArray("level_generator", "screen_encounter_parent", "scroll_director", "enemy_controller")]
@@ -42,7 +41,7 @@ scroll_speed = 50.0
 
 [node name="World" type="Node2D" parent="." unique_id=822996462]
 
-[node name="SettingsPanel" parent="." unique_id=217040426 instance=ExtResource("10_ejwf3")]
+[node name="SettingsPanel" parent="." unique_id=217040426]
 
 [node name="CoinSpawner" parent="." unique_id=1386735529 instance=ExtResource("9_bq31y")]
 augments = Array[ExtResource("10_a3klg")]([ExtResource("11_5w86b"), ExtResource("12_8m7vp"), ExtResource("13_fireball"), ExtResource("14_magnet")])

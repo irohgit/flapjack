@@ -84,7 +84,7 @@ func _fire() -> void:
 	# Same parent as this ship, so shots shake with the world.
 	get_parent().add_child(shot)
 	shot.global_position = global_position + Vector2(0, 60)
-	Audio.play_sfx(data.fire_sfx, -6.0, 0.06, data.fire_pitch)
+	Audio.play_sfx(data.fire_sfx, data.fire_sfx_volume_db, 0.06, data.fire_pitch)
 
 
 # Public entry point. Collision code finds methods on the Area2D, not children.

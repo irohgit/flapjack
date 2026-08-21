@@ -28,7 +28,9 @@ func take_damage(amount: int) -> void:
 func _on_died() -> void:
 	Audio.play_sfx(explosion_sfx, 5.0)
 	queue_free()
+	
 func setup(new_data: PatternButcherBirdData, spawn_position: Vector2, direction: float) -> void:
+	print(">>> butcherbird setup called, pattern: ", new_data.movement_pattern)
 	data = new_data
 	position = spawn_position
 	start_position = spawn_position
@@ -40,6 +42,7 @@ func setup(new_data: PatternButcherBirdData, spawn_position: Vector2, direction:
 	
 func _process(delta: float) -> void:
 	if data == null:
+		print(">>> bird _process: data is NULL, returning")
 		return
 
 	time_alive += delta

@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://das28foe55u6f"]
+
+[ext_resource type="Script" uid="uid://8rpnf6p3wdqr" path="res://UI/nav_button.gd" id="1_ae3mk"]
+
+[node name="Navbutton" type="TextureButton" unique_id=395615966]
+custom_minimum_size = Vector2(500, 140)
+offset_right = 500.0
+offset_bottom = 140.0
+script = ExtResource("1_ae3mk")
+
+[node name="Label" type="Label" parent="." unique_id=1454462337]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "SDSDSD"
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://de1bc11i6qosg"]
 
 [ext_resource type="SpriteFrames" uid="uid://t2mg6ve5rv3l" path="res://Animations/fish_background_swim.tres" id="1_ce8mq"]
+[ext_resource type="Script" uid="uid://mgn4gv3qdjo3" path="res://Actors/Environment/parallax_decor.gd" id="1_ie076"]
 
 [node name="BgLayer1Fish" type="Node2D" unique_id=513696111]
+script = ExtResource("1_ie076")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=824631223]
 sprite_frames = ExtResource("1_ce8mq")

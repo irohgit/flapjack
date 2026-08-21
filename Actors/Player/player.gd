@@ -41,6 +41,14 @@ var _selected_potion_slot := 0
 @export var hit_sfx: AudioStream
 @export var death_sfx: AudioStream
 
+#Developer Tool
+func _unhandled_input(event: InputEvent) -> void:
+	if not OS.is_debug_build():
+		return
+	if event.is_action_pressed("kill_self"):
+		get_viewport().set_input_as_handled()
+		_health.take_damage(9999)
+		
 func _ready() -> void:
 	_potion_slots.resize(potion_slot_count)
 	area_entered.connect(_on_area_entered)

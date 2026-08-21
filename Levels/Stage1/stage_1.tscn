@@ -3,9 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://t7alddeyjrep" path="res://Levels/hud.tscn" id="1_s0w88"]
 [ext_resource type="Script" uid="uid://ldk65a2c6xgp" path="res://Levels/Stage1/stage_1.gd" id="1_thckm"]
 [ext_resource type="Script" uid="uid://tsoi3lwff5mf" path="res://Actors/Camera/shake_camera.gd" id="1_utqb5"]
-[ext_resource type="PackedScene" uid="uid://cstesilwdvxw5" path="res://Levels/settings_panel.tscn" id="2_nx2dg"]
 [ext_resource type="AudioStream" uid="uid://b86afwbiwoubu" path="res://Audio/BGM/hesapirate.mp3" id="2_yvgdk"]
 [ext_resource type="PackedScene" uid="uid://dsf0q5lcpr0mh" path="res://Actors/Camera/ScrollDirector.tscn" id="3_o28ls"]
+[ext_resource type="PackedScene" uid="uid://cpy76lvb1x4cb" path="res://UI/GameUI.tscn" id="3_p2t5c"]
 [ext_resource type="PackedScene" uid="uid://c1hug03muahmo" path="res://Actors/Camera/water_background.tscn" id="3_utqb5"]
 [ext_resource type="PackedScene" uid="uid://cclwwsegfn8rr" path="res://Actors/Player/player.tscn" id="4_nx2dg"]
 [ext_resource type="Resource" uid="uid://bsk4oh4u6bnhe" path="res://Data/Enemy/BulwarkEnemy.tres" id="5_fkloy"]
@@ -20,6 +20,10 @@
 [ext_resource type="Resource" uid="uid://c8prjyekwi7hm" path="res://Data/Pickups/HomingCannonPickup.tres" id="17_uwhja"]
 [ext_resource type="Resource" uid="uid://b2xa4hm5ib5ca" path="res://Data/Levels/Stages/Stage1.tres" id="18_6vwij"]
 [ext_resource type="Resource" uid="uid://5vagi0atsu3m" path="res://Data/Pickups/PlasmaAugmentPickup.tres" id="18_p2t5c"]
+[ext_resource type="PackedScene" uid="uid://bws0ib2ep02xb" path="res://Actors/Environment/cloud_overlay.tscn" id="19_aqmxt"]
+[ext_resource type="Script" uid="uid://bmy2fmsv1ku8m" path="res://Levels/Stage1/ParallaxDirector.gd" id="19_m3y4m"]
+[ext_resource type="PackedScene" uid="uid://de1bc11i6qosg" path="res://Actors/Environment/bg_layer_1_fish.tscn" id="20_p2t5c"]
+[ext_resource type="PackedScene" uid="uid://blwcrrdy6twr8" path="res://Actors/Environment/bg_layer_near_seagullog.tscn" id="21_aqmxt"]
 [ext_resource type="Resource" uid="uid://e8bbiwbkus1o" path="res://Data/Pickups/OrbitalRicochetPickup.tres" id="18_xq76v"]
 [ext_resource type="Resource" uid="uid://bnh66tw3h3xk8" path="res://Data/Pickups/HarpoonPickup.tres" id="19_ht8rm"]
 [ext_resource type="PackedScene" uid="uid://dgp73phtjophn" path="res://Actors/Pickup/pickup.tscn" id="19_uwhja"]
@@ -36,6 +40,8 @@ stage_music_db = -30.0
 scroll_director = NodePath("ScrollDirector")
 enemy_controller = NodePath("EnemyController")
 
+[node name="GameUI" parent="." unique_id=1532914546 instance=ExtResource("3_p2t5c")]
+
 [node name="EnemyController" parent="." unique_id=335274421 node_paths=PackedStringArray("spawn_parent") instance=ExtResource("10_8p85k")]
 enemy_types = Array[ExtResource("12_fkloy")]([ExtResource("5_fkloy"), ExtResource("6_rvay1")])
 spawn_parent = NodePath("../World")
@@ -49,21 +55,44 @@ scroll_speed = 50.0
 
 [node name="World" type="Node2D" parent="." unique_id=790454155]
 
-[node name="SettingsPanel" parent="." unique_id=217040426 instance=ExtResource("2_nx2dg")]
-
-[node name="Spawner" parent="." unique_id=1386735529 instance=ExtResource("14_rvay1")]
+[node name="CoinSpawner" parent="." unique_id=1386735529 instance=ExtResource("14_rvay1")]
 augments = Array[ExtResource("16_m3y4m")]([ExtResource("17_uwhja"), ExtResource("18_p2t5c"), ExtResource("21_fireball"), ExtResource("22_magnet"), ExtResource("16_e24f3"), ExtResource("17_qr3gx"), ExtResource("18_xq76v"), ExtResource("19_ht8rm")])
 
 [node name="LevelGenerator" type="Node2D" parent="." unique_id=593108892]
 script = ExtResource("16_cvtwx")
 level_data = ExtResource("18_6vwij")
 
+[node name="ParallaxDirector" type="Node2D" parent="." unique_id=1266982156 node_paths=PackedStringArray("far_parent", "near_parent", "overlay_parent", "scroll_director")]
+script = ExtResource("19_m3y4m")
+far_objects = Array[PackedScene]([ExtResource("20_p2t5c")])
+near_objects = Array[PackedScene]([ExtResource("21_aqmxt")])
+overlay_objects = Array[PackedScene]([ExtResource("19_aqmxt")])
+far_parent = NodePath("Far")
+near_parent = NodePath("Near")
+overlay_parent = NodePath("Overlay")
+far_scroll_range = Vector2(4, 4)
+near_scroll_range = Vector2(3, 3)
+min_gap = 200.0
+max_gap = 500.0
+min_per_band = 2
+max_per_band = 6
+edge_margin = 150.0
+spawn_lead = 400.0
+scroll_director = NodePath("../ScrollDirector")
+level_data = ExtResource("18_6vwij")
+
+[node name="Far" type="Node2D" parent="ParallaxDirector" unique_id=679556213]
+
+[node name="Near" type="Node2D" parent="ParallaxDirector" unique_id=1147739887]
+
+[node name="Overlay" type="Node2D" parent="ParallaxDirector" unique_id=1868737272]
+
 [node name="ScrollRig" type="Node2D" parent="." unique_id=873284287]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="ScrollRig" unique_id=261069038]
 layer = -100
 
-[node name="WaterBack" parent="ScrollRig/CanvasLayer" unique_id=364615905 node_paths=PackedStringArray("camera") instance=ExtResource("3_utqb5")]
+[node name="WaterBack" parent="ScrollRig/CanvasLayer" unique_id=106349697 node_paths=PackedStringArray("camera") instance=ExtResource("3_utqb5")]
 camera = NodePath("../../ShakeCamera")
 metadata/_edit_use_anchors_ = true
 

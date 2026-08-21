@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://cpy76lvb1x4cb"]
+
+[ext_resource type="PackedScene" uid="uid://cq7rvdaul30k1" path="res://UI/pause_menu.tscn" id="1_lwtm8"]
+[ext_resource type="PackedScene" uid="uid://btdaigjltsc2m" path="res://UI/DeathScreen/death_screen.tscn" id="2_hqqrp"]
+
+[node name="GameUI" type="CanvasLayer" unique_id=1532914546]
+
+[node name="PauseMenu" parent="." unique_id=114401258 instance=ExtResource("1_lwtm8")]
+
+[node name="DeathScreen" parent="." unique_id=318826695 instance=ExtResource("2_hqqrp")]
+visible = false

@@ -65,11 +65,11 @@ func play_sfx(stream: AudioStream, volume_db := 0.0, pitch_spread := 0.06, base_
 	voice.play()
 
 
-# Picks one of several recordings of the same event. 
-func play_sfx_varied(streams: Array[AudioStream], volume_db := 0.0) -> void:
+# Picks one of several recordings of the same event.
+func play_sfx_varied(streams: Array[AudioStream], volume_db := 0.0, pitch_spread := 0.06, base_pitch := 1.0) -> void:
 	if streams.is_empty():
 		return
-	play_sfx(streams.pick_random(), volume_db)
+	play_sfx(streams.pick_random(), volume_db, pitch_spread, base_pitch)
 
 
 # UI sounds bypass the SFX bus so a gameplay volume slider does not silence

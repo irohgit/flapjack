@@ -14,5 +14,6 @@ enum WeaponType {ACTIVE, PASSIVE}
 #SFX
 @export var fire_sound: AudioStream
 @export var fire_volume_db := -14.0
+@export var fire_sounds: Array[AudioStream] = []
 @export_range(0.0, 0.5, 0.01) var fire_pitch_spread := 0.06
 @export_range(0.3, 2.0, 0.01) var fire_pitch := 1.0 #1.0 sample recorded  Less than 1 pitches down and is heavier and larger. 
