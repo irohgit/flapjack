@@ -25,6 +25,8 @@ var fire_tick_interval := 0.5
 var sprite_frames_override: SpriteFrames
 var animation_name_override: StringName = &"default"
 
+var pierce := 0
+
 var direction := Vector2.UP
 
 
@@ -162,7 +164,11 @@ func _on_area_entered(area: Area2D) -> void:
 	if area.has_method("take_damage"):
 		area.take_damage(data.damage)
 	_on_impact()
-	queue_free()
+	
+	if pierce == 0:
+		queue_free()
+	else:
+		pierce -= 1
 
 
 # Override for splitting, explosions, screen shake.

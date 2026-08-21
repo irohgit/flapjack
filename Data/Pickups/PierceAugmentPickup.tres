@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PickupData" format=3 uid="uid://e2bxh85j6kul"]
+
+[ext_resource type="Resource" uid="uid://dqcrvuh0gyty8" path="res://Data/Augments/PiercingCannonBall.tres" id="1_br1aa"]
+[ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="1_wg6ku"]
+[ext_resource type="AudioStream" uid="uid://d2sr3t6n13ye4" path="res://Audio/SFX/soft_pickup.mp3" id="2_br1aa"]
+[ext_resource type="Texture2D" uid="uid://bygt8tb1xwxtv" path="res://Assets/Pickups/18.png" id="2_n2jre"]
+
+[resource]
+script = ExtResource("1_wg6ku")
+texture = ExtResource("2_n2jre")
+augment = ExtResource("1_br1aa")
+notification_name = "Piercing Rounds"
+pickup_sfx = ExtResource("2_br1aa")
+metadata/_custom_type_script = "uid://rau2jwiqd0pd"
