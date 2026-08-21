@@ -8,61 +8,202 @@
 [ext_resource type="Script" uid="uid://p4ssfrvfj0uw" path="res://Data/Levels/level_data.gd" id="4_iy8op"]
 [ext_resource type="Script" uid="uid://bgt6cqxd8jifw" path="res://Data/Levels/weighted_encounter_data.gd" id="5_74al8"]
 [ext_resource type="PackedScene" uid="uid://b0uqnqks41txj" path="res://Levels/iroh_sandbox.tscn" id="5_hcrxh"]
+[ext_resource type="Script" uid="uid://cytvv5o32ru6e" path="res://Data/Levels/encounter_data.gd" id="6_encounter"]
 [ext_resource type="PackedScene" uid="uid://3gxxy4myod8b" path="res://Actors/Enemies/PatternEnemyWaveSpawner.tscn" id="9_74al8"]
 
-[sub_resource type="Resource" id="Resource_hcrxh"]
+[sub_resource type="Resource" id="WeightedEnemy_bulwark"]
 script = ExtResource("1_0jwiu")
 enemy = ExtResource("2_oihka")
 metadata/_custom_type_script = "uid://brpre4byem6tx"
 
-[sub_resource type="Resource" id="Resource_qllpl"]
+[sub_resource type="Resource" id="WeightedEnemy_hunter"]
 script = ExtResource("1_0jwiu")
 enemy = ExtResource("3_iy8op")
 metadata/_custom_type_script = "uid://brpre4byem6tx"
 
-[sub_resource type="Resource" id="Resource_gj6f6"]
+[sub_resource type="Resource" id="WeightedFormation_line"]
+script = ExtResource("3_oihka")
+metadata/_custom_type_script = "uid://dgn1ppeend4i1"
+
+[sub_resource type="Resource" id="WeightedFormation_v"]
+script = ExtResource("3_oihka")
+formation = 1
+metadata/_custom_type_script = "uid://dgn1ppeend4i1"
+
+[sub_resource type="Resource" id="WeightedFormation_grid"]
+script = ExtResource("3_oihka")
+formation = 2
+metadata/_custom_type_script = "uid://dgn1ppeend4i1"
+
+[sub_resource type="Resource" id="WeightedFormation_circle"]
+script = ExtResource("3_oihka")
+formation = 3
+metadata/_custom_type_script = "uid://dgn1ppeend4i1"
+
+[sub_resource type="Resource" id="WeightedSpecial_birds"]
+script = ExtResource("5_74al8")
+encounter_scene = ExtResource("9_74al8")
+metadata/_custom_type_script = "uid://bgt6cqxd8jifw"
+
+[sub_resource type="Resource" id="Encounter_01_normal"]
+script = ExtResource("6_encounter")
+distance_after_previous = 550.0
+min_pack_size = 5
+max_pack_size = 10
+enemy_pool = Array[ExtResource("1_0jwiu")]([SubResource("WeightedEnemy_bulwark"), SubResource("WeightedEnemy_hunter")])
+formation_pool = Array[ExtResource("3_oihka")]([SubResource("WeightedFormation_line"), SubResource("WeightedFormation_v"), SubResource("WeightedFormation_grid"), SubResource("WeightedFormation_circle")])
+
+[sub_resource type="Resource" id="Encounter_02_special"]
+script = ExtResource("6_encounter")
+type = 1
+distance_after_previous = 550.0
+special_encounter_pool = Array[ExtResource("5_74al8")]([SubResource("WeightedSpecial_birds")])
+
+[sub_resource type="Resource" id="Encounter_03_normal"]
+script = ExtResource("6_encounter")
+distance_after_previous = 550.0
+min_pack_size = 5
+max_pack_size = 10
+enemy_pool = Array[ExtResource("1_0jwiu")]([SubResource("WeightedEnemy_bulwark"), SubResource("WeightedEnemy_hunter")])
+formation_pool = Array[ExtResource("3_oihka")]([SubResource("WeightedFormation_line"), SubResource("WeightedFormation_v"), SubResource("WeightedFormation_grid"), SubResource("WeightedFormation_circle")])
+
+[sub_resource type="Resource" id="Encounter_04_optional_normal"]
+script = ExtResource("6_encounter")
+chance_to_run = 0.5
+distance_after_previous = 150.0
+min_pack_size = 5
+max_pack_size = 10
+enemy_pool = Array[ExtResource("1_0jwiu")]([SubResource("WeightedEnemy_bulwark"), SubResource("WeightedEnemy_hunter")])
+formation_pool = Array[ExtResource("3_oihka")]([SubResource("WeightedFormation_line"), SubResource("WeightedFormation_v"), SubResource("WeightedFormation_grid"), SubResource("WeightedFormation_circle")])
+
+[sub_resource type="Resource" id="Encounter_05_special"]
+script = ExtResource("6_encounter")
+type = 1
+distance_after_previous = 550.0
+special_encounter_pool = Array[ExtResource("5_74al8")]([SubResource("WeightedSpecial_birds")])
+
+[sub_resource type="Resource" id="Encounter_06_normal"]
+script = ExtResource("6_encounter")
+distance_after_previous = 550.0
+min_pack_size = 5
+max_pack_size = 10
+enemy_pool = Array[ExtResource("1_0jwiu")]([SubResource("WeightedEnemy_bulwark"), SubResource("WeightedEnemy_hunter")])
+formation_pool = Array[ExtResource("3_oihka")]([SubResource("WeightedFormation_line"), SubResource("WeightedFormation_v"), SubResource("WeightedFormation_grid"), SubResource("WeightedFormation_circle")])
+
+[sub_resource type="Resource" id="Encounter_07_special"]
+script = ExtResource("6_encounter")
+type = 1
+distance_after_previous = 550.0
+special_encounter_pool = Array[ExtResource("5_74al8")]([SubResource("WeightedSpecial_birds")])
+
+[sub_resource type="Resource" id="Encounter_08_optional_normal"]
+script = ExtResource("6_encounter")
+chance_to_run = 0.5
+distance_after_previous = 150.0
+min_pack_size = 5
+max_pack_size = 10
+enemy_pool = Array[ExtResource("1_0jwiu")]([SubResource("WeightedEnemy_bulwark"), SubResource("WeightedEnemy_hunter")])
+formation_pool = Array[ExtResource("3_oihka")]([SubResource("WeightedFormation_line"), SubResource("WeightedFormation_v"), SubResource("WeightedFormation_grid"), SubResource("WeightedFormation_circle")])
+
+[sub_resource type="Resource" id="Encounter_09_special"]
+script = ExtResource("6_encounter")
+type = 1
+distance_after_previous = 550.0
+special_encounter_pool = Array[ExtResource("5_74al8")]([SubResource("WeightedSpecial_birds")])
+
+[sub_resource type="Resource" id="Encounter_10_normal"]
+script = ExtResource("6_encounter")
+distance_after_previous = 550.0
+min_pack_size = 5
+max_pack_size = 10
+enemy_pool = Array[ExtResource("1_0jwiu")]([SubResource("WeightedEnemy_bulwark"), SubResource("WeightedEnemy_hunter")])
+formation_pool = Array[ExtResource("3_oihka")]([SubResource("WeightedFormation_line"), SubResource("WeightedFormation_v"), SubResource("WeightedFormation_grid"), SubResource("WeightedFormation_circle")])
+
+[sub_resource type="Resource" id="Encounter_11_special"]
+script = ExtResource("6_encounter")
+type = 1
+distance_after_previous = 550.0
+special_encounter_pool = Array[ExtResource("5_74al8")]([SubResource("WeightedSpecial_birds")])
+
+[sub_resource type="Resource" id="Encounter_12_optional_normal"]
+script = ExtResource("6_encounter")
+chance_to_run = 0.5
+distance_after_previous = 150.0
+min_pack_size = 5
+max_pack_size = 10
+enemy_pool = Array[ExtResource("1_0jwiu")]([SubResource("WeightedEnemy_bulwark"), SubResource("WeightedEnemy_hunter")])
+formation_pool = Array[ExtResource("3_oihka")]([SubResource("WeightedFormation_line"), SubResource("WeightedFormation_v"), SubResource("WeightedFormation_grid"), SubResource("WeightedFormation_circle")])
+
+[sub_resource type="Resource" id="Encounter_13_normal"]
+script = ExtResource("6_encounter")
+distance_after_previous = 550.0
+min_pack_size = 5
+max_pack_size = 10
+enemy_pool = Array[ExtResource("1_0jwiu")]([SubResource("WeightedEnemy_bulwark"), SubResource("WeightedEnemy_hunter")])
+formation_pool = Array[ExtResource("3_oihka")]([SubResource("WeightedFormation_line"), SubResource("WeightedFormation_v"), SubResource("WeightedFormation_grid"), SubResource("WeightedFormation_circle")])
+
+[sub_resource type="Resource" id="Encounter_14_special"]
+script = ExtResource("6_encounter")
+type = 1
+distance_after_previous = 550.0
+special_encounter_pool = Array[ExtResource("5_74al8")]([SubResource("WeightedSpecial_birds")])
+
+[sub_resource type="Resource" id="Encounter_15_normal"]
+script = ExtResource("6_encounter")
+distance_after_previous = 550.0
+min_pack_size = 5
+max_pack_size = 10
+enemy_pool = Array[ExtResource("1_0jwiu")]([SubResource("WeightedEnemy_bulwark"), SubResource("WeightedEnemy_hunter")])
+formation_pool = Array[ExtResource("3_oihka")]([SubResource("WeightedFormation_line"), SubResource("WeightedFormation_v"), SubResource("WeightedFormation_grid"), SubResource("WeightedFormation_circle")])
+
+[sub_resource type="Resource" id="Encounter_16_special"]
+script = ExtResource("6_encounter")
+type = 1
+distance_after_previous = 550.0
+special_encounter_pool = Array[ExtResource("5_74al8")]([SubResource("WeightedSpecial_birds")])
+
+[sub_resource type="Resource" id="Encounter_17_optional_normal"]
+script = ExtResource("6_encounter")
+chance_to_run = 0.5
+distance_after_previous = 150.0
+min_pack_size = 5
+max_pack_size = 10
+enemy_pool = Array[ExtResource("1_0jwiu")]([SubResource("WeightedEnemy_bulwark"), SubResource("WeightedEnemy_hunter")])
+formation_pool = Array[ExtResource("3_oihka")]([SubResource("WeightedFormation_line"), SubResource("WeightedFormation_v"), SubResource("WeightedFormation_grid"), SubResource("WeightedFormation_circle")])
+
+[sub_resource type="Resource" id="Encounter_18_special"]
+script = ExtResource("6_encounter")
+type = 1
+distance_after_previous = 550.0
+special_encounter_pool = Array[ExtResource("5_74al8")]([SubResource("WeightedSpecial_birds")])
+
+[sub_resource type="Resource" id="Encounter_19_normal"]
+script = ExtResource("6_encounter")
+distance_after_previous = 550.0
+min_pack_size = 5
+max_pack_size = 10
+enemy_pool = Array[ExtResource("1_0jwiu")]([SubResource("WeightedEnemy_bulwark"), SubResource("WeightedEnemy_hunter")])
+formation_pool = Array[ExtResource("3_oihka")]([SubResource("WeightedFormation_line"), SubResource("WeightedFormation_v"), SubResource("WeightedFormation_grid"), SubResource("WeightedFormation_circle")])
+
+[sub_resource type="Resource" id="Encounter_20_optional_normal"]
+script = ExtResource("6_encounter")
+chance_to_run = 0.5
+distance_after_previous = 150.0
+min_pack_size = 5
+max_pack_size = 10
+enemy_pool = Array[ExtResource("1_0jwiu")]([SubResource("WeightedEnemy_bulwark"), SubResource("WeightedEnemy_hunter")])
+formation_pool = Array[ExtResource("3_oihka")]([SubResource("WeightedFormation_line"), SubResource("WeightedFormation_v"), SubResource("WeightedFormation_grid"), SubResource("WeightedFormation_circle")])
+
+[sub_resource type="Resource" id="Finale_boss"]
 script = ExtResource("2_4mj3y")
 event_name = "Boss"
 encounter_scene = ExtResource("5_hcrxh")
 metadata/_custom_type_script = "uid://bhsc86o70es47"
 
-[sub_resource type="Resource" id="Resource_de3ok"]
-script = ExtResource("3_oihka")
-metadata/_custom_type_script = "uid://dgn1ppeend4i1"
-
-[sub_resource type="Resource" id="Resource_psoqc"]
-script = ExtResource("3_oihka")
-formation = 1
-metadata/_custom_type_script = "uid://dgn1ppeend4i1"
-
-[sub_resource type="Resource" id="Resource_g4ecr"]
-script = ExtResource("3_oihka")
-formation = 2
-metadata/_custom_type_script = "uid://dgn1ppeend4i1"
-
-[sub_resource type="Resource" id="Resource_mreyg"]
-script = ExtResource("3_oihka")
-formation = 3
-metadata/_custom_type_script = "uid://dgn1ppeend4i1"
-
-[sub_resource type="Resource" id="Resource_1l6y5"]
-script = ExtResource("5_74al8")
-encounter_scene = ExtResource("9_74al8")
-metadata/_custom_type_script = "uid://bgt6cqxd8jifw"
-
 [resource]
 script = ExtResource("4_iy8op")
 level_name = "Stage1"
 end_position = Vector2(-600, -10000)
-min_encounters = 15
-max_encounters = 20
-min_special_encounters = 8
-max_special_encounters = 8
-min_pack_size = 5
-max_pack_size = 10
-guaranteed_normal_start_count = 1
-enemy_pool = Array[ExtResource("1_0jwiu")]([SubResource("Resource_hcrxh"), SubResource("Resource_qllpl")])
-formation_pool = Array[ExtResource("3_oihka")]([SubResource("Resource_de3ok"), SubResource("Resource_psoqc"), SubResource("Resource_g4ecr"), SubResource("Resource_mreyg")])
-special_encounter_pool = Array[ExtResource("5_74al8")]([SubResource("Resource_1l6y5")])
-finale_pool = Array[ExtResource("2_4mj3y")]([SubResource("Resource_gj6f6")])
+encounter_sequence = Array[ExtResource("6_encounter")]([SubResource("Encounter_01_normal"), SubResource("Encounter_02_special"), SubResource("Encounter_03_normal"), SubResource("Encounter_04_optional_normal"), SubResource("Encounter_05_special"), SubResource("Encounter_06_normal"), SubResource("Encounter_07_special"), SubResource("Encounter_08_optional_normal"), SubResource("Encounter_09_special"), SubResource("Encounter_10_normal"), SubResource("Encounter_11_special"), SubResource("Encounter_12_optional_normal"), SubResource("Encounter_13_normal"), SubResource("Encounter_14_special"), SubResource("Encounter_15_normal"), SubResource("Encounter_16_special"), SubResource("Encounter_17_optional_normal"), SubResource("Encounter_18_special"), SubResource("Encounter_19_normal"), SubResource("Encounter_20_optional_normal")])
+finale_pool = Array[ExtResource("2_4mj3y")]([SubResource("Finale_boss")])
 metadata/_custom_type_script = "uid://p4ssfrvfj0uw"
