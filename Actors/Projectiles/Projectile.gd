@@ -29,6 +29,10 @@ var pierce := 0
 
 var orbital_ricochet := false
 var boost_speed_multiplier := 1.0
+var has_done_ricochet := false
+var age_time := 0.0
+
+var final_speed_boost := 1.0
 
 var direction := Vector2.UP
 
@@ -77,6 +81,7 @@ func _apply_allegiance() -> void:
 		set_collision_mask_value(1, true)    # looks for player
 		
 func _physics_process(delta: float) -> void:
+	age_time += delta
 	_move(delta)
 	_update_trail()
 
@@ -97,13 +102,25 @@ func _move(delta: float) -> void:
 			homing = false
 			_homing_target = null
 			
-	if orbital_ricochet:
-		pass
+	if orbital_ricochet and not has_done_ricochet:
+		if age_time >= 3.0:
+			_orbital_ricochet(delta)
 	
-	position += direction * data.speed * delta
+	position += direction * data.speed * final_speed_boost * delta
 
 func _orbital_ricochet(delta: float) -> void:
 	_homing_target = _find_nearest_enemy()
+	
+	var desired_direction := global_position.direction_to(
+		_homing_target.global_position
+	)
+	
+	var angle_to_target := direction.angle_to(desired_direction)
+	
+	direction = direction.rotated(angle_to_target).normalized()
+	
+	final_speed_boost *= boost_speed_multiplier
+	has_done_ricochet = true
 
 func _update_homing(delta: float) -> void:
 	if not _has_valid_homing_target():

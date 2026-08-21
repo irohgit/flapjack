@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PickupData" format=3 uid="uid://e8bbiwbkus1o"]
+
+[ext_resource type="Resource" uid="uid://cqs5vl1fvswhy" path="res://Data/Augments/OrbitalRicochetCannon.tres" id="1_4u47b"]
+[ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="1_7p4su"]
+[ext_resource type="AudioStream" uid="uid://d2sr3t6n13ye4" path="res://Audio/SFX/soft_pickup.mp3" id="2_0qk4m"]
+[ext_resource type="Texture2D" uid="uid://bdu2cc31lf3wy" path="res://Assets/Pickups/16.png" id="2_c8inv"]
+
+[resource]
+script = ExtResource("1_7p4su")
+texture = ExtResource("2_c8inv")
+augment = ExtResource("1_4u47b")
+notification_name = "Oribital Ricochet"
+pickup_sfx = ExtResource("2_0qk4m")
+metadata/_custom_type_script = "uid://rau2jwiqd0pd"
