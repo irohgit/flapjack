@@ -17,10 +17,13 @@ var _weapon_states: Array[WeaponState] = []
 @export var gin_count:= 0
 @export_range(1, 5, 1) var potion_slot_count := 3
 
-@onready var _health: HealthComponent = $HealthComponent
+@export var boatTextures: Array[Texture2D]
 
+@onready var _health: HealthComponent = $HealthComponent
+@onready var _sprite: Sprite2D = $Sprite2D
 @onready var _pickup_range: Area2D = $PickupRange
 @onready var _pickup_range_shape: CollisionShape2D = $PickupRange/CollisionShape2D
+@onready var _hitbox_shape: CollisionShape2D = $CollisionShape2D
 
 signal coin_changed(amount: int)
 signal gin_changed(amount: int)
@@ -41,6 +44,14 @@ var _selected_potion_slot := 0
 @export var hit_sfx: AudioStream
 @export var death_sfx: AudioStream
 
+#Ship Tier
+@export var ship_tiers: Array[ShipTierData] = []
+@export var ship_tier := 1:
+	set(value):
+		ship_tier = clampi(value, 1, 3)
+		if is_node_ready():
+			_update_hull(_health.current_health, _health.max_health)
+			
 #Developer Tool
 func _unhandled_input(event: InputEvent) -> void:
 	if not OS.is_debug_build():
@@ -54,6 +65,9 @@ func _ready() -> void:
 	area_entered.connect(_on_area_entered)
 	_pickup_range.area_entered.connect(_on_pickup_range_entered)
 	_pickup_range.area_exited.connect(_on_pickup_range_exited)
+	_health.health_changed.connect(_on_health_changed)
+	_apply_tier()
+	_update_hull(_health.current_health, _health.max_health)
 	_health.damaged.connect(_on_damaged)
 	#_health.health_changed.connect(func(c, m): DebugHud.watch("health", "%d/%d" % [c, m]))
 	_health.died.connect(_on_died)
@@ -62,6 +76,9 @@ func _ready() -> void:
 	
 	for weapon in weapons:
 		add_weapon(weapon)
+func _on_health_changed(current: int, maximum: int) -> void:
+	_update_hull(current, maximum)
+	
 	
 func _process(_delta: float) -> void:
 	_move_intent = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
@@ -318,3 +335,39 @@ func _get_retry_scene_path() -> String:
 
 	var current_scene := get_tree().current_scene
 	return current_scene.scene_file_path if current_scene != null else ""
+	
+	
+func _update_hull(current: int, maximum: int) -> void:
+	var tier_index := clampi(ship_tier - 1, 0, ship_tiers.size() - 1)
+	if ship_tiers.is_empty():
+		return
+
+	var textures := ship_tiers[tier_index].hull_textures
+	if textures.is_empty() or maximum <= 0:
+		return
+
+	var ratio := float(current) / float(maximum)
+	var index := int((1.0 - ratio) * textures.size())
+	index = clampi(index, 0, textures.size() - 1)
+
+	if _sprite.texture != textures[index]:
+		_sprite.texture = textures[index]
+		
+
+	
+func _apply_tier() -> void:
+	if ship_tiers.is_empty():
+		print("ship_tiers_empty")
+		return
+	var tier := ship_tiers[clampi(ship_tier - 1, 0, ship_tiers.size() - 1)]
+	_sprite.scale = Vector2.ONE * tier.display_scale
+
+	var hit := CapsuleShape2D.new()
+	hit.radius = tier.hitbox_radius
+	_hitbox_shape.shape = hit
+
+	var pick := CircleShape2D.new()
+	pick.radius = tier.pickup_radius
+	_pickup_range_shape.shape = pick
+
+	
