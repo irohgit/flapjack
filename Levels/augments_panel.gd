@@ -2,17 +2,28 @@ extends PanelContainer
 
 @export var augment_entry_scene: PackedScene
 
-@onready var augment_list = $MarginContainer/AugmentList
+@onready var augment_list: VBoxContainer = $MarginContainer/AugmentList/AugmentList
 
 func _ready() -> void:
 	var player = get_tree().get_first_node_in_group("player")
 
 	if player:
-		player.augment_added.connect(_on_augment_added)
+		player.pickup_collected.connect(_on_pickup_collected)
 
 
-func _on_augment_added(augment: AugmentData) -> void:
+func _on_pickup_collected(pickup: PickupData) -> void:
+	if (
+		pickup.pickup_type != PickupData.PickupType.AUGMENT
+		and pickup.pickup_type != PickupData.PickupType.WEAPON
+	):
+		return
+
 	var entry = augment_entry_scene.instantiate()
 
 	augment_list.add_child(entry)
-	entry.setup(augment)
+	entry.setup(pickup)
+
+	while augment_list.get_child_count() > 3:
+		var oldest_entry := augment_list.get_child(0)
+		augment_list.remove_child(oldest_entry)
+		oldest_entry.queue_free()

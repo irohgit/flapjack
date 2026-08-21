@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="AugmentData" format=3 uid="uid://cqs5vl1fvswhy"]
+
+[ext_resource type="Script" uid="uid://lwfav2amh5h7" path="res://Data/Augments/orbital_ricochet.gd" id="1_s2ine"]
+[ext_resource type="Script" uid="uid://cpp3oou337x" path="res://Data/Augments/augment_data.gd" id="1_sjybk"]
+[ext_resource type="Resource" uid="uid://b7nwwwfmfkswx" path="res://Data/Weapons/Cannon.tres" id="3_4rels"]
+[ext_resource type="Texture2D" uid="uid://bdu2cc31lf3wy" path="res://Assets/Pickups/16.png" id="4_qulrg"]
+
+[sub_resource type="Resource" id="Resource_sjybk"]
+script = ExtResource("1_s2ine")
+metadata/_custom_type_script = "uid://lwfav2amh5h7"
+
+[resource]
+script = ExtResource("1_sjybk")
+name = "OrbitalRicochet"
+targetWeapon = ExtResource("3_4rels")
+texture = ExtResource("4_qulrg")
+augmentEffect = SubResource("Resource_sjybk")
+metadata/_custom_type_script = "uid://cpp3oou337x"

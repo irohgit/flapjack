@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="WeaponData" format=3 uid="uid://gn4h7j4dka1t"]
+
+[ext_resource type="Script" uid="uid://dfww4fxipct38" path="res://Data/Weapons/weapon_data.gd" id="1_dc47t"]
+[ext_resource type="AudioStream" uid="uid://ceh8vejpx46ar" path="res://Audio/player_cannon.mp3" id="1_kirqi"]
+[ext_resource type="Texture2D" uid="uid://g7lr3i0a17el" path="res://Assets/Projectiles/harpoon.png" id="2_ne2xw"]
+[ext_resource type="Resource" uid="uid://csly84awhfqjb" path="res://Data/Projectiles/harpoon.tres" id="4_4xvum"]
+[ext_resource type="PackedScene" uid="uid://bl12qi0n68b6i" path="res://Actors/Projectiles/projectile.tscn" id="4_jhfk2"]
+[ext_resource type="Script" uid="uid://8mpavbvjvvjy" path="res://Data/Weapons/harpoon_behaviour.gd" id="4_x65to"]
+
+[sub_resource type="Resource" id="Resource_xq76v"]
+script = ExtResource("4_x65to")
+projectile_scene = ExtResource("4_jhfk2")
+metadata/_custom_type_script = "uid://8mpavbvjvvjy"
+
+[resource]
+script = ExtResource("1_dc47t")
+name = "Harpoon"
+damage = 1
+firerate = 5.0
+texture = ExtResource("2_ne2xw")
+weaponType = 1
+weaponProjectile = ExtResource("4_4xvum")
+weaponBehaviour = SubResource("Resource_xq76v")
+fire_sound = ExtResource("1_kirqi")
+metadata/_custom_type_script = "uid://dfww4fxipct38"
