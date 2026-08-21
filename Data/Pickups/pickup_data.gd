@@ -25,7 +25,28 @@ enum PickupType {AUGMENT, WEAPON, COIN, HEALTH, SHIELD, GIN}
 @export_range(0.0, 0.5, 0.01) var pickup_pitch_spread := 0.04
 @export_range(0.3, 2.0, 0.01) var pickup_pitch := 1.0
 
+
+func can_pickup(player: Player) -> bool:
+	if player == null:
+		return false
+
+	match pickup_type:
+		PickupType.AUGMENT:
+			return player.can_add_augment(augment)
+		PickupType.WEAPON:
+			return player.can_add_weapon(weapon)
+		PickupType.HEALTH, PickupType.SHIELD:
+			return player.can_add_potion(self)
+		PickupType.COIN, PickupType.GIN:
+			return true
+
+	return false
+
+
 func apply_to(player: Player) -> bool:
+	if not can_pickup(player):
+		return false
+
 	match pickup_type:
 		PickupType.AUGMENT:
 			return player.add_augment(augment)

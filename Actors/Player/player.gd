@@ -10,6 +10,7 @@ extends Area2D
 
 #Projectile Firing 
 @export var weapons: Array[WeaponData]
+@export_range(1, 20, 1) var max_weapons := 3
 var _weapon_states: Array[WeaponState] = []
 
 @export var coin_count:= 0
@@ -44,6 +45,7 @@ func _ready() -> void:
 	_potion_slots.resize(potion_slot_count)
 	area_entered.connect(_on_area_entered)
 	_pickup_range.area_entered.connect(_on_pickup_range_entered)
+	_pickup_range.area_exited.connect(_on_pickup_range_exited)
 	_health.damaged.connect(_on_damaged)
 	#_health.health_changed.connect(func(c, m): DebugHud.watch("health", "%d/%d" % [c, m]))
 	_health.died.connect(_on_died)
@@ -51,7 +53,7 @@ func _ready() -> void:
 	gin_changed.emit(gin_count)
 	
 	for weapon in weapons:
-		_weapon_states.append(WeaponState.new(weapon))
+		add_weapon(weapon)
 	
 func _process(_delta: float) -> void:
 	_move_intent = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
@@ -94,14 +96,16 @@ func _on_area_entered(area: Area2D) -> void:
 		take_damage(area.get_contact_damage())
 
 func _on_pickup_range_entered(area: Area2D) -> void:
-	if area.is_in_group("pickup") and area.has_method("collect"):
-		area.collect(self)
+	if area.is_in_group("pickup") and area.has_method("attract_to"):
+		area.attract_to(self)
+
+
+func _on_pickup_range_exited(area: Area2D) -> void:
+	if area.is_in_group("pickup") and area.has_method("stop_attracting"):
+		area.stop_attracting(self)
 
 func set_pickup_radius(radius: float) -> void:
-	print("set_pickup_radius called with: ", radius)
-	print("shape type: ", _pickup_range_shape.shape)
 	if _pickup_range_shape.shape is CircleShape2D:
-		print("radius after set: ", (_pickup_range_shape.shape as CircleShape2D).radius)
 		(_pickup_range_shape.shape as CircleShape2D).radius = radius
 
 ## Camera
@@ -120,7 +124,41 @@ func _add_gin(amount: int):
 	gin_count += amount
 	gin_changed.emit(gin_count)
 
+
+func can_add_weapon(weapon: WeaponData) -> bool:
+	return weapon != null and _weapon_states.size() < max_weapons
+
+
+func add_weapon(weapon: WeaponData) -> bool:
+	if not can_add_weapon(weapon):
+		return false
+
+	_weapon_states.append(WeaponState.new(weapon))
+	return true
+
+
+func get_weapon_count() -> int:
+	return _weapon_states.size()
+
+
+func can_add_augment(augment: AugmentData) -> bool:
+	if augment == null or augment.augmentEffect == null:
+		return false
+
+	if augment.targetWeapon == null:
+		return true
+
+	for state in _weapon_states:
+		if state.data == augment.targetWeapon:
+			return true
+
+	return false
+
+
 func add_augment(augment: AugmentData) -> bool:
+	if not can_add_augment(augment):
+		return false
+
 	if augment.targetWeapon == null:
 		augment.augmentEffect.apply_to_player(self)
 		return true
@@ -133,8 +171,16 @@ func add_augment(augment: AugmentData) -> bool:
 	return false
 
 
+func can_add_potion(potion: PickupData) -> bool:
+	return potion != null and potion.is_potion() and has_potion_space()
+
+
+func has_potion_space() -> bool:
+	return _potion_slots.has(null)
+
+
 func add_potion(potion: PickupData) -> bool:
-	if potion == null or not potion.is_potion():
+	if not can_add_potion(potion):
 		return false
 
 	for index in range(_potion_slots.size()):
