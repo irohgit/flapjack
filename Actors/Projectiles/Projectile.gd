@@ -209,13 +209,13 @@ func _update_trail() -> void:
 
 func _on_area_entered(area: Area2D) -> void:
 	Audio.play_sfx(data.impact_sound, -8.0)
-	if plasma and area is Enemy:
-		var enemy := area as Enemy
-		enemy.apply_effect(Enemy.Effects.STUN, plasma_stun_duration)
-	if fire and area is Enemy:
-		var enemy := area as Enemy
-		enemy.apply_burn(fire_damage_per_tick, fire_tick_count, fire_tick_interval)
-	if orbital_ricochet and plasma and area is Enemy:
+	var is_enemy := area.is_in_group("enemy")
+
+	if plasma and is_enemy and area.has_method("apply_effect"):
+		area.call("apply_effect", Enemy.Effects.STUN, plasma_stun_duration)
+	if fire and is_enemy and area.has_method("apply_burn"):
+		area.call("apply_burn", fire_damage_per_tick, fire_tick_count, fire_tick_interval)
+	if orbital_ricochet and plasma and is_enemy:
 		if pierce != 0:
 			hit_list.append(area)
 			_chain_lightning()
