@@ -35,11 +35,6 @@ script = ExtResource("3_5467k")
 formation = 3
 metadata/_custom_type_script = "uid://dgn1ppeend4i1"
 
-[sub_resource type="Resource" id="WeightedSpecial_birds"]
-script = ExtResource("5_d14ko")
-encounter_scene = ExtResource("8_ygboy")
-metadata/_custom_type_script = "uid://bgt6cqxd8jifw"
-
 [sub_resource type="Resource" id="Encounter_01_normal"]
 script = ExtResource("6_encounter")
 distance_after_previous = 1050.0
@@ -51,6 +46,11 @@ script = ExtResource("6_encounter")
 distance_after_previous = 1050.0
 enemy_pool = Array[ExtResource("1_nj72p")]([SubResource("WeightedEnemy_bulwark"), SubResource("WeightedEnemy_hunter")])
 formation_pool = Array[ExtResource("3_5467k")]([SubResource("WeightedFormation_line"), SubResource("WeightedFormation_v"), SubResource("WeightedFormation_circle")])
+
+[sub_resource type="Resource" id="WeightedSpecial_birds"]
+script = ExtResource("5_d14ko")
+encounter_scene = ExtResource("8_ygboy")
+metadata/_custom_type_script = "uid://bgt6cqxd8jifw"
 
 [sub_resource type="Resource" id="Encounter_03_special"]
 script = ExtResource("6_encounter")

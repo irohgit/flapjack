@@ -1,0 +1,662 @@
+[gd_scene load_steps=28 format=3]
+
+[ext_resource type="Script" path="res://UI/Shop/shop_menu.gd" id="1_script"]
+[ext_resource type="FontFile" path="res://Assets/Fonts/PixelOperator.ttf" id="2_font"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Panels/panel_main.png" id="3_main"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Panels/panel_shop_title.png" id="4_title"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Panels/panel_coin_counter.png" id="5_coin_panel"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Panels/panel_merchant_portrait.png" id="6_portrait"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Panels/panel_merchant_dialogue.png" id="7_dialogue"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Panels/panel_item_details.png" id="8_details"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Panels/panel_selected_icon_frame.png" id="9_icon_frame"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Panels/panel_price.png" id="10_price"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Decorations/small_skull.png" id="11_skull"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Decorations/skull_divider.png" id="12_divider"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Icons/Status/coin.png" id="13_coin"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Items/Weapons/cannon.png" id="14_weapon_icon"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Items/Augments/Cannon/plasma_cannon.png" id="15_augment_icon"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Items/Potions/health.png" id="16_potion_icon"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Buttons/tab_normal.png" id="17_tab"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Buttons/previous.png" id="18_previous"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Buttons/next.png" id="19_next"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Buttons/buy_normal.png" id="20_buy"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Buttons/buy_hover.png" id="21_buy_hover"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Buttons/buy_pressed.png" id="22_buy_pressed"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Buttons/buy_disabled.png" id="23_buy_disabled"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Buttons/exit_normal.png" id="24_exit"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Buttons/exit_hover.png" id="25_exit_hover"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Buttons/exit_pressed.png" id="26_exit_pressed"]
+
+[sub_resource type="Theme" id="Theme_shop"]
+default_font = ExtResource("2_font")
+default_font_size = 22
+
+[node name="ShopMenu" type="Control" node_paths=PackedStringArray("first_focus")]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_shop")
+script = ExtResource("1_script")
+first_focus = NodePath("Window/WeaponsTab")
+pauses_tree = true
+
+[node name="Dimmer" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.00392157, 0.0156863, 0.027451, 0.91)
+
+[node name="Window" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainPanel" type="NinePatchRect" parent="Window"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 24.0
+offset_top = 18.0
+offset_right = 1896.0
+offset_bottom = 1058.0
+mouse_filter = 2
+texture = ExtResource("3_main")
+patch_margin_left = 14
+patch_margin_top = 14
+patch_margin_right = 14
+patch_margin_bottom = 14
+
+[node name="TitlePanel" type="NinePatchRect" parent="Window"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 697.0
+offset_top = 24.0
+offset_right = 1223.0
+offset_bottom = 128.0
+mouse_filter = 2
+texture = ExtResource("4_title")
+patch_margin_left = 24
+patch_margin_top = 15
+patch_margin_right = 24
+patch_margin_bottom = 15
+
+[node name="Title" type="Label" parent="Window/TitlePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 0.886275, 0.54902, 1)
+theme_override_colors/font_outline_color = Color(0.0588235, 0.0313726, 0.00784314, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 64
+text = "SHOP"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CoinPanel" type="NinePatchRect" parent="Window"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 1515.0
+offset_top = 42.0
+offset_right = 1848.0
+offset_bottom = 116.0
+mouse_filter = 2
+texture = ExtResource("5_coin_panel")
+patch_margin_left = 14
+patch_margin_top = 12
+patch_margin_right = 14
+patch_margin_bottom = 12
+
+[node name="CoinIcon" type="TextureRect" parent="Window/CoinPanel"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 18.0
+offset_top = 11.0
+offset_right = 72.0
+offset_bottom = 65.0
+mouse_filter = 2
+texture = ExtResource("13_coin")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CoinCaption" type="Label" parent="Window/CoinPanel"]
+layout_mode = 0
+offset_left = 77.0
+offset_top = 7.0
+offset_right = 172.0
+offset_bottom = 35.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.905882, 0.764706, 0.415686, 1)
+theme_override_font_sizes/font_size = 17
+text = "COINS"
+
+[node name="CoinAmount" type="Label" parent="Window/CoinPanel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 78.0
+offset_top = 27.0
+offset_right = 310.0
+offset_bottom = 65.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 30
+text = "0"
+
+[node name="MerchantPortrait" type="NinePatchRect" parent="Window"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 66.0
+offset_top = 172.0
+offset_right = 350.0
+offset_bottom = 500.0
+mouse_filter = 2
+texture = ExtResource("6_portrait")
+patch_margin_left = 12
+patch_margin_top = 20
+patch_margin_right = 12
+patch_margin_bottom = 12
+
+[node name="MerchantSkull" type="TextureRect" parent="Window/MerchantPortrait"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 77.0
+offset_top = 76.0
+offset_right = 207.0
+offset_bottom = 206.0
+mouse_filter = 2
+texture = ExtResource("11_skull")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="MerchantName" type="Label" parent="Window/MerchantPortrait"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 245.0
+offset_right = 266.0
+offset_bottom = 293.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 0.85098, 0.533333, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 27
+text = "QUARTERMASTER"
+horizontal_alignment = 1
+
+[node name="MerchantDialoguePanel" type="NinePatchRect" parent="Window"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 66.0
+offset_top = 515.0
+offset_right = 350.0
+offset_bottom = 815.0
+mouse_filter = 2
+texture = ExtResource("7_dialogue")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+
+[node name="MerchantDialogue" type="Label" parent="Window/MerchantDialoguePanel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 25.0
+offset_right = -24.0
+offset_bottom = -25.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.968627, 0.866667, 0.572549, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 22
+text = "Take a closer look. Every tool changes how you command the sea."
+autowrap_mode = 2
+vertical_alignment = 1
+
+[node name="GridPanel" type="NinePatchRect" parent="Window"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 375.0
+offset_top = 152.0
+offset_right = 1210.0
+offset_bottom = 905.0
+mouse_filter = 2
+texture = ExtResource("3_main")
+patch_margin_left = 14
+patch_margin_top = 14
+patch_margin_right = 14
+patch_margin_bottom = 14
+
+[node name="WeaponsTab" type="TextureButton" parent="Window"]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 0
+offset_left = 397.0
+offset_top = 173.0
+offset_right = 652.0
+offset_bottom = 243.0
+focus_neighbor_left = NodePath("../../ExitButton")
+focus_neighbor_right = NodePath("../AugmentsTab")
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("17_tab")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Icon" type="TextureRect" parent="Window/WeaponsTab"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 24.0
+offset_top = 10.0
+offset_right = 76.0
+offset_bottom = 60.0
+mouse_filter = 2
+texture = ExtResource("14_weapon_icon")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Window/WeaponsTab"]
+layout_mode = 0
+offset_left = 78.0
+offset_top = 10.0
+offset_right = 239.0
+offset_bottom = 60.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 27
+text = "WEAPONS"
+vertical_alignment = 1
+
+[node name="AugmentsTab" type="TextureButton" parent="Window"]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 0
+offset_left = 665.0
+offset_top = 173.0
+offset_right = 932.0
+offset_bottom = 243.0
+focus_neighbor_left = NodePath("../WeaponsTab")
+focus_neighbor_right = NodePath("../PotionsTab")
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("17_tab")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Icon" type="TextureRect" parent="Window/AugmentsTab"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 22.0
+offset_top = 8.0
+offset_right = 77.0
+offset_bottom = 62.0
+mouse_filter = 2
+texture = ExtResource("15_augment_icon")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Window/AugmentsTab"]
+layout_mode = 0
+offset_left = 77.0
+offset_top = 10.0
+offset_right = 252.0
+offset_bottom = 60.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 25
+text = "AUGMENTS"
+vertical_alignment = 1
+
+[node name="PotionsTab" type="TextureButton" parent="Window"]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 0
+offset_left = 945.0
+offset_top = 173.0
+offset_right = 1188.0
+offset_bottom = 243.0
+focus_neighbor_left = NodePath("../AugmentsTab")
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("17_tab")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Icon" type="TextureRect" parent="Window/PotionsTab"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 21.0
+offset_top = 9.0
+offset_right = 73.0
+offset_bottom = 61.0
+mouse_filter = 2
+texture = ExtResource("16_potion_icon")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Window/PotionsTab"]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 10.0
+offset_right = 229.0
+offset_bottom = 60.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 27
+text = "POTIONS"
+vertical_alignment = 1
+
+[node name="ItemGrid" type="GridContainer" parent="Window"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 407.0
+offset_top = 264.0
+offset_right = 1178.0
+offset_bottom = 687.0
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 12
+columns = 4
+
+[node name="PreviousButton" type="TextureButton" parent="Window"]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 0
+offset_left = 716.0
+offset_top = 815.0
+offset_right = 781.0
+offset_bottom = 875.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("18_previous")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="PageLabel" type="Label" parent="Window"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 794.0
+offset_top = 818.0
+offset_right = 970.0
+offset_bottom = 873.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 32
+text = "1 / 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NextButton" type="TextureButton" parent="Window"]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 0
+offset_left = 983.0
+offset_top = 815.0
+offset_right = 1048.0
+offset_bottom = 875.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("19_next")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="DetailPanel" type="NinePatchRect" parent="Window"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 1228.0
+offset_top = 150.0
+offset_right = 1854.0
+offset_bottom = 956.0
+mouse_filter = 2
+texture = ExtResource("8_details")
+patch_margin_left = 15
+patch_margin_top = 15
+patch_margin_right = 15
+patch_margin_bottom = 15
+
+[node name="SelectedIconFrame" type="NinePatchRect" parent="Window/DetailPanel"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 30.0
+offset_top = 34.0
+offset_right = 212.0
+offset_bottom = 216.0
+mouse_filter = 2
+texture = ExtResource("9_icon_frame")
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+
+[node name="SelectedItemIcon" type="TextureRect" parent="Window/DetailPanel/SelectedIconFrame"]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 22.0
+offset_top = 22.0
+offset_right = -22.0
+offset_bottom = -22.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ItemName" type="Label" parent="Window/DetailPanel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 228.0
+offset_top = 43.0
+offset_right = 596.0
+offset_bottom = 94.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 0.960784, 0.85098, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 35
+text = "ITEM NAME"
+text_overrun_behavior = 3
+
+[node name="ItemType" type="Label" parent="Window/DetailPanel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 230.0
+offset_top = 99.0
+offset_right = 595.0
+offset_bottom = 138.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.266667, 0.788235, 1, 1)
+theme_override_font_sizes/font_size = 19
+text = "TYPE • RARITY • LV. 1"
+
+[node name="Divider" type="TextureRect" parent="Window/DetailPanel"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 225.0
+offset_top = 151.0
+offset_right = 594.0
+offset_bottom = 177.0
+mouse_filter = 2
+texture = ExtResource("12_divider")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ItemDescription" type="Label" parent="Window/DetailPanel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 32.0
+offset_top = 236.0
+offset_right = 594.0
+offset_bottom = 326.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.968627, 0.866667, 0.572549, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 20
+text = "Item description"
+autowrap_mode = 2
+
+[node name="ItemEffects" type="Label" parent="Window/DetailPanel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 32.0
+offset_top = 328.0
+offset_right = 594.0
+offset_bottom = 446.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.929412, 0.956863, 0.968627, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 18
+text = "• Effect"
+autowrap_mode = 2
+
+[node name="StatsContainer" type="VBoxContainer" parent="Window/DetailPanel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 30.0
+offset_top = 453.0
+offset_right = 596.0
+offset_bottom = 650.0
+theme_override_constants/separation = 5
+
+[node name="PricePanel" type="NinePatchRect" parent="Window/DetailPanel"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 29.0
+offset_top = 668.0
+offset_right = 310.0
+offset_bottom = 732.0
+mouse_filter = 2
+texture = ExtResource("10_price")
+patch_margin_left = 12
+patch_margin_top = 8
+patch_margin_right = 12
+patch_margin_bottom = 8
+
+[node name="Coin" type="TextureRect" parent="Window/DetailPanel/PricePanel"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 13.0
+offset_top = 11.0
+offset_right = 55.0
+offset_bottom = 53.0
+mouse_filter = 2
+texture = ExtResource("13_coin")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PriceLabel" type="Label" parent="Window/DetailPanel/PricePanel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 62.0
+offset_top = 10.0
+offset_right = 266.0
+offset_bottom = 54.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 0.905882, 0.615686, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 21
+text = "UI PRICE • TBD"
+vertical_alignment = 1
+
+[node name="BuyButton" type="TextureButton" parent="Window/DetailPanel"]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 0
+offset_left = 326.0
+offset_top = 663.0
+offset_right = 595.0
+offset_bottom = 737.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("20_buy")
+texture_pressed = ExtResource("22_buy_pressed")
+texture_hover = ExtResource("21_buy_hover")
+texture_disabled = ExtResource("23_buy_disabled")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="BuyButtonLabel" type="Label" parent="Window/DetailPanel/BuyButton"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 30
+text = "BUY"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PriceNotice" type="Label" parent="Window/DetailPanel"]
+layout_mode = 0
+offset_left = 31.0
+offset_top = 748.0
+offset_right = 595.0
+offset_bottom = 782.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.454902, 0.686275, 0.713726, 1)
+theme_override_font_sizes/font_size = 16
+text = "UI PREVIEW • PRICES AND PURCHASE LOGIC ARE NOT FINAL"
+horizontal_alignment = 1
+
+[node name="ExitButton" type="TextureButton" parent="Window"]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 0
+offset_left = 67.0
+offset_top = 895.0
+offset_right = 351.0
+offset_bottom = 976.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("24_exit")
+texture_pressed = ExtResource("26_exit_pressed")
+texture_hover = ExtResource("25_exit_hover")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Window/ExitButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 0.941176, 0.823529, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 34
+text = "EXIT"
+horizontal_alignment = 1
+vertical_alignment = 1
