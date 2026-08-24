@@ -10,25 +10,8 @@ extends Resource
 @export var end_position: Vector2 = Vector2(0, -10000)
 @export var spawn_ahead_distance: float = 600.0
 
-@export_group("Encounters")
-@export var min_encounters: int = 8
-@export var max_encounters: int = 12
-@export var min_special_encounters: int = 1
-@export var max_special_encounters: int = 2
-@export var min_pack_size: int = 3
-@export var max_pack_size: int = 5
-
-@export_range(0.0, 0.35, 0.01) var encounter_spacing_jitter: float = 0.15
-
-@export var guaranteed_normal_start_count: int = 2
-@export var finale_buffer: float = 500.0
-
-@export_group("Normal Enemy Pool")
-@export var enemy_pool: Array[WeightedEnemyData] = []
-@export var formation_pool: Array[WeightedFormationData] = []
-
-@export_group("Special Encounter Pool")
-@export var special_encounter_pool: Array[WeightedEncounterData] = []
+@export_group("Encounter Sequence")
+@export var encounter_sequence: Array[EncounterData] = []
 
 @export_group("Stage Finale")
 @export var finale_trigger_position: Vector2 = Vector2(0, -9000)

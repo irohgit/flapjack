@@ -7,6 +7,7 @@
 [resource]
 script = ExtResource("1_0o2jw")
 texture = ExtResource("3_dl30m")
+speed = 500.0
 trail_colour = Color(0.8202725, 0.78069204, 0.5485027, 0.7058824)
 impact_sound = ExtResource("1_dl30m")
 metadata/_custom_type_script = "uid://cre7gs48pepsi"
