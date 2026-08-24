@@ -31,6 +31,7 @@ metadata/_custom_type_script = "uid://cytvv5o32ru6e"
 [sub_resource type="Resource" id="Formation_v"]
 script = ExtResource("3_formation")
 formation = 1
+weight = 0.5
 metadata/_custom_type_script = "uid://dgn1ppeend4i1"
 
 [sub_resource type="Resource" id="Encounter_02_intro_v"]
@@ -94,6 +95,7 @@ metadata/_custom_type_script = "uid://cytvv5o32ru6e"
 [sub_resource type="Resource" id="Formation_grid"]
 script = ExtResource("3_formation")
 formation = 2
+weight = 0.5
 metadata/_custom_type_script = "uid://dgn1ppeend4i1"
 
 [sub_resource type="Resource" id="Encounter_07_grid_intro"]

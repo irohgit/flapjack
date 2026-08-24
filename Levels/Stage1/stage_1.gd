@@ -9,7 +9,7 @@ extends LevelManager
 func _ready() -> void:
 	Audio.play_music(stage_music, stage_music_db, music_fade_in)
 	assert(scroll_director != null, "Stage 1 needs a ScrollDirector")
-	assert(enemy_controller != null, "Stage 1 needs an EnemyController")
+	#assert(enemy_controller != null, "Stage 1 needs an EnemyController")
 	assert(level_generator != null, "Stage 1 needs a LevelGenerator")
 	assert(level_generator.level_data != null, "LevelGenerator needs LevelData")
 	var plan: Array[GeneratedEncounter] = level_generator.generate_plan()
@@ -75,7 +75,7 @@ func run_special_encounter(encounter: GeneratedEncounter) -> void:
 		instance.call("set_enemy_controller", enemy_controller)
 
 	screen_encounter_parent.add_child(instance)
-
+	
 	
 	var playfield_size: Vector2 = level_generator.level_data.playfield_size
 	var edge_margin: float = 120.0

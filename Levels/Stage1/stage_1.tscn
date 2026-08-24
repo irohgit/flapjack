@@ -30,6 +30,7 @@
 [ext_resource type="PackedScene" uid="uid://blwcrrdy6twr8" path="res://Actors/Environment/bg_layer_near_seagullog.tscn" id="21_aqmxt"]
 [ext_resource type="Resource" uid="uid://cpynird4edptk" path="res://Data/Pickups/FireballAugmentPickup.tres" id="21_fireball"]
 [ext_resource type="Resource" uid="uid://cesmcj6ctad" path="res://Data/Pickups/MagnetAugmentPickup.tres" id="22_magnet"]
+[ext_resource type="PackedScene" uid="uid://cuwj1wdixoj3p" path="res://Actors/Hazards/hazard.tscn" id="24_0rlpp"]
 
 [node name="Stage1" type="Node2D" unique_id=1126219472 node_paths=PackedStringArray("level_generator", "screen_encounter_parent", "scroll_director", "enemy_controller")]
 script = ExtResource("1_thckm")
@@ -39,6 +40,7 @@ stage_music = ExtResource("2_yvgdk")
 stage_music_db = -30.0
 scroll_director = NodePath("ScrollDirector")
 enemy_controller = NodePath("EnemyController")
+metadata/_edit_vertical_guides_ = [960.0]
 
 [node name="GameUI" parent="." unique_id=1532914546 instance=ExtResource("3_p2t5c")]
 
@@ -65,7 +67,7 @@ level_data = ExtResource("18_6vwij")
 [node name="ParallaxDirector" type="Node2D" parent="." unique_id=1266982156 node_paths=PackedStringArray("far_parent", "near_parent", "overlay_parent", "scroll_director")]
 script = ExtResource("19_m3y4m")
 far_objects = Array[PackedScene]([ExtResource("20_p2t5c")])
-near_objects = Array[PackedScene]([ExtResource("21_aqmxt")])
+near_objects = Array[PackedScene]([ExtResource("24_0rlpp")])
 overlay_objects = Array[PackedScene]([ExtResource("19_aqmxt")])
 far_parent = NodePath("Far")
 near_parent = NodePath("Near")
@@ -103,7 +105,7 @@ max_offset = Vector2(0, 0)
 metadata/_custom_type_script = "uid://tsoi3lwff5mf"
 
 [node name="Player" parent="ScrollRig" unique_id=2109576054 node_paths=PackedStringArray("camera") instance=ExtResource("4_nx2dg")]
-position = Vector2(960, 1000)
+position = Vector2(960, 852)
 camera = NodePath("../ShakeCamera")
 
 [node name="ScreenEncounters" type="Node2D" parent="ScrollRig" unique_id=1299489232]
