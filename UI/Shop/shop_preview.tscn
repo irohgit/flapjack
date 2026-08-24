@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://dsbclw1i0w4vq"]
+
+[ext_resource type="Script" uid="uid://bauh7mstkmkj5" path="res://UI/Shop/shop_preview.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://bjrtqk23jc7jq" path="res://Assets/UI/MainMenu/background_landscape.png" id="2_background"]
+[ext_resource type="PackedScene" path="res://UI/Shop/shop_menu.tscn" id="3_shop"]
+
+[node name="ShopPreview" type="Control" unique_id=1498731068]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Background" type="TextureRect" parent="." unique_id=1940927119]
+modulate = Color(0.45, 0.55, 0.62, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_background")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="ShopMenu" parent="." unique_id=1931830054 instance=ExtResource("3_shop")]
+layout_mode = 1
