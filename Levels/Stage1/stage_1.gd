@@ -71,6 +71,9 @@ func run_special_encounter(encounter: GeneratedEncounter) -> void:
 		push_error("Special encounter must inherit from Node2D")
 		return
 
+	if instance.has_method("set_enemy_controller"):
+		instance.call("set_enemy_controller", enemy_controller)
+
 	screen_encounter_parent.add_child(instance)
 	
 	
