@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ShipTierData" format=3 uid="uid://b7kxg57l135l2"]
+
+[ext_resource type="Texture2D" uid="uid://mks7n5ll2h5f" path="res://Assets/Boat/Schooner_1.png" id="1_7djy0"]
+[ext_resource type="Script" uid="uid://cm2aeylarosbb" path="res://Data/Ship/ship_tier.gd" id="1_voyha"]
+[ext_resource type="Texture2D" uid="uid://tha788q7lbmt" path="res://Assets/Boat/Schooner_2.png" id="2_a6jx1"]
+[ext_resource type="Texture2D" uid="uid://csj0lmds3lxlk" path="res://Assets/Boat/Schooner_3.png" id="3_rfceh"]
+
+[resource]
+script = ExtResource("1_voyha")
+tier_name = "Schooner"
+hull_textures = Array[Texture2D]([ExtResource("1_7djy0"), ExtResource("2_a6jx1"), ExtResource("3_rfceh")])
+display_scale = 2
+hitbox_radius = 12.0
+pickup_radius = 85.0
+metadata/_custom_type_script = "uid://cm2aeylarosbb"

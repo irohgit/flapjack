@@ -33,11 +33,13 @@ metadata/_custom_type_script = "uid://dgn1ppeend4i1"
 [sub_resource type="Resource" id="Resource_psoqc"]
 script = ExtResource("3_oihka")
 formation = 1
+weight = 0.5
 metadata/_custom_type_script = "uid://dgn1ppeend4i1"
 
 [sub_resource type="Resource" id="Resource_g4ecr"]
 script = ExtResource("3_oihka")
 formation = 2
+weight = 0.5
 metadata/_custom_type_script = "uid://dgn1ppeend4i1"
 
 [sub_resource type="Resource" id="Resource_mreyg"]
@@ -54,10 +56,9 @@ metadata/_custom_type_script = "uid://bgt6cqxd8jifw"
 script = ExtResource("4_iy8op")
 level_name = "Stage1"
 end_position = Vector2(-600, -10000)
-min_encounters = 15
-max_encounters = 20
-min_special_encounters = 8
-max_special_encounters = 8
+min_encounters = 10
+max_encounters = 10
+min_special_encounters = 2
 min_pack_size = 5
 max_pack_size = 10
 guaranteed_normal_start_count = 1

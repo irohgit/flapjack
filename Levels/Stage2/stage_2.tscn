@@ -41,8 +41,6 @@ scroll_speed = 50.0
 
 [node name="World" type="Node2D" parent="." unique_id=822996462]
 
-[node name="SettingsPanel" parent="." unique_id=217040426]
-
 [node name="CoinSpawner" parent="." unique_id=1386735529 instance=ExtResource("9_bq31y")]
 augments = Array[ExtResource("10_a3klg")]([ExtResource("11_5w86b"), ExtResource("12_8m7vp"), ExtResource("13_fireball"), ExtResource("14_magnet")])
 
@@ -57,10 +55,8 @@ layer = -100
 
 [node name="WaterBack" parent="ScrollRig/CanvasLayer" unique_id=364615905 node_paths=PackedStringArray("camera") instance=ExtResource("5_2ahl2")]
 camera = NodePath("../../ShakeCamera")
-deep_water_color = Color(0.18039216, 0.2901961, 0.12156863, 1)
-wave_water_color = Color(0.23921569, 0.41960785, 0.15686275, 1)
-rim_color = Color(0.47843137, 0.6117647, 0.30588236, 1)
-foam_color = Color(0.76862746, 0.8392157, 0.627451, 1)
+wave_water_color = Color(0.18039216, 0.2901961, 0.12156863, 1)
+foam_color = Color(0.18039216, 0.2901961, 0.12156863, 1)
 metadata/_edit_use_anchors_ = true
 
 [node name="ShakeCamera" type="Camera2D" parent="ScrollRig" unique_id=1729136761 groups=["shake_camera"]]

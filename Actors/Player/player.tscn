@@ -4,7 +4,16 @@
 [ext_resource type="Script" uid="uid://dfww4fxipct38" path="res://Data/Weapons/weapon_data.gd" id="2_isd1h"]
 [ext_resource type="Resource" uid="uid://b7nwwwfmfkswx" path="res://Data/Weapons/Cannon.tres" id="3_8gtf5"]
 [ext_resource type="Texture2D" uid="uid://bchf2yw8841go" path="res://Assets/Boat/Player.png" id="3_b63gh"]
+[ext_resource type="Texture2D" uid="uid://mks7n5ll2h5f" path="res://Assets/Boat/Schooner_1.png" id="4_awv0x"]
 [ext_resource type="Script" uid="uid://cv0v6ynhg51ei" path="res://Systems/Combat/HealthComponent.gd" id="5_n7l8t"]
+[ext_resource type="Texture2D" uid="uid://dsfm27q55ofy2" path="res://Assets/Cinematics/Cinematic_Boat_Blackbeard_512.png" id="5_pnakb"]
+[ext_resource type="Script" uid="uid://cm2aeylarosbb" path="res://Data/Ship/ship_tier.gd" id="7_g1lo4"]
+[ext_resource type="Resource" uid="uid://c5bnkj5rw25a0" path="res://Data/Ship/skiff.tres" id="8_sciwa"]
+[ext_resource type="Resource" uid="uid://b7kxg57l135l2" path="res://Data/Ship/schooner.tres" id="8_w553y"]
+[ext_resource type="Resource" uid="uid://duaftfp5au7uw" path="res://Data/Ship/galleon.tres" id="9_wmrsf"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_pnakb"]
+load_path = "res://.godot/imported/skiff_1.png-c6e3be67a458e5c0cc58bdba20a7a962.ctex"
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5st54"]
 radius = 31.0
@@ -19,13 +28,17 @@ collision_mask = 6
 script = ExtResource("1_5ni5v")
 max_speed = 200.0
 weapons = Array[ExtResource("2_isd1h")]([ExtResource("3_8gtf5")])
+boatTextures = Array[Texture2D]([SubResource("CompressedTexture2D_pnakb"), ExtResource("4_awv0x"), ExtResource("5_pnakb")])
+ship_tiers = Array[ExtResource("7_g1lo4")]([ExtResource("8_sciwa"), ExtResource("8_w553y"), ExtResource("9_wmrsf")])
+ship_tier = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1889078999]
-rotation = -3.1415925
+scale = Vector2(3, 3)
 texture = ExtResource("3_b63gh")
 flip_v = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1588285206]
+scale = Vector2(5, 5)
 shape = SubResource("CapsuleShape2D_5st54")
 
 [node name="HealthComponent" type="Node" parent="." unique_id=1517013079]
@@ -38,4 +51,5 @@ collision_layer = 8
 collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickupRange" unique_id=1601549884]
+scale = Vector2(6, 6)
 shape = SubResource("CircleShape2D_dxqhr")
