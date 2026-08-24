@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://bufl80hyamq16"]
+
+[ext_resource type="SpriteFrames" uid="uid://t2mg6ve5rv3l" path="res://Animations/fish_background_swim.tres" id="2_uafg1"]
+
+[sub_resource type="GDScript" id="GDScript_0alet"]
+script/source = "extends ParallaxProp
+
+@onready var spriteToScale:= $AnimatedSprite2D
+
+spriteToScale.scale"
+
+[node name="BgLayer1Fish" type="Node2D" unique_id=513696111]
+script = SubResource("GDScript_0alet")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=824631223]
+scale = Vector2(1.5, 1.5)
+sprite_frames = ExtResource("2_uafg1")
+animation = &"swim"
+autoplay = "swim"

@@ -1,5 +1,5 @@
 class_name CloudOverlay
-extends Node2D
+extends ParallaxProp
 
 ## A drifting cloud for the parallax overlay band.
 ##

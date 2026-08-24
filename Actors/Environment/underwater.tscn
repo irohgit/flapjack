@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://dhmeg6ol7b7lh"]
+
+[ext_resource type="Script" uid="uid://d06qlr4jj1y3a" path="res://Actors/parallax_prop.gd" id="1_8vr8j"]
+
+[node name="Underwater" type="Node2D" unique_id=796667725]
+script = ExtResource("1_8vr8j")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=290410721]

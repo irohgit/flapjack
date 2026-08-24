@@ -2,7 +2,7 @@
 
 [ext_resource type="Shader" uid="uid://cq85abjo4x30h" path="res://Assets/Shaders/Water/water.gdshader" id="1_o3frl"]
 [ext_resource type="Texture2D" uid="uid://conqv6viso2ly" path="res://Assets/Shaders/Water/water_noise.tres" id="2_pfjoy"]
-[ext_resource type="Script" path="res://Actors/Camera/water_background.gd" id="3_script"]
+[ext_resource type="Script" uid="uid://dbu8j88sjpadn" path="res://Actors/Camera/water_background.gd" id="3_script"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_63c11"]
 shader = ExtResource("1_o3frl")
