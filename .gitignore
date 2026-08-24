@@ -32,3 +32,6 @@ desktop.ini
 .idea/
 *.swp
 *~
+
+# Assets
+Assets/Environment/Tilesets/
