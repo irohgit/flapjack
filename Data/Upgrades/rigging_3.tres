@@ -10,4 +10,5 @@ display_name = "Rigging 3"
 display_description = "+ Speed"
 tier = 3
 icon = ExtResource("1_ku8v4")
+bonus_per_level = 20.0
 metadata/_custom_type_script = "uid://syfvycgndo0d"

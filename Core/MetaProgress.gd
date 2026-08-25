@@ -9,10 +9,21 @@ signal boat_tier_changed(new_tier: int)
 enum BoatTier { SKIFF, SCHOONER, GALLEON }
 
 var gin := 0
-var trust := 0   # lifetime total spend, never decreases - matches "Trust never goes down"
+var trust := 0   # lifetime total spend, never decreases
 var boat_tier: BoatTier = BoatTier.SKIFF
 var upgrade_levels: Dictionary = {}   # node_id -> current level
 var pending_retry_scene_path := ""
+
+const HULL_NODES: Array[UpgradeNodeData] = [
+	preload("res://Data/Upgrades/hull_1.tres"),
+	preload("res://Data/Upgrades/hull_2.tres"),
+	preload("res://Data/Upgrades/hull_3.tres"),
+]
+const RIGGING_NODES: Array[UpgradeNodeData] = [
+	preload("res://Data/Upgrades/rigging_1.tres"),
+	preload("res://Data/Upgrades/rigging_2.tres"),
+	preload("res://Data/Upgrades/rigging_3.tres"),
+]
 
 func add_gin(amount: int) -> void:
 	gin += amount
@@ -53,6 +64,12 @@ func get_total_bonus(stat_type: UpgradeNodeData.StatType, all_nodes: Array[Upgra
 		if node.stat_type == stat_type:
 			total += get_level(node.id) * node.bonus_per_level
 	return total
+
+func get_health_bonus() -> float:
+	return get_total_bonus(UpgradeNodeData.StatType.HULL, HULL_NODES)
+
+func get_speed_bonus() -> float:
+	return get_total_bonus(UpgradeNodeData.StatType.RIGGING, RIGGING_NODES)
 
 func check_tier_transition(tier1_nodes: Array[UpgradeNodeData], tier2_nodes: Array[UpgradeNodeData]) -> void:
 	if boat_tier == BoatTier.SKIFF and _all_maxed(tier1_nodes):
