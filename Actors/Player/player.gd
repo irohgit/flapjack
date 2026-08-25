@@ -79,6 +79,7 @@ func _ready() -> void:
 		add_weapon(weapon)
 func _apply_meta_upgrades() -> void:
 	max_speed += MetaProgress.get_speed_bonus()
+	max_weapons += int(MetaProgress.get_weapon_slot_bonus())
 	var bonus_health := int(MetaProgress.get_health_bonus())
 	if bonus_health > 0:
 		_health.set_max_health(_health.max_health + bonus_health)

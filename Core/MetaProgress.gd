@@ -24,6 +24,11 @@ const RIGGING_NODES: Array[UpgradeNodeData] = [
 	preload("res://Data/Upgrades/rigging_2.tres"),
 	preload("res://Data/Upgrades/rigging_3.tres"),
 ]
+const ARMAMENT_NODES: Array[UpgradeNodeData] = [
+	preload("res://Data/Upgrades/armament_1.tres"),
+	preload("res://Data/Upgrades/armament_2.tres"),
+	preload("res://Data/Upgrades/armament_3.tres"),
+]
 
 func add_gin(amount: int) -> void:
 	gin += amount
@@ -70,6 +75,9 @@ func get_health_bonus() -> float:
 
 func get_speed_bonus() -> float:
 	return get_total_bonus(UpgradeNodeData.StatType.RIGGING, RIGGING_NODES)
+
+func get_weapon_slot_bonus() -> float:
+	return get_total_bonus(UpgradeNodeData.StatType.ARMAMENT, ARMAMENT_NODES)
 
 func check_tier_transition(tier1_nodes: Array[UpgradeNodeData], tier2_nodes: Array[UpgradeNodeData]) -> void:
 	if boat_tier == BoatTier.SKIFF and _all_maxed(tier1_nodes):
