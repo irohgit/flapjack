@@ -7,6 +7,8 @@
 script = ExtResource("1_c8t0e")
 opacity = 0.6
 fade_out_time = 6.0
+min_scale = 0.4
+max_scale = 0.8
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=688771810]
 scale = Vector2(10, 10)
