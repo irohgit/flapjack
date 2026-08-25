@@ -52,6 +52,11 @@ var _selected_potion_slot := 0
 		if is_node_ready():
 			_update_hull(_health.current_health, _health.max_health)
 			
+#BANK MOVEMENT
+@export var banks: BankGenerator
+@export var bank_push_x := 850.0    # sideways shove out of the sand
+@export var bank_push_down := 150.0 # drag downward, like running aground
+
 #Developer Tool
 func _unhandled_input(event: InputEvent) -> void:
 	if not OS.is_debug_build():
@@ -62,6 +67,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		
 func _ready() -> void:
 	_apply_meta_upgrades()
+	add_to_group("Player")
 	_potion_slots.resize(potion_slot_count)
 	area_entered.connect(_on_area_entered)
 	_pickup_range.area_entered.connect(_on_pickup_range_entered)
@@ -101,6 +107,13 @@ func _process(_delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	var target := _move_intent * max_speed
 	velocity = velocity.lerp(target, 1.0 - exp(-responsiveness * delta))
+	
+	#Before Processing Movement: Adjust for contact with banks
+	#While over sand, shove back out to the water and slightly drag down
+	if banks != null and banks.is_on_bank(global_position):
+		_external_force.x += banks.bank_push_dir(global_position) * bank_push_x
+		_external_force.y += bank_push_down
+		
 	position += (velocity + _external_force) * delta
 	position = _clamp_to_camera(position)
 	_external_force = Vector2.ZERO

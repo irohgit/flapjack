@@ -22,6 +22,7 @@ texture = ExtResource("1_m1alp")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1631142024]
 position = Vector2(2, 3)
 shape = SubResource("CapsuleShape2D_odipc")
+debug_color = Color(0.85882354, 0, 0.8784314, 0.19607843)
 
 [node name="HealthComponent" type="Node" parent="." unique_id=347688055]
 script = ExtResource("1_2v41r")

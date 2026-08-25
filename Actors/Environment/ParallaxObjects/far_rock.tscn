@@ -1,0 +1,71 @@
+[gd_scene format=3 uid="uid://cnl7v1qfhh014"]
+
+[ext_resource type="Script" uid="uid://bmpjei5mq0i3u" path="res://Actors/Environment/ParallaxObjects/variantprop.gd" id="1_kdcn0"]
+[ext_resource type="Texture2D" uid="uid://dupglrprny45y" path="res://Assets/Environment/tile-B-03.png" id="2_cnolj"]
+
+[node name="FarRock" type="Node2D" unique_id=2042900424]
+script = ExtResource("1_kdcn0")
+min_scale = 0.5
+max_scale = 0.9
+depth_scale = 0.5
+metadata/_custom_type_script = "uid://d06qlr4jj1y3a"
+
+[node name="FarRock_1" type="Sprite2D" parent="." unique_id=1060330307]
+texture = ExtResource("2_cnolj")
+region_enabled = true
+region_rect = Rect2(3, 2, 138, 141)
+
+[node name="FarRock_2" type="Sprite2D" parent="." unique_id=1436946049]
+texture = ExtResource("2_cnolj")
+region_enabled = true
+region_rect = Rect2(195, 3, 91, 92)
+
+[node name="FarRock_3" type="Sprite2D" parent="." unique_id=1735525340]
+texture = ExtResource("2_cnolj")
+region_enabled = true
+region_rect = Rect2(195, 98, 90, 93)
+
+[node name="FarRock_4" type="Sprite2D" parent="." unique_id=1647858606]
+texture = ExtResource("2_cnolj")
+region_enabled = true
+region_rect = Rect2(2, 194, 92, 93)
+
+[node name="FarRock_5" type="Sprite2D" parent="." unique_id=1782130558]
+texture = ExtResource("2_cnolj")
+region_enabled = true
+region_rect = Rect2(98, 198, 91, 89)
+
+[node name="FarRock_6" type="Sprite2D" parent="." unique_id=683156744]
+texture = ExtResource("2_cnolj")
+region_enabled = true
+region_rect = Rect2(5, 291, 88, 92)
+
+[node name="FarRock_7" type="Sprite2D" parent="." unique_id=1844287050]
+texture = ExtResource("2_cnolj")
+region_enabled = true
+region_rect = Rect2(2, 675, 92, 90)
+
+[node name="FarRock_8" type="Sprite2D" parent="." unique_id=1373372021]
+texture = ExtResource("2_cnolj")
+region_enabled = true
+region_rect = Rect2(98, 685, 92, 71)
+
+[node name="FarRock_9" type="Sprite2D" parent="." unique_id=1647455893]
+texture = ExtResource("2_cnolj")
+region_enabled = true
+region_rect = Rect2(195, 305, 90, 70)
+
+[node name="FarRock_10" type="Sprite2D" parent="." unique_id=1779906808]
+texture = ExtResource("2_cnolj")
+region_enabled = true
+region_rect = Rect2(194, 675, 92, 92)
+
+[node name="FarRock_11" type="Sprite2D" parent="." unique_id=824608146]
+texture = ExtResource("2_cnolj")
+region_enabled = true
+region_rect = Rect2(291, 196, 90, 89)
+
+[node name="FarRock_12" type="Sprite2D" parent="." unique_id=1584591129]
+texture = ExtResource("2_cnolj")
+region_enabled = true
+region_rect = Rect2(3, 146, 42, 45)

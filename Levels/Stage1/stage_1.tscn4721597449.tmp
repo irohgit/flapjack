@@ -10,7 +10,6 @@
 [ext_resource type="PackedScene" uid="uid://cclwwsegfn8rr" path="res://Actors/Player/player.tscn" id="4_nx2dg"]
 [ext_resource type="Resource" uid="uid://bsk4oh4u6bnhe" path="res://Data/Enemy/BulwarkEnemy.tres" id="5_fkloy"]
 [ext_resource type="Resource" uid="uid://cnxtqo5woe8ja" path="res://Data/Enemy/HunterEnemy.tres" id="6_rvay1"]
-[ext_resource type="TileSet" uid="uid://d2udepspeupyb" path="res://UI/test_bank.tres" id="10_6xawf"]
 [ext_resource type="PackedScene" uid="uid://b27tvj4v653m2" path="res://Levels/enemy_controller.tscn" id="10_8p85k"]
 [ext_resource type="Script" uid="uid://bo6li876odoia" path="res://Data/Enemy/enemy_data.gd" id="12_fkloy"]
 [ext_resource type="PackedScene" uid="uid://luquvycpj4hd" path="res://Actors/Pickup/coin_spawner.tscn" id="14_rvay1"]
@@ -30,54 +29,7 @@
 [ext_resource type="Resource" uid="uid://cpynird4edptk" path="res://Data/Pickups/FireballAugmentPickup.tres" id="21_fireball"]
 [ext_resource type="Script" uid="uid://bbwfptmjbqmy8" path="res://Systems/ParallaxDirector2.gd" id="22_0rlpp"]
 [ext_resource type="Resource" uid="uid://cesmcj6ctad" path="res://Data/Pickups/MagnetAugmentPickup.tres" id="22_magnet"]
-[ext_resource type="Script" uid="uid://8sxccskaloo3" path="res://Systems/Environment/WeightedProp.gd" id="25_jrq28"]
-[ext_resource type="PackedScene" uid="uid://ckkn43tmuuln0" path="res://Actors/Environment/ParallaxObjects/far_coral.tscn" id="26_edqev"]
-[ext_resource type="PackedScene" uid="uid://cnl7v1qfhh014" path="res://Actors/Environment/ParallaxObjects/far_rock.tscn" id="27_1xfup"]
-[ext_resource type="PackedScene" uid="uid://b7wmf0ym3lvi6" path="res://Actors/Environment/ParallaxObjects/far_statues.tscn" id="28_54op2"]
-[ext_resource type="Script" uid="uid://b80ljucjchi54" path="res://Systems/Environment/bankGenerator.gd" id="29_6xawf"]
-[ext_resource type="PackedScene" uid="uid://bossw7m3pbuhw" path="res://Actors/Environment/ParallaxObjects/near_barrel.tscn" id="30_fffbn"]
-[ext_resource type="PackedScene" uid="uid://bc2g5sxmhx1p2" path="res://Actors/Environment/ParallaxObjects/near_wood.tscn" id="31_gp8qq"]
-
-[sub_resource type="Resource" id="Resource_54op2"]
-script = ExtResource("25_jrq28")
-scene = ExtResource("20_p2t5c")
-metadata/_custom_type_script = "uid://8sxccskaloo3"
-
-[sub_resource type="Resource" id="Resource_jrq28"]
-script = ExtResource("25_jrq28")
-scene = ExtResource("26_edqev")
-weight = 0.8
-metadata/_custom_type_script = "uid://8sxccskaloo3"
-
-[sub_resource type="Resource" id="Resource_7wjkh"]
-script = ExtResource("25_jrq28")
-scene = ExtResource("27_1xfup")
-weight = 0.6
-metadata/_custom_type_script = "uid://8sxccskaloo3"
-
-[sub_resource type="Resource" id="Resource_fffbn"]
-script = ExtResource("25_jrq28")
-scene = ExtResource("28_54op2")
-weight = 0.4
-metadata/_custom_type_script = "uid://8sxccskaloo3"
-
-[sub_resource type="Resource" id="Resource_qd6vc"]
-script = ExtResource("25_jrq28")
-scene = ExtResource("30_fffbn")
-weight = 0.4
-metadata/_custom_type_script = "uid://8sxccskaloo3"
-
-[sub_resource type="Resource" id="Resource_b1rs4"]
-script = ExtResource("25_jrq28")
-scene = ExtResource("31_gp8qq")
-weight = 0.4
-metadata/_custom_type_script = "uid://8sxccskaloo3"
-
-[sub_resource type="Resource" id="Resource_08pg4"]
-script = ExtResource("25_jrq28")
-scene = ExtResource("19_aqmxt")
-weight = 0.9
-metadata/_custom_type_script = "uid://8sxccskaloo3"
+[ext_resource type="PackedScene" uid="uid://blwcrrdy6twr8" path="res://Actors/Environment/bg_layer_near_seagullog.tscn" id="24_0rlpp"]
 
 [node name="Stage1" type="Node2D" unique_id=1126219472 node_paths=PackedStringArray("level_generator", "screen_encounter_parent", "scroll_director", "enemy_controller")]
 script = ExtResource("1_thckm")
@@ -102,16 +54,6 @@ scroll_speed = 50.0
 
 [node name="HUD" parent="." unique_id=228684140 instance=ExtResource("1_s0w88")]
 
-[node name="BankGenerator" type="TileMapLayer" parent="." unique_id=297553281 node_paths=PackedStringArray("scroll_rig")]
-tile_set = ExtResource("10_6xawf")
-collision_visibility_mode = 2
-navigation_enabled = false
-script = ExtResource("29_6xawf")
-scroll_rig = NodePath("../ScrollRig")
-scroll_ratio = 1.0
-level_data = ExtResource("18_6vwij")
-rows_behind = 100
-
 [node name="World" type="Node2D" parent="." unique_id=790454155]
 
 [node name="CoinSpawner" parent="." unique_id=1386735529 instance=ExtResource("14_rvay1")]
@@ -122,16 +64,15 @@ script = ExtResource("16_cvtwx")
 level_data = ExtResource("18_6vwij")
 
 [node name="ParallaxDirector" type="Node2D" parent="." unique_id=1266982156 node_paths=PackedStringArray("far_parent", "near_parent", "overlay_parent", "scroll_director")]
-position = Vector2(0, -3)
 script = ExtResource("22_0rlpp")
-far_objects = Array[ExtResource("25_jrq28")]([SubResource("Resource_54op2"), SubResource("Resource_jrq28"), SubResource("Resource_7wjkh"), SubResource("Resource_fffbn")])
-near_objects = Array[ExtResource("25_jrq28")]([SubResource("Resource_qd6vc"), SubResource("Resource_b1rs4")])
-overlay_objects = Array[ExtResource("25_jrq28")]([SubResource("Resource_08pg4")])
-far_parent = NodePath("../ScrollRig/WaterSurface/Far")
+far_objects = Array[PackedScene]([ExtResource("20_p2t5c")])
+near_objects = Array[PackedScene]([ExtResource("24_0rlpp")])
+overlay_objects = Array[PackedScene]([ExtResource("19_aqmxt")])
+far_parent = NodePath("../ScrollRig/CanvasLayer2/Far")
 near_parent = NodePath("../ScrollRig/Near")
 overlay_parent = NodePath("../ScrollRig/Overlay")
-far_scroll_range = Vector2(2, 2)
-near_scroll_range = Vector2(2.5, 2.5)
+far_scroll_range = Vector2(3, 3)
+near_scroll_range = Vector2(5, 5)
 overlay_scroll_range = Vector2(10, 10)
 min_gap = 100.0
 max_gap = 500.0
@@ -143,43 +84,27 @@ level_data = ExtResource("18_6vwij")
 
 [node name="ScrollRig" type="Node2D" parent="." unique_id=873284287]
 
-[node name="OceanFloor" type="CanvasLayer" parent="ScrollRig" unique_id=608316747]
-layer = -110
-
-[node name="WaterBack" parent="ScrollRig/OceanFloor" unique_id=364615905 node_paths=PackedStringArray("camera") instance=ExtResource("3_utqb5")]
-modulate = Color(1, 1, 1, 0.1764706)
-camera = NodePath("../../ShakeCamera")
-deep_water_color = Color(0.004864846, 0.064170115, 0.069873326, 1)
-wave_water_color = Color(0.016202513, 0.1346806, 0.13913924, 1)
-rim_color = Color(0.025103364, 0.15510175, 0.1561454, 1)
-foam_color = Color(0, 0.0984276, 0.10094104, 0.39215687)
-metadata/_edit_use_anchors_ = true
-
-[node name="WaterBackground" type="CanvasLayer" parent="ScrollRig" unique_id=164305503]
+[node name="CanvasLayer" type="CanvasLayer" parent="ScrollRig" unique_id=164305503]
 layer = -100
 
-[node name="WaterBack" parent="ScrollRig/WaterBackground" unique_id=106349697 node_paths=PackedStringArray("camera") instance=ExtResource("3_utqb5")]
-modulate = Color(1, 1, 1, 0.1764706)
+[node name="WaterBack" parent="ScrollRig/CanvasLayer" unique_id=106349697 node_paths=PackedStringArray("camera") instance=ExtResource("3_utqb5")]
+camera = NodePath("../../ShakeCamera")
+foam_color = Color(0.96862745, 1, 1, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="ScrollRig" unique_id=2124093744]
+layer = -5
+
+[node name="Far" type="Node2D" parent="ScrollRig/CanvasLayer2" unique_id=359183758]
+z_index = -10
+
+[node name="WaterSurface" parent="ScrollRig/CanvasLayer2" unique_id=1905329641 node_paths=PackedStringArray("camera") instance=ExtResource("3_utqb5")]
+self_modulate = Color(1, 1, 1, 0)
 camera = NodePath("../../ShakeCamera")
 deep_water_color = Color(0.23921569, 0.78039217, 0.81960785, 0.5882353)
 wave_water_color = Color(0.32156864, 0.85882354, 0.8784314, 0.5882353)
 rim_color = Color(0.61960787, 0.9490196, 0.9490196, 0.5882353)
-foam_color = Color(0.96862745, 1, 1, 0.5882353)
-metadata/_edit_use_anchors_ = true
-
-[node name="WaterSurface" type="CanvasLayer" parent="ScrollRig" unique_id=2124093744]
-layer = -5
-
-[node name="Far" type="Node2D" parent="ScrollRig/WaterSurface" unique_id=359183758]
-z_index = -10
-
-[node name="WaterSurface" parent="ScrollRig/WaterSurface" unique_id=1905329641 node_paths=PackedStringArray("camera") instance=ExtResource("3_utqb5")]
-self_modulate = Color(1, 1, 1, 0)
-camera = NodePath("../../ShakeCamera")
-deep_water_color = Color(0.23921569, 0.78039217, 0.81960785, 0.39215687)
-wave_water_color = Color(0.32156864, 0.85882354, 0.8784314, 0.39215687)
-rim_color = Color(0.61960787, 0.9490196, 0.9490196, 0.39215687)
-foam_color = Color(0.96862745, 1, 1, 0.39215687)
+foam_color = Color(1, 1, 1, 0.39215687)
 metadata/_edit_use_anchors_ = true
 
 [node name="Near" type="Node2D" parent="ScrollRig" unique_id=1147739887]
@@ -194,10 +119,9 @@ metadata/_custom_type_script = "uid://tsoi3lwff5mf"
 
 [node name="ScreenEncounters" type="Node2D" parent="ScrollRig" unique_id=1299489232]
 
-[node name="Player" parent="ScrollRig" unique_id=2109576054 node_paths=PackedStringArray("camera", "banks") instance=ExtResource("4_nx2dg")]
+[node name="Player" parent="ScrollRig" unique_id=2109576054 node_paths=PackedStringArray("camera") instance=ExtResource("4_nx2dg")]
 position = Vector2(960, 852)
 camera = NodePath("../ShakeCamera")
-banks = NodePath("../../BankGenerator")
 
 [node name="Pickup" parent="." unique_id=169920597 instance=ExtResource("19_uwhja")]
 position = Vector2(283, 480)

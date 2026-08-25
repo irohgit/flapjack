@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://b7wmf0ym3lvi6"]
+
+[ext_resource type="Script" uid="uid://bmpjei5mq0i3u" path="res://Actors/Environment/ParallaxObjects/variantprop.gd" id="1_lvfdk"]
+[ext_resource type="Texture2D" uid="uid://boamqx2jilf5" path="res://Assets/Environment/tile-B-02.png" id="2_lvfdk"]
+
+[node name="FarStatue" type="Node2D" unique_id=2042900424]
+script = ExtResource("1_lvfdk")
+depth_scale = 0.5
+metadata/_custom_type_script = "uid://d06qlr4jj1y3a"
+
+[node name="FarStatue_1" type="Sprite2D" parent="." unique_id=1060330307]
+texture = ExtResource("2_lvfdk")
+region_enabled = true
+region_rect = Rect2(664, 192, 104, 104)
+
+[node name="FarStatue_2" type="Sprite2D" parent="." unique_id=357346479]
+texture = ExtResource("2_lvfdk")
+region_enabled = true
+region_rect = Rect2(672, 384, 48, 48)
+
+[node name="FarStatue_3" type="Sprite2D" parent="." unique_id=1698232508]
+texture = ExtResource("2_lvfdk")
+region_enabled = true
+region_rect = Rect2(576, 432, 48, 48)
+
+[node name="FarStatue_4" type="Sprite2D" parent="." unique_id=1503614878]
+texture = ExtResource("2_lvfdk")
+region_enabled = true
+region_rect = Rect2(192, 384, 192, 96)
+
+[node name="FarStatue_5" type="Sprite2D" parent="." unique_id=1636117156]
+texture = ExtResource("2_lvfdk")
+region_enabled = true
+region_rect = Rect2(472, 288, 96, 96)
