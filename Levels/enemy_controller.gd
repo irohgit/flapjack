@@ -41,8 +41,7 @@ func spawn_pack(pack: Array[EnemyData],pos: Vector2,formation: Formation = Forma
 		assert(enemy != null, "Enemy scenes must inherit from Enemy")
 		enemy.data = enemy_data
 
-		_active_enemies += 1
-		enemy.tree_exited.connect(_on_enemy_exited)
+		register_enemy(enemy)
 		spawn_parent.add_child(enemy)
 		enemy.global_position = pos + _formation_offset(
 			index,
@@ -53,6 +52,14 @@ func spawn_pack(pack: Array[EnemyData],pos: Vector2,formation: Formation = Forma
 
 func has_active_enemies() -> bool:
 	return _active_enemies > 0
+
+
+func register_enemy(enemy: Node) -> void:
+	if enemy == null or enemy.tree_exited.is_connected(_on_enemy_exited):
+		return
+
+	_active_enemies += 1
+	enemy.tree_exited.connect(_on_enemy_exited, CONNECT_ONE_SHOT)
 
 
 func _formation_offset(index: int, count: int, formation: Formation) -> Vector2:
@@ -95,6 +102,9 @@ func _formation_offset(index: int, count: int, formation: Formation) -> Vector2:
 	return Vector2.ZERO
 
 func _on_enemy_exited() -> void:
+	if _active_enemies <= 0:
+		return
+
 	_active_enemies -= 1
 	if _active_enemies == 0:
 		enemies_cleared.emit()

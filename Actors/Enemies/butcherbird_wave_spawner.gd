@@ -16,6 +16,11 @@ extends Node2D
 var bird_data: PatternButcherBirdData
 var birds_spawned: int = 0
 var flip_horizontal: bool = false
+var enemy_controller: EnemyController
+
+
+func set_enemy_controller(controller: EnemyController) -> void:
+	enemy_controller = controller
 
 func begin(spawn_from_right: bool) -> void:
 	if bird_data_pool.is_empty():
@@ -23,7 +28,6 @@ func begin(spawn_from_right: bool) -> void:
 		return
 
 	bird_data = bird_data_pool.pick_random()
-	print(bird_data)
 
 	flip_horizontal = spawn_from_right
 	birds_spawned = 0
@@ -66,6 +70,9 @@ func spawn_bird() -> void:
 	var direction: float = -1.0 if flip_horizontal else 1.0
 
 	bird.setup(bird_data, spawn_position, direction)
+
+	if enemy_controller != null:
+		enemy_controller.register_enemy(bird)
 
 	birds_spawned += 1
 
