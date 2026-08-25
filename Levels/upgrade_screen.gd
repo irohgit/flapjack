@@ -1,7 +1,7 @@
 class_name UpgradeScreen
 extends Control
 
-const MAIN_MENU_SCENE := "res://Levels/MainMenu.tscn"
+const MAIN_MENU_SCENE := "res://UI/main_menu.tscn"
 
 @export var tier1_nodes: Array[UpgradeNodeData]
 @export var tier2_nodes: Array[UpgradeNodeData]
