@@ -33,6 +33,7 @@ func _ready() -> void:
 
 	_player.coin_changed.connect(_on_coin_changed)
 	_player.gin_changed.connect(_on_gin_changed)
+	MetaProgress.gin_changed.connect(_on_gin_changed)
 
 	call_deferred("_init_display_values")
 
@@ -49,7 +50,7 @@ func _init_display_values() -> void:
 	_player.potion_selection_changed.connect(_on_potion_selection_changed)
 
 	_on_coin_changed(_player.coin_count)
-	_on_gin_changed(_player.gin_count)
+	_refresh_gin_display()
 
 	_on_health_changed(
 		health.get_current_health(),
@@ -63,8 +64,11 @@ func _init_display_values() -> void:
 func _on_coin_changed(amount: int) -> void:
 	coin_label.text = str(amount)
 
-func _on_gin_changed(amount: int) -> void:
-	gin_label.text = str(amount)
+func _on_gin_changed(_amount: int) -> void:
+	_refresh_gin_display()
+
+func _refresh_gin_display() -> void:
+	gin_label.text = str(MetaProgress.gin + _player.gin_count)
 
 func _on_health_changed(current: int, maximum: int) -> void:
 	_current_health = current

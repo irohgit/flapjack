@@ -67,6 +67,12 @@ func add_shield(amount: int) -> void:
 	shield_changed.emit(shield_points)
 
 
+func set_max_health(new_max: int) -> void:
+	max_health = maxi(new_max, 1)
+	current_health = max_health
+	health_changed.emit(current_health, max_health)
+
+
 func get_current_health() -> int:
 	return current_health
 

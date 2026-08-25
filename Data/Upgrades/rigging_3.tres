@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="UpgradeNodeData" format=3 uid="uid://ouy83pj5uyo"]
+
+[ext_resource type="Script" uid="uid://syfvycgndo0d" path="res://Data/Upgrades/upgrade_node_data.gd" id="1_gxkpy"]
+[ext_resource type="Texture2D" uid="uid://d01nxjifynbnp" path="res://Assets/Upgrades/GGEZ (10).png" id="1_ku8v4"]
+
+[resource]
+script = ExtResource("1_gxkpy")
+id = &"5"
+display_name = "Rigging 3"
+display_description = "+ Speed"
+tier = 3
+icon = ExtResource("1_ku8v4")
+level_costs = Array[int]([50, 75, 100])
+bonus_per_level = 20.0
+metadata/_custom_type_script = "uid://syfvycgndo0d"

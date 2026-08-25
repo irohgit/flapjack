@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="UpgradeNodeData" format=3 uid="uid://ext0rr45eml7"]
+
+[ext_resource type="Script" uid="uid://syfvycgndo0d" path="res://Data/Upgrades/upgrade_node_data.gd" id="1_2x4sl"]
+[ext_resource type="Texture2D" uid="uid://b7y4kgaqe35o4" path="res://Assets/Upgrades/GGEZ (4).png" id="1_l0r5d"]
+
+[resource]
+script = ExtResource("1_2x4sl")
+id = &"6"
+display_name = "Armament 1"
+display_description = "+ Weapon"
+stat_type = 1
+icon = ExtResource("1_l0r5d")
+level_costs = Array[int]([10, 15])
+bonus_per_level = 1.0
+metadata/_custom_type_script = "uid://syfvycgndo0d"

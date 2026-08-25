@@ -49,6 +49,8 @@ func _on_player_died(retry_scene_path: String) -> void:
 		var current_scene := get_tree().current_scene
 		_retry_scene_path = current_scene.scene_file_path if current_scene != null else ""
 
+	MetaProgress.pending_retry_scene_path = _retry_scene_path
+
 	if retry_button:
 		retry_button.act = NavButton.Act.CHANGE_SCENE
 		retry_button.scene_to_load = _retry_scene_path
