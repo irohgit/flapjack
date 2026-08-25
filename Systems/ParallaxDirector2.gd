@@ -13,9 +13,9 @@ extends Node2D
 # =============================================================================
 
 @export_group("Object pools")
-@export var far_objects: Array[PackedScene] = []
-@export var near_objects: Array[PackedScene] = []
-@export var overlay_objects: Array[PackedScene] = []
+@export var far_objects: Array[WeightedProp] = []
+@export var near_objects: Array[WeightedProp] = []
+@export var overlay_objects: Array[WeightedProp] = []
 
 @export_group("Layer parents")
 @export var far_parent: Node2D
@@ -50,6 +50,8 @@ extends Node2D
 @export var scroll_director: ScrollDirector
 @export var level_data: LevelData
 
+
+
 var _next_spawn_y := 0.0
 
 
@@ -82,14 +84,17 @@ func _spawn_tick() -> void:
 	_spawn_band(overlay_objects, overlay_scroll_range, overlay_parent, overlay_z)
 
 
-func _spawn_band(pool: Array[PackedScene], scroll_range: Vector2, parent: Node2D, band_z: int) -> void:
+func _spawn_band(pool: Array[WeightedProp], scroll_range: Vector2, parent: Node2D, band_z: int) -> void:
 	if pool.is_empty() or parent == null:
 		return
 	for i in randi_range(min_per_band, max_per_band):
 		_spawn_one(pool, scroll_range, parent, band_z)
 
-func _spawn_one(pool: Array[PackedScene], scroll_range: Vector2, parent: Node2D, band_z: int) -> void:
-	var prop := pool.pick_random().instantiate() as ParallaxProp
+func _spawn_one(pool: Array[WeightedProp], scroll_range: Vector2, parent: Node2D, band_z: int) -> void:
+	var scene: PackedScene = _weighted_pick(pool)
+	if scene == null:
+		return
+	var prop := scene.instantiate() as ParallaxProp
 	if prop == null:
 		push_error("ParallaxDirector: pooled scene root must extend ParallaxProp")
 		return
@@ -109,3 +114,19 @@ func _spawn_one(pool: Array[PackedScene], scroll_range: Vector2, parent: Node2D,
 		prop.global_position = Vector2(x, -spawn_lead - randf_range(0.0, 300.0))
 	else:
 		prop.global_position = Vector2(x, top - spawn_lead - randf_range(0.0, 300.0))
+
+func _weighted_pick(pool: Array[WeightedProp]) -> PackedScene:
+	var total := 0.0
+	for wp in pool:
+		if wp != null and wp.scene != null:
+			total += maxf(wp.weight, 0.0)
+	if total <= 0.0:
+		return null
+	var r := randf() * total
+	for wp in pool:
+		if wp == null or wp.scene == null:
+			continue
+		r -= maxf(wp.weight, 0.0)
+		if r <= 0.0:
+			return wp.scene
+	return null

@@ -83,7 +83,7 @@ enum Grow { NONE, GROW, SHRINK, BREATHE }
 
 @onready var _sprite: Sprite2D = $Sprite2D
 
-var _t := 0.0                  # seconds alive
+var _timeAlive := 0.0                  # seconds alive
 var _life := 0.0               # this instance's actual lifetime
 var _tail_start := 0.0         # when the ramp to zero begins
 var _wobble_phase := 0.0
@@ -148,12 +148,12 @@ func _process(delta: float) -> void:
 			_entered = true
 		return
 
-	_t += delta
+	_timeAlive += delta
 	_apply_motion(delta)
 	_apply_alpha()
 	_apply_scale(delta)
 
-	if _life > 0.0 and _t >= _life:
+	if _life > 0.0 and _timeAlive >= _life:
 		queue_free()
 
 
@@ -181,7 +181,7 @@ func _apply_motion(delta: float) -> void:
 	_base_pos += drift_speed * delta
 	var wobble := 0.0
 	if wobble_amplitude > 0.0:
-		wobble = sin(_t * wobble_speed * TAU + _wobble_phase) * wobble_amplitude
+		wobble = sin(_timeAlive * wobble_speed * TAU + _wobble_phase) * wobble_amplitude
 	position = _base_pos + Vector2(0.0, wobble)
 
 
@@ -192,7 +192,7 @@ func _apply_alpha() -> void:
 ## What the fade mode is doing right now, ignoring the ending. 0..1.
 func _mode_factor() -> float:
 	if fade_mode == Fade.PULSE:
-		var wave := (sin(_t / maxf(pulse_period, 0.001) * TAU + _fade_phase) + 1.0) * 0.5
+		var wave := (sin(_timeAlive / maxf(pulse_period, 0.001) * TAU + _fade_phase) + 1.0) * 0.5
 		return 1.0 - pulse_depth + pulse_depth * wave
 	return 1.0
 
@@ -202,7 +202,7 @@ func _mode_factor() -> float:
 func _tail_factor() -> float:
 	if _life <= 0.0:
 		return 1.0
-	if _t <= _tail_start:
+	if _timeAlive <= _tail_start:
 		return 1.0
 	var span := maxf(_life - _tail_start, 0.001)
 	return clampf(1.0 - (_t - _tail_start) / span, 0.0, 1.0)
@@ -219,5 +219,5 @@ func _apply_scale(delta: float) -> void:
 			if scale.x <= 0.01:
 				queue_free()
 		Grow.BREATHE:
-			var wave := sin(_t / maxf(breathe_period, 0.001) * TAU + _breathe_phase)
+			var wave := sin(_timeAlive / maxf(breathe_period, 0.001) * TAU + _breathe_phase)
 			scale = _base_scale * (1.0 + wave * breathe_amount)

@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://bp8dgwji3l417"]
+
+[ext_resource type="Script" uid="uid://d06qlr4jj1y3a" path="res://Actors/parallax_prop.gd" id="1_xhggr"]
+[ext_resource type="Texture2D" uid="uid://dupglrprny45y" path="res://Assets/Environment/tile-B-03.png" id="2_qy1wd"]
+
+[node name="FarCoral1" type="Node2D" unique_id=2042900424]
+script = ExtResource("1_xhggr")
+metadata/_custom_type_script = "uid://d06qlr4jj1y3a"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1060330307]
+texture = ExtResource("2_qy1wd")
+region_enabled = true
+region_rect = Rect2(583, 2, 82, 92)

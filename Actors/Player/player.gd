@@ -66,6 +66,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		_health.take_damage(9999)
 		
 func _ready() -> void:
+	add_to_group("Player")
 	_potion_slots.resize(potion_slot_count)
 	area_entered.connect(_on_area_entered)
 	_pickup_range.area_entered.connect(_on_pickup_range_entered)

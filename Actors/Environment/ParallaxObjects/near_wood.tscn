@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://bc2g5sxmhx1p2"]
+
+[ext_resource type="Script" uid="uid://bmpjei5mq0i3u" path="res://Actors/Environment/ParallaxObjects/variantprop.gd" id="1_qd6vc"]
+[ext_resource type="Texture2D" uid="uid://b3k48vxms43yg" path="res://Assets/Environment/dock_tileset_1.png" id="2_qd6vc"]
+[ext_resource type="Texture2D" uid="uid://dt37uu1kearuf" path="res://Assets/Environment/B8.png" id="3_qd6vc"]
+
+[node name="NearWood" type="Node2D" unique_id=2042900424]
+script = ExtResource("1_qd6vc")
+min_scale = 0.3
+max_scale = 0.7
+push_strength = 150.0
+push_return = 1.0
+float_enabled = true
+sway_deg = 5.0
+sway_speed = 1.2
+bob_pixels = 5.0
+bob_speed = 5.0
+metadata/_custom_type_script = "uid://d06qlr4jj1y3a"
+
+[node name="NearWood_1" type="Sprite2D" parent="." unique_id=1060330307]
+modulate = Color(0.76517767, 0.8268501, 1, 1)
+texture = ExtResource("2_qd6vc")
+region_enabled = true
+region_rect = Rect2(483, 3, 89, 91)
+
+[node name="NearWood_2" type="Sprite2D" parent="." unique_id=789169853]
+modulate = Color(0.76517767, 0.8268501, 1, 1)
+texture = ExtResource("3_qd6vc")
+region_enabled = true
+region_rect = Rect2(96, 624, 96, 48)
+
+[node name="NearWood_3" type="Sprite2D" parent="." unique_id=955217774]
+modulate = Color(0.76517767, 0.8268501, 1, 1)
+texture = ExtResource("3_qd6vc")
+region_enabled = true
+region_rect = Rect2(96, 576, 96, 48)
+
+[node name="NearWood_4" type="Sprite2D" parent="." unique_id=394393638]
+modulate = Color(0.76517767, 0.8268501, 1, 1)
+texture = ExtResource("3_qd6vc")
+region_enabled = true
+region_rect = Rect2(288, 576, 96, 48)
