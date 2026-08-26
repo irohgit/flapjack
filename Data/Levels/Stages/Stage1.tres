@@ -7,7 +7,7 @@
 [ext_resource type="Resource" uid="uid://cnxtqo5woe8ja" path="res://Data/Enemy/HunterEnemy.tres" id="3_hunter"]
 [ext_resource type="Script" uid="uid://p4ssfrvfj0uw" path="res://Data/Levels/level_data.gd" id="4_level"]
 [ext_resource type="Script" uid="uid://bgt6cqxd8jifw" path="res://Data/Levels/weighted_encounter_data.gd" id="5_special"]
-[ext_resource type="PackedScene" uid="uid://b0uqnqks41txj" path="res://Levels/iroh_sandbox.tscn" id="5_stage_clear"]
+[ext_resource type="PackedScene" path="res://Actors/Enemies/voodoo_boss.tscn" id="5_stage_clear"]
 [ext_resource type="Script" uid="uid://cytvv5o32ru6e" path="res://Data/Levels/encounter_data.gd" id="6_encounter"]
 [ext_resource type="PackedScene" uid="uid://3gxxy4myod8b" path="res://Actors/Enemies/PatternEnemyWaveSpawner.tscn" id="8_birds"]
 
@@ -187,13 +187,14 @@ metadata/_custom_type_script = "uid://cytvv5o32ru6e"
 
 [sub_resource type="Resource" id="Finale_stage_clear"]
 script = ExtResource("2_finale")
-event_name = "StageClear"
+event_name = "VoodooBoss"
 encounter_scene = ExtResource("5_stage_clear")
 metadata/_custom_type_script = "uid://bhsc86o70es47"
 
 [resource]
 script = ExtResource("4_level")
 level_name = "Stage1"
+finale_spawn_position = Vector2(960, -9600)
 encounter_sequence = Array[ExtResource("6_encounter")]([SubResource("Encounter_01_intro_line"), SubResource("Encounter_02_intro_v"), SubResource("Encounter_03_first_hunters"), SubResource("Encounter_04_optional_reinforcement"), SubResource("Encounter_05_mixed_fleet"), SubResource("Encounter_06_bird_warning"), SubResource("Encounter_07_grid_intro"), SubResource("Encounter_08_optional_circle"), SubResource("Encounter_09_midpoint_fleet"), SubResource("Encounter_10_bird_return"), SubResource("Encounter_11_advanced_fleet"), SubResource("Encounter_12_optional_pressure"), SubResource("Encounter_13_late_fleet"), SubResource("Encounter_14_final_fleet"), SubResource("Encounter_15_final_birds")])
 finale_pool = Array[ExtResource("2_finale")]([SubResource("Finale_stage_clear")])
 metadata/_custom_type_script = "uid://p4ssfrvfj0uw"

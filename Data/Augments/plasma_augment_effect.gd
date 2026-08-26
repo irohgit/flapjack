@@ -6,8 +6,10 @@ extends AugmentEffect
 
 func apply_to_projectile(_projectile: Projectile) -> void:
 	_projectile.plasma = true
-	_projectile.plasma_stun_duration = maxf(
-		_projectile.plasma_stun_duration,
-		stun_duration
-	)
 	_projectile.texture_override = projectile_texture
+
+	var stun := StatusEffectData.new()
+	stun.type = StatusEffectData.Type.STUN
+	stun.duration = stun_duration
+	stun.reapply_policy = StatusEffectData.ReapplyPolicy.KEEP_LONGEST
+	_projectile.add_status_effect(stun)

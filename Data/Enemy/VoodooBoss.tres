@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=8 format=3]
+
+[ext_resource type="Script" uid="uid://bo6li876odoia" path="res://Data/Enemy/enemy_data.gd" id="1_enemy"]
+[ext_resource type="Texture2D" uid="uid://bdvwtt7ugbmss" path="res://Assets/Enemies/Voodoo_Pirates/Enemy_Ship_Voodoo_Boss_Pixel_Clean.png" id="3_texture"]
+[ext_resource type="PackedScene" uid="uid://bl12qi0n68b6i" path="res://Actors/Projectiles/projectile.tscn" id="4_projectile"]
+[ext_resource type="Resource" uid="uid://dk3d73cdpoumi" path="res://Data/Projectiles/enemy_cannonball.tres" id="5_ammo"]
+[ext_resource type="AudioStream" uid="uid://cbplby7nfcsyw" path="res://Audio/SFX/ship_hit.mp3" id="6_hit"]
+[ext_resource type="AudioStream" uid="uid://bcf81qxqc8nxo" path="res://Audio/SFX/ship_destroyed.mp3" id="7_death"]
+[ext_resource type="AudioStream" uid="uid://41by6wg6cvxx" path="res://Audio/SFX/enemy_cannon_shot_1.mp3" id="8_fire"]
+
+[resource]
+script = ExtResource("1_enemy")
+health = 500
+contact_damage = 1
+projectile_damage = 1
+projectile_fire_rate = 2
+move_speed = 200.0
+texture = ExtResource("3_texture")
+visual_scale = 0.2
+projectile_scene = ExtResource("4_projectile")
+ammo = ExtResource("5_ammo")
+hit_sfx = ExtResource("6_hit")
+death_sfx = ExtResource("7_death")
+fire_sfx = ExtResource("8_fire")
+fire_pitch = 0.3
+fire_sfx_volume_db = -10.0

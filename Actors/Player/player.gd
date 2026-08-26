@@ -24,6 +24,7 @@ var _weapon_states: Array[WeaponState] = []
 @onready var _pickup_range: Area2D = $PickupRange
 @onready var _pickup_range_shape: CollisionShape2D = $PickupRange/CollisionShape2D
 @onready var _hitbox_shape: CollisionShape2D = $CollisionShape2D
+@onready var _status_effects: StatusEffectComponent = $StatusEffectComponent
 
 signal coin_changed(amount: int)
 signal gin_changed(amount: int)
@@ -96,6 +97,8 @@ func _on_health_changed(current: int, maximum: int) -> void:
 	
 func _process(_delta: float) -> void:
 	_move_intent = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
+	if _status_effects.has_effect(StatusEffectData.Type.CONFUSION):
+		_move_intent *= -1.0
 
 	if Input.is_action_just_pressed("potion_previous"):
 		select_potion_slot(_selected_potion_slot - 1)
@@ -321,6 +324,10 @@ func heal(amount: int) -> void:
 
 func get_health_component() -> HealthComponent:
 	return _health
+
+
+func apply_status_effect(effect: StatusEffectData) -> void:
+	_status_effects.apply_effect(effect)
 
 ## Combat Private
 func _on_damaged() -> void:
