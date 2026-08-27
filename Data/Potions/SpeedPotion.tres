@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="PotionData" format=3 uid="uid://c2jmgkqcfbsv0"]
 
 [ext_resource type="Script" uid="uid://sx6ump0oii3m" path="res://Data/Potions/potion_data.gd" id="1_potion"]
+[ext_resource type="Script" uid="uid://bb2hxg3ieta4h" path="res://Systems/Combat/effect_action.gd" id="1_y307j"]
 [ext_resource type="Script" uid="uid://djyh13b16xtos" path="res://Systems/Combat/status_effect_data.gd" id="2_effect"]
 [ext_resource type="Script" uid="uid://bd7w82irghj51" path="res://Systems/Combat/status_effect_modifier.gd" id="3_modifier"]
 [ext_resource type="Texture2D" uid="uid://bgiej8ve1g3v0" path="res://Assets/Pickups/28.png" id="4_icon"]

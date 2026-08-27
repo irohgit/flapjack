@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://bb2hxg3ieta4h" path="res://Systems/Combat/effect_action.gd" id="2_action"]
 [ext_resource type="Script" uid="uid://ohnosjqw7vvk" path="res://Systems/Combat/shield_effect_action.gd" id="3_shield"]
 [ext_resource type="Texture2D" uid="uid://doboqjtyybmv6" path="res://Assets/Pickups/26.png" id="4_icon"]
+[ext_resource type="Script" uid="uid://djyh13b16xtos" path="res://Systems/Combat/status_effect_data.gd" id="6_bo6co"]
 
 [sub_resource type="Resource" id="ShieldAction"]
 script = ExtResource("3_shield")
