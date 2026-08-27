@@ -1,0 +1,154 @@
+[gd_scene format=3 uid="uid://du1b0f1hfk7hv"]
+
+[ext_resource type="Script" uid="uid://de7yopokrwyd6" path="res://Data/Enemy/enemy_snake.gd" id="1_snake"]
+[ext_resource type="Script" uid="uid://cv0v6ynhg51ei" path="res://Systems/Combat/HealthComponent.gd" id="2_health"]
+[ext_resource type="Texture2D" uid="uid://b834aqwbt1eme" path="res://Assets/Enemies/snake.png" id="3_aeyw2"]
+[ext_resource type="Script" uid="uid://dttjdne32amn0" path="res://Systems/Combat/status_effect_component.gd" id="3_status"]
+[ext_resource type="Resource" uid="uid://t1kh8q3w3dhn" path="res://Data/Enemy/SnakeEnemy.tres" id="4_data"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pavj5"]
+atlas = ExtResource("3_aeyw2")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fdr6w"]
+atlas = ExtResource("3_aeyw2")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cjf4c"]
+atlas = ExtResource("3_aeyw2")
+region = Rect2(128, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_37v44"]
+atlas = ExtResource("3_aeyw2")
+region = Rect2(192, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_61a0s"]
+atlas = ExtResource("3_aeyw2")
+region = Rect2(256, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kim65"]
+atlas = ExtResource("3_aeyw2")
+region = Rect2(320, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4j137"]
+atlas = ExtResource("3_aeyw2")
+region = Rect2(384, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0g3v8"]
+atlas = ExtResource("3_aeyw2")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k7gjo"]
+atlas = ExtResource("3_aeyw2")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xu4yt"]
+atlas = ExtResource("3_aeyw2")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_35mrd"]
+atlas = ExtResource("3_aeyw2")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0jyjy"]
+atlas = ExtResource("3_aeyw2")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1rbrs"]
+atlas = ExtResource("3_aeyw2")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d2lli"]
+atlas = ExtResource("3_aeyw2")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_o522n"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pavj5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fdr6w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cjf4c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_37v44")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_61a0s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kim65")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4j137")
+}],
+"loop": 1,
+"name": &"Attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0g3v8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k7gjo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xu4yt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_35mrd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0jyjy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1rbrs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d2lli")
+}],
+"loop": 1,
+"name": &"Idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_24dg8"]
+size = Vector2(65, 24)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_detection"]
+radius = 180.95612
+
+[node name="SnakeEnemy" type="Area2D" unique_id=1238329062 groups=["enemy", "hazard"]]
+scale = Vector2(3, 3)
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("1_snake")
+data = ExtResource("4_data")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=521052626]
+sprite_frames = SubResource("SpriteFrames_o522n")
+animation = &"Attack"
+frame = 1
+frame_progress = 0.897815
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=450419208]
+position = Vector2(-0.5, 8)
+shape = SubResource("RectangleShape2D_24dg8")
+
+[node name="HealthComponent" type="Node" parent="." unique_id=319668964]
+script = ExtResource("2_health")
+
+[node name="StatusEffectComponent" type="Node" parent="." unique_id=1727566971]
+script = ExtResource("3_status")
+
+[node name="DetectionRadius" type="Area2D" parent="." unique_id=28479859]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionRadius" unique_id=1599308502]
+shape = SubResource("CircleShape2D_detection")
+debug_color = Color(1, 0.6, 0, 0.196)

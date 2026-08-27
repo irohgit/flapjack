@@ -40,6 +40,7 @@
 [ext_resource type="Resource" uid="uid://bkqumwc6jcphy" path="res://Data/Pickups/HealthPotion.tres" id="32_health"]
 [ext_resource type="Resource" path="res://Data/Pickups/RapidFirePotion.tres" id="33_rapid"]
 [ext_resource type="Resource" path="res://Data/Pickups/SpeedPotion.tres" id="34_speed"]
+[ext_resource type="PackedScene" path="res://Actors/Enemies/snake_enemy.tscn" id="41_cmsr7"]
 
 [sub_resource type="Resource" id="Resource_54op2"]
 script = ExtResource("25_jrq28")
@@ -205,3 +206,6 @@ banks = NodePath("../../BankGenerator")
 [node name="Pickup" parent="." unique_id=169920597 instance=ExtResource("19_uwhja")]
 position = Vector2(283, 480)
 data = ExtResource("20_uwhja")
+
+[node name="SnakeEnemy" parent="." unique_id=993331539 instance=ExtResource("41_cmsr7")]
+position = Vector2(240, 301)
