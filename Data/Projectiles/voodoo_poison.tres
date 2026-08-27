@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="ProjectileData" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://Systems/Combat/status_effect_data.gd" id="1_status"]
+[ext_resource type="Script" uid="uid://cre7gs48pepsi" path="res://Data/Projectiles/projectile_data.gd" id="2_projectile"]
+[ext_resource type="Texture2D" path="res://Assets/Projectiles/voodoo_poison_blob.svg" id="3_texture"]
+[ext_resource type="AudioStream" uid="uid://byy7pb1556tpq" path="res://Audio/distant_cannon.mp3" id="4_impact"]
+
+[sub_resource type="Resource" id="Status_confusion"]
+script = ExtResource("1_status")
+effect_id = &"confusion"
+display_name = "Confusion"
+description = "Movement controls are reversed."
+icon = ExtResource("3_texture")
+show_in_hud = true
+duration = 10.0
+reapply_policy = 0
+flags = Array[StringName]([&"reverse_controls"])
+
+[resource]
+script = ExtResource("2_projectile")
+allegiance = 1
+texture = ExtResource("3_texture")
+scale = 0.75
+speed = 350.0
+damage = 0
+hitbox_radius = 18.0
+trail_colour = Color(0.55, 0.12, 0.75, 0.75)
+trail_length = 16
+status_effects = Array[ExtResource("1_status")]([SubResource("Status_confusion")])
+impact_sound = ExtResource("4_impact")
+expire_time = 6.0

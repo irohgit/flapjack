@@ -8,11 +8,7 @@ func fire(shooter: Node2D, weapon: WeaponState) -> void:
 		push_error("Cannon projectile scene is not a Projectile")
 		return
 		
-	for augment in weapon.augments:
-		if augment.augmentEffect != null:
-			augment.augmentEffect.apply_to_projectile(shot)
-
-	shot.data = weapon.data.weaponProjectile
+	_configure_projectile(shot, weapon)
 	shot.direction = Vector2.UP
 
 	shooter.get_parent().add_child(shot)

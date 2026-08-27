@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://cv0v6ynhg51ei" path="res://Systems/Combat/HealthComponent.gd" id="5_n7l8t"]
 [ext_resource type="Texture2D" uid="uid://dsfm27q55ofy2" path="res://Assets/Cinematics/Cinematic_Boat_Blackbeard_512.png" id="5_pnakb"]
 [ext_resource type="Script" uid="uid://cm2aeylarosbb" path="res://Data/Ship/ship_tier.gd" id="7_g1lo4"]
+[ext_resource type="Script" path="res://Systems/Combat/status_effect_component.gd" id="10_status"]
 [ext_resource type="Resource" uid="uid://c5bnkj5rw25a0" path="res://Data/Ship/skiff.tres" id="8_sciwa"]
 [ext_resource type="Resource" uid="uid://b7kxg57l135l2" path="res://Data/Ship/schooner.tres" id="8_w553y"]
 [ext_resource type="Resource" uid="uid://duaftfp5au7uw" path="res://Data/Ship/galleon.tres" id="9_wmrsf"]
@@ -46,6 +47,9 @@ debug_color = Color(0.99215686, 0, 0.26666668, 0.19607843)
 script = ExtResource("5_n7l8t")
 max_health = 6
 invincibility_time = 1.0
+
+[node name="StatusEffectComponent" type="Node" parent="."]
+script = ExtResource("10_status")
 
 [node name="PickupRange" type="Area2D" parent="." unique_id=675580203]
 collision_layer = 8

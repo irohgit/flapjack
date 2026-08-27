@@ -14,5 +14,6 @@ enum Allegiance { PLAYER, ENEMY }
 @export var hitbox_radius := 8.0
 @export var trail_colour := Color.WHITE
 @export var trail_length := 12
+@export var status_effects: Array[StatusEffectData] = []
 @export var impact_sound: AudioStream
 @export var expire_time := 5.0

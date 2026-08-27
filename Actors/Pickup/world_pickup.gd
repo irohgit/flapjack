@@ -21,10 +21,11 @@ func _ready() -> void:
 		_animated_sprite.sprite_frames = data.sprite_frames
 		_animated_sprite.play(data.animation_name)
 	else:
-		assert(data.texture != null, "PickupData has no visual")
+		var pickup_texture := data.get_texture()
+		assert(pickup_texture != null, "PickupData has no visual")
 		_sprite.visible = true
 		_animated_sprite.visible = false
-		_sprite.texture = data.texture
+		_sprite.texture = pickup_texture
 
 
 func _physics_process(delta: float) -> void:

@@ -66,6 +66,8 @@ pickup="Collected by the player on contact. Must expose collect(player)."
 shake_camera="The active gameplay camera. Anything requesting screenshake calls add_trauma() on this. Expect exactly one member."
 flapjack_fx=""
 player=""
+player_projectile="Projectiles fired by the player. Used by enemy dodge and targeting behaviour."
+enemy_projectile="Projectiles fired by enemies."
 
 [input]
 

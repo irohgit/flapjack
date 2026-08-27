@@ -4,7 +4,7 @@ extends Node2D
 @export var silver_coin_data: PickupData
 @export var bronze_coin_data: PickupData
 @export var pickup_scene: PackedScene
-@export var augments: Array[PickupData]
+@export var loot_pool: Array[PickupData]
 
 func _ready():
 	print("spawner ready")
@@ -19,7 +19,7 @@ func choose_spawn(position: Vector2):
 	if roll < 0.6:
 		spawn_coin(position)
 	elif roll < 1.0:
-		spawn_augment(position)
+		spawn_loot(position)
 	
 
 func spawn_coin(position: Vector2):
@@ -41,13 +41,15 @@ func spawn_coin(position: Vector2):
 
 	_add_pickup.call_deferred(coin, position)
 
-func spawn_augment(position: Vector2):
-	print("spawning augment")
-	var augment = pickup_scene.instantiate() as WorldPickup
+func spawn_loot(position: Vector2):
+	if loot_pool.is_empty():
+		return
 
-	augment.data = augments.pick_random()
+	print("spawning loot")
+	var pickup = pickup_scene.instantiate() as WorldPickup
+	pickup.data = loot_pool.pick_random()
 
-	_add_pickup.call_deferred(augment, position)
+	_add_pickup.call_deferred(pickup, position)
 
 
 func _add_pickup(pickup: WorldPickup, position: Vector2) -> void:

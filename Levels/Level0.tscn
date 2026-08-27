@@ -16,8 +16,10 @@
 [ext_resource type="PackedScene" uid="uid://dgp73phtjophn" path="res://Actors/Pickup/pickup.tscn" id="16_aa3m5"]
 [ext_resource type="Resource" uid="uid://bcj4lyhuitxi2" path="res://Data/Pickups/ShieldPotion.tres" id="17_aa3m5"]
 [ext_resource type="Resource" uid="uid://bkqumwc6jcphy" path="res://Data/Pickups/HealthPotion.tres" id="17_y3xa5"]
-[ext_resource type="PackedScene" uid="uid://cstesilwdvxw5" path="res://UI/settings_panel.tscn" id="18_y3xa5"]
+[ext_resource type="PackedScene" uid="uid://b2judmr242f45" path="res://UI/settings_menu.tscn" id="18_y3xa5"]
 [ext_resource type="PackedScene" uid="uid://dyx6252lck76u" path="res://Actors/Environment/wind_zone.tscn" id="19_nbhn6"]
+[ext_resource type="Resource" path="res://Data/Pickups/RapidFirePotion.tres" id="20_rapid"]
+[ext_resource type="Resource" path="res://Data/Pickups/SpeedPotion.tres" id="21_speed"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n48ea"]
 shader = ExtResource("2_im6i0")
@@ -44,7 +46,8 @@ script = ExtResource("1_y3xa5")
 scroll_director = NodePath("ScrollDirector")
 enemy_controller = NodePath("EnemyController")
 
-[node name="ScrollDirector" parent="." unique_id=1595117280 instance=ExtResource("5_im6i0")]
+[node name="ScrollDirector" parent="." unique_id=1595117280 node_paths=PackedStringArray("scroll_rig") instance=ExtResource("5_im6i0")]
+scroll_rig = NodePath("../Camera2D")
 scroll_speed = 15.0
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1873851463 groups=["shake_camera"]]
@@ -91,6 +94,14 @@ data = ExtResource("17_y3xa5")
 [node name="Pickup2" parent="." unique_id=42963610 instance=ExtResource("16_aa3m5")]
 position = Vector2(716, 880)
 data = ExtResource("17_aa3m5")
+
+[node name="Pickup3" parent="." instance=ExtResource("16_aa3m5")]
+position = Vector2(520, 720)
+data = ExtResource("20_rapid")
+
+[node name="Pickup4" parent="." instance=ExtResource("16_aa3m5")]
+position = Vector2(900, 780)
+data = ExtResource("21_speed")
 
 [node name="wind_zone" parent="." unique_id=963280108 instance=ExtResource("19_nbhn6")]
 position = Vector2(203, 685)

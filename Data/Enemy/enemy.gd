@@ -1,8 +1,6 @@
 class_name Enemy
 extends Area2D
 
-enum Effects {STUN, BURN}
-
 @export var data: EnemyData
 
 # Randomise the opening delay so a newly revealed row does not fire in lockstep.
@@ -12,15 +10,9 @@ enum Effects {STUN, BURN}
 
 @onready var _health: HealthComponent = $HealthComponent
 @onready var _sprite: Sprite2D = $Sprite2D
-
-@export var effects: Dictionary[Effects, float] = {}
+@onready var _status_effects: StatusEffectComponent = $StatusEffectComponent
 
 var _fire_timer := 0.0
-
-var _burn_damage := 0
-var _burn_ticks_remaining := 0
-var _burn_tick_timer := 0.0
-var _burn_tick_interval := 0.5
 
 func _ready() -> void:
 	assert(data != null, "Enemy spawned with no EnemyData assigned")
@@ -38,13 +30,10 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	_tick_effects(delta)
-	_tick_burn(delta)
-
-	var final_speed: float = data.move_speed
-
-	if _effect_active(Effects.STUN):
-		final_speed *= 0.25
+	var final_speed := _status_effects.get_modified_value(
+		StatusEffectData.STAT_MOVEMENT_SPEED,
+		data.move_speed
+	)
 
 	_move(delta, final_speed)
 
@@ -73,8 +62,12 @@ func _reset_timer() -> void:
 func _move(delta: float, speed: float) -> void:
 	pass
 
-func _fire() -> void:
+func _fire() -> Projectile:
 	var shot := data.projectile_scene.instantiate() as Projectile
+	if shot == null:
+		push_error("Enemy projectile scene must inherit from Projectile")
+		return null
+
 	var shot_data := data.ammo.duplicate() as ProjectileData
 	shot_data.damage = data.projectile_damage
 	shot_data.speed *= data.projectile_speed
@@ -83,8 +76,13 @@ func _fire() -> void:
 
 	# Same parent as this ship, so shots shake with the world.
 	get_parent().add_child(shot)
-	shot.global_position = global_position + Vector2(0, 60)
+	shot.global_position = _get_fire_position()
 	Audio.play_sfx(data.fire_sfx, data.fire_sfx_volume_db, 0.06, data.fire_pitch)
+	return shot
+
+
+func _get_fire_position() -> Vector2:
+	return global_position + Vector2(0, 60)
 
 
 # Public entry point. Collision code finds methods on the Area2D, not children.
@@ -112,34 +110,5 @@ func _on_died() -> void:
 	queue_free()
 
 
-func _tick_effects(delta: float) -> void:
-	for effect: Effects in effects.keys():
-		var remaining := maxf(effects[effect] - delta, 0.0)
-		if remaining <= 0.0:
-			effects.erase(effect)
-		else:
-			effects[effect] = remaining
-
-func apply_burn(damage_per_tick: int, tick_count: int, tick_interval: float = 0.5) -> void:
-	_burn_damage = damage_per_tick
-	_burn_ticks_remaining = tick_count
-	_burn_tick_interval = tick_interval
-	_burn_tick_timer = tick_interval
-
-func _tick_burn(delta: float) -> void:
-	if _burn_ticks_remaining <= 0:
-		return
-	_burn_tick_timer -= delta
-	if _burn_tick_timer <= 0.0:
-		take_damage(_burn_damage)
-		_burn_ticks_remaining -= 1
-		_burn_tick_timer = _burn_tick_interval
-
-func _effect_active(effect: Effects) -> bool:
-	var remaining: float = effects.get(effect, 0.0)
-	return remaining > 0.0
-
-
-func apply_effect(effect: Effects, time: float) -> void:
-	var remaining: float = effects.get(effect, 0.0)
-	effects[effect] = maxf(remaining, time)
+func apply_status_effect(effect: StatusEffectData) -> bool:
+	return _status_effects.apply_effect(effect)
