@@ -162,9 +162,9 @@ static func _potions() -> Array:
 		_potion_entry(SHIELD_POTION),
 		_potion_entry(RAPID_FIRE_POTION),
 		_potion_entry(SPEED_POTION),
-		_entry("shrink_potion", "SHRINK", POTIONS, "Wonderland Potion", "res://Assets/UI/Shop/Items/Potions/shrink.png", "Temporarily shrinks the player ship.", ["Shrink effect", "Exact gameplay values are TBD"], [["area", "SMALLER PLAYER"], ["duration", "TEMPORARY"]], 100, "RARE", "locked"),
-		_entry("growth_potion", "GROWTH", POTIONS, "Wonderland Potion", "res://Assets/UI/Shop/Items/Potions/growth.png", "Temporarily enlarges the player ship.", ["Growth effect", "Exact gameplay values are TBD"], [["area", "LARGER PLAYER"], ["duration", "TEMPORARY"]], 100, "RARE", "locked"),
-		_entry("rubber_potion", "RUBBER", POTIONS, "Reflection Potion", "res://Assets/UI/Shop/Items/Potions/reflection.png", "Turns the hull rubbery enough to send incoming shots back where they came from.", ["Reflects enemy bullets toward their source", "Does not protect against contact damage"], [["shield", "PROJECTILES ONLY"], ["duration", "TEMPORARY"]], 160, "EPIC", "locked"),
+		_entry("shrink_potion", "SHRINK", POTIONS, "Wonderland Potion", "res://Assets/Pickups/27.png", "Temporarily shrinks the player ship.", ["Shrink effect", "Exact gameplay values are TBD"], [["area", "SMALLER PLAYER"], ["duration", "TEMPORARY"]], 100, "RARE", "locked"),
+		_entry("growth_potion", "GROWTH", POTIONS, "Wonderland Potion", "res://Assets/Pickups/27.png", "Temporarily enlarges the player ship.", ["Growth effect", "Exact gameplay values are TBD"], [["area", "LARGER PLAYER"], ["duration", "TEMPORARY"]], 100, "RARE", "locked"),
+		_entry("rubber_potion", "RUBBER", POTIONS, "Reflection Potion", "res://Assets/Pickups/27.png", "Turns the hull rubbery enough to send incoming shots back where they came from.", ["Reflects enemy bullets toward their source", "Does not protect against contact damage"], [["shield", "PROJECTILES ONLY"], ["duration", "TEMPORARY"]], 160, "EPIC", "locked"),
 	]
 
 
@@ -173,8 +173,7 @@ static func _potion_entry(potion: PotionData) -> Dictionary:
 	for effect in potion.shop_effects:
 		effects.append(effect)
 
-	var icon := potion.shop_icon if potion.shop_icon != null else potion.inventory_icon
-	var icon_path := icon.resource_path if icon != null else ""
+	var icon_path := potion.icon.resource_path if potion.icon != null else ""
 	return _entry(
 		String(potion.potion_id),
 		potion.display_name,

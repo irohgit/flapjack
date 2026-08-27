@@ -241,7 +241,7 @@ func _remove_active_effect(effect_id: StringName) -> void:
 func _update_potion_slots() -> void:
 	for index in range(_potion_item_icons.size()):
 		var potion := _player.get_potion_in_slot(index)
-		_potion_item_icons[index].texture = potion.inventory_icon if potion != null else null
+		_potion_item_icons[index].texture = potion.icon if potion != null else null
 		_potion_selectors[index].visible = (
 			index == _player.get_selected_potion_slot()
 		)

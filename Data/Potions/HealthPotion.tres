@@ -1,10 +1,9 @@
-[gd_resource type="Resource" script_class="PotionData" load_steps=7 format=3]
+[gd_resource type="Resource" script_class="PotionData" load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://Data/Potions/potion_data.gd" id="1_potion"]
 [ext_resource type="Script" path="res://Systems/Combat/effect_action.gd" id="2_action"]
 [ext_resource type="Script" path="res://Systems/Combat/heal_effect_action.gd" id="3_heal"]
-[ext_resource type="Texture2D" path="res://Assets/Pickups/29.png" id="4_inventory"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Items/Potions/health.png" id="5_shop"]
+[ext_resource type="Texture2D" uid="uid://c0wuehgoy3qp1" path="res://Assets/Pickups/29.png" id="4_icon"]
 
 [sub_resource type="Resource" id="HealAction"]
 script = ExtResource("3_heal")
@@ -15,8 +14,7 @@ script = ExtResource("1_potion")
 potion_id = &"health_potion"
 display_name = "Health"
 description = "Repairs one point of damage."
-inventory_icon = ExtResource("4_inventory")
-shop_icon = ExtResource("5_shop")
+icon = ExtResource("4_icon")
 price = 80
 rarity = "COMMON"
 shop_effects = PackedStringArray("Restores 1 health")

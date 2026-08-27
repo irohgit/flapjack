@@ -1,24 +1,20 @@
-[gd_resource type="Resource" script_class="PotionData" load_steps=7 format=3]
+[gd_resource type="Resource" script_class="PotionData" format=3 uid="uid://bau7v7mpln58f"]
 
-[ext_resource type="Script" path="res://Data/Potions/potion_data.gd" id="1_potion"]
-[ext_resource type="Script" path="res://Systems/Combat/effect_action.gd" id="2_action"]
-[ext_resource type="Script" path="res://Systems/Combat/shield_effect_action.gd" id="3_shield"]
-[ext_resource type="Texture2D" path="res://Assets/Pickups/26.png" id="4_inventory"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Items/Potions/shield.png" id="5_shop"]
+[ext_resource type="Script" uid="uid://sx6ump0oii3m" path="res://Data/Potions/potion_data.gd" id="1_potion"]
+[ext_resource type="Script" uid="uid://bb2hxg3ieta4h" path="res://Systems/Combat/effect_action.gd" id="2_action"]
+[ext_resource type="Script" uid="uid://ohnosjqw7vvk" path="res://Systems/Combat/shield_effect_action.gd" id="3_shield"]
+[ext_resource type="Texture2D" uid="uid://doboqjtyybmv6" path="res://Assets/Pickups/26.png" id="4_icon"]
 
 [sub_resource type="Resource" id="ShieldAction"]
 script = ExtResource("3_shield")
-amount = 1
 
 [resource]
 script = ExtResource("1_potion")
 potion_id = &"shield_potion"
 display_name = "Shield"
 description = "Adds one point of protective shielding."
-inventory_icon = ExtResource("4_inventory")
-shop_icon = ExtResource("5_shop")
+icon = ExtResource("4_icon")
 price = 100
 rarity = "UNCOMMON"
-shop_effects = PackedStringArray("Adds 1 shield")
 shop_stats = [["shield", "+1"]]
 instant_actions = Array[ExtResource("2_action")]([SubResource("ShieldAction")])

@@ -15,7 +15,7 @@
 [ext_resource type="Texture2D" path="res://Assets/UI/Shop/Icons/Status/coin.png" id="13_coin"]
 [ext_resource type="Texture2D" path="res://Assets/UI/Shop/Items/Weapons/cannon.png" id="14_weapon_icon"]
 [ext_resource type="Texture2D" path="res://Assets/UI/Shop/Items/Augments/Cannon/plasma_cannon.png" id="15_augment_icon"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Items/Potions/health.png" id="16_potion_icon"]
+[ext_resource type="Texture2D" uid="uid://c0wuehgoy3qp1" path="res://Assets/Pickups/29.png" id="16_potion_icon"]
 [ext_resource type="Texture2D" path="res://Assets/UI/Shop/Buttons/tab_normal.png" id="17_tab"]
 [ext_resource type="Texture2D" path="res://Assets/UI/Shop/Buttons/previous.png" id="18_previous"]
 [ext_resource type="Texture2D" path="res://Assets/UI/Shop/Buttons/next.png" id="19_next"]

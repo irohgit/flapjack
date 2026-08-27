@@ -5,10 +5,9 @@ extends Resource
 @export var potion_id: StringName
 @export var display_name: String
 @export_multiline var description: String
-@export var inventory_icon: Texture2D
+@export var icon: Texture2D
 
 @export_group("Shop")
-@export var shop_icon: Texture2D
 @export_range(0, 100000, 1, "or_greater") var price := 0
 @export var rarity := "COMMON"
 @export var shop_effects: PackedStringArray = []
@@ -49,7 +48,9 @@ func use_on(player: Player) -> bool:
 	for effect in timed_effects:
 		if effect == null:
 			continue
-		var effect_applied := player.apply_status_effect(effect)
+		var potion_effect := effect.duplicate(true) as StatusEffectData
+		potion_effect.icon = icon
+		var effect_applied := player.apply_status_effect(potion_effect)
 		applied_any = effect_applied or applied_any
 
 	return applied_any

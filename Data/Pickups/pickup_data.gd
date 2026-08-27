@@ -66,6 +66,12 @@ func is_potion() -> bool:
 	return pickup_type in [PickupType.HEALTH, PickupType.SHIELD, PickupType.POTION]
 
 
+func get_texture() -> Texture2D:
+	if is_potion() and potion != null:
+		return potion.icon
+	return texture
+
+
 func get_notification_text() -> String:
 	if not notification_name.is_empty():
 		return notification_name
