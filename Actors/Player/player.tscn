@@ -54,4 +54,4 @@ collision_mask = 16
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickupRange" unique_id=1601549884]
 scale = Vector2(2, 2)
 shape = SubResource("CircleShape2D_dxqhr")
-debug_color = Color(0.50980395, 0.5803922, 0, 0.19607843)
+debug_color = Color(0.7125058, 0.82186186, 0.5587626, 0.09803922)

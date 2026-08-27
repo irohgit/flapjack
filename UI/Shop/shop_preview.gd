@@ -22,4 +22,3 @@ func _on_purchase_requested(item_id: String, price: int, _category: String) -> v
 	_preview_coins -= price
 	shop_menu.set_coin_amount(_preview_coins)
 	shop_menu.set_item_state(item_id, "owned")
-

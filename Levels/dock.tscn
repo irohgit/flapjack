@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://bv8f0m16foofm"]
+
+[ext_resource type="Texture2D" uid="uid://dskhsys57r4gm" path="res://Assets/Environment/Dock/stub_dock.png" id="1_jk8js"]
+
+[node name="Dock" type="Node2D" unique_id=229493838]
+metadata/_edit_vertical_guides_ = [960.0]
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=2092240938]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_jk8js")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=842310289]
