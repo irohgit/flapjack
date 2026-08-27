@@ -15,6 +15,9 @@ enum Phase {
 @export_range(1.0, 1000.0, 1.0, "or_greater") var dodge_clearance := 170.0
 @export_range(0.0, 500.0, 1.0, "or_greater") var playfield_margin := 170.0
 
+@export_group("Positioning")
+@export_range(0.0, 0.5, 0.01) var hold_height_ratio := 0.28
+
 @export_group("Poison")
 @export var poison_projectile_scene: PackedScene
 @export var poison_data: ProjectileData
@@ -75,19 +78,33 @@ func _move(delta: float, speed: float) -> void:
 		return
 
 	var dodge_direction := _get_dodge_direction()
-	if dodge_direction.is_zero_approx():
-		return
-
 	var movement_speed := speed
 	if _phase == Phase.BERSERK:
 		movement_speed *= berserk_speed_multiplier
 
-	global_position += dodge_direction.normalized() * movement_speed * delta
+	var hold_position := _get_hold_position()
+	if dodge_direction.is_zero_approx():
+		global_position = global_position.move_toward(
+			hold_position,
+			movement_speed * delta
+		)
+	else:
+		var hold_direction := global_position.direction_to(hold_position)
+		var steering := (dodge_direction.normalized() + hold_direction * 0.35).normalized()
+		global_position += steering * movement_speed * delta
+
 	global_position = _clamp_to_visible_playfield(global_position)
 
 
 func _fire() -> Projectile:
 	var shot := super()
+	if shot == null:
+		return null
+
+	var player := get_tree().get_first_node_in_group("player") as Node2D
+	if player != null:
+		shot.direction = shot.global_position.direction_to(player.global_position)
+
 	_track_spawned_node(shot)
 	return shot
 
@@ -105,6 +122,14 @@ func _reset_timer() -> void:
 
 func get_phase() -> Phase:
 	return _phase
+
+
+func _get_hold_position() -> Vector2:
+	var visible_rect := Playarea.get_visible_world_rect()
+	return Vector2(
+		visible_rect.get_center().x,
+		visible_rect.position.y + visible_rect.size.y * hold_height_ratio
+	)
 
 
 func _on_health_changed(current: int, maximum: int) -> void:

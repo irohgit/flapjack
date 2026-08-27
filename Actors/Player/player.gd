@@ -32,6 +32,7 @@ signal augment_added(augment: AugmentData)
 signal pickup_collected(pickup: PickupData)
 signal potion_inventory_changed
 signal potion_selection_changed(index: int)
+signal exited_play_area
 
 var velocity := Vector2.ZERO
 var _move_intent := Vector2.ZERO
@@ -39,6 +40,8 @@ var _external_force := Vector2.ZERO
 var _is_dead := false
 var _potion_slots: Array[PickupData] = []
 var _selected_potion_slot := 0
+var _can_exit_forward := false
+var _has_exited_play_area := false
 
 #SFX
 @export var cannon_sfx: AudioStream
@@ -119,6 +122,7 @@ func _physics_process(delta: float) -> void:
 		
 	position += (velocity + _external_force) * delta
 	position = _clamp_to_camera(position)
+	_check_for_forward_exit()
 	_external_force = Vector2.ZERO
 	_update_weapons(delta)
 	
@@ -133,11 +137,28 @@ func _clamp_to_camera(pos: Vector2) -> Vector2:
 	var right: float = camera_center_local.x + view_size.x * 0.5
 	var top: float = camera_center_local.y - view_size.y * 0.5
 	var bottom: float = camera_center_local.y + view_size.y * 0.5
+	var minimum_y := -INF if _can_exit_forward else top + margin
 
 	return Vector2(
 		clampf(pos.x, left + margin, right - margin),
-		clampf(pos.y, top + margin, bottom - margin)
+		clampf(pos.y, minimum_y, bottom - margin)
 	)
+
+
+func allow_forward_exit() -> void:
+	_can_exit_forward = true
+
+
+func _check_for_forward_exit() -> void:
+	if not _can_exit_forward or _has_exited_play_area:
+		return
+
+	var visible_rect := Playarea.get_visible_world_rect()
+	if global_position.y >= visible_rect.position.y - half_width:
+		return
+
+	_has_exited_play_area = true
+	exited_play_area.emit()
 		
 func _on_area_entered(area: Area2D) -> void:
 	# Overlap Function 

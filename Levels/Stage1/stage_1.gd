@@ -1,5 +1,7 @@
 extends LevelManager
 
+const NEXT_STAGE_SCENE := "res://Levels/Stage2/stage_2.tscn"
+
 @export var level_generator: LevelGenerator
 @export var screen_encounter_parent: Node2D
 @export var stage_music: AudioStream
@@ -27,6 +29,16 @@ func _ready() -> void:
 	)
 
 	run_finale()
+	await GameEvents.boss_defeated
+
+	var player := get_tree().get_first_node_in_group("player") as Player
+	if player == null:
+		push_error("Stage 1 cannot unlock its exit without a player")
+		return
+
+	player.allow_forward_exit()
+	await player.exited_play_area
+	get_tree().change_scene_to_file(NEXT_STAGE_SCENE)
 	
 func run_plan(plan: Array[GeneratedEncounter]) -> void:
 	for encounter: GeneratedEncounter in plan:

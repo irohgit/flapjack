@@ -17,7 +17,7 @@ metadata/_custom_type_script = "uid://dos0tbtxfdq3x"
 [resource]
 script = ExtResource("1_c1qbg")
 name = "Cannon"
-damage = 5
+damage = 1
 firerate = 0.25
 weaponProjectile = ExtResource("2_lekde")
 weaponBehaviour = SubResource("Resource_5fhce")
