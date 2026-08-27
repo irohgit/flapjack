@@ -1,13 +1,13 @@
-[gd_resource type="Resource" script_class="PotionData" load_steps=6 format=3]
+[gd_resource type="Resource" script_class="PotionData" format=3 uid="uid://cvrdvi5dmsnu4"]
 
-[ext_resource type="Script" path="res://Data/Potions/potion_data.gd" id="1_potion"]
-[ext_resource type="Script" path="res://Systems/Combat/effect_action.gd" id="2_action"]
-[ext_resource type="Script" path="res://Systems/Combat/heal_effect_action.gd" id="3_heal"]
+[ext_resource type="Script" uid="uid://sx6ump0oii3m" path="res://Data/Potions/potion_data.gd" id="1_potion"]
+[ext_resource type="Script" uid="uid://bb2hxg3ieta4h" path="res://Systems/Combat/effect_action.gd" id="2_action"]
+[ext_resource type="Script" uid="uid://d0uis0cabk7n" path="res://Systems/Combat/heal_effect_action.gd" id="3_heal"]
 [ext_resource type="Texture2D" uid="uid://c0wuehgoy3qp1" path="res://Assets/Pickups/29.png" id="4_icon"]
+[ext_resource type="Script" uid="uid://djyh13b16xtos" path="res://Systems/Combat/status_effect_data.gd" id="5_q5x2o"]
 
 [sub_resource type="Resource" id="HealAction"]
 script = ExtResource("3_heal")
-amount = 1
 
 [resource]
 script = ExtResource("1_potion")
@@ -16,7 +16,5 @@ display_name = "Health"
 description = "Repairs one point of damage."
 icon = ExtResource("4_icon")
 price = 80
-rarity = "COMMON"
-shop_effects = PackedStringArray("Restores 1 health")
 shop_stats = [["health", "+1"]]
 instant_actions = Array[ExtResource("2_action")]([SubResource("HealAction")])
