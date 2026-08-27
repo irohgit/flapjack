@@ -15,13 +15,9 @@ var homing_range := 450.0
 var _homing_target: Node2D
 
 var plasma := false
-var plasma_stun_duration := 0.0
 var texture_override: Texture2D
 
 var fire := false
-var fire_damage_per_tick := 0
-var fire_tick_count := 0
-var fire_tick_interval := 0.5
 var sprite_frames_override: SpriteFrames
 var animation_name_override: StringName = &"default"
 
@@ -37,10 +33,13 @@ var hit_list: Array[Node2D] = []
 var final_speed_boost := 1.0
 
 var direction := Vector2.UP
+var _status_effects: Array[StatusEffectData] = []
 
 
 func _ready() -> void:
 	assert(data != null, "Projectile spawned with no ProjectileData assigned")
+	for effect: StatusEffectData in data.status_effects:
+		add_status_effect(effect)
 	_apply_data()
 	$VisibleOnScreenNotifier2D.screen_exited.connect(_on_screen_exited)
 	area_entered.connect(_on_area_entered)
@@ -79,9 +78,18 @@ func _apply_allegiance() -> void:
 	if data.allegiance == ProjectileData.Allegiance.PLAYER:
 		set_collision_layer_value(4, true)   # player_bullet
 		set_collision_mask_value(2, true)    # looks for enemy
+		add_to_group("player_projectile")
 	else:
 		set_collision_layer_value(3, true)   # enemy_bullet
 		set_collision_mask_value(1, true)    # looks for player
+		add_to_group("enemy_projectile")
+
+
+func add_status_effect(effect: StatusEffectData) -> void:
+	if effect == null:
+		return
+
+	_status_effects.append(effect.duplicate(true) as StatusEffectData)
 		
 func _physics_process(delta: float) -> void:
 	age_time += delta
@@ -211,10 +219,9 @@ func _on_area_entered(area: Area2D) -> void:
 	Audio.play_sfx(data.impact_sound, -8.0)
 	var is_enemy := area.is_in_group("enemy")
 
-	if plasma and is_enemy and area.has_method("apply_effect"):
-		area.call("apply_effect", Enemy.Effects.STUN, plasma_stun_duration)
-	if fire and is_enemy and area.has_method("apply_burn"):
-		area.call("apply_burn", fire_damage_per_tick, fire_tick_count, fire_tick_interval)
+	if area.has_method("apply_status_effect"):
+		for effect: StatusEffectData in _status_effects:
+			area.call("apply_status_effect", effect)
 	if orbital_ricochet and plasma and is_enemy:
 		if pierce != 0:
 			hit_list.append(area)

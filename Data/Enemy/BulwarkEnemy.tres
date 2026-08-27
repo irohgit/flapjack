@@ -10,6 +10,7 @@
 
 [resource]
 script = ExtResource("1_rl34p")
+health = 3
 texture = ExtResource("4_dul8q")
 projectile_scene = ExtResource("2_v7pu7")
 ammo = ExtResource("1_dul8q")

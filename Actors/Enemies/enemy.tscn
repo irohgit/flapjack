@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://bokjl1r7po7pc" path="res://Data/Enemy/enemy.gd" id="1_8k4sg"]
 [ext_resource type="Texture2D" uid="uid://cv04hsa45l3hf" path="res://Assets/Enemies/Blackbeard_Pirates/Enemy_Ship_5.png" id="1_m1alp"]
 [ext_resource type="Resource" uid="uid://bsk4oh4u6bnhe" path="res://Data/Enemy/BulwarkEnemy.tres" id="2_basic_enemy"]
+[ext_resource type="Script" path="res://Systems/Combat/status_effect_component.gd" id="3_status"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_odipc"]
 radius = 31.0
@@ -28,3 +29,6 @@ debug_color = Color(0.85882354, 0, 0.8784314, 0.19607843)
 script = ExtResource("1_2v41r")
 max_health = 5
 metadata/_custom_type_script = "uid://cv0v6ynhg51ei"
+
+[node name="StatusEffectComponent" type="Node" parent="."]
+script = ExtResource("3_status")

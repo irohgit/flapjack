@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="PotionData" format=3 uid="uid://c2jmgkqcfbsv0"]
+
+[ext_resource type="Script" uid="uid://sx6ump0oii3m" path="res://Data/Potions/potion_data.gd" id="1_potion"]
+[ext_resource type="Script" uid="uid://bb2hxg3ieta4h" path="res://Systems/Combat/effect_action.gd" id="1_y307j"]
+[ext_resource type="Script" uid="uid://djyh13b16xtos" path="res://Systems/Combat/status_effect_data.gd" id="2_effect"]
+[ext_resource type="Script" uid="uid://bd7w82irghj51" path="res://Systems/Combat/status_effect_modifier.gd" id="3_modifier"]
+[ext_resource type="Texture2D" uid="uid://bgiej8ve1g3v0" path="res://Assets/Pickups/28.png" id="4_icon"]
+
+[sub_resource type="Resource" id="MovementSpeedModifier"]
+script = ExtResource("3_modifier")
+stat_id = &"movement_speed"
+operation = 1
+value = 1.5
+
+[sub_resource type="Resource" id="SpeedEffect"]
+script = ExtResource("2_effect")
+effect_id = &"potion_speed"
+display_name = "Speed"
+description = "Movement speed is increased by 50%."
+show_in_hud = true
+duration = 10.0
+stat_modifiers = Array[ExtResource("3_modifier")]([SubResource("MovementSpeedModifier")])
+
+[resource]
+script = ExtResource("1_potion")
+potion_id = &"speed_potion"
+display_name = "Speed"
+description = "Increases movement speed by 50% for 10 seconds."
+icon = ExtResource("4_icon")
+price = 110
+rarity = "RARE"
+shop_stats = [["movement_speed", "+50%"], ["duration", "10s"]]
+timed_effects = Array[ExtResource("2_effect")]([SubResource("SpeedEffect")])

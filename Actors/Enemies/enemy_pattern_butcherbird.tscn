@@ -4,6 +4,7 @@
 [ext_resource type="AudioStream" uid="uid://cjjm3p6o70cwu" path="res://Audio/SFX/bird_hit.mp3" id="2_2n1w6"]
 [ext_resource type="SpriteFrames" uid="uid://fekwl0bh3r7q" path="res://Animations/butcher_bird_black_fly.tres" id="2_uqecc"]
 [ext_resource type="Script" uid="uid://cv0v6ynhg51ei" path="res://Systems/Combat/HealthComponent.gd" id="3_uqecc"]
+[ext_resource type="Script" path="res://Systems/Combat/status_effect_component.gd" id="4_status"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5yy73"]
 radius = 18.027756
@@ -26,3 +27,6 @@ shape = SubResource("CircleShape2D_5yy73")
 script = ExtResource("3_uqecc")
 max_health = 1
 metadata/_custom_type_script = "uid://cv0v6ynhg51ei"
+
+[node name="StatusEffectComponent" type="Node" parent="."]
+script = ExtResource("4_status")

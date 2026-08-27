@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="PotionData" format=3 uid="uid://bau7v7mpln58f"]
+
+[ext_resource type="Script" uid="uid://sx6ump0oii3m" path="res://Data/Potions/potion_data.gd" id="1_potion"]
+[ext_resource type="Script" uid="uid://bb2hxg3ieta4h" path="res://Systems/Combat/effect_action.gd" id="2_action"]
+[ext_resource type="Script" uid="uid://ohnosjqw7vvk" path="res://Systems/Combat/shield_effect_action.gd" id="3_shield"]
+[ext_resource type="Texture2D" uid="uid://doboqjtyybmv6" path="res://Assets/Pickups/26.png" id="4_icon"]
+[ext_resource type="Script" uid="uid://djyh13b16xtos" path="res://Systems/Combat/status_effect_data.gd" id="6_bo6co"]
+
+[sub_resource type="Resource" id="ShieldAction"]
+script = ExtResource("3_shield")
+
+[resource]
+script = ExtResource("1_potion")
+potion_id = &"shield_potion"
+display_name = "Shield"
+description = "Adds one point of protective shielding."
+icon = ExtResource("4_icon")
+price = 100
+rarity = "UNCOMMON"
+shop_stats = [["shield", "+1"]]
+instant_actions = Array[ExtResource("2_action")]([SubResource("ShieldAction")])

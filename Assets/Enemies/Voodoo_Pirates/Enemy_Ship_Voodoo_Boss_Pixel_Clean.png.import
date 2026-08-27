@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://baklm20gl7lf8"
-path="res://.godot/imported/growth.png-0f7c1f0babef14eb3ea2c0a8fc5a38f3.ctex"
+uid="uid://bdvwtt7ugbmss"
+path="res://.godot/imported/Enemy_Ship_Voodoo_Boss_Pixel_Clean.png-1b30ab9d70e599179dc07f497e4dd428.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI/Shop/Items/Potions/growth.png"
-dest_files=["res://.godot/imported/growth.png-0f7c1f0babef14eb3ea2c0a8fc5a38f3.ctex"]
+source_file="res://Assets/Enemies/Voodoo_Pirates/Enemy_Ship_Voodoo_Boss_Pixel_Clean.png"
+dest_files=["res://.godot/imported/Enemy_Ship_Voodoo_Boss_Pixel_Clean.png-1b30ab9d70e599179dc07f497e4dd428.ctex"]
 
 [params]
 

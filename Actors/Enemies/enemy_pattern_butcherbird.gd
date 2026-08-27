@@ -6,16 +6,12 @@ extends Area2D
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var _health: HealthComponent = $HealthComponent
+@onready var _status_effects: StatusEffectComponent = $StatusEffectComponent
 
 var time_alive: float = 0.0
 var start_position: Vector2
 var horizontal_direction: float = 1.0
 
-var effects: Dictionary[Enemy.Effects, float] = {}
-var _burn_damage := 0
-var _burn_ticks_remaining := 0
-var _burn_tick_timer := 0.0
-var _burn_tick_interval := 0.5
 var _has_entered_play_area := false
 
 # SFX
@@ -72,18 +68,16 @@ func _process(delta: float) -> void:
 	if data == null:
 		return
 
-	_tick_effects(delta)
-	_tick_burn(delta)
 	_update_play_area_state()
 
 	if is_queued_for_deletion():
 		return
 
 	time_alive += delta
-	var movement_speed := data.speed
-
-	if _effect_active(Enemy.Effects.STUN):
-		movement_speed *= 0.25
+	var movement_speed := _status_effects.get_modified_value(
+		StatusEffectData.STAT_MOVEMENT_SPEED,
+		data.speed
+	)
 
 	match data.movement_pattern:
 		PatternButcherBirdData.MovementPattern.SINE:
@@ -114,43 +108,8 @@ func move_swoop(delta: float, speed: float) -> void:
 	position.x += speed * delta * horizontal_direction
 
 
-func apply_burn(damage_per_tick: int, tick_count: int, tick_interval: float = 0.5) -> void:
-	_burn_damage = damage_per_tick
-	_burn_ticks_remaining = tick_count
-	_burn_tick_interval = tick_interval
-	_burn_tick_timer = tick_interval
-
-
-func apply_effect(effect: Enemy.Effects, duration: float) -> void:
-	var remaining: float = effects.get(effect, 0.0)
-	effects[effect] = maxf(remaining, duration)
-
-
-func _tick_effects(delta: float) -> void:
-	for effect: Enemy.Effects in effects.keys():
-		var remaining := maxf(effects[effect] - delta, 0.0)
-
-		if remaining <= 0.0:
-			effects.erase(effect)
-		else:
-			effects[effect] = remaining
-
-
-func _tick_burn(delta: float) -> void:
-	if _burn_ticks_remaining <= 0:
-		return
-
-	_burn_tick_timer -= delta
-
-	if _burn_tick_timer <= 0.0:
-		take_damage(_burn_damage)
-		_burn_ticks_remaining -= 1
-		_burn_tick_timer = _burn_tick_interval
-
-
-func _effect_active(effect: Enemy.Effects) -> bool:
-	var remaining: float = effects.get(effect, 0.0)
-	return remaining > 0.0
+func apply_status_effect(effect: StatusEffectData) -> bool:
+	return _status_effects.apply_effect(effect)
 
 
 func _update_play_area_state() -> void:
