@@ -24,7 +24,7 @@ func _ready() -> void:
 	scroll_director.move_to(FIRST_CAMERA_POSITION)
 	await wait_until(
 		func() -> bool:
-			return scroll_director.has_reached(FIRST_CAMERA_POSITION)
+			return scroll_director.has_reached_y(FIRST_CAMERA_POSITION.y)
 	)
 	enemy_controller.spawn_pack(
 		first_wave,
@@ -50,7 +50,7 @@ func _ready() -> void:
 	await wait_until(
 		func() -> bool:
 			return (
-				scroll_director.has_reached(SECOND_CAMERA_POSITION)
+				scroll_director.has_reached_y(SECOND_CAMERA_POSITION.y)
 				and not enemy_controller.has_active_enemies()
 			)
 	)

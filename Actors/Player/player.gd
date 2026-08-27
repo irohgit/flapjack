@@ -38,7 +38,7 @@ var velocity := Vector2.ZERO
 var _move_intent := Vector2.ZERO
 var _external_force := Vector2.ZERO
 var _is_dead := false
-var _potion_slots: Array[PickupData] = []
+var _potion_slots: Array[PotionData] = []
 var _selected_potion_slot := 0
 var _can_exit_forward := false
 var _has_exited_play_area := false
@@ -100,7 +100,7 @@ func _on_health_changed(current: int, maximum: int) -> void:
 	
 func _process(_delta: float) -> void:
 	_move_intent = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
-	if _status_effects.has_effect(StatusEffectData.Type.CONFUSION):
+	if _status_effects.has_flag(StatusEffectData.FLAG_REVERSE_CONTROLS):
 		_move_intent *= -1.0
 
 	if Input.is_action_just_pressed("potion_previous"):
@@ -111,7 +111,11 @@ func _process(_delta: float) -> void:
 		drink_selected_potion()
 
 func _physics_process(delta: float) -> void:
-	var target := _move_intent * max_speed
+	var movement_speed := _status_effects.get_modified_value(
+		StatusEffectData.STAT_MOVEMENT_SPEED,
+		max_speed
+	)
+	var target := _move_intent * movement_speed
 	velocity = velocity.lerp(target, 1.0 - exp(-responsiveness * delta))
 	
 	#Before Processing Movement: Adjust for contact with banks
@@ -241,15 +245,15 @@ func add_augment(augment: AugmentData) -> bool:
 	return false
 
 
-func can_add_potion(potion: PickupData) -> bool:
-	return potion != null and potion.is_potion() and has_potion_space()
+func can_add_potion(potion: PotionData) -> bool:
+	return potion != null and has_potion_space()
 
 
 func has_potion_space() -> bool:
 	return _potion_slots.has(null)
 
 
-func add_potion(potion: PickupData) -> bool:
+func add_potion(potion: PotionData) -> bool:
 	if not can_add_potion(potion):
 		return false
 
@@ -276,18 +280,8 @@ func select_potion_slot(index: int) -> void:
 
 func drink_selected_potion() -> bool:
 	var potion := get_potion_in_slot(_selected_potion_slot)
-	if potion == null:
+	if potion == null or not potion.use_on(self):
 		return false
-
-	match potion.pickup_type:
-		PickupData.PickupType.HEALTH:
-			if _health.get_current_health() >= _health.get_max_health():
-				return false
-			_health.heal(potion.heal_amount)
-		PickupData.PickupType.SHIELD:
-			_health.add_shield(potion.shield_amount)
-		_:
-			return false
 
 	_potion_slots[_selected_potion_slot] = null
 	potion_inventory_changed.emit()
@@ -298,7 +292,7 @@ func get_potion_slot_count() -> int:
 	return _potion_slots.size()
 
 
-func get_potion_in_slot(index: int) -> PickupData:
+func get_potion_in_slot(index: int) -> PotionData:
 	if index < 0 or index >= _potion_slots.size():
 		return null
 	return _potion_slots[index]
@@ -310,9 +304,14 @@ func get_selected_potion_slot() -> int:
 ## Combat
 func _update_weapons(delta: float) -> void:
 	var shoot_pressed := Input.is_action_pressed("shoot")
+	var fire_rate := _status_effects.get_modified_value(
+		StatusEffectData.STAT_FIRE_RATE,
+		1.0
+	)
+	var cooldown_delta := delta * maxf(fire_rate, 0.0)
 	
 	for state in _weapon_states:
-		state.cooldown -= delta
+		state.cooldown -= cooldown_delta
 		var should_fire := shoot_pressed
 		
 		if should_fire and state.cooldown <= 0.0 and state.data.weaponType == WeaponData.WeaponType.ACTIVE:
@@ -347,8 +346,12 @@ func get_health_component() -> HealthComponent:
 	return _health
 
 
-func apply_status_effect(effect: StatusEffectData) -> void:
-	_status_effects.apply_effect(effect)
+func apply_status_effect(effect: StatusEffectData) -> bool:
+	return _status_effects.apply_effect(effect)
+
+
+func get_status_effect_component() -> StatusEffectComponent:
+	return _status_effects
 
 ## Combat Private
 func _on_damaged() -> void:

@@ -9,6 +9,10 @@ const AUGMENTS := "Augments"
 const POTIONS := "Potions"
 
 const CATEGORIES := [WEAPONS, AUGMENTS, POTIONS]
+const HEALTH_POTION: PotionData = preload("res://Data/Potions/HealthPotion.tres")
+const SHIELD_POTION: PotionData = preload("res://Data/Potions/ShieldPotion.tres")
+const RAPID_FIRE_POTION: PotionData = preload("res://Data/Potions/RapidFirePotion.tres")
+const SPEED_POTION: PotionData = preload("res://Data/Potions/SpeedPotion.tres")
 
 
 static func get_items(category: String) -> Array:
@@ -154,11 +158,32 @@ static func _augments() -> Array:
 
 static func _potions() -> Array:
 	return [
-		_entry("rapid_fire_potion", "RAPID FIRE", POTIONS, "Potion", "res://Assets/UI/Shop/Items/Potions/rapid_fire.png", "A short-lived rush that lets the ship's weapons fire faster.", ["Temporarily increases fire rate"], [["fire_rate", "BOOSTED"], ["duration", "TEMPORARY"]], 90, "UNCOMMON"),
-		_entry("shield_potion", "SHIELD", POTIONS, "Potion", "res://Assets/UI/Shop/Items/Potions/shield.png", "A protective draught that adds shield strength beyond normal health.", ["Adds shield"], [["shield", "ADDITIONAL"]], 100, "UNCOMMON"),
-		_entry("health_potion", "HEALTH", POTIONS, "Potion", "res://Assets/UI/Shop/Items/Potions/health.png", "A restorative mixture for repairing damage at sea.", ["Restores player health"], [["health", "RESTORE"]], 80, "COMMON"),
-		_entry("speed_time_potion", "SPEED / SLOW TIME", POTIONS, "Potion Concept", "res://Assets/UI/Shop/Items/Potions/speed_time.png", "Either boosts ship speed or slows the world around it; the team has not chosen the final version.", ["Option A: increase player speed", "Option B: globally slow camera scrolling and enemies"], [["movement_speed", "TBD"], ["duration", "TEMPORARY"]], 110, "RARE"),
-		_entry("shrink_potion", "SHRINK", POTIONS, "Wonderland Potion", "res://Assets/UI/Shop/Items/Potions/shrink.png", "Temporarily shrinks the player ship.", ["Shrink effect", "Exact gameplay values are TBD"], [["area", "SMALLER PLAYER"], ["duration", "TEMPORARY"]], 100, "RARE"),
-		_entry("growth_potion", "GROWTH", POTIONS, "Wonderland Potion", "res://Assets/UI/Shop/Items/Potions/growth.png", "Temporarily enlarges the player ship.", ["Growth effect", "Exact gameplay values are TBD"], [["area", "LARGER PLAYER"], ["duration", "TEMPORARY"]], 100, "RARE"),
-		_entry("rubber_potion", "RUBBER", POTIONS, "Reflection Potion", "res://Assets/UI/Shop/Items/Potions/reflection.png", "Turns the hull rubbery enough to send incoming shots back where they came from.", ["Reflects enemy bullets toward their source", "Does not protect against contact damage"], [["shield", "PROJECTILES ONLY"], ["duration", "TEMPORARY"]], 160, "EPIC"),
+		_potion_entry(HEALTH_POTION),
+		_potion_entry(SHIELD_POTION),
+		_potion_entry(RAPID_FIRE_POTION),
+		_potion_entry(SPEED_POTION),
+		_entry("shrink_potion", "SHRINK", POTIONS, "Wonderland Potion", "res://Assets/UI/Shop/Items/Potions/shrink.png", "Temporarily shrinks the player ship.", ["Shrink effect", "Exact gameplay values are TBD"], [["area", "SMALLER PLAYER"], ["duration", "TEMPORARY"]], 100, "RARE", "locked"),
+		_entry("growth_potion", "GROWTH", POTIONS, "Wonderland Potion", "res://Assets/UI/Shop/Items/Potions/growth.png", "Temporarily enlarges the player ship.", ["Growth effect", "Exact gameplay values are TBD"], [["area", "LARGER PLAYER"], ["duration", "TEMPORARY"]], 100, "RARE", "locked"),
+		_entry("rubber_potion", "RUBBER", POTIONS, "Reflection Potion", "res://Assets/UI/Shop/Items/Potions/reflection.png", "Turns the hull rubbery enough to send incoming shots back where they came from.", ["Reflects enemy bullets toward their source", "Does not protect against contact damage"], [["shield", "PROJECTILES ONLY"], ["duration", "TEMPORARY"]], 160, "EPIC", "locked"),
 	]
+
+
+static func _potion_entry(potion: PotionData) -> Dictionary:
+	var effects: Array = []
+	for effect in potion.shop_effects:
+		effects.append(effect)
+
+	var icon := potion.shop_icon if potion.shop_icon != null else potion.inventory_icon
+	var icon_path := icon.resource_path if icon != null else ""
+	return _entry(
+		String(potion.potion_id),
+		potion.display_name,
+		POTIONS,
+		"Potion",
+		icon_path,
+		potion.description,
+		effects,
+		potion.shop_stats.duplicate(true),
+		potion.price,
+		potion.rarity
+	)

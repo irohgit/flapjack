@@ -1,0 +1,37 @@
+[gd_resource type="Resource" script_class="PotionData" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://Data/Potions/potion_data.gd" id="1_potion"]
+[ext_resource type="Script" path="res://Systems/Combat/status_effect_data.gd" id="2_effect"]
+[ext_resource type="Script" path="res://Systems/Combat/status_effect_modifier.gd" id="3_modifier"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Items/Potions/rapid_fire.png" id="4_icon"]
+
+[sub_resource type="Resource" id="FireRateModifier"]
+script = ExtResource("3_modifier")
+stat_id = &"fire_rate"
+operation = 1
+value = 2.0
+
+[sub_resource type="Resource" id="RapidFireEffect"]
+script = ExtResource("2_effect")
+effect_id = &"potion_rapid_fire"
+display_name = "Rapid Fire"
+description = "Weapons fire twice as quickly."
+icon = ExtResource("4_icon")
+show_in_hud = true
+duration = 10.0
+reapply_policy = 0
+stat_modifiers = Array[ExtResource("3_modifier")]([SubResource("FireRateModifier")])
+
+[resource]
+script = ExtResource("1_potion")
+potion_id = &"rapid_fire_potion"
+display_name = "Rapid Fire"
+description = "Doubles weapon fire rate for 10 seconds."
+inventory_icon = ExtResource("4_icon")
+shop_icon = ExtResource("4_icon")
+price = 90
+rarity = "UNCOMMON"
+shop_effects = PackedStringArray("Doubles fire rate for 10 seconds")
+shop_stats = [["fire_rate", "2X"], ["duration", "10s"]]
+timed_effects = Array[ExtResource("2_effect")]([SubResource("RapidFireEffect")])
+

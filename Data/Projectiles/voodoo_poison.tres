@@ -7,8 +7,14 @@
 
 [sub_resource type="Resource" id="Status_confusion"]
 script = ExtResource("1_status")
-type = 2
+effect_id = &"confusion"
+display_name = "Confusion"
+description = "Movement controls are reversed."
+icon = ExtResource("3_texture")
+show_in_hud = true
 duration = 10.0
+reapply_policy = 0
+flags = Array[StringName]([&"reverse_controls"])
 
 [resource]
 script = ExtResource("2_projectile")

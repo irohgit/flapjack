@@ -3,9 +3,11 @@ extends CanvasLayer
 @onready var coin_label: Label = $Coin/Amount
 @onready var gin_label: Label = $Gin/Amount
 @onready var health_shield_icons: HBoxContainer = $"health and shield icon/HealthRow"
+@onready var active_effects_container: HBoxContainer = $ActiveEffects
 @onready var potion_slots_container: HBoxContainer = $PotionSlots
 
 var _player: Player
+var _status_effects: StatusEffectComponent
 
 var _current_health: int = 0
 var _maximum_health: int = 0
@@ -14,6 +16,7 @@ var _heart_icons: Array[TextureRect] = []
 var _shield_icons: Array[TextureRect] = []
 var _potion_item_icons: Array[TextureRect] = []
 var _potion_selectors: Array[TextureRect] = []
+var _active_effect_entries: Dictionary = {}
 
 @export var full_heart_icon: Texture2D
 @export var half_heart_icon: Texture2D
@@ -48,6 +51,17 @@ func _init_display_values() -> void:
 	health.shield_changed.connect(_on_shield_changed)
 	_player.potion_inventory_changed.connect(_update_potion_slots)
 	_player.potion_selection_changed.connect(_on_potion_selection_changed)
+	_status_effects = _player.get_status_effect_component()
+
+	if _status_effects == null:
+		push_warning("Status effect component not found")
+	else:
+		_status_effects.effect_started.connect(_on_effect_started)
+		_status_effects.effect_refreshed.connect(_on_effect_refreshed)
+		_status_effects.effect_ended.connect(_on_effect_ended)
+
+		for effect_id in _status_effects.get_active_effect_ids():
+			_show_active_effect(effect_id)
 
 	_on_coin_changed(_player.coin_count)
 	_refresh_gin_display()
@@ -60,6 +74,17 @@ func _init_display_values() -> void:
 	_on_shield_changed(health.get_shield_points())
 	_ensure_potion_slot_count(_player.get_potion_slot_count())
 	_update_potion_slots()
+
+
+func _process(_delta: float) -> void:
+	if _status_effects == null:
+		return
+
+	for effect_id in _active_effect_entries:
+		var entry: Dictionary = _active_effect_entries[effect_id]
+		var countdown := entry["countdown"] as Label
+		countdown.text = str(maxi(0, ceili(_status_effects.get_remaining(effect_id))))
+
 
 func _on_coin_changed(amount: int) -> void:
 	coin_label.text = str(amount)
@@ -140,10 +165,83 @@ func _on_potion_selection_changed(_index: int) -> void:
 	_update_potion_slots()
 
 
+func _on_effect_started(effect_id: StringName) -> void:
+	_show_active_effect(effect_id)
+
+
+func _on_effect_refreshed(effect_id: StringName) -> void:
+	_show_active_effect(effect_id)
+
+
+func _on_effect_ended(effect_id: StringName) -> void:
+	_remove_active_effect(effect_id)
+
+
+func _show_active_effect(effect_id: StringName) -> void:
+	var effect := _status_effects.get_effect_data(effect_id)
+	if effect == null or not effect.show_in_hud:
+		_remove_active_effect(effect_id)
+		return
+
+	var entry: Dictionary = _active_effect_entries.get(effect_id, {})
+	if entry.is_empty():
+		entry = _create_active_effect_entry()
+		_active_effect_entries[effect_id] = entry
+
+	var root := entry["root"] as Control
+	var icon := entry["icon"] as TextureRect
+	var countdown := entry["countdown"] as Label
+	icon.texture = effect.icon
+	countdown.text = str(maxi(0, ceili(_status_effects.get_remaining(effect_id))))
+	root.tooltip_text = effect.description if not effect.description.is_empty() else effect.display_name
+
+
+func _create_active_effect_entry() -> Dictionary:
+	var root := Control.new()
+	root.custom_minimum_size = Vector2(48.0, 48.0)
+	active_effects_container.add_child(root)
+
+	var icon := TextureRect.new()
+	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	icon.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	root.add_child(icon)
+	icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+
+	var countdown := Label.new()
+	countdown.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	countdown.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	countdown.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
+	countdown.add_theme_font_size_override("font_size", 18)
+	countdown.add_theme_color_override("font_color", Color.WHITE)
+	countdown.add_theme_color_override("font_outline_color", Color.BLACK)
+	countdown.add_theme_constant_override("outline_size", 4)
+	root.add_child(countdown)
+	countdown.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+
+	return {
+		"root": root,
+		"icon": icon,
+		"countdown": countdown,
+	}
+
+
+func _remove_active_effect(effect_id: StringName) -> void:
+	if not _active_effect_entries.has(effect_id):
+		return
+
+	var entry: Dictionary = _active_effect_entries[effect_id]
+	var root := entry["root"] as Control
+	_active_effect_entries.erase(effect_id)
+	active_effects_container.remove_child(root)
+	root.queue_free()
+
+
 func _update_potion_slots() -> void:
 	for index in range(_potion_item_icons.size()):
 		var potion := _player.get_potion_in_slot(index)
-		_potion_item_icons[index].texture = potion.texture if potion != null else null
+		_potion_item_icons[index].texture = potion.inventory_icon if potion != null else null
 		_potion_selectors[index].visible = (
 			index == _player.get_selected_potion_slot()
 		)

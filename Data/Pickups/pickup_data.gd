@@ -3,7 +3,7 @@ extends Resource
 
 # Keep existing values stable because Godot serializes enum selections as
 # integers in .tres and .tscn files. New pickup types belong at the end.
-enum PickupType {AUGMENT, WEAPON, COIN, HEALTH, SHIELD, GIN}
+enum PickupType {AUGMENT, WEAPON, COIN, HEALTH, SHIELD, GIN, POTION}
 
 @export var pickup_type: PickupType
 @export var texture: Texture2D
@@ -12,10 +12,9 @@ enum PickupType {AUGMENT, WEAPON, COIN, HEALTH, SHIELD, GIN}
 
 @export var augment: AugmentData
 @export var weapon: WeaponData
+@export var potion: PotionData
 @export var coin_amount := 0
 @export var gin_amount := 0
-@export var heal_amount := 0
-@export var shield_amount := 0
 @export var notification_name: String
 #SFX
 # --- Audio ---
@@ -35,8 +34,8 @@ func can_pickup(player: Player) -> bool:
 			return player.can_add_augment(augment)
 		PickupType.WEAPON:
 			return player.can_add_weapon(weapon)
-		PickupType.HEALTH, PickupType.SHIELD:
-			return player.can_add_potion(self)
+		PickupType.HEALTH, PickupType.SHIELD, PickupType.POTION:
+			return player.can_add_potion(potion)
 		PickupType.COIN, PickupType.GIN:
 			return true
 
@@ -58,15 +57,13 @@ func apply_to(player: Player) -> bool:
 		PickupType.GIN:
 			player._add_gin(gin_amount)
 			return true
-		PickupType.HEALTH:
-			return player.add_potion(self)
-		PickupType.SHIELD:
-			return player.add_potion(self)
+		PickupType.HEALTH, PickupType.SHIELD, PickupType.POTION:
+			return player.add_potion(potion)
 	return false
 
 
 func is_potion() -> bool:
-	return pickup_type in [PickupType.HEALTH, PickupType.SHIELD]
+	return pickup_type in [PickupType.HEALTH, PickupType.SHIELD, PickupType.POTION]
 
 
 func get_notification_text() -> String:
@@ -82,9 +79,9 @@ func get_notification_text() -> String:
 			return "Coins +%d" % coin_amount
 		PickupType.GIN:
 			return "Gin +%d" % gin_amount
-		PickupType.HEALTH:
-			return "Health +%d" % heal_amount
-		PickupType.SHIELD:
-			return "Shield +%d" % shield_amount
+		PickupType.HEALTH, PickupType.SHIELD, PickupType.POTION:
+			if potion != null and not potion.display_name.is_empty():
+				return potion.display_name
+			return "Potion"
 
 	return "Pickup"

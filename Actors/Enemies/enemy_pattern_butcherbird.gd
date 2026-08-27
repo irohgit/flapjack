@@ -74,10 +74,10 @@ func _process(delta: float) -> void:
 		return
 
 	time_alive += delta
-	var movement_speed := data.speed
-
-	if _status_effects.has_effect(StatusEffectData.Type.STUN):
-		movement_speed *= 0.25
+	var movement_speed := _status_effects.get_modified_value(
+		StatusEffectData.STAT_MOVEMENT_SPEED,
+		data.speed
+	)
 
 	match data.movement_pattern:
 		PatternButcherBirdData.MovementPattern.SINE:
@@ -108,8 +108,8 @@ func move_swoop(delta: float, speed: float) -> void:
 	position.x += speed * delta * horizontal_direction
 
 
-func apply_status_effect(effect: StatusEffectData) -> void:
-	_status_effects.apply_effect(effect)
+func apply_status_effect(effect: StatusEffectData) -> bool:
+	return _status_effects.apply_effect(effect)
 
 
 func _update_play_area_state() -> void:

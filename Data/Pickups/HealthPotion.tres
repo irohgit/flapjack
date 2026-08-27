@@ -3,11 +3,12 @@
 [ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="1_a6b40"]
 [ext_resource type="AudioStream" uid="uid://d1t77v38kul38" path="res://Audio/SFX/pop_pickup_cute.mp3" id="1_xdqpg"]
 [ext_resource type="Texture2D" uid="uid://c0wuehgoy3qp1" path="res://Assets/Pickups/29.png" id="2_vfhu1"]
+[ext_resource type="Resource" path="res://Data/Potions/HealthPotion.tres" id="3_potion"]
 
 [resource]
 script = ExtResource("1_a6b40")
 pickup_type = 3
 texture = ExtResource("2_vfhu1")
-heal_amount = 1
+potion = ExtResource("3_potion")
 pickup_sfx = ExtResource("1_xdqpg")
 metadata/_custom_type_script = "uid://rau2jwiqd0pd"

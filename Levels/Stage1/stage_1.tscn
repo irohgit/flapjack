@@ -37,6 +37,9 @@
 [ext_resource type="Script" uid="uid://b80ljucjchi54" path="res://Systems/Environment/bankGenerator.gd" id="29_6xawf"]
 [ext_resource type="PackedScene" uid="uid://bossw7m3pbuhw" path="res://Actors/Environment/ParallaxObjects/near_barrel.tscn" id="30_fffbn"]
 [ext_resource type="PackedScene" uid="uid://bc2g5sxmhx1p2" path="res://Actors/Environment/ParallaxObjects/near_wood.tscn" id="31_gp8qq"]
+[ext_resource type="Resource" uid="uid://bkqumwc6jcphy" path="res://Data/Pickups/HealthPotion.tres" id="32_health"]
+[ext_resource type="Resource" path="res://Data/Pickups/RapidFirePotion.tres" id="33_rapid"]
+[ext_resource type="Resource" path="res://Data/Pickups/SpeedPotion.tres" id="34_speed"]
 
 [sub_resource type="Resource" id="Resource_54op2"]
 script = ExtResource("25_jrq28")
@@ -115,7 +118,7 @@ rows_behind = 100
 [node name="World" type="Node2D" parent="." unique_id=790454155]
 
 [node name="CoinSpawner" parent="." unique_id=1386735529 instance=ExtResource("14_rvay1")]
-augments = Array[ExtResource("16_m3y4m")]([ExtResource("17_uwhja"), ExtResource("18_p2t5c"), ExtResource("21_fireball"), ExtResource("22_magnet"), ExtResource("16_e24f3"), ExtResource("17_qr3gx"), ExtResource("18_xq76v"), ExtResource("19_ht8rm")])
+loot_pool = Array[ExtResource("16_m3y4m")]([ExtResource("17_uwhja"), ExtResource("18_p2t5c"), ExtResource("21_fireball"), ExtResource("22_magnet"), ExtResource("17_qr3gx"), ExtResource("18_xq76v"), ExtResource("19_ht8rm"), ExtResource("32_health"), ExtResource("16_e24f3"), ExtResource("33_rapid"), ExtResource("34_speed")])
 
 [node name="LevelGenerator" type="Node2D" parent="." unique_id=593108892]
 script = ExtResource("16_cvtwx")

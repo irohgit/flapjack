@@ -30,10 +30,10 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	var final_speed: float = data.move_speed
-
-	if _status_effects.has_effect(StatusEffectData.Type.STUN):
-		final_speed *= 0.25
+	var final_speed := _status_effects.get_modified_value(
+		StatusEffectData.STAT_MOVEMENT_SPEED,
+		data.move_speed
+	)
 
 	_move(delta, final_speed)
 
@@ -110,5 +110,5 @@ func _on_died() -> void:
 	queue_free()
 
 
-func apply_status_effect(effect: StatusEffectData) -> void:
-	_status_effects.apply_effect(effect)
+func apply_status_effect(effect: StatusEffectData) -> bool:
+	return _status_effects.apply_effect(effect)

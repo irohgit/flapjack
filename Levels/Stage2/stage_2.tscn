@@ -42,7 +42,7 @@ scroll_speed = 50.0
 [node name="World" type="Node2D" parent="." unique_id=822996462]
 
 [node name="CoinSpawner" parent="." unique_id=1386735529 instance=ExtResource("9_bq31y")]
-augments = Array[ExtResource("10_a3klg")]([ExtResource("11_5w86b"), ExtResource("12_8m7vp"), ExtResource("13_fireball"), ExtResource("14_magnet")])
+loot_pool = Array[ExtResource("10_a3klg")]([ExtResource("11_5w86b"), ExtResource("12_8m7vp"), ExtResource("13_fireball"), ExtResource("14_magnet")])
 
 [node name="LevelGenerator" type="Node2D" parent="." unique_id=711120617]
 script = ExtResource("13_d1opp")
