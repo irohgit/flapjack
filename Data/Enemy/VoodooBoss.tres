@@ -10,11 +10,11 @@
 
 [resource]
 script = ExtResource("1_enemy")
-health = 500
+health = 250
 contact_damage = 1
 projectile_damage = 1
 projectile_fire_rate = 2
-move_speed = 200.0
+move_speed = 100.0
 texture = ExtResource("3_texture")
 visual_scale = 0.2
 projectile_scene = ExtResource("4_projectile")

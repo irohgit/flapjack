@@ -11,5 +11,4 @@ func apply_to_projectile(_projectile: Projectile) -> void:
 	var stun := StatusEffectData.new()
 	stun.type = StatusEffectData.Type.STUN
 	stun.duration = stun_duration
-	stun.reapply_policy = StatusEffectData.ReapplyPolicy.KEEP_LONGEST
 	_projectile.add_status_effect(stun)

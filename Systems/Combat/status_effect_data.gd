@@ -8,16 +8,9 @@ enum Type {
 	CONFUSION,
 }
 
-enum ReapplyPolicy {
-	REFRESH,
-	KEEP_LONGEST,
-	STACK,
-}
-
 
 @export var type: Type = Type.STUN
 @export_range(0.0, 120.0, 0.1, "or_greater") var duration := 1.0
-@export var reapply_policy: ReapplyPolicy = ReapplyPolicy.KEEP_LONGEST
 
 @export_group("Damage Over Time")
 @export var damage_per_tick := 0

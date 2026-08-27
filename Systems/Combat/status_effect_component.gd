@@ -2,11 +2,6 @@ class_name StatusEffectComponent
 extends Node
 
 
-signal effect_started(type: StatusEffectData.Type)
-signal effect_refreshed(type: StatusEffectData.Type, remaining: float)
-signal effect_ended(type: StatusEffectData.Type)
-
-
 class ActiveEffect:
 	var data: StatusEffectData
 	var remaining := 0.0
@@ -32,61 +27,33 @@ func _process(delta: float) -> void:
 
 		if active.remaining <= 0.0:
 			_active_effects.erase(type)
-			effect_ended.emit(type)
 
 
 func apply_effect(effect: StatusEffectData) -> void:
 	if effect == null or effect.duration <= 0.0:
 		return
 
-	var copied_effect := effect.duplicate(true) as StatusEffectData
-	var active := _active_effects.get(copied_effect.type) as ActiveEffect
-
-	if active == null:
-		_active_effects[copied_effect.type] = ActiveEffect.new(copied_effect)
-		effect_started.emit(copied_effect.type)
+	var active := _active_effects.get(effect.type) as ActiveEffect
+	# A new stun may extend the current one, but never shorten it.
+	if (
+		active != null
+		and effect.type == StatusEffectData.Type.STUN
+		and active.remaining >= effect.duration
+	):
 		return
 
-	match copied_effect.reapply_policy:
-		StatusEffectData.ReapplyPolicy.REFRESH:
-			active.data = copied_effect
-			active.remaining = copied_effect.duration
-			active.tick_timer = maxf(copied_effect.tick_interval, 0.01)
+	var copied_effect := effect.duplicate(true) as StatusEffectData
+	if active == null:
+		_active_effects[copied_effect.type] = ActiveEffect.new(copied_effect)
+		return
 
-		StatusEffectData.ReapplyPolicy.KEEP_LONGEST:
-			if copied_effect.duration > active.remaining:
-				active.data = copied_effect
-				active.remaining = copied_effect.duration
-				active.tick_timer = minf(
-					active.tick_timer,
-					maxf(copied_effect.tick_interval, 0.01)
-				)
-
-		StatusEffectData.ReapplyPolicy.STACK:
-			active.remaining += copied_effect.duration
-
-	effect_refreshed.emit(copied_effect.type, active.remaining)
+	active.data = copied_effect
+	active.remaining = copied_effect.duration
+	active.tick_timer = maxf(copied_effect.tick_interval, 0.01)
 
 
 func has_effect(type: StatusEffectData.Type) -> bool:
 	return _active_effects.has(type)
-
-
-func get_remaining(type: StatusEffectData.Type) -> float:
-	var active := _active_effects.get(type) as ActiveEffect
-	return active.remaining if active != null else 0.0
-
-
-func clear_effect(type: StatusEffectData.Type) -> void:
-	if not _active_effects.erase(type):
-		return
-
-	effect_ended.emit(type)
-
-
-func clear_all() -> void:
-	for type: StatusEffectData.Type in _active_effects.keys():
-		clear_effect(type)
 
 
 func _tick_burn(active: ActiveEffect, delta: float) -> void:

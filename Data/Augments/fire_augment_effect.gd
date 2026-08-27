@@ -15,7 +15,6 @@ func apply_to_projectile(_projectile: Projectile) -> void:
 	var burn := StatusEffectData.new()
 	burn.type = StatusEffectData.Type.BURN
 	burn.duration = float(burn_tick_count) * burn_tick_interval
-	burn.reapply_policy = StatusEffectData.ReapplyPolicy.REFRESH
 	burn.damage_per_tick = burn_damage_per_tick
 	burn.tick_interval = burn_tick_interval
 	_projectile.add_status_effect(burn)

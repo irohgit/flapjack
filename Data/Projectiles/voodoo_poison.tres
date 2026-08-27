@@ -9,7 +9,6 @@
 script = ExtResource("1_status")
 type = 2
 duration = 10.0
-reapply_policy = 0
 
 [resource]
 script = ExtResource("2_projectile")

@@ -8,15 +8,13 @@ enum Phase {
 	BERSERK,
 }
 
+const POISON_HEALTH_THRESHOLD := 0.75
+const BERSERK_HEALTH_THRESHOLD := 0.30
 
-@export_group("Dodging")
-@export_range(1.0, 2000.0, 1.0, "or_greater") var dodge_detection_radius := 450.0
-@export_range(0.0, 5.0, 0.05, "or_greater") var dodge_lookahead := 1.0
-@export_range(1.0, 1000.0, 1.0, "or_greater") var dodge_clearance := 170.0
-@export_range(0.0, 500.0, 1.0, "or_greater") var playfield_margin := 170.0
 
 @export_group("Positioning")
 @export_range(0.0, 0.5, 0.01) var hold_height_ratio := 0.28
+@export_range(0.0, 500.0, 1.0, "or_greater") var playfield_margin := 170.0
 
 @export_group("Poison")
 @export var poison_projectile_scene: PackedScene
@@ -38,10 +36,10 @@ enum Phase {
 @onready var _poison_muzzle: Marker2D = $PoisonMuzzle
 
 var _phase: Phase = Phase.NORMAL
-var _poison_timer := INF
-var _minion_timer := INF
+var _poison_timer := 0.0
+var _minion_timer := 0.0
 var _next_wave_from_left := true
-var _spawned_nodes: Array[Node] = []
+var _boss_spawns: Array[Node] = []
 var _is_dying := false
 
 
@@ -77,22 +75,14 @@ func _move(delta: float, speed: float) -> void:
 	if not Playarea.is_near_screen(global_position, playfield_margin):
 		return
 
-	var dodge_direction := _get_dodge_direction()
 	var movement_speed := speed
 	if _phase == Phase.BERSERK:
 		movement_speed *= berserk_speed_multiplier
 
-	var hold_position := _get_hold_position()
-	if dodge_direction.is_zero_approx():
-		global_position = global_position.move_toward(
-			hold_position,
-			movement_speed * delta
-		)
-	else:
-		var hold_direction := global_position.direction_to(hold_position)
-		var steering := (dodge_direction.normalized() + hold_direction * 0.35).normalized()
-		global_position += steering * movement_speed * delta
-
+	global_position = global_position.move_toward(
+		_get_hold_position(),
+		movement_speed * delta
+	)
 	global_position = _clamp_to_visible_playfield(global_position)
 
 
@@ -101,11 +91,7 @@ func _fire() -> Projectile:
 	if shot == null:
 		return null
 
-	var player := get_tree().get_first_node_in_group("player") as Node2D
-	if player != null:
-		shot.direction = shot.global_position.direction_to(player.global_position)
-
-	_track_spawned_node(shot)
+	_boss_spawns.append(shot)
 	return shot
 
 
@@ -120,14 +106,15 @@ func _reset_timer() -> void:
 	_fire_timer = cooldown
 
 
-func get_phase() -> Phase:
-	return _phase
-
-
 func _get_hold_position() -> Vector2:
 	var visible_rect := Playarea.get_visible_world_rect()
+	var target_x := visible_rect.get_center().x
+	var player := get_tree().get_first_node_in_group("player") as Node2D
+	if player != null:
+		target_x = player.global_position.x
+
 	return Vector2(
-		visible_rect.get_center().x,
+		target_x,
 		visible_rect.position.y + visible_rect.size.y * hold_height_ratio
 	)
 
@@ -137,92 +124,20 @@ func _on_health_changed(current: int, maximum: int) -> void:
 		return
 
 	var health_ratio := float(current) / float(maximum)
-	var next_phase := Phase.NORMAL
+	if health_ratio <= BERSERK_HEALTH_THRESHOLD and _phase != Phase.BERSERK:
+		var was_poison_phase := _phase == Phase.POISON
+		_phase = Phase.BERSERK
 
-	if health_ratio <= 0.30:
-		next_phase = Phase.BERSERK
-	elif health_ratio <= 0.75:
-		next_phase = Phase.POISON
-
-	if next_phase <= _phase:
-		return
-
-	var previous_phase := _phase
-	_phase = next_phase
-
-	if _phase == Phase.POISON:
-		_poison_timer = _next_poison_interval()
-
-	if _phase == Phase.BERSERK:
 		var attack_rate := maxf(berserk_attack_rate_multiplier, 0.1)
 		_fire_timer /= attack_rate
-		if previous_phase >= Phase.POISON:
+		if was_poison_phase:
 			_poison_timer /= attack_rate
 		else:
 			_poison_timer = _next_poison_interval()
 		_minion_timer = minion_wave_interval
-
-
-func _get_dodge_direction() -> Vector2:
-	var steering := Vector2.ZERO
-	var detection_squared := dodge_detection_radius * dodge_detection_radius
-
-	for node: Node in get_tree().get_nodes_in_group("player_projectile"):
-		var projectile := node as Projectile
-		if projectile == null or projectile.data == null or projectile.is_queued_for_deletion():
-			continue
-
-		var to_boss := global_position - projectile.global_position
-		if to_boss.length_squared() > detection_squared:
-			continue
-
-		var projectile_velocity := (
-			projectile.direction.normalized()
-			* projectile.data.speed
-			* projectile.final_speed_boost
-		)
-		var velocity_squared := projectile_velocity.length_squared()
-		if velocity_squared <= 0.0 or to_boss.dot(projectile_velocity) <= 0.0:
-			continue
-
-		var closest_time := clampf(
-			to_boss.dot(projectile_velocity) / velocity_squared,
-			0.0,
-			dodge_lookahead
-		)
-		var closest_point := projectile.global_position + projectile_velocity * closest_time
-		var miss_offset := global_position - closest_point
-		var miss_distance := miss_offset.length()
-		if miss_distance > dodge_clearance:
-			continue
-
-		var escape_direction := miss_offset.normalized()
-		if escape_direction.is_zero_approx():
-			escape_direction = _best_lateral_direction(projectile_velocity)
-
-		var distance_weight := 1.0 - clampf(
-			projectile.global_position.distance_to(global_position) / dodge_detection_radius,
-			0.0,
-			1.0
-		)
-		var impact_weight := 1.0 - clampf(miss_distance / dodge_clearance, 0.0, 1.0)
-		steering += escape_direction * (distance_weight + impact_weight)
-
-	return steering
-
-
-func _best_lateral_direction(projectile_velocity: Vector2) -> Vector2:
-	var lateral := Vector2(-projectile_velocity.y, projectile_velocity.x).normalized()
-	var visible_rect := Playarea.get_visible_world_rect()
-	var left_space := global_position.x - (visible_rect.position.x + playfield_margin)
-	var right_space := visible_rect.end.x - playfield_margin - global_position.x
-
-	if lateral.x < 0.0 and left_space < right_space:
-		lateral *= -1.0
-	elif lateral.x > 0.0 and right_space < left_space:
-		lateral *= -1.0
-
-	return lateral
+	elif health_ratio <= POISON_HEALTH_THRESHOLD and _phase == Phase.NORMAL:
+		_phase = Phase.POISON
+		_poison_timer = _next_poison_interval()
 
 
 func _clamp_to_visible_playfield(world_position: Vector2) -> Vector2:
@@ -248,14 +163,11 @@ func _fire_poison() -> void:
 		return
 
 	shot.data = poison_data.duplicate(true) as ProjectileData
-	var player := get_tree().get_first_node_in_group("player") as Node2D
 	shot.direction = Vector2.DOWN
-	if player != null:
-		shot.direction = _poison_muzzle.global_position.direction_to(player.global_position)
 
 	get_parent().add_child(shot)
 	shot.global_position = _poison_muzzle.global_position
-	_track_spawned_node(shot)
+	_boss_spawns.append(shot)
 
 
 func _next_poison_interval() -> float:
@@ -268,10 +180,6 @@ func _next_poison_interval() -> float:
 func _spawn_bird_wave() -> void:
 	var from_left := _next_wave_from_left
 	_next_wave_from_left = not _next_wave_from_left
-	_spawn_bird_wave_staggered(from_left)
-
-
-func _spawn_bird_wave_staggered(from_left: bool) -> void:
 	for index: int in range(minion_wave_size):
 		if _is_dying or not is_inside_tree():
 			return
@@ -301,19 +209,7 @@ func _spawn_bird(index: int, from_left: bool) -> void:
 
 	spawn_parent.add_child(bird)
 	bird.setup(bird_data, spawn_parent.to_local(spawn_global), direction)
-	_track_spawned_node(bird)
-
-
-func _track_spawned_node(node: Node) -> void:
-	if node == null:
-		return
-
-	_spawned_nodes.append(node)
-	node.tree_exited.connect(_on_spawned_node_exited.bind(node), CONNECT_ONE_SHOT)
-
-
-func _on_spawned_node_exited(node: Node) -> void:
-	_spawned_nodes.erase(node)
+	_boss_spawns.append(bird)
 
 
 func _on_died() -> void:
@@ -321,10 +217,10 @@ func _on_died() -> void:
 		return
 
 	_is_dying = true
-	for node: Node in _spawned_nodes.duplicate():
+	for node: Node in _boss_spawns:
 		if is_instance_valid(node) and not node.is_queued_for_deletion():
 			node.queue_free()
-	_spawned_nodes.clear()
+	_boss_spawns.clear()
 
 	GameEvents.boss_defeated.emit(global_position)
 	super()
