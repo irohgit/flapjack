@@ -101,7 +101,6 @@ horizontal_spacing = 250.0
 
 [node name="ScrollDirector" parent="." unique_id=1595117280 node_paths=PackedStringArray("scroll_rig") instance=ExtResource("3_o28ls")]
 scroll_rig = NodePath("../ScrollRig")
-scroll_speed = 50.0
 
 [node name="HUD" parent="." unique_id=228684140 instance=ExtResource("1_s0w88")]
 
@@ -197,10 +196,11 @@ metadata/_custom_type_script = "uid://tsoi3lwff5mf"
 
 [node name="ScreenEncounters" type="Node2D" parent="ScrollRig" unique_id=1299489232]
 
-[node name="Player" parent="ScrollRig" unique_id=2109576054 node_paths=PackedStringArray("camera", "banks") instance=ExtResource("4_nx2dg")]
+[node name="Player" parent="ScrollRig" unique_id=2109576054 node_paths=PackedStringArray("camera", "banks", "scrollDirector") instance=ExtResource("4_nx2dg")]
 position = Vector2(960, 852)
 camera = NodePath("../ShakeCamera")
 banks = NodePath("../../BankGenerator")
+scrollDirector = NodePath("../../ScrollDirector")
 
 [node name="Pickup" parent="." unique_id=169920597 instance=ExtResource("19_uwhja")]
 position = Vector2(283, 480)

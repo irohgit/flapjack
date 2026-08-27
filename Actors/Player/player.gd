@@ -26,6 +26,7 @@ var _weapon_states: Array[WeaponState] = []
 @onready var _hitbox_shape: CollisionShape2D = $CollisionShape2D
 @onready var _status_effects: StatusEffectComponent = $StatusEffectComponent
 
+
 signal coin_changed(amount: int)
 signal gin_changed(amount: int)
 signal augment_added(augment: AugmentData)
@@ -61,13 +62,22 @@ var _has_exited_play_area := false
 @export var bank_push_x := 850.0    # sideways shove out of the sand
 @export var bank_push_down := 150.0 # drag downward, like running aground
 
-#Developer Tool
+#Developer Exports
+@export var scrollDirector: ScrollDirector
+#Developer Tools
 func _unhandled_input(event: InputEvent) -> void:
 	if not OS.is_debug_build():
 		return
+	#1. Kill Self Instantly
 	if event.is_action_pressed("kill_self"):
 		get_viewport().set_input_as_handled()
 		_health.take_damage(9999)
+	#2. Increase scroll speed
+	if event.is_action_pressed("increase_scroll_speed"):
+		scrollDirector.change_move_speed(scrollDirector.scroll_speed + scrollDirector.scroll_speed_change)
+	if event.is_action_pressed("decrease_scroll_speed"):
+		scrollDirector.change_move_speed(scrollDirector.scroll_speed - scrollDirector.scroll_speed_change)
+	
 		
 func _ready() -> void:
 	_apply_meta_upgrades()
