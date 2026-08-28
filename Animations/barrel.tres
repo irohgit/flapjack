@@ -1,0 +1,77 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://dvw354nqleto6"]
+
+[ext_resource type="Texture2D" uid="uid://c53w0fy5j605f" path="res://Assets/Environment/Destructible Objects Sprite Sheet.png" id="1_6b0qv"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5csas"]
+atlas = ExtResource("1_6b0qv")
+region = Rect2(256, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_60ewa"]
+atlas = ExtResource("1_6b0qv")
+region = Rect2(320, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_frkcs"]
+atlas = ExtResource("1_6b0qv")
+region = Rect2(384, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tdteo"]
+atlas = ExtResource("1_6b0qv")
+region = Rect2(192, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tpjg5"]
+atlas = ExtResource("1_6b0qv")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xspt3"]
+atlas = ExtResource("1_6b0qv")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_piks5"]
+atlas = ExtResource("1_6b0qv")
+region = Rect2(128, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_12dba"]
+atlas = ExtResource("1_6b0qv")
+region = Rect2(0, 0, 64, 64)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5csas")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_60ewa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_frkcs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tdteo")
+}],
+"loop": 1,
+"name": &"explode",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tpjg5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xspt3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_piks5")
+}],
+"loop": 1,
+"name": &"hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_12dba")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}]

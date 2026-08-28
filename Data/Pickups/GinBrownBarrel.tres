@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PickupData" format=3 uid="uid://b342ifv78fmmg"]
+
+[ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="1_mab8g"]
+[ext_resource type="SpriteFrames" uid="uid://dvw354nqleto6" path="res://Animations/barrel.tres" id="2_sqnjn"]
+[ext_resource type="Texture2D" uid="uid://c53w0fy5j605f" path="res://Assets/Environment/Destructible Objects Sprite Sheet.png" id="3_8vqka"]
+
+[resource]
+script = ExtResource("1_mab8g")
+pickup_type = 5
+texture = ExtResource("3_8vqka")
+sprite_frames = ExtResource("2_sqnjn")
+animation_name = &"hit"
+gin_amount = 1
+metadata/_custom_type_script = "uid://rau2jwiqd0pd"

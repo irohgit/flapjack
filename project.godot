@@ -68,6 +68,7 @@ flapjack_fx=""
 player=""
 player_projectile="Projectiles fired by the player. Used by enemy dodge and targeting behaviour."
 enemy_projectile="Projectiles fired by enemies."
+destructible=""
 
 [input]
 
