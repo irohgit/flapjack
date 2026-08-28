@@ -27,7 +27,4 @@ potion_id = &"rapid_fire_potion"
 display_name = "Rapid Fire"
 description = "Doubles weapon fire rate for 10 seconds."
 icon = ExtResource("4_icon")
-price = 90
-rarity = "UNCOMMON"
-shop_stats = [["fire_rate", "2X"], ["duration", "10s"]]
 timed_effects = Array[ExtResource("2_effect")]([SubResource("RapidFireEffect")])

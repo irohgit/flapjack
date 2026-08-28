@@ -9,5 +9,9 @@
 script = ExtResource("1_qmc68")
 texture = ExtResource("2_iqpjv")
 augment = ExtResource("3_plasma")
+shop_id = &"plasma_cannon"
+shop_description = "Infuses cannon fire with volatile Azure plasma."
+shop_price = 180
+shop_rarity = "RARE"
 pickup_sfx = ExtResource("2_f42f2")
 metadata/_custom_type_script = "uid://rau2jwiqd0pd"

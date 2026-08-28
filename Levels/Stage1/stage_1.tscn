@@ -93,7 +93,6 @@ enemy_controller = NodePath("EnemyController")
 metadata/_edit_vertical_guides_ = [960.0]
 
 [node name="GameUI" parent="." unique_id=1532914546 instance=ExtResource("3_p2t5c")]
-level_data = ExtResource("18_6vwij")
 
 [node name="EnemyController" parent="." unique_id=335274421 node_paths=PackedStringArray("spawn_parent") instance=ExtResource("10_8p85k")]
 enemy_types = Array[ExtResource("12_fkloy")]([ExtResource("5_fkloy"), ExtResource("6_rvay1")])

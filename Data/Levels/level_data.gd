@@ -11,7 +11,7 @@ extends Resource
 @export var spawn_ahead_distance: float = 600.0
 
 @export_group("Merchant")
-@export var shop_data: ShopData
+@export var shop_items: Array[PickupData] = []
 
 @export_group("Encounter Sequence")
 @export var encounter_sequence: Array[EncounterData] = []

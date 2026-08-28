@@ -15,6 +15,4 @@ potion_id = &"health_potion"
 display_name = "Health"
 description = "Repairs one point of damage."
 icon = ExtResource("4_icon")
-price = 80
-shop_stats = [["health", "+1"]]
 instant_actions = Array[ExtResource("2_action")]([SubResource("HealAction")])

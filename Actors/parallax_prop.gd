@@ -111,7 +111,7 @@ func is_in_canvas_layer() -> bool:
 #Visual Polish - Boat will have a wake that pushes 
 func _apply_push(delta: float) -> void:
 	if _player == null:
-		_player = get_tree().get_first_node_in_group("Player") as Node2D
+		_player = get_tree().get_first_node_in_group("player") as Node2D
 		if _player == null:
 			print("push: no node in group 'player'")
 			return

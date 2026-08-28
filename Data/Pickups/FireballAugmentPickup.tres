@@ -4,12 +4,14 @@
 [ext_resource type="AudioStream" uid="uid://bhp3mqd4ya5te" path="res://Audio/SFX/plasma_pickup.mp3" id="2_f438p"]
 [ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="3_011jj"]
 [ext_resource type="Texture2D" uid="uid://bx5o4w04hmjw7" path="res://Assets/Pickups/FireBall/FB001.png" id="4_011jj"]
-[ext_resource type="Resource" uid="uid://b7nwwwfmfkswx" path="res://Data/Weapons/Cannon.tres" id="5_2apyp"]
 
 [resource]
 script = ExtResource("3_011jj")
 texture = ExtResource("4_011jj")
 augment = ExtResource("1_f438p")
-weapon = ExtResource("5_2apyp")
+shop_id = &"fire_cannon"
+shop_description = "Heated shot sets struck targets alight."
+shop_price = 190
+shop_rarity = "UNCOMMON"
 pickup_sfx = ExtResource("2_f438p")
 metadata/_custom_type_script = "uid://rau2jwiqd0pd"

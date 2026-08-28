@@ -9,5 +9,9 @@
 script = ExtResource("2_15c5x")
 texture = ExtResource("4_qrkgb")
 augment = ExtResource("1_15c5x")
+shop_id = &"homing_cannon"
+shop_description = "Enchanted cannonballs correct their flight toward enemy ships."
+shop_price = 200
+shop_rarity = "RARE"
 pickup_sfx = ExtResource("2_qrkgb")
 metadata/_custom_type_script = "uid://rau2jwiqd0pd"

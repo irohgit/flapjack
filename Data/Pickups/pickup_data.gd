@@ -18,12 +18,10 @@ enum PickupType {AUGMENT, WEAPON, COIN, HEALTH, SHIELD, GIN, POTION}
 @export var notification_name: String
 
 @export_group("Shop Presentation")
-@export var shop_id: StringName
+@export var shop_id: StringName = &""
 @export_multiline var shop_description: String
 @export_range(0, 100000, 1, "or_greater") var shop_price := 0
-@export var shop_rarity := "COMMON"
-@export var shop_effects: PackedStringArray = []
-@export var shop_stats: Array = []
+@export_enum("COMMON", "UNCOMMON", "RARE", "EPIC") var shop_rarity: String = "COMMON"
 
 #SFX
 # --- Audio ---
@@ -52,7 +50,7 @@ func can_pickup(player: Player) -> bool:
 
 
 func apply_to(player: Player) -> bool:
-	if not can_pickup(player):
+	if player == null:
 		return false
 
 	match pickup_type:
@@ -103,27 +101,53 @@ func get_notification_text() -> String:
 
 
 func get_shop_id() -> StringName:
-	if not shop_id.is_empty():
-		return shop_id
-	if not resource_path.is_empty():
-		return StringName(resource_path.get_file().get_basename().to_snake_case())
-	return StringName(get_notification_text().to_snake_case())
+	return shop_id
 
 
-func get_shop_category() -> String:
+func is_sellable() -> bool:
+	if shop_id.is_empty() or shop_price <= 0 or get_shop_icon() == null:
+		return false
+
 	match pickup_type:
 		PickupType.WEAPON:
-			return "Weapons"
+			return weapon != null
 		PickupType.AUGMENT:
-			return "Augments"
+			return augment != null and augment.augmentEffect != null
 		PickupType.HEALTH, PickupType.SHIELD, PickupType.POTION:
-			return "Potions"
-		PickupType.COIN, PickupType.GIN:
-			return "Currency"
-	return "Items"
+			return potion != null
+
+	return false
 
 
-func get_shop_subtype() -> String:
+func get_shop_name() -> String:
+	match pickup_type:
+		PickupType.WEAPON:
+			if weapon != null and not weapon.name.is_empty():
+				return weapon.name
+		PickupType.AUGMENT:
+			if augment != null and not augment.name.is_empty():
+				return augment.name
+		PickupType.HEALTH, PickupType.SHIELD, PickupType.POTION:
+			if potion != null and not potion.display_name.is_empty():
+				return potion.display_name
+	return get_notification_text()
+
+
+func get_shop_icon() -> Texture2D:
+	match pickup_type:
+		PickupType.WEAPON:
+			if weapon != null and weapon.texture != null:
+				return weapon.texture
+		PickupType.AUGMENT:
+			if augment != null and augment.texture != null:
+				return augment.texture
+		PickupType.HEALTH, PickupType.SHIELD, PickupType.POTION:
+			if potion != null and potion.icon != null:
+				return potion.icon
+	return null
+
+
+func get_shop_type() -> String:
 	match pickup_type:
 		PickupType.WEAPON:
 			return "Weapon"
@@ -147,30 +171,8 @@ func get_shop_description() -> String:
 
 
 func get_shop_price() -> int:
-	if shop_price > 0:
-		return shop_price
-	if is_potion() and potion != null:
-		return potion.price
-	return 0
+	return shop_price
 
 
 func get_shop_rarity() -> String:
-	if is_potion() and potion != null and shop_rarity == "COMMON":
-		return potion.rarity
 	return shop_rarity
-
-
-func get_shop_effects() -> PackedStringArray:
-	if not shop_effects.is_empty():
-		return shop_effects.duplicate()
-	if is_potion() and potion != null:
-		return potion.shop_effects.duplicate()
-	return PackedStringArray()
-
-
-func get_shop_stats() -> Array:
-	if not shop_stats.is_empty():
-		return shop_stats.duplicate(true)
-	if is_potion() and potion != null:
-		return potion.shop_stats.duplicate(true)
-	return []

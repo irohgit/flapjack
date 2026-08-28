@@ -27,7 +27,4 @@ potion_id = &"speed_potion"
 display_name = "Speed"
 description = "Increases movement speed by 50% for 10 seconds."
 icon = ExtResource("4_icon")
-price = 110
-rarity = "RARE"
-shop_stats = [["movement_speed", "+50%"], ["duration", "10s"]]
 timed_effects = Array[ExtResource("2_effect")]([SubResource("SpeedEffect")])

@@ -9,6 +9,9 @@
 script = ExtResource("1_7p4su")
 texture = ExtResource("2_c8inv")
 augment = ExtResource("1_4u47b")
-notification_name = "Oribital Ricochet"
+notification_name = "Orbital Ricochet"
+shop_id = &"orbital_ricochet"
+shop_price = 275
+shop_rarity = "EPIC"
 pickup_sfx = ExtResource("2_0qk4m")
 metadata/_custom_type_script = "uid://rau2jwiqd0pd"
