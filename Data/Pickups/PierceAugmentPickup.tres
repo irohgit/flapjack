@@ -4,6 +4,15 @@
 [ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="1_wg6ku"]
 [ext_resource type="AudioStream" uid="uid://d2sr3t6n13ye4" path="res://Audio/SFX/soft_pickup.mp3" id="2_br1aa"]
 [ext_resource type="Texture2D" uid="uid://bygt8tb1xwxtv" path="res://Assets/Pickups/18.png" id="2_n2jre"]
+[ext_resource type="Shader" uid="uid://b2g6d0upsk6cx" path="res://Assets/Shaders/pickup.gdshader" id="2_spivm"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0ptqr"]
+shader = ExtResource("2_spivm")
+shader_parameter/outline_color = Color(0.8784314, 0.9019608, 0.96862745, 1)
+shader_parameter/outline_width = 10.0
+shader_parameter/pulse_speed = 5.0
+shader_parameter/pulse_min = 0.6
+shader_parameter/pulse_max = 1.5
 
 [resource]
 script = ExtResource("1_wg6ku")
@@ -11,4 +20,5 @@ texture = ExtResource("2_n2jre")
 augment = ExtResource("1_br1aa")
 notification_name = "Piercing Rounds"
 pickup_sfx = ExtResource("2_br1aa")
+highlight_material = SubResource("ShaderMaterial_0ptqr")
 metadata/_custom_type_script = "uid://rau2jwiqd0pd"

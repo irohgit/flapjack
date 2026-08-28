@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://b2xa4hm5ib5ca"]
 
 [ext_resource type="Script" uid="uid://brpre4byem6tx" path="res://Data/Levels/weighted_enemy_data.gd" id="1_enemy"]
+[ext_resource type="Resource" uid="uid://b342ifv78fmmg" path="res://Data/Pickups/GinBrownBarrel.tres" id="1_qllpl"]
 [ext_resource type="Resource" uid="uid://bsk4oh4u6bnhe" path="res://Data/Enemy/BulwarkEnemy.tres" id="2_bulwark"]
 [ext_resource type="Script" uid="uid://bhsc86o70es47" path="res://Data/Levels/weighted_end_event_data.gd" id="2_finale"]
 [ext_resource type="Script" uid="uid://dgn1ppeend4i1" path="res://Data/Levels/weighted_formation_data.gd" id="3_formation"]
@@ -10,6 +11,7 @@
 [ext_resource type="PackedScene" path="res://Actors/Enemies/voodoo_boss.tscn" id="5_stage_clear"]
 [ext_resource type="Script" uid="uid://cytvv5o32ru6e" path="res://Data/Levels/encounter_data.gd" id="6_encounter"]
 [ext_resource type="PackedScene" uid="uid://3gxxy4myod8b" path="res://Actors/Enemies/PatternEnemyWaveSpawner.tscn" id="8_birds"]
+[ext_resource type="Resource" uid="uid://qygik8ixvyxj" path="res://Data/Pickups/GinGoldBarrel.tres" id="11_de3ok"]
 
 [sub_resource type="Resource" id="Enemy_bulwark"]
 script = ExtResource("1_enemy")
@@ -198,4 +200,9 @@ encounter_sequence = Array[ExtResource("6_encounter")]([SubResource("Encounter_0
 finale_trigger_position = Vector2(0, -10000)
 finale_spawn_position = Vector2(960, -9700)
 finale_pool = Array[ExtResource("2_finale")]([SubResource("Finale_stage_clear")])
+gin_min = 10
+gin_max = 10
+brown_barrel = ExtResource("1_qllpl")
+gold_barrel = ExtResource("11_de3ok")
+max_barrels_per_encounter = 5
 metadata/_custom_type_script = "uid://p4ssfrvfj0uw"

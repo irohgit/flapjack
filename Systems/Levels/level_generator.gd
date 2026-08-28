@@ -62,7 +62,12 @@ func generate_plan() -> Array[GeneratedEncounter]:
 
 		previous_anchor_y = anchor_y
 		has_previous_encounter = true
-
+	
+	_assign_gin(_plan_gin())
+	var total_barrels := 0
+	for e: GeneratedEncounter in generated_plan:
+		total_barrels += e.gin_barrels.size()
+	print("GIN PLAN: ", total_barrels, " barrels across ", generated_plan.size(), " encounters")
 	return generated_plan
 
 
@@ -218,3 +223,66 @@ func _choose_special_encounter(pool: Array[WeightedEncounterData]) -> PackedScen
 
 	var index: int = rng.rand_weighted(weights)
 	return valid_entries[index].encounter_scene
+	
+#GIN Functions
+func _plan_gin() -> Array[DestructibleData]:
+	var barrels: Array[DestructibleData] = []
+	if level_data.brown_barrel == null:
+		return barrels
+
+	# count the barrel slots this stage actually has
+	var normal_count := 0
+	for encounter: GeneratedEncounter in generated_plan:
+		if encounter.type == GeneratedEncounter.Type.NORMAL:
+			normal_count += 1
+	var max_slots: int = normal_count * level_data.max_barrels_per_encounter
+	if max_slots <= 0:
+		push_warning("Gin planned but no normal encounters to hold it")
+		return barrels
+
+	var gold_value: int = level_data.gold_value if level_data.gold_barrel != null else 0
+	var brown_value: int = maxi(1, level_data.brown_value)
+	var richest: int = maxi(gold_value, brown_value)
+
+	# clamp the request to the stage's real ceiling
+	var total: int = rng.randi_range(level_data.gin_min, level_data.gin_max)
+	var ceiling := max_slots * richest
+	if total > ceiling:
+		push_warning("Wanted %d gin but stage ceiling is %d (%d slots x %d). Add richer barrels or more encounters." % [total, ceiling, max_slots, richest])
+		total = ceiling
+
+	# start with the designer's gold flavour, then add gold if needed to fit the slots
+	var gold_count := 0
+	if gold_value > 0:
+		gold_count = int(round(total * level_data.gold_share)) / gold_value
+	var remaining := total - gold_count * gold_value
+	var brown_count := int(ceil(float(maxi(remaining, 0)) / float(brown_value)))
+
+	while gold_value > 0 and gold_count + brown_count > max_slots and gold_count * gold_value < total:
+		gold_count += 1
+		remaining = total - gold_count * gold_value
+		brown_count = int(ceil(float(maxi(remaining, 0)) / float(brown_value)))
+
+	brown_count = mini(brown_count, max_slots - gold_count)
+
+	for _i in gold_count:
+		barrels.append(level_data.gold_barrel)
+	for _i in brown_count:
+		barrels.append(level_data.brown_barrel)
+
+	barrels.shuffle()
+	return barrels
+
+#This function assigns gin to normal encounters
+func _assign_gin(barrels: Array[DestructibleData]) -> void:
+	if barrels.is_empty():
+		return
+	var normals: Array[GeneratedEncounter] = []
+	for encounter: GeneratedEncounter in generated_plan:
+		if encounter.type == GeneratedEncounter.Type.NORMAL:
+			normals.append(encounter)
+	if normals.is_empty():
+		return
+	normals.shuffle()
+	for i: int in range(barrels.size()):
+		normals[i % normals.size()].gin_barrels.append(barrels[i])

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PickupData" format=3 uid="uid://7x5vq7u18w0i"]
+
+[ext_resource type="AudioStream" uid="uid://cnl8157a83koi" path="res://Audio/SFX/gem_pickup.mp3" id="1_2nctt"]
+[ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="2_ynoje"]
+[ext_resource type="Texture2D" uid="uid://c6s7ng7xgbl1w" path="res://Assets/Pickups/GoldGin.png" id="3_2nctt"]
+
+[resource]
+script = ExtResource("2_ynoje")
+pickup_type = 5
+texture = ExtResource("3_2nctt")
+gin_amount = 5
+pickup_sfx = ExtResource("1_2nctt")
+pickup_pitch_spread = 0.0
+metadata/_custom_type_script = "uid://rau2jwiqd0pd"

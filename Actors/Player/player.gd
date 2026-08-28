@@ -119,7 +119,6 @@ func _process(_delta: float) -> void:
 		select_potion_slot(_selected_potion_slot + 1)
 	if Input.is_action_just_pressed("drink_potion"):
 		drink_selected_potion()
-
 func _physics_process(delta: float) -> void:
 	var movement_speed := _status_effects.get_modified_value(
 		StatusEffectData.STAT_MOVEMENT_SPEED,

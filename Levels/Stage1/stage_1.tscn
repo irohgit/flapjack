@@ -24,9 +24,7 @@
 [ext_resource type="Resource" uid="uid://e8bbiwbkus1o" path="res://Data/Pickups/OrbitalRicochetPickup.tres" id="18_xq76v"]
 [ext_resource type="PackedScene" uid="uid://bws0ib2ep02xb" path="res://Actors/Environment/cloud_overlay.tscn" id="19_aqmxt"]
 [ext_resource type="Resource" uid="uid://bnh66tw3h3xk8" path="res://Data/Pickups/HarpoonPickup.tres" id="19_ht8rm"]
-[ext_resource type="PackedScene" uid="uid://dgp73phtjophn" path="res://Actors/Pickup/pickup.tscn" id="19_uwhja"]
 [ext_resource type="PackedScene" uid="uid://de1bc11i6qosg" path="res://Actors/Environment/bg_layer_1_fish.tscn" id="20_p2t5c"]
-[ext_resource type="Resource" uid="uid://bvtbthku5smhg" path="res://Data/Pickups/Gin.tres" id="20_uwhja"]
 [ext_resource type="Resource" uid="uid://cpynird4edptk" path="res://Data/Pickups/FireballAugmentPickup.tres" id="21_fireball"]
 [ext_resource type="Script" uid="uid://bbwfptmjbqmy8" path="res://Systems/ParallaxDirector2.gd" id="22_0rlpp"]
 [ext_resource type="Resource" uid="uid://cesmcj6ctad" path="res://Data/Pickups/MagnetAugmentPickup.tres" id="22_magnet"]
@@ -35,12 +33,12 @@
 [ext_resource type="PackedScene" uid="uid://cnl7v1qfhh014" path="res://Actors/Environment/ParallaxObjects/far_rock.tscn" id="27_1xfup"]
 [ext_resource type="PackedScene" uid="uid://b7wmf0ym3lvi6" path="res://Actors/Environment/ParallaxObjects/far_statues.tscn" id="28_54op2"]
 [ext_resource type="Script" uid="uid://b80ljucjchi54" path="res://Systems/Environment/bankGenerator.gd" id="29_6xawf"]
-[ext_resource type="PackedScene" uid="uid://bossw7m3pbuhw" path="res://Actors/Environment/ParallaxObjects/near_barrel.tscn" id="30_fffbn"]
 [ext_resource type="PackedScene" uid="uid://bc2g5sxmhx1p2" path="res://Actors/Environment/ParallaxObjects/near_wood.tscn" id="31_gp8qq"]
 [ext_resource type="Resource" uid="uid://bkqumwc6jcphy" path="res://Data/Pickups/HealthPotion.tres" id="32_health"]
-[ext_resource type="Resource" path="res://Data/Pickups/RapidFirePotion.tres" id="33_rapid"]
-[ext_resource type="Resource" path="res://Data/Pickups/SpeedPotion.tres" id="34_speed"]
-[ext_resource type="Resource" uid="uid://b342ifv78fmmg" path="res://Data/Pickups/GinBrownBarrel.tres" id="41_cmsr7"]
+[ext_resource type="Resource" uid="uid://cs41wqbjx3rya" path="res://Data/Pickups/RapidFirePotion.tres" id="33_rapid"]
+[ext_resource type="Resource" uid="uid://b5mc7v6dicmvg" path="res://Data/Pickups/SpeedPotion.tres" id="34_speed"]
+[ext_resource type="PackedScene" uid="uid://3mo2067bwo0l" path="res://Actors/Pickup/barrel.tscn" id="42_30rop"]
+[ext_resource type="Script" uid="uid://dk4cjbt8xm0wc" path="res://Actors/Pickup/ginspawner.gd" id="42_pgwwf"]
 
 [sub_resource type="Resource" id="Resource_54op2"]
 script = ExtResource("25_jrq28")
@@ -65,12 +63,6 @@ scene = ExtResource("28_54op2")
 weight = 0.4
 metadata/_custom_type_script = "uid://8sxccskaloo3"
 
-[sub_resource type="Resource" id="Resource_qd6vc"]
-script = ExtResource("25_jrq28")
-scene = ExtResource("30_fffbn")
-weight = 0.4
-metadata/_custom_type_script = "uid://8sxccskaloo3"
-
 [sub_resource type="Resource" id="Resource_b1rs4"]
 script = ExtResource("25_jrq28")
 scene = ExtResource("31_gp8qq")
@@ -84,7 +76,6 @@ weight = 0.9
 metadata/_custom_type_script = "uid://8sxccskaloo3"
 
 [node name="Stage1" type="Node2D" unique_id=1126219472 node_paths=PackedStringArray("level_generator", "screen_encounter_parent", "scroll_director", "enemy_controller")]
-position = Vector2(0, 1)
 script = ExtResource("1_thckm")
 level_generator = NodePath("LevelGenerator")
 screen_encounter_parent = NodePath("ScrollRig/ScreenEncounters")
@@ -129,7 +120,7 @@ level_data = ExtResource("18_6vwij")
 position = Vector2(0, -3)
 script = ExtResource("22_0rlpp")
 far_objects = Array[ExtResource("25_jrq28")]([SubResource("Resource_54op2"), SubResource("Resource_jrq28"), SubResource("Resource_7wjkh"), SubResource("Resource_fffbn")])
-near_objects = Array[ExtResource("25_jrq28")]([SubResource("Resource_qd6vc"), SubResource("Resource_b1rs4")])
+near_objects = Array[ExtResource("25_jrq28")]([SubResource("Resource_b1rs4")])
 overlay_objects = Array[ExtResource("25_jrq28")]([SubResource("Resource_08pg4")])
 far_parent = NodePath("../ScrollRig/WaterSurface/Far")
 near_parent = NodePath("../ScrollRig/Near")
@@ -140,10 +131,18 @@ overlay_scroll_range = Vector2(10, 10)
 min_gap = 100.0
 max_gap = 500.0
 min_per_band = 3
-max_per_band = 8
+max_per_band = 6
 spawn_lead = 100.0
 scroll_director = NodePath("../ScrollDirector")
 level_data = ExtResource("18_6vwij")
+
+[node name="GinSpawner" type="Node2D" parent="." unique_id=1760309351 node_paths=PackedStringArray("spawn_parent", "camera")]
+position = Vector2(655, 540)
+script = ExtResource("42_pgwwf")
+gin_barrel_scene = ExtResource("42_30rop")
+spawn_parent = NodePath(".")
+drift_time = 20.0
+camera = NodePath("../ScrollRig/ShakeCamera")
 
 [node name="ScrollRig" type="Node2D" parent="." unique_id=873284287]
 
@@ -203,11 +202,3 @@ position = Vector2(960, 852)
 camera = NodePath("../ShakeCamera")
 banks = NodePath("../../BankGenerator")
 scrollDirector = NodePath("../../ScrollDirector")
-
-[node name="Pickup" parent="." unique_id=169920597 instance=ExtResource("19_uwhja")]
-position = Vector2(283, 481)
-data = ExtResource("20_uwhja")
-
-[node name="GinBarrel" parent="." unique_id=1857440470 instance=ExtResource("19_uwhja")]
-position = Vector2(655, 541)
-data = ExtResource("41_cmsr7")

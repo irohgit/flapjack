@@ -1,7 +1,17 @@
 [gd_scene format=3 uid="uid://dgp73phtjophn"]
 
 [ext_resource type="Script" uid="uid://cihkjwqxafexs" path="res://Actors/Pickup/world_pickup.gd" id="1_dxqhr"]
+[ext_resource type="Shader" uid="uid://b2g6d0upsk6cx" path="res://Assets/Shaders/pickup.gdshader" id="2_mlr3r"]
 [ext_resource type="Script" uid="uid://cv0v6ynhg51ei" path="res://Systems/Combat/HealthComponent.gd" id="2_qd6t3"]
+[ext_resource type="Script" uid="uid://csfmjtnriqc1u" path="res://Actors/Pickup/floatmotion.gd" id="3_plqhn"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_b5btn"]
+shader = ExtResource("2_mlr3r")
+shader_parameter/outline_color = Color(1, 0.95, 0.7, 1)
+shader_parameter/outline_width = 10.0
+shader_parameter/pulse_speed = 5.0
+shader_parameter/pulse_min = 0.6
+shader_parameter/pulse_max = 1.5
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_b77r1"]
 
@@ -14,6 +24,7 @@ script = ExtResource("1_dxqhr")
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1482293552]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1740038192]
+material = SubResource("ShaderMaterial_b5btn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=10593349 groups=["player_projectile"]]
 shape = SubResource("CircleShape2D_b77r1")
@@ -22,3 +33,7 @@ debug_color = Color(1, 1, 1, 0.11764706)
 [node name="HealthComponent" type="Node" parent="." unique_id=1715396705]
 script = ExtResource("2_qd6t3")
 metadata/_custom_type_script = "uid://cv0v6ynhg51ei"
+
+[node name="Floatmotion" type="Node2D" parent="." unique_id=38811324]
+script = ExtResource("3_plqhn")
+random_spawn_rotation = true

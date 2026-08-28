@@ -62,7 +62,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		close_menu()
 	if event is InputEventKey and event.pressed and not event.echo:
 		var s := String(open_action)
-		print("[", name, "] open_action=[", s, "] length=", s.length())
+		#print("[", name, "] open_action=[", s, "] length=", s.length())
 		#print("[",name,"] got key. open_action = ' ", open_action, "' visible = ", visible) 
 
 ## Show this screen. Override and call super() when opening means something extra.
