@@ -3,10 +3,12 @@
 [ext_resource type="AudioStream" uid="uid://cbplby7nfcsyw" path="res://Audio/SFX/ship_hit.mp3" id="1_fp7vk"]
 [ext_resource type="Script" uid="uid://cre7gs48pepsi" path="res://Data/Projectiles/projectile_data.gd" id="1_p6wsq"]
 [ext_resource type="Texture2D" uid="uid://g7lr3i0a17el" path="res://Assets/Projectiles/harpoon.png" id="2_0cyof"]
+[ext_resource type="Script" uid="uid://djyh13b16xtos" path="res://Systems/Combat/status_effect_data.gd" id="3_c6o3c"]
 
 [resource]
 script = ExtResource("1_p6wsq")
 texture = ExtResource("2_0cyof")
 scale = 1.5
+pierce = -1
 impact_sound = ExtResource("1_fp7vk")
 metadata/_custom_type_script = "uid://cre7gs48pepsi"

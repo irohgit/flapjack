@@ -68,6 +68,7 @@ func _apply_data() -> void:
 	_shape.shape = circle
 	
 	_trail.default_color = data.trail_colour
+	pierce = data.pierce
 	
 	_apply_allegiance()
 # Layers come from the data, so a spawner never has to know or set them.

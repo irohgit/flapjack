@@ -11,6 +11,7 @@ enum Allegiance { PLAYER, ENEMY }
 @export var scale := 1.0
 @export var speed := 1100.0
 @export var damage := 1
+@export var pierce := 0
 @export var hitbox_radius := 8.0
 @export var trail_colour := Color.WHITE
 @export var trail_length := 12
