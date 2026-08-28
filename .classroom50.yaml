@@ -1,0 +1,7 @@
+schema: "classroom50/repo-config/v1"
+classroom: "games-studio-2-cosc2349"
+assignment: "assignment-2-xenon"
+owner:
+  username: "s4006583"
+  id: 131413403
+  accepted_at: "2026-08-17T05:02:56Z"
