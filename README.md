@@ -1,5 +1,7 @@
 # Flapjack
 
+## games-studio-2-cosc2349-assignment-2-xenon-s4006583
+
 Flapjack is a 2D, vertically scrolling boat action game built with Godot. The
 player steers through scrolling stages, fights enemy formations, collects
 pickups, and upgrades weapons.
@@ -20,21 +22,21 @@ The project has no separate package or dependency installation step.
 
 ## Controls
 
-| Action | Keyboard | Controller |
-| --- | --- | --- |
-| Move | W, A, S, D | Left stick |
-| Shoot | Space | Right trigger |
-| Pause/back | Escape | — |
+| Action     | Keyboard   | Controller    |
+| ---------- | ---------- | ------------- |
+| Move       | W, A, S, D | Left stick    |
+| Shoot      | Space      | Right trigger |
+| Pause/back | Escape     | —             |
 
 ## Project layout
 
-| Path | Purpose |
-| --- | --- |
-| `Actors/` | Player, enemies, projectiles, pickups, cameras, and hazards |
-| `Assets/` | Textures, fonts, shaders, and cinematic artwork |
-| `Data/` | Godot resources defining enemies, weapons, projectiles, and pickups |
-| `Levels/` | Menus, reusable level systems, and stage scenes/scripts |
-| `Systems/` | Shared combat, environment, event, and debug systems |
+| Path       | Purpose                                                             |
+| ---------- | ------------------------------------------------------------------- |
+| `Actors/`  | Player, enemies, projectiles, pickups, cameras, and hazards         |
+| `Assets/`  | Textures, fonts, shaders, and cinematic artwork                     |
+| `Data/`    | Godot resources defining enemies, weapons, projectiles, and pickups |
+| `Levels/`  | Menus, reusable level systems, and stage scenes/scripts             |
+| `Systems/` | Shared combat, environment, event, and debug systems                |
 
 Gameplay behaviour is split between actor scripts and small reusable
 components. For example, the Player node runs `Actors/Player/player.gd`, while
@@ -109,16 +111,16 @@ menus outside it.
 These references are not discovered automatically and must be assigned in the
 Inspector:
 
-| Node | Property | Value |
-| --- | --- | --- |
-| `StageN` | `scroll_director` | `ScrollDirector` |
-| `StageN` | `enemy_controller` | `EnemyController` |
-| `EnemyController` | `spawn_parent` | `../World` |
-| `EnemyController` | `enemy_types` | One or more `EnemyData` resources |
-| `ScrollDirector` | `camera` | `../ShakeCamera` |
-| `WaterBack` | `camera` | `../../ShakeCamera` |
-| `Player` | `camera` | `../../ShakeCamera` |
-| `Player` | `weapons` | The starting `WeaponData` resources |
+| Node              | Property           | Value                               |
+| ----------------- | ------------------ | ----------------------------------- |
+| `StageN`          | `scroll_director`  | `ScrollDirector`                    |
+| `StageN`          | `enemy_controller` | `EnemyController`                   |
+| `EnemyController` | `spawn_parent`     | `../World`                          |
+| `EnemyController` | `enemy_types`      | One or more `EnemyData` resources   |
+| `ScrollDirector`  | `camera`           | `../ShakeCamera`                    |
+| `WaterBack`       | `camera`           | `../../ShakeCamera`                 |
+| `Player`          | `camera`           | `../../ShakeCamera`                 |
+| `Player`          | `weapons`          | The starting `WeaponData` resources |
 
 Also add `ShakeCamera` to the `shake_camera` group if the stage should support
 screen shake.
