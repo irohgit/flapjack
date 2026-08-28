@@ -85,6 +85,8 @@ func _ready() -> void:
 	coin_changed.emit(coin_count)
 	gin_changed.emit(gin_count)
 	
+	GlobalPlayer.write_to_player(self)
+	
 	for weapon in weapons:
 		add_weapon(weapon)
 func _apply_meta_upgrades() -> void:
@@ -162,6 +164,9 @@ func _check_for_forward_exit() -> void:
 		return
 
 	_has_exited_play_area = true
+	
+	GlobalPlayer.read_from_player(self)
+	
 	exited_play_area.emit()
 		
 func _on_area_entered(area: Area2D) -> void:
