@@ -368,16 +368,14 @@ theme_override_font_sizes/font_size = 27
 text = "POTIONS"
 vertical_alignment = 1
 
-[node name="ItemGrid" type="GridContainer" parent="Window"]
+[node name="ItemList" type="VBoxContainer" parent="Window"]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 407.0
 offset_top = 264.0
 offset_right = 1178.0
-offset_bottom = 687.0
-theme_override_constants/h_separation = 12
-theme_override_constants/v_separation = 12
-columns = 4
+offset_bottom = 786.0
+theme_override_constants/separation = 12
 
 [node name="PreviousButton" type="TextureButton" parent="Window"]
 unique_name_in_owner = true

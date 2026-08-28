@@ -59,7 +59,7 @@ static func _weapons() -> Array:
 	return [
 		_entry(
 			"cannon", "CANNON", WEAPONS, "Starting Weapon",
-			"res://Assets/UI/Shop/Items/Weapons/cannon.png",
+			"res://Assets/UI/Shop/Items/Weapons/cannon_generated.png",
 			"The ship's dependable starting cannon. Simple, direct and ready for specialised augments.",
 			["Main starting weapon", "Fires standard cannonballs forward"],
 			[["damage", "STANDARD"], ["fire_rate", "0.5s"], ["projectile_speed", "1100"]],
@@ -67,7 +67,7 @@ static func _weapons() -> Array:
 		),
 		_entry(
 			"molotov", "MOLOTOV", WEAPONS, "Timed Area Weapon",
-			"res://Assets/UI/Shop/Items/Weapons/molotov.png",
+			"res://Assets/UI/Shop/Items/Weapons/molotov_generated.png",
 			"A volatile bottle thrown automatically in a random direction from the ship.",
 			["Fires on a timer", "Creates burning area damage", "Burns for a limited duration"],
 			[["burning", "AREA BURN"], ["duration", "TIMED"], ["area", "MEDIUM"]],
@@ -75,7 +75,7 @@ static func _weapons() -> Array:
 		),
 		_entry(
 			"net", "NET", WEAPONS, "Timed Control Weapon",
-			"res://Assets/UI/Shop/Items/Weapons/net.png",
+			"res://Assets/UI/Shop/Items/Weapons/net_generated.png",
 			"A weighted net thrown like a Molotov, trading damage for control of crowded waters.",
 			["Fires on a timer", "Thrown in a random direction", "Slows enemies inside the net", "Deals no base damage"],
 			[["slow", "STRONG"], ["area", "MEDIUM"], ["damage", "NONE"]],

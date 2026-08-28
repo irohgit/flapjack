@@ -6,15 +6,12 @@ signal shop_closed
 
 const ShopCatalogData = preload("res://UI/Shop/shop_catalog.gd")
 
-const PAGE_SIZE := 8
-
-const CARD_NORMAL := preload("res://Assets/UI/Shop/Cards/card_normal.png")
-const CARD_HOVER := preload("res://Assets/UI/Shop/Cards/card_hover.png")
-const CARD_SELECTED := preload("res://Assets/UI/Shop/Cards/card_selected.png")
-const CARD_LOCKED := preload("res://Assets/UI/Shop/Cards/card_locked.png")
-const CARD_OWNED := preload("res://Assets/UI/Shop/Cards/card_owned.png")
-const CARD_EQUIPPED := preload("res://Assets/UI/Shop/Cards/card_equipped.png")
-const CARD_SOLD_OUT := preload("res://Assets/UI/Shop/Cards/card_sold_out.png")
+const SLOT_AREA_HEIGHT := 522.0
+const SLOT_GAP := 12.0
+const MIN_SLOT_COUNT := 1
+const MAX_SLOT_COUNT := 5
+const MIN_SLOT_HEIGHT := 92.0
+const MAX_SLOT_HEIGHT := 176.0
 
 const TAB_NORMAL := preload("res://Assets/UI/Shop/Buttons/tab_normal.png")
 const TAB_HOVER := preload("res://Assets/UI/Shop/Buttons/tab_hover.png")
@@ -51,8 +48,11 @@ const RARITY_COLORS := {
 	"LEGENDARY": Color("ffb83e"),
 }
 
+@export_category("Shop Layout")
+@export_range(MIN_SLOT_COUNT, MAX_SLOT_COUNT, 1) var visible_slot_count: int = 3
+
 @onready var coin_amount_label: Label = %CoinAmount
-@onready var item_grid: GridContainer = %ItemGrid
+@onready var item_list: VBoxContainer = %ItemList
 @onready var page_label: Label = %PageLabel
 @onready var previous_button: TextureButton = %PreviousButton
 @onready var next_button: TextureButton = %NextButton
@@ -83,6 +83,8 @@ var _coin_amount := 0
 
 func _ready() -> void:
 	super()
+	visible_slot_count = clampi(visible_slot_count, MIN_SLOT_COUNT, MAX_SLOT_COUNT)
+	item_list.add_theme_constant_override("separation", int(SLOT_GAP))
 	_configure_tab(weapons_tab, ShopCatalogData.WEAPONS)
 	_configure_tab(augments_tab, ShopCatalogData.AUGMENTS)
 	_configure_tab(potions_tab, ShopCatalogData.POTIONS)
@@ -124,6 +126,22 @@ func set_item_state(item_id: String, state: String) -> void:
 		_update_details(_selected_item)
 
 
+## Changes how many vertical offers are shown on each page. This is also
+## exposed in the inspector as `visible_slot_count` and defaults to three.
+func set_slot_count(count: int) -> void:
+	var next_count := clampi(count, MIN_SLOT_COUNT, MAX_SLOT_COUNT)
+	if next_count == visible_slot_count:
+		return
+	visible_slot_count = next_count
+	_page = 0
+	if is_node_ready():
+		_refresh_grid()
+
+
+func get_slot_count() -> int:
+	return visible_slot_count
+
+
 func _configure_tab(button: TextureButton, category: String) -> void:
 	button.toggle_mode = true
 	button.button_group = _category_group
@@ -141,14 +159,14 @@ func _show_category(category: String) -> void:
 
 
 func _refresh_grid() -> void:
-	for child in item_grid.get_children():
+	for child in item_list.get_children():
 		child.queue_free()
 	_card_group = ButtonGroup.new()
 
-	var page_count := maxi(1, ceili(float(_items.size()) / PAGE_SIZE))
+	var page_count := maxi(1, ceili(float(_items.size()) / visible_slot_count))
 	_page = clampi(_page, 0, page_count - 1)
-	var start := _page * PAGE_SIZE
-	var end := mini(start + PAGE_SIZE, _items.size())
+	var start := _page * visible_slot_count
+	var end := mini(start + visible_slot_count, _items.size())
 
 	var first_item: Dictionary = {}
 	for index in range(start, end):
@@ -157,7 +175,9 @@ func _refresh_grid() -> void:
 			item["state"] = _state_overrides[item["id"]]
 		if first_item.is_empty():
 			first_item = item
-		item_grid.add_child(_create_item_card(item))
+		item_list.add_child(_create_item_card(item))
+
+	_link_slot_focus()
 
 	page_label.text = "%d / %d" % [_page + 1, page_count]
 	previous_button.disabled = _page == 0
@@ -167,94 +187,228 @@ func _refresh_grid() -> void:
 		_select_item(first_item)
 
 
-func _create_item_card(item: Dictionary) -> TextureButton:
-	var button := TextureButton.new()
+func _create_item_card(item: Dictionary) -> Button:
+	var button := Button.new()
 	button.name = String(item["id"]).to_pascal_case()
-	button.custom_minimum_size = Vector2(184, 202)
-	button.ignore_texture_size = true
-	button.stretch_mode = TextureButton.STRETCH_SCALE
+	button.custom_minimum_size = Vector2(0, _slot_height())
+	button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	button.focus_mode = Control.FOCUS_ALL
 	button.toggle_mode = true
 	button.button_group = _card_group
-	button.texture_normal = _card_texture_for_state(item["state"])
-	button.texture_hover = CARD_HOVER
-	button.texture_pressed = CARD_SELECTED
+	button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	button.clip_contents = true
+	button.add_theme_stylebox_override("normal", _slot_style(String(item["state"]), "normal"))
+	button.add_theme_stylebox_override("hover", _slot_style(String(item["state"]), "hover"))
+	button.add_theme_stylebox_override("pressed", _slot_style(String(item["state"]), "pressed"))
+	button.add_theme_stylebox_override("focus", _slot_style(String(item["state"]), "focus"))
 	button.pressed.connect(_select_item.bind(item))
 	button.mouse_entered.connect(button.grab_focus)
 
+	var rarity_stripe := ColorRect.new()
+	rarity_stripe.anchor_bottom = 1.0
+	rarity_stripe.offset_right = 6.0
+	rarity_stripe.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	rarity_stripe.color = _rarity_color(String(item["rarity"]))
+	button.add_child(rarity_stripe)
+
+	var content := HBoxContainer.new()
+	content.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	content.offset_left = 22.0
+	content.offset_top = 10.0
+	content.offset_right = -18.0
+	content.offset_bottom = -10.0
+	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	content.add_theme_constant_override("separation", 18)
+	button.add_child(content)
+
+	var icon_frame := PanelContainer.new()
+	var icon_size := maxf(58.0, _slot_height() - 22.0)
+	icon_frame.custom_minimum_size = Vector2(icon_size, icon_size)
+	icon_frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	icon_frame.add_theme_stylebox_override("panel", _icon_frame_style(String(item["rarity"])))
+	content.add_child(icon_frame)
+
 	var icon := TextureRect.new()
-	icon.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
-	icon.offset_left = 42.0
-	icon.offset_top = 18.0
-	icon.offset_right = -42.0
-	icon.offset_bottom = 105.0
 	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	icon.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	icon.texture = load(item["icon"])
-	button.add_child(icon)
+	icon_frame.add_child(icon)
+
+	var details := VBoxContainer.new()
+	details.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	details.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	details.alignment = BoxContainer.ALIGNMENT_CENTER
+	details.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	details.add_theme_constant_override("separation", 3)
+	content.add_child(details)
 
 	var name_label := Label.new()
-	name_label.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
-	name_label.offset_left = 10.0
-	name_label.offset_top = 110.0
-	name_label.offset_right = -10.0
-	name_label.offset_bottom = 138.0
 	name_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	name_label.text = item["name"]
-	name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	name_label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
-	name_label.add_theme_font_size_override("font_size", 20)
-	name_label.add_theme_color_override("font_color", Color.WHITE)
+	name_label.add_theme_font_size_override("font_size", _slot_font_size(27, 20))
+	name_label.add_theme_color_override("font_color", Color("fff5d8"))
 	name_label.add_theme_color_override("font_outline_color", Color.BLACK)
-	name_label.add_theme_constant_override("outline_size", 2)
-	button.add_child(name_label)
+	name_label.add_theme_constant_override("outline_size", 3)
+	details.add_child(name_label)
 
-	var rarity_label := Label.new()
-	rarity_label.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
-	rarity_label.offset_left = 12.0
-	rarity_label.offset_top = 140.0
-	rarity_label.offset_right = -12.0
-	rarity_label.offset_bottom = 163.0
-	rarity_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	rarity_label.text = item["rarity"]
-	rarity_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	rarity_label.add_theme_font_size_override("font_size", 16)
-	rarity_label.add_theme_color_override("font_color", _rarity_color(item["rarity"]))
-	rarity_label.add_theme_color_override("font_outline_color", Color.BLACK)
-	rarity_label.add_theme_constant_override("outline_size", 2)
-	button.add_child(rarity_label)
+	var meta_label := Label.new()
+	meta_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	meta_label.text = "%s  •  %s" % [item["subtype"], item["rarity"]]
+	meta_label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	meta_label.add_theme_font_size_override("font_size", _slot_font_size(18, 14))
+	meta_label.add_theme_color_override("font_color", _rarity_color(String(item["rarity"])))
+	details.add_child(meta_label)
+
+	if _slot_height() >= 128.0:
+		var description := Label.new()
+		description.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		description.text = item["description"]
+		description.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+		description.add_theme_font_size_override("font_size", 15)
+		description.add_theme_color_override("font_color", Color("aebbc2"))
+		details.add_child(description)
+
+	var price_stack := VBoxContainer.new()
+	price_stack.custom_minimum_size = Vector2(164.0, 0.0)
+	price_stack.alignment = BoxContainer.ALIGNMENT_CENTER
+	price_stack.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	price_stack.add_theme_constant_override("separation", 2)
+	content.add_child(price_stack)
+
+	var price_caption := Label.new()
+	price_caption.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	price_caption.text = "PRICE" if String(item["state"]) == "available" else "STATUS"
+	price_caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	price_caption.add_theme_font_size_override("font_size", _slot_font_size(15, 12))
+	price_caption.add_theme_color_override("font_color", Color("8da1aa"))
+	price_stack.add_child(price_caption)
+
+	var price_row := HBoxContainer.new()
+	price_row.alignment = BoxContainer.ALIGNMENT_CENTER
+	price_row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	price_row.add_theme_constant_override("separation", 6)
+	price_stack.add_child(price_row)
+
+	if String(item["state"]) == "available":
+		var coin := TextureRect.new()
+		coin.custom_minimum_size = Vector2(27, 27)
+		coin.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		coin.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		coin.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		coin.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		coin.texture = COIN_ICON
+		price_row.add_child(coin)
 
 	var price := Label.new()
-	price.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
-	price.offset_left = 12.0
-	price.offset_top = -34.0
-	price.offset_right = -12.0
-	price.offset_bottom = -8.0
 	price.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	price.text = _card_price_text(item)
+	price.text = "%d" % item["price"] if String(item["state"]) == "available" else _card_price_text(item)
 	price.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	price.add_theme_font_size_override("font_size", 17)
+	price.add_theme_font_size_override("font_size", _slot_font_size(23, 17))
 	price.add_theme_color_override("font_color", Color("fff1bd"))
 	price.add_theme_color_override("font_outline_color", Color.BLACK)
 	price.add_theme_constant_override("outline_size", 2)
-	button.add_child(price)
+	price_row.add_child(price)
 
 	return button
 
 
-func _card_texture_for_state(state: String) -> Texture2D:
+func _link_slot_focus() -> void:
+	var buttons := _card_group.get_buttons()
+	if buttons.is_empty():
+		return
+	for index in buttons.size():
+		var button: BaseButton = buttons[index]
+		if index > 0:
+			button.focus_neighbor_top = button.get_path_to(buttons[index - 1])
+		if index < buttons.size() - 1:
+			button.focus_neighbor_bottom = button.get_path_to(buttons[index + 1])
+		button.focus_neighbor_left = button.get_path_to(exit_button)
+		button.focus_neighbor_right = button.get_path_to(buy_button)
+
+	weapons_tab.focus_neighbor_bottom = weapons_tab.get_path_to(buttons[0])
+	augments_tab.focus_neighbor_bottom = augments_tab.get_path_to(buttons[0])
+	potions_tab.focus_neighbor_bottom = potions_tab.get_path_to(buttons[0])
+
+
+func _slot_height() -> float:
+	var gaps := SLOT_GAP * float(visible_slot_count - 1)
+	return clampf(
+		floorf((SLOT_AREA_HEIGHT - gaps) / float(visible_slot_count)),
+		MIN_SLOT_HEIGHT,
+		MAX_SLOT_HEIGHT
+	)
+
+
+func _slot_font_size(large: int, small: int) -> int:
+	var weight := clampf(inverse_lerp(MIN_SLOT_HEIGHT, 165.0, _slot_height()), 0.0, 1.0)
+	return roundi(lerpf(float(small), float(large), weight))
+
+
+func _slot_style(state: String, mode: String) -> StyleBoxFlat:
+	var style := StyleBoxFlat.new()
+	var background := Color("101923")
+	var border := Color("69583c")
 	match state:
 		"locked":
-			return CARD_LOCKED
+			background = Color("0b1016")
+			border = Color("4e565a")
 		"owned":
-			return CARD_OWNED
+			background = Color("10201d")
+			border = Color("5f9c78")
 		"equipped":
-			return CARD_EQUIPPED
+			background = Color("102231")
+			border = Color("56b6df")
 		"sold_out":
-			return CARD_SOLD_OUT
-	return CARD_NORMAL
+			background = Color("171014")
+			border = Color("7d4c54")
+		"combination":
+			background = Color("1c1425")
+			border = Color("a466c2")
+
+	match mode:
+		"hover", "focus":
+			background = background.lightened(0.10)
+			border = Color("e2bd63")
+		"pressed":
+			background = background.lightened(0.18)
+			border = Color("ffe094")
+
+	style.bg_color = background
+	style.border_color = border
+	style.border_width_left = 2
+	style.border_width_top = 2
+	style.border_width_right = 2
+	style.border_width_bottom = 2
+	style.corner_radius_top_left = 8
+	style.corner_radius_top_right = 8
+	style.corner_radius_bottom_right = 8
+	style.corner_radius_bottom_left = 8
+	style.shadow_color = Color(0, 0, 0, 0.42)
+	style.shadow_size = 4
+	style.shadow_offset = Vector2(0, 3)
+	return style
+
+
+func _icon_frame_style(rarity: String) -> StyleBoxFlat:
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color("070c12")
+	style.border_color = _rarity_color(rarity).darkened(0.25)
+	style.border_width_left = 2
+	style.border_width_top = 2
+	style.border_width_right = 2
+	style.border_width_bottom = 2
+	style.corner_radius_top_left = 6
+	style.corner_radius_top_right = 6
+	style.corner_radius_bottom_right = 6
+	style.corner_radius_bottom_left = 6
+	style.content_margin_left = 8.0
+	style.content_margin_top = 8.0
+	style.content_margin_right = 8.0
+	style.content_margin_bottom = 8.0
+	return style
 
 
 func _card_price_text(item: Dictionary) -> String:
