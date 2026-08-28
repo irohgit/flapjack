@@ -10,6 +10,9 @@ extends Resource
 @export var end_position: Vector2 = Vector2(0, -10000)
 @export var spawn_ahead_distance: float = 600.0
 
+@export_group("Merchant")
+@export var shop_data: ShopData
+
 @export_group("Encounter Sequence")
 @export var encounter_sequence: Array[EncounterData] = []
 

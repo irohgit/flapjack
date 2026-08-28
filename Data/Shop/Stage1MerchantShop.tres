@@ -1,0 +1,92 @@
+[gd_resource type="Resource" script_class="ShopData" format=3]
+
+[ext_resource type="Script" path="res://Data/Shop/shop_data.gd" id="1_shop"]
+[ext_resource type="Script" path="res://Data/Shop/shop_offer_data.gd" id="2_offer"]
+[ext_resource type="Resource" path="res://Data/Pickups/HomingCannonPickup.tres" id="3_homing"]
+[ext_resource type="Resource" path="res://Data/Pickups/PlasmaAugmentPickup.tres" id="4_plasma"]
+[ext_resource type="Resource" path="res://Data/Pickups/FireballAugmentPickup.tres" id="5_fire"]
+[ext_resource type="Resource" path="res://Data/Pickups/MagnetAugmentPickup.tres" id="6_magnet"]
+[ext_resource type="Resource" path="res://Data/Pickups/PierceAugmentPickup.tres" id="7_pierce"]
+[ext_resource type="Resource" path="res://Data/Pickups/OrbitalRicochetPickup.tres" id="8_ricochet"]
+[ext_resource type="Resource" path="res://Data/Pickups/HarpoonPickup.tres" id="9_harpoon"]
+[ext_resource type="Resource" path="res://Data/Pickups/HealthPotion.tres" id="10_health"]
+[ext_resource type="Resource" path="res://Data/Pickups/ShieldPotion.tres" id="11_shield"]
+[ext_resource type="Resource" path="res://Data/Pickups/RapidFirePotion.tres" id="12_rapid"]
+[ext_resource type="Resource" path="res://Data/Pickups/SpeedPotion.tres" id="13_speed"]
+
+[sub_resource type="Resource" id="Offer_homing"]
+script = ExtResource("2_offer")
+pickup = ExtResource("3_homing")
+price_override = 200
+rarity_override = "RARE"
+
+[sub_resource type="Resource" id="Offer_plasma"]
+script = ExtResource("2_offer")
+pickup = ExtResource("4_plasma")
+price_override = 180
+rarity_override = "RARE"
+
+[sub_resource type="Resource" id="Offer_fire"]
+script = ExtResource("2_offer")
+pickup = ExtResource("5_fire")
+price_override = 190
+rarity_override = "UNCOMMON"
+
+[sub_resource type="Resource" id="Offer_magnet"]
+script = ExtResource("2_offer")
+pickup = ExtResource("6_magnet")
+price_override = 160
+rarity_override = "UNCOMMON"
+
+[sub_resource type="Resource" id="Offer_pierce"]
+script = ExtResource("2_offer")
+pickup = ExtResource("7_pierce")
+price_override = 190
+rarity_override = "UNCOMMON"
+
+[sub_resource type="Resource" id="Offer_ricochet"]
+script = ExtResource("2_offer")
+pickup = ExtResource("8_ricochet")
+weight = 0.65
+price_override = 275
+rarity_override = "EPIC"
+
+[sub_resource type="Resource" id="Offer_harpoon"]
+script = ExtResource("2_offer")
+pickup = ExtResource("9_harpoon")
+weight = 0.6
+price_override = 450
+rarity_override = "RARE"
+
+[sub_resource type="Resource" id="Offer_health"]
+script = ExtResource("2_offer")
+pickup = ExtResource("10_health")
+weight = 1.5
+price_override = 80
+
+[sub_resource type="Resource" id="Offer_shield"]
+script = ExtResource("2_offer")
+pickup = ExtResource("11_shield")
+weight = 1.35
+price_override = 100
+rarity_override = "UNCOMMON"
+
+[sub_resource type="Resource" id="Offer_rapid"]
+script = ExtResource("2_offer")
+pickup = ExtResource("12_rapid")
+weight = 1.25
+price_override = 90
+rarity_override = "UNCOMMON"
+
+[sub_resource type="Resource" id="Offer_speed"]
+script = ExtResource("2_offer")
+pickup = ExtResource("13_speed")
+weight = 1.15
+price_override = 110
+rarity_override = "RARE"
+
+[resource]
+script = ExtResource("1_shop")
+min_offers = 3
+max_offers = 5
+offer_pool = Array[ExtResource("2_offer")]([SubResource("Offer_homing"), SubResource("Offer_plasma"), SubResource("Offer_fire"), SubResource("Offer_magnet"), SubResource("Offer_pierce"), SubResource("Offer_ricochet"), SubResource("Offer_harpoon"), SubResource("Offer_health"), SubResource("Offer_shield"), SubResource("Offer_rapid"), SubResource("Offer_speed")])

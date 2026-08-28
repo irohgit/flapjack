@@ -12,7 +12,7 @@ const EXIT_PASSAGE_CUE_SCENE := preload("res://Actors/HUD/exit_passage_cue.tscn"
 func _ready() -> void:
 	Audio.play_music(stage_music, stage_music_db, music_fade_in)
 	assert(scroll_director != null, "Stage 1 needs a ScrollDirector")
-	#assert(enemy_controller != null, "Stage 1 needs an EnemyController")
+	#assert(enemy_controller != null, "Stage 1 needs an EnemyController") 
 	assert(level_generator != null, "Stage 1 needs a LevelGenerator")
 	assert(level_generator.level_data != null, "LevelGenerator needs LevelData")
 	var plan: Array[GeneratedEncounter] = level_generator.generate_plan()

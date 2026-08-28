@@ -16,6 +16,15 @@ enum PickupType {AUGMENT, WEAPON, COIN, HEALTH, SHIELD, GIN, POTION}
 @export var coin_amount := 0
 @export var gin_amount := 0
 @export var notification_name: String
+
+@export_group("Shop Presentation")
+@export var shop_id: StringName
+@export_multiline var shop_description: String
+@export_range(0, 100000, 1, "or_greater") var shop_price := 0
+@export var shop_rarity := "COMMON"
+@export var shop_effects: PackedStringArray = []
+@export var shop_stats: Array = []
+
 #SFX
 # --- Audio ---
 # Per-variant so a gold coin can sound different from a bronze one. 
@@ -91,3 +100,77 @@ func get_notification_text() -> String:
 			return "Potion"
 
 	return "Pickup"
+
+
+func get_shop_id() -> StringName:
+	if not shop_id.is_empty():
+		return shop_id
+	if not resource_path.is_empty():
+		return StringName(resource_path.get_file().get_basename().to_snake_case())
+	return StringName(get_notification_text().to_snake_case())
+
+
+func get_shop_category() -> String:
+	match pickup_type:
+		PickupType.WEAPON:
+			return "Weapons"
+		PickupType.AUGMENT:
+			return "Augments"
+		PickupType.HEALTH, PickupType.SHIELD, PickupType.POTION:
+			return "Potions"
+		PickupType.COIN, PickupType.GIN:
+			return "Currency"
+	return "Items"
+
+
+func get_shop_subtype() -> String:
+	match pickup_type:
+		PickupType.WEAPON:
+			return "Weapon"
+		PickupType.AUGMENT:
+			return "Augment"
+		PickupType.HEALTH, PickupType.SHIELD, PickupType.POTION:
+			return "Potion"
+		PickupType.COIN:
+			return "Coin"
+		PickupType.GIN:
+			return "Gin"
+	return "Item"
+
+
+func get_shop_description() -> String:
+	if not shop_description.is_empty():
+		return shop_description
+	if is_potion() and potion != null:
+		return potion.description
+	return "A useful item from the merchant's current stock."
+
+
+func get_shop_price() -> int:
+	if shop_price > 0:
+		return shop_price
+	if is_potion() and potion != null:
+		return potion.price
+	return 0
+
+
+func get_shop_rarity() -> String:
+	if is_potion() and potion != null and shop_rarity == "COMMON":
+		return potion.rarity
+	return shop_rarity
+
+
+func get_shop_effects() -> PackedStringArray:
+	if not shop_effects.is_empty():
+		return shop_effects.duplicate()
+	if is_potion() and potion != null:
+		return potion.shop_effects.duplicate()
+	return PackedStringArray()
+
+
+func get_shop_stats() -> Array:
+	if not shop_stats.is_empty():
+		return shop_stats.duplicate(true)
+	if is_potion() and potion != null:
+		return potion.shop_stats.duplicate(true)
+	return []
