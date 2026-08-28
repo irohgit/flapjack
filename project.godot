@@ -26,6 +26,8 @@ DebugHud="*uid://b0uptuewb1atn"
 GameEvents="*uid://3lsfc782llap"
 Audio="*uid://d316g6l1ugkiy"
 MetaProgress="*uid://c0tuwxifuhojx"
+NewAutoloadScript="*uid://2bn2f0nlte4k"
+GlobalPlayer="*uid://cna1d67vuylas"
 
 [display]
 
