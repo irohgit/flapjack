@@ -83,6 +83,7 @@ weight = 0.9
 metadata/_custom_type_script = "uid://8sxccskaloo3"
 
 [node name="Stage1" type="Node2D" unique_id=1126219472 node_paths=PackedStringArray("level_generator", "screen_encounter_parent", "scroll_director", "enemy_controller")]
+position = Vector2(0, 1)
 script = ExtResource("1_thckm")
 level_generator = NodePath("LevelGenerator")
 screen_encounter_parent = NodePath("ScrollRig/ScreenEncounters")

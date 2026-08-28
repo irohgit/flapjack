@@ -16,6 +16,7 @@ enum PickupType {AUGMENT, WEAPON, COIN, HEALTH, SHIELD, GIN, POTION}
 @export var coin_amount := 0
 @export var gin_amount := 0
 @export var notification_name: String
+
 #SFX
 # --- Audio ---
 # Per-variant so a gold coin can sound different from a bronze one. 
