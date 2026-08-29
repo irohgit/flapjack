@@ -10,6 +10,7 @@
 shader = ExtResource("2_5fiiy")
 shader_parameter/outline_color = Color(0.8784314, 0.9019608, 0.96862745, 1)
 shader_parameter/outline_width = 10.0
+shader_parameter/outline_opacity = 0.35
 shader_parameter/pulse_speed = 5.0
 shader_parameter/pulse_min = 0.6
 shader_parameter/pulse_max = 1.5

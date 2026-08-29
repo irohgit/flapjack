@@ -1,12 +1,14 @@
 [gd_resource type="Resource" script_class="ShipTierData" format=3 uid="uid://duaftfp5au7uw"]
 
-[ext_resource type="Texture2D" uid="uid://bqw558gynpsl4" path="res://Assets/Boat/Galleon_1.png" id="1_cfej2"]
+[ext_resource type="Texture2D" uid="uid://c8s78souw2gh3" path="res://Assets/Boat/Galleon_1_100x140.png" id="1_cfej2"]
 [ext_resource type="Script" uid="uid://cm2aeylarosbb" path="res://Data/Ship/ship_tier.gd" id="1_hv5er"]
-[ext_resource type="Texture2D" uid="uid://ov1w3vu4fxud" path="res://Assets/Boat/Galleon_3.png" id="2_25iu5"]
-[ext_resource type="Texture2D" uid="uid://crlrj3peq27p3" path="res://Assets/Boat/Galleon_4.png" id="3_jw8ek"]
+[ext_resource type="Texture2D" uid="uid://dulf8wuscvwtq" path="res://Assets/Boat/Galleon_2_100x140.png" id="2_25iu5"]
+[ext_resource type="Texture2D" uid="uid://cxa22b4tvoqq4" path="res://Assets/Boat/Galleon_3_100x140.png" id="3_jw8ek"]
 
 [resource]
 script = ExtResource("1_hv5er")
 tier_name = "Galleon"
 hull_textures = Array[Texture2D]([ExtResource("1_cfej2"), ExtResource("2_25iu5"), ExtResource("3_jw8ek")])
+display_scale = 1
+pixel_hull_width = 70.0
 metadata/_custom_type_script = "uid://cm2aeylarosbb"

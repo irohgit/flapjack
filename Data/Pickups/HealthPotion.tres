@@ -9,6 +9,7 @@
 shader = ExtResource("1_cys4d")
 shader_parameter/outline_color = Color(1, 0.2509804, 0.2509804, 1)
 shader_parameter/outline_width = 10.0
+shader_parameter/outline_opacity = 0.35
 shader_parameter/pulse_speed = 5.0
 shader_parameter/pulse_min = 0.6
 shader_parameter/pulse_max = 1.5

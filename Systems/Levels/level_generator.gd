@@ -1,18 +1,14 @@
 class_name LevelGenerator
 extends Node
 
-
 @export var level_data: LevelData
-
 
 var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 var generated_plan: Array[GeneratedEncounter] = []
 
-
 func _ready() -> void:
 	# Each stage entry gets a fresh set of encounter chance and pool rolls.
 	rng.randomize()
-
 
 func generate_plan() -> Array[GeneratedEncounter]:
 	generated_plan.clear()
@@ -70,7 +66,6 @@ func generate_plan() -> Array[GeneratedEncounter]:
 	print("GIN PLAN: ", total_barrels, " barrels across ", generated_plan.size(), " encounters")
 	return generated_plan
 
-
 func choose_finale_encounter() -> PackedScene:
 	if level_data == null:
 		push_error("LevelGenerator has no LevelData")
@@ -91,10 +86,8 @@ func choose_finale_encounter() -> PackedScene:
 	var index: int = rng.rand_weighted(weights)
 	return valid_entries[index].encounter_scene
 
-
 func _get_travel_direction() -> float:
 	return -1.0 if level_data.end_position.y < 0.0 else 1.0
-
 
 func _should_run(encounter_data: EncounterData) -> bool:
 	if encounter_data.chance_to_run <= 0.0:
@@ -104,7 +97,6 @@ func _should_run(encounter_data: EncounterData) -> bool:
 		return true
 
 	return rng.randf() < encounter_data.chance_to_run
-
 
 func _is_configured(encounter_data: EncounterData, index: int) -> bool:
 	match encounter_data.type:
@@ -129,15 +121,13 @@ func _is_configured(encounter_data: EncounterData, index: int) -> bool:
 		_:
 			push_error("Encounter %d has an unknown type" % (index + 1))
 			return false
-
 	return true
-
 
 func _generate_encounter(
 	encounter_data: EncounterData,
 	anchor_y: float,
 	centre_x: float
-) -> GeneratedEncounter:
+	) -> GeneratedEncounter:
 	var encounter := GeneratedEncounter.new()
 
 	match encounter_data.type:
@@ -164,13 +154,11 @@ func _generate_encounter(
 
 	return encounter
 
-
 func _has_valid_enemies(pool: Array[WeightedEnemyData]) -> bool:
 	for entry: WeightedEnemyData in pool:
 		if entry != null and entry.enemy != null and entry.weight > 0.0:
 			return true
 	return false
-
 
 func _has_valid_formations(pool: Array[WeightedFormationData]) -> bool:
 	for entry: WeightedFormationData in pool:
@@ -178,13 +166,11 @@ func _has_valid_formations(pool: Array[WeightedFormationData]) -> bool:
 			return true
 	return false
 
-
 func _has_valid_special_encounters(pool: Array[WeightedEncounterData]) -> bool:
 	for entry: WeightedEncounterData in pool:
 		if entry != null and entry.encounter_scene != null and entry.weight > 0.0:
 			return true
 	return false
-
 
 func _choose_enemy(pool: Array[WeightedEnemyData]) -> EnemyData:
 	var valid_entries: Array[WeightedEnemyData] = []
@@ -198,7 +184,6 @@ func _choose_enemy(pool: Array[WeightedEnemyData]) -> EnemyData:
 	var index: int = rng.rand_weighted(weights)
 	return valid_entries[index].enemy
 
-
 func _choose_formation(pool: Array[WeightedFormationData]) -> EnemyController.Formation:
 	var valid_entries: Array[WeightedFormationData] = []
 	var weights := PackedFloat32Array()
@@ -210,7 +195,6 @@ func _choose_formation(pool: Array[WeightedFormationData]) -> EnemyController.Fo
 
 	var index: int = rng.rand_weighted(weights)
 	return valid_entries[index].formation
-
 
 func _choose_special_encounter(pool: Array[WeightedEncounterData]) -> PackedScene:
 	var valid_entries: Array[WeightedEncounterData] = []

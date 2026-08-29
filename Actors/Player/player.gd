@@ -50,13 +50,21 @@ var _has_exited_play_area := false
 @export var death_sfx: AudioStream
 
 #Ship Tier
+@export_range(0.5, 5.0, 0.05) var wake_overhang := 2.4 #2.4 works with skiff,
+@export_range(0.5, 5.0, 0.05) var wake_length := 1.5:
+	set(value):
+		wake_length = value
+		if is_node_ready():
+			_fit_wake_to_hull()
 @export var ship_tiers: Array[ShipTierData] = []
 @export var ship_tier := 1:
 	set(value):
 		ship_tier = clampi(value, 1, 3)
 		if is_node_ready():
 			_update_hull(_health.current_health, _health.max_health)
-			
+			#_fit_wake_to_hull()
+
+
 #BANK MOVEMENT
 @export var banks: BankGenerator
 @export var bank_push_x := 850.0    # sideways shove out of the sand
@@ -94,6 +102,7 @@ func _ready() -> void:
 	_health.died.connect(_on_died)
 	coin_changed.emit(coin_count)
 	gin_changed.emit(gin_count)
+	_fit_wake_to_hull()
 	
 	for weapon in weapons:
 		add_weapon(weapon)
@@ -413,22 +422,43 @@ func _update_hull(current: int, maximum: int) -> void:
 
 	if _sprite.texture != textures[index]:
 		_sprite.texture = textures[index]
-		
+		_fit_wake_to_hull()
 
 	
 func _apply_tier() -> void:
+	#Guard against null ship tier value
 	if ship_tiers.is_empty():
 		print("ship_tiers_empty")
 		return
+	#1. Apply Tier
 	var tier := ship_tiers[clampi(ship_tier - 1, 0, ship_tiers.size() - 1)]
-	_sprite.scale = Vector2.ONE * tier.display_scale
-
-	var hit := CapsuleShape2D.new()
-	hit.radius = tier.hitbox_radius
-	_hitbox_shape.shape = hit
-
-	var pick := CircleShape2D.new()
-	pick.radius = tier.pickup_radius
-	_pickup_range_shape.shape = pick
-
+	#2. Apply Tier Texture
+	#$Sprite2D.texture = tier.boat_texture   # art decides hull size, no scaling
+	#3. Call function to fit animated wake to hull texture
+	_fit_wake_to_hull()
 	
+	#SET SCALING
+	#_sprite.scale = Vector2.ONE * tier.display_scale
+	
+	#SET HIT BOX CAPSULE RADIUS FOR TIER	
+	#var hit := CapsuleShape2D.new()
+	#hit.radius = tier.hitbox_radius
+	#_hitbox_shape.shape = hit
+	
+	#SET PICKUP CRICLE RADIUS FOR TIER	
+	#var pick := CircleShape2D.new()
+	#pick.radius = tier.pickup_radius
+	#_pickup_range_shape.shape = pick
+
+#ship vfx 
+func _fit_wake_to_hull() -> void:
+	var tier_index := clampi(ship_tier - 1, 0, ship_tiers.size() - 1)
+	var hull_w: float = ship_tiers[tier_index].pixel_hull_width
+	var frame: Texture2D = $Wake.sprite_frames.get_frame_texture($Wake.animation, 0)
+	var wake_w: float = frame.get_width()
+	var fit_x := (hull_w / wake_w) * wake_overhang
+	$Wake.scale = Vector2(fit_x, wake_length)
+	print(wake_w)
+	print(frame)
+	print($Wake.scale)
+	print("hull_w = ", $Sprite2D.texture.get_width())
