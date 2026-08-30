@@ -64,9 +64,9 @@ var _has_exited_play_area := false
 			_update_hull(_health.current_health, _health.max_health)
 			#_fit_wake_to_hull()
 var _current_tier: ShipTierData
-@onready var _mast: Sprite2D = $Mast
 @export var move_threshold := 5.0 
 var _tier_has_mast := false
+@onready var _masts: Node2D = $Masts
 
 #BANK MOVEMENT
 @export var banks: BankGenerator
@@ -152,7 +152,7 @@ func _physics_process(delta: float) -> void:
 	_external_force = Vector2.ZERO
 	_update_weapons(delta)
 	#DebugHud.flash(str(velocity))
-	_update_mast()
+	_update_masts()
 	_update_wake()
 	
 func _clamp_to_camera(pos: Vector2) -> Vector2:
@@ -443,9 +443,12 @@ func _apply_tier() -> void:
 	#3. Call function to fit animated wake to hull texture
 	_fit_wake_to_hull()
 	
+	
+	
 	#SET SCALING
 	#_sprite.scale = Vector2.ONE * tier.display_scale
 	
+	#IROH COMMENTED THIS OUT -- 30/8/2026 : Uncomment and fix this if necessary note...
 	#SET HIT BOX CAPSULE RADIUS FOR TIER	
 	#var hit := CapsuleShape2D.new()
 	#hit.radius = tier.hitbox_radius
@@ -469,16 +472,6 @@ func _fit_wake_to_hull() -> void:
 	print($Wake.scale)
 	print("hull_w = ", $Sprite2D.texture.get_width())
 	
-func _update_mast() -> void:
-	var tier := ship_tiers[clampi(ship_tier - 1, 0, ship_tiers.size() - 1)]
-	if tier.mast_idle == null:
-		_mast.visible = false
-		return
-	_mast.visible = true
-	var is_moving: bool = _move_intent != Vector2.ZERO
-	_mast.texture = tier.mast_moving if is_moving else tier.mast_idle
-	var target_angle := _move_intent.x * 45.0
-	_mast.rotation_degrees = lerpf(_mast.rotation_degrees, target_angle, 0.2)
 
 func _update_wake() -> void:
 	var anim := "wake_forward" #set animation to wake forward
@@ -489,3 +482,15 @@ func _update_wake() -> void:
 	# else it stays "wake_forward" for up, down, and idle
 	if $Wake.animation != anim:
 		$Wake.play(anim)
+
+func _update_masts() -> void:
+	var tier := ship_tiers[clampi(ship_tier - 1, 0, ship_tiers.size() - 1)]
+	_masts.visible = tier.has_masts
+	if not tier.has_masts:
+		return
+	var is_moving: bool = _move_intent != Vector2.ZERO #if our moveintent is not 0 that means we are moving
+	var lean := _move_intent.x * 45.0 #rotate masts left/right by 45 degrees
+	for child in _masts.get_children():
+		var mast := child as Mast
+		mast.set_moving(is_moving)
+		mast.rotation_degrees = lean

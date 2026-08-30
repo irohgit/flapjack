@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://yefut8muiq0h" path="res://Assets/Boat/right_Wake_SpriteSheet-export.png" id="10_nwamd"]
 [ext_resource type="Script" uid="uid://dttjdne32amn0" path="res://Systems/Combat/status_effect_component.gd" id="10_status"]
 [ext_resource type="Texture2D" uid="uid://b1buy6pcwy4q1" path="res://Assets/Boat/Wake_SpriteSheet.png" id="10_wmrsf"]
+[ext_resource type="Script" uid="uid://darf8kfohuabj" path="res://Actors/Player/mast.gd" id="13_nwamd"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_h1i6w"]
 atlas = ExtResource("10_wmrsf")
@@ -96,9 +97,29 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_sciwa"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_47o75"]
 atlas = ExtResource("10_h1i6w")
 region = Rect2(64, 424, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_io41c"]
+atlas = ExtResource("10_h1i6w")
+region = Rect2(96, 424, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4k5fm"]
+atlas = ExtResource("10_h1i6w")
+region = Rect2(64, 360, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2smj8"]
+atlas = ExtResource("10_h1i6w")
+region = Rect2(96, 360, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a4xvd"]
+atlas = ExtResource("10_h1i6w")
+region = Rect2(64, 328, 32, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rkige"]
+atlas = ExtResource("10_h1i6w")
+region = Rect2(96, 328, 32, 8)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5st54"]
 radius = 31.0
@@ -125,9 +146,27 @@ flip_v = true
 texture = ExtResource("9_w553y")
 flip_v = true
 
-[node name="Mast" type="Sprite2D" parent="." unique_id=1290454073]
-texture = SubResource("AtlasTexture_sciwa")
+[node name="Masts" type="Node2D" parent="." unique_id=119036697]
+
+[node name="Mast" type="Sprite2D" parent="Masts" unique_id=1290454073]
 flip_v = true
+script = ExtResource("13_nwamd")
+idle_tex = SubResource("AtlasTexture_47o75")
+wind_tex = SubResource("AtlasTexture_io41c")
+
+[node name="Mast2" type="Sprite2D" parent="Masts" unique_id=1985227548]
+position = Vector2(0, 7)
+flip_v = true
+script = ExtResource("13_nwamd")
+idle_tex = SubResource("AtlasTexture_4k5fm")
+wind_tex = SubResource("AtlasTexture_2smj8")
+
+[node name="Mast3" type="Sprite2D" parent="Masts" unique_id=1118859247]
+position = Vector2(0, 11)
+flip_v = true
+script = ExtResource("13_nwamd")
+idle_tex = SubResource("AtlasTexture_a4xvd")
+wind_tex = SubResource("AtlasTexture_rkige")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1588285206]
 visible = false
