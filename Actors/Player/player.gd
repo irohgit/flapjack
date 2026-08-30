@@ -17,7 +17,7 @@ var _weapon_states: Array[WeaponState] = []
 @export var gin_count:= 0
 @export_range(1, 5, 1) var potion_slot_count := 3
 
-@export var boatTextures: Array[Texture2D]
+#@export var boatTextures: Array[Texture2D]
 
 @onready var _health: HealthComponent = $HealthComponent
 @onready var _sprite: Sprite2D = $Sprite2D
@@ -63,7 +63,10 @@ var _has_exited_play_area := false
 		if is_node_ready():
 			_update_hull(_health.current_health, _health.max_health)
 			#_fit_wake_to_hull()
-
+var _current_tier: ShipTierData
+@onready var _mast: Sprite2D = $Mast
+@export var move_threshold := 5.0 
+var _tier_has_mast := false
 
 #BANK MOVEMENT
 @export var banks: BankGenerator
@@ -128,6 +131,7 @@ func _process(_delta: float) -> void:
 		select_potion_slot(_selected_potion_slot + 1)
 	if Input.is_action_just_pressed("drink_potion"):
 		drink_selected_potion()
+		
 func _physics_process(delta: float) -> void:
 	var movement_speed := _status_effects.get_modified_value(
 		StatusEffectData.STAT_MOVEMENT_SPEED,
@@ -135,7 +139,7 @@ func _physics_process(delta: float) -> void:
 	)
 	var target := _move_intent * movement_speed
 	velocity = velocity.lerp(target, 1.0 - exp(-responsiveness * delta))
-	
+		
 	#Before Processing Movement: Adjust for contact with banks
 	#While over sand, shove back out to the water and slightly drag down
 	if banks != null and banks.is_on_bank(global_position):
@@ -147,6 +151,9 @@ func _physics_process(delta: float) -> void:
 	_check_for_forward_exit()
 	_external_force = Vector2.ZERO
 	_update_weapons(delta)
+	#DebugHud.flash(str(velocity))
+	_update_mast()
+	_update_wake()
 	
 func _clamp_to_camera(pos: Vector2) -> Vector2:
 	var camera_center_global: Vector2 = camera.get_screen_center_position()
@@ -406,7 +413,6 @@ func _get_retry_scene_path() -> String:
 	var current_scene := get_tree().current_scene
 	return current_scene.scene_file_path if current_scene != null else ""
 	
-	
 func _update_hull(current: int, maximum: int) -> void:
 	var tier_index := clampi(ship_tier - 1, 0, ship_tiers.size() - 1)
 	if ship_tiers.is_empty():
@@ -415,7 +421,7 @@ func _update_hull(current: int, maximum: int) -> void:
 	var textures := ship_tiers[tier_index].hull_textures
 	if textures.is_empty() or maximum <= 0:
 		return
-
+	
 	var ratio := float(current) / float(maximum)
 	var index := int((1.0 - ratio) * textures.size())
 	index = clampi(index, 0, textures.size() - 1)
@@ -423,7 +429,7 @@ func _update_hull(current: int, maximum: int) -> void:
 	if _sprite.texture != textures[index]:
 		_sprite.texture = textures[index]
 		_fit_wake_to_hull()
-
+	
 	
 func _apply_tier() -> void:
 	#Guard against null ship tier value
@@ -462,3 +468,24 @@ func _fit_wake_to_hull() -> void:
 	print(frame)
 	print($Wake.scale)
 	print("hull_w = ", $Sprite2D.texture.get_width())
+	
+func _update_mast() -> void:
+	var tier := ship_tiers[clampi(ship_tier - 1, 0, ship_tiers.size() - 1)]
+	if tier.mast_idle == null:
+		_mast.visible = false
+		return
+	_mast.visible = true
+	var is_moving: bool = _move_intent != Vector2.ZERO
+	_mast.texture = tier.mast_moving if is_moving else tier.mast_idle
+	var target_angle := _move_intent.x * 45.0
+	_mast.rotation_degrees = lerpf(_mast.rotation_degrees, target_angle, 0.2)
+
+func _update_wake() -> void:
+	var anim := "wake_forward" #set animation to wake forward
+	if _move_intent.x < -0.4: #if our inpu is less than -0.1 means we are moving left
+		anim = "wake_strafe_left"
+	elif _move_intent.x > 0.4: #if our x input above 0.1 that means we are moving right
+		anim = "wake_strafe_right"
+	# else it stays "wake_forward" for up, down, and idle
+	if $Wake.animation != anim:
+		$Wake.play(anim)

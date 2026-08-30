@@ -23,6 +23,7 @@ func _on_gin_requested(entry: int, _at: Vector2, barrel_data: DestructibleData) 
 			_float_down(barrel_data)
 
 func _float_down(barrel_data: DestructibleData) -> void:
+	print("camera = ", camera, "  in_tree = ", camera.is_inside_tree() if camera else "null")
 	if gin_barrel_scene == null:
 		push_error("GinSpawner: no gin_barrel_scene assigned")
 		return
