@@ -110,6 +110,10 @@ func _ready() -> void:
 	for weapon in weapons:
 		add_weapon(weapon)
 func _apply_meta_upgrades() -> void:
+	match MetaProgress.boat_tier:
+		MetaProgress.BoatTier.SKIFF:    ship_tier = 1
+		MetaProgress.BoatTier.SCHOONER: ship_tier = 2
+		MetaProgress.BoatTier.GALLEON:  ship_tier = 3
 	max_speed += MetaProgress.get_speed_bonus()
 	max_weapons += int(MetaProgress.get_weapon_slot_bonus())
 	var bonus_health := int(MetaProgress.get_health_bonus())

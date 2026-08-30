@@ -11,5 +11,4 @@ tier_name = "Galleon"
 hull_textures = Array[Texture2D]([ExtResource("1_cfej2"), ExtResource("2_25iu5"), ExtResource("3_jw8ek")])
 display_scale = 1
 pixel_hull_width = 70.0
-has_masts = true
 metadata/_custom_type_script = "uid://cm2aeylarosbb"
