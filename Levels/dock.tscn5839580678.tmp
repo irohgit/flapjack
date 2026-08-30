@@ -1,0 +1,290 @@
+[gd_scene format=3 uid="uid://bv8f0m16foofm"]
+
+[ext_resource type="Script" uid="uid://b6362540qdmii" path="res://Levels/dock.gd" id="1_gp6d4"]
+[ext_resource type="Texture2D" uid="uid://b2ecyt8goulwd" path="res://Assets/Environment/Dock/dock_1.png" id="1_jk8js"]
+[ext_resource type="PackedScene" uid="uid://c1hug03muahmo" path="res://Actors/Camera/water_background.tscn" id="2_hbxvl"]
+[ext_resource type="PackedScene" uid="uid://cclwwsegfn8rr" path="res://Actors/Player/player.tscn" id="2_wv1s7"]
+[ext_resource type="Script" uid="uid://c5arswu2ypo5c" path="res://Levels/dockbounds.gd" id="4_u0fe5"]
+[ext_resource type="Texture2D" uid="uid://df607lk1lqag2" path="res://Assets/Characters/ginny_drinking_spritesheet_96x96.png" id="5_4nibh"]
+[ext_resource type="Texture2D" uid="uid://b6vlcs7mjr1q4" path="res://Assets/Characters/Ginny_Idle_spritesheet_96x96.png" id="5_y055y"]
+[ext_resource type="Texture2D" uid="uid://bq5au2ufytqr6" path="res://Assets/Characters/ginny_drinking_long_spritesheet_288x48.png" id="6_jlhff"]
+[ext_resource type="Texture2D" uid="uid://bpqus7enchi0o" path="res://Assets/Characters/ginny_wave_spritesheet_96x96.png" id="7_sd5uq"]
+[ext_resource type="Texture2D" uid="uid://dkgautuhavx01" path="res://Assets/Characters/ginny_sleeping_spritesheet_192x48.png" id="8_6f3ff"]
+[ext_resource type="Script" uid="uid://prqvr6dw61gf" path="res://Levels/InteractHotspot.gd" id="11_q2u3x"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gp6d4"]
+atlas = ExtResource("5_4nibh")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q2u3x"]
+atlas = ExtResource("5_4nibh")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pxqul"]
+atlas = ExtResource("5_4nibh")
+region = Rect2(0, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qbsur"]
+atlas = ExtResource("5_4nibh")
+region = Rect2(48, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ygi7o"]
+atlas = ExtResource("6_jlhff")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j1ydr"]
+atlas = ExtResource("6_jlhff")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v7vau"]
+atlas = ExtResource("6_jlhff")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q8rlk"]
+atlas = ExtResource("6_jlhff")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3cuo4"]
+atlas = ExtResource("6_jlhff")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uuko1"]
+atlas = ExtResource("6_jlhff")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4nibh"]
+atlas = ExtResource("5_y055y")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sd5uq"]
+atlas = ExtResource("5_y055y")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jlhff"]
+atlas = ExtResource("5_y055y")
+region = Rect2(0, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6f3ff"]
+atlas = ExtResource("5_y055y")
+region = Rect2(48, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pbksv"]
+atlas = ExtResource("8_6f3ff")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x8iy1"]
+atlas = ExtResource("8_6f3ff")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_um2y4"]
+atlas = ExtResource("8_6f3ff")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rftcx"]
+atlas = ExtResource("8_6f3ff")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kl4sp"]
+atlas = ExtResource("7_sd5uq")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e3o5v"]
+atlas = ExtResource("7_sd5uq")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_17jeg"]
+atlas = ExtResource("7_sd5uq")
+region = Rect2(0, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vsn3u"]
+atlas = ExtResource("7_sd5uq")
+region = Rect2(48, 48, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5st54"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gp6d4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q2u3x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pxqul")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qbsur")
+}],
+"loop": 1,
+"name": &"drink",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ygi7o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j1ydr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v7vau")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q8rlk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3cuo4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uuko1")
+}],
+"loop": 1,
+"name": &"drink_long",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4nibh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sd5uq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jlhff")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6f3ff")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pbksv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x8iy1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x8iy1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_um2y4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_um2y4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rftcx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rftcx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x8iy1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pbksv")
+}],
+"loop": 1,
+"name": &"sleep",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kl4sp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e3o5v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_17jeg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vsn3u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_17jeg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e3o5v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kl4sp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e3o5v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_17jeg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vsn3u")
+}],
+"loop": 1,
+"name": &"wave",
+"speed": 3.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5yy73"]
+size = Vector2(137, 127)
+
+[node name="Dock" type="Node2D" unique_id=229493838]
+script = ExtResource("1_gp6d4")
+metadata/_edit_vertical_guides_ = [960.0]
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=2092240938]
+offset_left = -9.0
+offset_top = -6.0
+offset_right = 1921.0
+offset_bottom = 1089.0
+texture = ExtResource("1_jk8js")
+
+[node name="Player" parent="." unique_id=2109576054 node_paths=PackedStringArray("camera") instance=ExtResource("2_wv1s7")]
+position = Vector2(1064, 985)
+camera = NodePath("../Camera2D")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1709445959]
+position = Vector2(959, 542)
+
+[node name="OceanFloor" type="CanvasLayer" parent="." unique_id=1614885545]
+layer = -110
+
+[node name="WaterBack" parent="OceanFloor" unique_id=364615905 instance=ExtResource("2_hbxvl")]
+modulate = Color(1, 1, 1, 0.1764706)
+deep_water_color = Color(0.55282897, 0.8124258, 1, 1)
+wave_water_color = Color(0.70367926, 0.87278277, 0.99999994, 1)
+rim_color = Color(0.85061395, 0.93505543, 0.9999997, 1)
+foam_color = Color(0.9341898, 0.97122866, 0.99999994, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="DockBounds" type="Node2D" parent="." unique_id=1409784210 node_paths=PackedStringArray("islands")]
+script = ExtResource("4_u0fe5")
+islands = [NodePath("VinnieIsland")]
+
+[node name="Water" type="Polygon2D" parent="DockBounds" unique_id=815375415]
+position = Vector2(197, 381)
+color = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(-203, 366, -178, 374, -156, 376, -160, 353, -140, 355, -128, 367, -110, 371, -98, 380, -110, 388, -126, 395, -137, 415, -133, 425, -114, 434, -87, 432, -79, 408, -32, 416, -5, 409, 21, 427, 35, 456, 25, 478, 54, 514, 71, 567, 95, 584, 132, 615, 193, 615, 263, 615, 303, 632, 324, 647, 365, 666, 423, 673, 456, 646, 504, 635, 570, 623, 640, 601, 654, 564, 717, 541, 653, 519, 595, 496, 611, 471, 597, 441, 577, 441, 550, 422, 538, 446, 534, 471, 539, 485, 480, 462, 455, 441, 427, 442, 382, 419, 344, 394, 315, 358, 279, 347, 251, 337, 247, 289, 242, 259, 235, 237, 239, 216, 360, 216, 350, 124, 505, 134, 503, 78, 363, 83, 352, 62, 308, 72, 301, 11, 313, -4, 472, -5, 470, -43, 616, -45, 616, -76, 523, -79, 525, -119, 1104, -113, 1135, -82, 1161, -42, 1210, -14, 1236, 7, 1253, 7, 1252, 75, 1318, 78, 1319, 304, 1345, 307, 1348, 343, 1310, 396, 1247, 430, 1227, 464, 1128, 485, 1111, 507, 1066, 523, 1031, 536, 1013, 581, 1028, 608, 1097, 614, 1160, 623, 1259, 632, 1298, 607, 1360, 599, 1427, 553, 1525, 482, 1587, 447, 1653, 408, 1721, 341, 1729, 733, -223, 720)
+
+[node name="VinnieIsland" type="Polygon2D" parent="DockBounds" unique_id=2066326356]
+position = Vector2(197, 381)
+color = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(809, 186, 848, 208, 864, 240, 885, 245, 888, 282, 907, 292, 904, 326, 825, 328, 831, 377, 956, 374, 951, 294, 981, 300, 995, 308, 1013, 302, 1030, 312, 1062, 306, 1093, 290, 1104, 264, 1139, 224, 1153, 174, 1154, 153, 1134, 124, 1123, 90, 1072, 75, 1033, 58, 1003, 43, 944, 31, 922, 32, 842, 36, 828, 55, 805, 96, 806, 124, 806, 153, 809, 181)
+
+[node name="Ginny" type="Node2D" parent="." unique_id=1197978407]
+position = Vector2(533, 510)
+scale = Vector2(1.5, 1.5)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Ginny" unique_id=243228473]
+sprite_frames = SubResource("SpriteFrames_5st54")
+animation = &"wave"
+autoplay = "wave"
+
+[node name="Ginny_Interact" type="Area2D" parent="." unique_id=814066058]
+position = Vector2(624, 572)
+script = ExtResource("11_q2u3x")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ginny_Interact" unique_id=1073849320]
+shape = SubResource("RectangleShape2D_5yy73")
