@@ -4,6 +4,8 @@ extends MenuScreen
 signal shop_closed
 
 const OFFER_SLOT_COUNT := 3
+const PANEL_WIDTH := 820.0
+const PANEL_MARGIN := 24.0
 
 const RARITY_COLORS := {
 	"COMMON": Color("d8dde2"),
@@ -20,16 +22,20 @@ enum OfferState {
 	SOLD_OUT,
 }
 
+enum PanelSide {
+	LEFT,
+	RIGHT,
+}
+
+@export var panel_side: PanelSide = PanelSide.RIGHT:
+	set(value):
+		panel_side = value
+		if is_node_ready():
+			_apply_panel_side()
+
 @onready var coin_amount_label: Label = %CoinAmount
-@onready var item_icon: TextureRect = %SelectedItemIcon
-@onready var item_name_label: Label = %ItemName
-@onready var item_type_label: Label = %ItemType
-@onready var item_description_label: Label = %ItemDescription
-@onready var price_label: Label = %PriceLabel
-@onready var buy_button: TextureButton = %BuyButton
-@onready var buy_button_label: Label = %BuyButtonLabel
-@onready var merchant_dialogue: Label = %MerchantDialogue
 @onready var exit_button: TextureButton = %ExitButton
+@onready var side_panel: NinePatchRect = %SidePanel
 
 var _player: Player
 var _offers: Array[PickupData] = []
@@ -43,6 +49,7 @@ var _offer_cards: Array[ShopOfferCard] = []
 
 func _ready() -> void:
 	super()
+	_apply_panel_side()
 	_offer_cards.append(%OfferCard1 as ShopOfferCard)
 	_offer_cards.append(%OfferCard2 as ShopOfferCard)
 	_offer_cards.append(%OfferCard3 as ShopOfferCard)
@@ -53,13 +60,34 @@ func _ready() -> void:
 		card.focus_entered.connect(_select_offer.bind(index))
 		card.mouse_entered.connect(card.grab_focus)
 
-	buy_button.pressed.connect(_on_buy_pressed)
 	exit_button.pressed.connect(close_menu)
 	_refresh_all_cards()
 
 
-## Opens one merchant visit with stock that has already been rolled by GameUI.
-## The three authored card nodes are updated in place and never rebuilt.
+func _apply_panel_side() -> void:
+	var on_left := panel_side == PanelSide.LEFT
+	side_panel.anchor_left = 0.0 if on_left else 1.0
+	side_panel.anchor_right = side_panel.anchor_left
+	side_panel.offset_left = PANEL_MARGIN if on_left else -(PANEL_MARGIN + PANEL_WIDTH)
+	side_panel.offset_right = PANEL_MARGIN + PANEL_WIDTH if on_left else -PANEL_MARGIN
+	side_panel.grow_horizontal = Control.GROW_DIRECTION_END if on_left else Control.GROW_DIRECTION_BEGIN
+
+
+func _input(event: InputEvent) -> void:
+	if not visible or not event.is_action(&"ui_accept"):
+		return
+
+	var focus_owner := get_viewport().gui_get_focus_owner()
+	if focus_owner not in _offer_cards:
+		return
+
+	# Space/Enter/A buys the focused offer. Consume both the press and release
+	# so the row Button does not also toggle from the same input.
+	get_viewport().set_input_as_handled()
+	if event.is_action_pressed(&"ui_accept"):
+		_purchase_selected_offer()
+
+
 func open_shop(player: Player, offers: Array[PickupData]) -> void:
 	_set_player(player)
 	_offers.clear()
@@ -126,11 +154,7 @@ func _refresh_all_cards(focus_selected_card := false) -> void:
 	if _selected_index < 0 or _selected_index >= _offers.size():
 		_selected_index = 0 if not _offers.is_empty() else -1
 
-	if _selected_index >= 0:
-		_render_selection()
-	else:
-		_clear_details()
-
+	_render_selection()
 	_update_focus_neighbors()
 	if focus_selected_card and _selected_index >= 0:
 		_offer_cards[_selected_index].call_deferred("grab_focus")
@@ -173,56 +197,14 @@ func _select_offer(index: int) -> void:
 
 	_selected_index = index
 	_render_selection()
-	_update_focus_neighbors()
 
 
 func _render_selection() -> void:
 	for card_index in _offer_cards.size():
 		_offer_cards[card_index].set_pressed_no_signal(card_index == _selected_index)
 
-	_update_details(_offers[_selected_index], _offer_states[_selected_index])
 
-
-func _update_details(pickup: PickupData, state: OfferState) -> void:
-	var rarity := pickup.get_shop_rarity().to_upper()
-	item_icon.texture = pickup.get_shop_icon()
-	item_name_label.text = pickup.get_shop_name()
-	item_type_label.text = "%s • %s" % [pickup.get_shop_type().to_upper(), rarity]
-	item_type_label.add_theme_color_override("font_color", _rarity_color(rarity))
-	item_description_label.text = pickup.get_shop_description()
-	price_label.text = "%d COINS" % pickup.get_shop_price()
-	buy_button_label.text = _state_text(state, pickup.get_shop_price())
-	buy_button.disabled = state != OfferState.AVAILABLE
-	merchant_dialogue.text = _merchant_line(state)
-
-
-func _clear_details() -> void:
-	item_icon.texture = null
-	item_name_label.text = "NO STOCK"
-	item_type_label.text = ""
-	item_description_label.text = "The quartermaster has nothing available for this visit."
-	price_label.text = "—"
-	buy_button_label.text = "UNAVAILABLE"
-	buy_button.disabled = true
-	merchant_dialogue.text = "Nothing in the hold this time, captain."
-
-
-func _merchant_line(state: OfferState) -> String:
-	match state:
-		OfferState.AVAILABLE:
-			return "Take a closer look, captain. A fair price for a useful tool."
-		OfferState.NOT_ENOUGH_COINS:
-			return "Not enough coin for that one, captain."
-		OfferState.OWNED:
-			return "Already aboard. A reliable choice."
-		OfferState.UNAVAILABLE:
-			return "No room or no proper gear for that one just yet."
-		OfferState.SOLD_OUT:
-			return "Sold. It is yours now, captain."
-	return "Take a closer look, captain."
-
-
-func _on_buy_pressed() -> void:
+func _purchase_selected_offer() -> void:
 	if _buying or _player == null or _selected_index < 0 or _selected_index >= _offers.size():
 		return
 	if _selected_index >= _offer_states.size():
@@ -245,41 +227,35 @@ func _update_focus_neighbors() -> void:
 	if _offers.is_empty():
 		first_focus = exit_button
 		exit_button.focus_neighbor_top = NodePath()
+		exit_button.focus_neighbor_bottom = NodePath()
+		exit_button.focus_neighbor_left = NodePath()
 		exit_button.focus_neighbor_right = NodePath()
-		buy_button.focus_neighbor_top = buy_button.get_path_to(exit_button)
-		buy_button.focus_neighbor_left = buy_button.get_path_to(exit_button)
-		buy_button.focus_neighbor_bottom = buy_button.get_path_to(exit_button)
 		return
 
 	first_focus = _offer_cards[0]
 	for index in _offers.size():
 		var card := _offer_cards[index]
-		var action_target: Control = (
-			buy_button
-			if _offer_states[index] == OfferState.AVAILABLE
-			else exit_button
-		)
 		var top_target: Control = (
 			exit_button
 			if index == 0
 			else _offer_cards[index - 1]
 		)
 		var bottom_target: Control = (
-			action_target
+			exit_button
 			if index == _offers.size() - 1
 			else _offer_cards[index + 1]
 		)
-		card.focus_neighbor_left = card.get_path_to(exit_button)
-		card.focus_neighbor_right = card.get_path_to(action_target)
 		card.focus_neighbor_top = card.get_path_to(top_target)
 		card.focus_neighbor_bottom = card.get_path_to(bottom_target)
+		card.focus_neighbor_left = NodePath()
+		card.focus_neighbor_right = NodePath()
 
-	var selected_card := _offer_cards[_selected_index]
-	buy_button.focus_neighbor_top = buy_button.get_path_to(selected_card)
-	buy_button.focus_neighbor_left = buy_button.get_path_to(selected_card)
-	exit_button.focus_neighbor_right = exit_button.get_path_to(selected_card)
-	exit_button.focus_neighbor_top = exit_button.get_path_to(selected_card)
-	buy_button.focus_neighbor_bottom = buy_button.get_path_to(exit_button)
+	var first_card := _offer_cards[0]
+	var last_card := _offer_cards[_offers.size() - 1]
+	exit_button.focus_neighbor_top = exit_button.get_path_to(last_card)
+	exit_button.focus_neighbor_bottom = exit_button.get_path_to(first_card)
+	exit_button.focus_neighbor_left = NodePath()
+	exit_button.focus_neighbor_right = NodePath()
 
 
 func _rarity_color(rarity: String) -> Color:
