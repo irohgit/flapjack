@@ -13,6 +13,9 @@ extends Resource
 @export_group("Merchant")
 @export var shop_items: Array[PickupData] = []
 
+@export_group("Drops")
+@export var drop_categories: Array[DropCategoryData] = []
+
 @export_group("Encounter Sequence")
 @export var encounter_sequence: Array[EncounterData] = []
 

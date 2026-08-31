@@ -1,6 +1,6 @@
 extends Node
 
 
-signal enemy_died(world_position: Vector2)
+signal enemy_died(world_position: Vector2, enemy_data: Resource)
 signal boss_defeated(world_position: Vector2)
 signal player_died(retry_scene_path: String)

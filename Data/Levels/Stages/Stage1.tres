@@ -22,6 +22,104 @@
 [ext_resource type="Resource" uid="uid://bcj4lyhuitxi2" path="res://Data/Pickups/ShieldPotion.tres" id="7_shield"]
 [ext_resource type="Resource" path="res://Data/Pickups/SpeedPotion.tres" id="7_speed"]
 [ext_resource type="PackedScene" uid="uid://3gxxy4myod8b" path="res://Actors/Enemies/PatternEnemyWaveSpawner.tscn" id="8_birds"]
+[ext_resource type="Script" path="res://Data/Levels/weighted_drop_data.gd" id="9_weighted_drop"]
+[ext_resource type="Script" path="res://Data/Levels/drop_category_data.gd" id="10_drop_category"]
+[ext_resource type="Resource" uid="uid://c2mlimi5p04hl" path="res://Data/Pickups/GoldCoin.tres" id="11_gold"]
+[ext_resource type="Resource" uid="uid://bro26dstx3iic" path="res://Data/Pickups/SilverCoin.tres" id="12_silver"]
+[ext_resource type="Resource" uid="uid://dbvcpemefqpmm" path="res://Data/Pickups/BronzeCoin.tres" id="13_bronze"]
+[ext_resource type="Resource" uid="uid://b1t8pmt6xip8x" path="res://Data/Enemy/ButcherBird_Black.tres" id="14_black_bird"]
+[ext_resource type="Resource" uid="uid://cklo8eixg31" path="res://Data/Enemy/ButcherBird_Red.tres" id="15_red_bird"]
+[ext_resource type="Resource" path="res://Data/Enemy/VoodooBoss.tres" id="16_boss"]
+
+[sub_resource type="Resource" id="Drop_gold"]
+script = ExtResource("9_weighted_drop")
+pickup = ExtResource("11_gold")
+weight = 6.0
+
+[sub_resource type="Resource" id="Drop_silver"]
+script = ExtResource("9_weighted_drop")
+pickup = ExtResource("12_silver")
+weight = 18.0
+
+[sub_resource type="Resource" id="Drop_bronze"]
+script = ExtResource("9_weighted_drop")
+pickup = ExtResource("13_bronze")
+weight = 36.0
+
+[sub_resource type="Resource" id="Drop_homing"]
+script = ExtResource("9_weighted_drop")
+pickup = ExtResource("7_homing")
+weight = 3.6363636
+
+[sub_resource type="Resource" id="Drop_plasma"]
+script = ExtResource("9_weighted_drop")
+pickup = ExtResource("7_plasma")
+weight = 3.6363636
+
+[sub_resource type="Resource" id="Drop_fire"]
+script = ExtResource("9_weighted_drop")
+pickup = ExtResource("7_fire")
+weight = 3.6363636
+
+[sub_resource type="Resource" id="Drop_magnet"]
+script = ExtResource("9_weighted_drop")
+pickup = ExtResource("7_magnet")
+weight = 3.6363636
+
+[sub_resource type="Resource" id="Drop_pierce"]
+script = ExtResource("9_weighted_drop")
+pickup = ExtResource("7_pierce")
+weight = 3.6363636
+
+[sub_resource type="Resource" id="Drop_ricochet"]
+script = ExtResource("9_weighted_drop")
+pickup = ExtResource("7_ricochet")
+weight = 3.6363636
+
+[sub_resource type="Resource" id="Drop_harpoon"]
+script = ExtResource("9_weighted_drop")
+pickup = ExtResource("7_harpoon")
+weight = 3.6363636
+
+[sub_resource type="Resource" id="Drop_health"]
+script = ExtResource("9_weighted_drop")
+pickup = ExtResource("7_health")
+weight = 3.6363636
+
+[sub_resource type="Resource" id="Drop_shield"]
+script = ExtResource("9_weighted_drop")
+pickup = ExtResource("7_shield")
+weight = 3.6363636
+
+[sub_resource type="Resource" id="Drop_rapid"]
+script = ExtResource("9_weighted_drop")
+pickup = ExtResource("7_rapid")
+weight = 3.6363636
+
+[sub_resource type="Resource" id="Drop_speed"]
+script = ExtResource("9_weighted_drop")
+pickup = ExtResource("7_speed")
+weight = 3.6363636
+
+[sub_resource type="Resource" id="DropCategory_standard_enemies"]
+script = ExtResource("10_drop_category")
+category_name = "Standard Drops"
+enemies = Array[Resource]([ExtResource("2_bulwark"), ExtResource("3_hunter"), ExtResource("14_black_bird"), ExtResource("15_red_bird")])
+drops = Array[ExtResource("9_weighted_drop")]([SubResource("Drop_gold"), SubResource("Drop_silver"), SubResource("Drop_bronze"), SubResource("Drop_homing"), SubResource("Drop_plasma"), SubResource("Drop_fire"), SubResource("Drop_magnet"), SubResource("Drop_pierce"), SubResource("Drop_ricochet"), SubResource("Drop_harpoon"), SubResource("Drop_health"), SubResource("Drop_shield"), SubResource("Drop_rapid"), SubResource("Drop_speed")])
+
+[sub_resource type="Resource" id="DropCategory_boss_reward"]
+script = ExtResource("10_drop_category")
+category_name = "Boss Augment or Weapon"
+enemies = Array[Resource]([ExtResource("16_boss")])
+drops = Array[ExtResource("9_weighted_drop")]([SubResource("Drop_homing"), SubResource("Drop_plasma"), SubResource("Drop_fire"), SubResource("Drop_magnet"), SubResource("Drop_pierce"), SubResource("Drop_ricochet"), SubResource("Drop_harpoon")])
+
+[sub_resource type="Resource" id="DropCategory_boss_coins"]
+script = ExtResource("10_drop_category")
+category_name = "Boss Coins"
+enemies = Array[Resource]([ExtResource("16_boss")])
+rolls = 5
+no_drop_weight = 40.0
+drops = Array[ExtResource("9_weighted_drop")]([SubResource("Drop_gold"), SubResource("Drop_silver"), SubResource("Drop_bronze")])
 
 [sub_resource type="Resource" id="Enemy_bulwark"]
 script = ExtResource("1_enemy")
@@ -207,6 +305,7 @@ metadata/_custom_type_script = "uid://bhsc86o70es47"
 script = ExtResource("4_level")
 level_name = "Stage1"
 shop_items = Array[ExtResource("7_pickup_data")]([ExtResource("7_homing"), ExtResource("7_plasma"), ExtResource("7_fire"), ExtResource("7_magnet"), ExtResource("7_pierce"), ExtResource("7_ricochet"), ExtResource("7_harpoon"), ExtResource("7_health"), ExtResource("7_shield"), ExtResource("7_rapid"), ExtResource("7_speed")])
+drop_categories = Array[ExtResource("10_drop_category")]([SubResource("DropCategory_standard_enemies"), SubResource("DropCategory_boss_reward"), SubResource("DropCategory_boss_coins")])
 encounter_sequence = Array[ExtResource("6_encounter")]([SubResource("Encounter_01_intro_line"), SubResource("Encounter_02_intro_v"), SubResource("Encounter_03_first_hunters"), SubResource("Encounter_04_optional_reinforcement"), SubResource("Encounter_05_mixed_fleet"), SubResource("Encounter_06_bird_warning"), SubResource("Encounter_07_grid_intro"), SubResource("Encounter_08_optional_circle"), SubResource("Encounter_09_midpoint_fleet"), SubResource("Encounter_10_bird_return"), SubResource("Encounter_11_advanced_fleet"), SubResource("Encounter_12_optional_pressure"), SubResource("Encounter_13_late_fleet"), SubResource("Encounter_14_final_fleet"), SubResource("Encounter_15_final_birds")])
 finale_trigger_position = Vector2(0, -10000)
 finale_spawn_position = Vector2(960, -9700)
