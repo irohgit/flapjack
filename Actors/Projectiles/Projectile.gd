@@ -37,6 +37,8 @@ var final_speed_boost := 1.0
 var direction := Vector2.UP
 var _status_effects: Array[StatusEffectData] = []
 var _is_destroying := false
+var _has_expire_position := false
+var _expire_position := Vector2.ZERO
 
 
 func _ready() -> void:
@@ -48,7 +50,8 @@ func _ready() -> void:
 	area_entered.connect(_on_area_entered)
 	_trail.top_level = true
 	_trail.clear_points()
-	get_tree().create_timer(data.expire_time).timeout.connect(_on_expired)
+	if not _has_expire_position and data.expire_time > 0.0:
+		get_tree().create_timer(data.expire_time).timeout.connect(_on_expired)
 	
 
 func _apply_data() -> void:
@@ -94,11 +97,25 @@ func add_status_effect(effect: StatusEffectData) -> void:
 		return
 
 	_status_effects.append(effect.duplicate(true) as StatusEffectData)
-		
+
+
+## Sets a fixed world-space endpoint for a straight projectile. This must be
+## called before the projectile enters the tree so it replaces timed expiry.
+func set_expire_position(world_position: Vector2) -> void:
+	_expire_position = world_position
+	_has_expire_position = true
+
+
 func _physics_process(delta: float) -> void:
 	age_time += delta
 	_move(delta)
 	_update_trail()
+
+	if (
+		_has_expire_position
+		and global_position.distance_squared_to(_expire_position) <= 0.0001
+	):
+		destroy()
 
 
 # Override for homing, arcing, spiralling.
@@ -123,7 +140,15 @@ func _move(delta: float) -> void:
 	_sprite.rotation = direction_angle + PI / 2.0
 	_animated_sprite.rotation = direction_angle
 
-	position += direction * data.speed * final_speed_boost * delta
+	var movement := direction * data.speed * final_speed_boost * delta
+	if _has_expire_position:
+		var distance_remaining := global_position.distance_to(_expire_position)
+		if movement.length() >= distance_remaining:
+			global_position = _expire_position
+			return
+
+	position += movement
+
 
 func _chain_lightning() -> bool:
 	var target := _find_nearest_enemy(500, hit_list)
@@ -249,8 +274,9 @@ func _on_impact() -> void:
 	pass
 
 
-## The one exit path for impacts and lifetime expiry. Keeping the ground-effect
-## spawn here guarantees a transforming projectile creates exactly one area.
+## The one exit path for impacts, endpoint arrival, and lifetime expiry. Keeping
+## the ground-effect spawn here guarantees a transforming projectile creates
+## exactly one area.
 func destroy(spawn_ground_effect := true) -> void:
 	if _is_destroying or is_queued_for_deletion():
 		return

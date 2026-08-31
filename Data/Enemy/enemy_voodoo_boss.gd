@@ -161,15 +161,21 @@ func _fire_poison() -> void:
 
 	var fire_position := _get_fire_position()
 	var aim_direction := Vector2.DOWN
+	var expire_position := Vector2.ZERO
+	var has_expire_position := false
 	var player := get_tree().get_first_node_in_group("player") as Node2D
 	if player != null:
-		var direction_to_player := fire_position.direction_to(player.global_position)
+		expire_position = player.global_position
+		has_expire_position = true
+		var direction_to_player := fire_position.direction_to(expire_position)
 		if not direction_to_player.is_zero_approx():
 			aim_direction = direction_to_player
 
 	shot.data = poison_data.duplicate(true) as ProjectileData
 	shot.direction = aim_direction
 	shot.homing = false
+	if has_expire_position:
+		shot.set_expire_position(expire_position)
 
 	get_parent().add_child(shot)
 	shot.global_position = fire_position

@@ -54,9 +54,10 @@ prototyping.
 Instance `Actors/GroundEffects/ground_effect.tscn` and assign the resource to
 place an area directly in a level. To create one when a projectile ends, assign
 the same resource to `ProjectileData.death_ground_effect`; it will spawn when
-the projectile hits something or reaches its expiry time. A reapply interval of
-zero means entry-only; positive intervals refresh overlapping targets using the
-configured status effect's reapply policy. See
+the projectile hits something, reaches a configured endpoint, or reaches its
+fallback expiry time. A reapply interval of zero means entry-only; positive
+intervals refresh overlapping targets using the configured status effect's
+reapply policy. See
 `Data/GroundEffects/confusion_pool.tres` and `fire_pool.tres` for complete
 examples.
 
