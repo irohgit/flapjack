@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://d0cqw0ka110x7" path="res://Data/GroundEffects/ground_effect_data.gd" id="1_ground"]
 [ext_resource type="Script" uid="uid://djyh13b16xtos" path="res://Systems/Combat/status_effect_data.gd" id="2_status"]
 [ext_resource type="Script" uid="uid://bb2hxg3ieta4h" path="res://Systems/Combat/effect_action.gd" id="3_0jpbv"]
-[ext_resource type="Texture2D" uid="uid://dupvhyhrod0ce" path="res://Assets/Projectiles/voodoo_poison_blob.svg" id="3_texture"]
+[ext_resource type="Texture2D" uid="uid://du6k8yuqswg4o" path="res://Assets/GroundEffects/confusion_blob.png" id="3_texture"]
 [ext_resource type="Script" uid="uid://bd7w82irghj51" path="res://Systems/Combat/status_effect_modifier.gd" id="5_7brk8"]
 
 [sub_resource type="Resource" id="Status_confusion"]
@@ -26,5 +26,4 @@ hitbox_radius = 64.0
 duration = 5.0
 end_scale = 1.25
 texture = ExtResource("3_texture")
-tint = Color(0.85, 0.55, 1, 1)
-visual_scale = 2.0
+visual_scale = 4.0

@@ -36,6 +36,7 @@ var final_speed_boost := 1.0
 
 var direction := Vector2.UP
 var _status_effects: Array[StatusEffectData] = []
+var _is_destroying := false
 
 
 func _ready() -> void:
@@ -47,7 +48,7 @@ func _ready() -> void:
 	area_entered.connect(_on_area_entered)
 	_trail.top_level = true
 	_trail.clear_points()
-	get_tree().create_timer(data.expire_time).timeout.connect(queue_free)
+	get_tree().create_timer(data.expire_time).timeout.connect(_on_expired)
 	
 
 func _apply_data() -> void:
@@ -219,6 +220,9 @@ func _update_trail() -> void:
 
 
 func _on_area_entered(area: Area2D) -> void:
+	if _is_destroying:
+		return
+
 	Audio.play_sfx(data.impact_sound, -8.0)
 	var is_enemy := area.is_in_group("enemy")
 
@@ -232,11 +236,10 @@ func _on_area_entered(area: Area2D) -> void:
 			has_done_ricochet = true
 	if area.has_method("take_damage"):
 		area.take_damage(data.damage)
-	_spawn_impact_ground_effect()
 	_on_impact()
 	
 	if pierce == 0:
-		queue_free()
+		destroy()
 	else:
 		pierce -= 1
 
@@ -246,8 +249,20 @@ func _on_impact() -> void:
 	pass
 
 
-func _spawn_impact_ground_effect() -> void:
-	if data.impact_ground_effect == null:
+## The one exit path for impacts and lifetime expiry. Keeping the ground-effect
+## spawn here guarantees a transforming projectile creates exactly one area.
+func destroy(spawn_ground_effect := true) -> void:
+	if _is_destroying or is_queued_for_deletion():
+		return
+
+	_is_destroying = true
+	if spawn_ground_effect:
+		_spawn_death_ground_effect()
+	queue_free()
+
+
+func _spawn_death_ground_effect() -> void:
+	if data.death_ground_effect == null:
 		return
 
 	var spawn_parent := get_parent() as Node2D
@@ -260,10 +275,15 @@ func _spawn_impact_ground_effect() -> void:
 		push_error("Ground effect scene must inherit from GroundEffect")
 		return
 
-	ground_effect.data = data.impact_ground_effect
+	ground_effect.data = data.death_ground_effect
 	spawn_parent.add_child(ground_effect)
 	ground_effect.global_position = global_position
 
+
+func _on_expired() -> void:
+	destroy()
+
+
 func _on_screen_exited() -> void:
 	DebugHud.flash("bullet screen_exited fired")
-	queue_free()
+	destroy(false)
