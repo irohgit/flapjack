@@ -25,11 +25,16 @@ enum Target {
 
 @export_group("Lifetime")
 @export_range(0.05, 120.0, 0.05, "or_greater") var duration := 3.0
-## Scale animates the visual and hitbox together, so the active area grows too.
-@export_range(0.0, 10.0, 0.05, "or_greater") var start_scale := 0.25
-@export_range(0.0, 10.0, 0.05, "or_greater") var end_scale := 1.0
 @export_range(0.0, 1.0, 0.01) var start_opacity := 0.8
 @export_range(0.0, 1.0, 0.01) var end_opacity := 0.0
+
+@export_group("Pulse Animation")
+## The area appears immediately at this scale, then pulses around it.
+@export_range(0.01, 10.0, 0.05, "or_greater") var spawn_scale := 1.0
+## Fraction above and below spawn_scale reached by each pulse.
+@export_range(0.0, 0.95, 0.01) var pulse_amount := 0.1
+## Seconds for one complete grow-and-shrink cycle.
+@export_range(0.1, 10.0, 0.05, "or_greater") var pulse_period := 0.8
 
 @export_group("Visual")
 ## SpriteFrames takes precedence over texture. With neither assigned, the area

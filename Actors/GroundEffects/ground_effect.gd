@@ -16,6 +16,7 @@ var _elapsed := 0.0
 var _reapply_timer := 0.0
 var _base_scale := Vector2.ONE
 var _uses_drawn_circle := false
+var _pulse_tween: Tween
 
 
 func _ready() -> void:
@@ -33,7 +34,8 @@ func _ready() -> void:
 	_reapply_timer = data.reapply_interval
 	_configure_collision()
 	_configure_visual()
-	_apply_lifetime_state(0.0)
+	_start_pulse_animation()
+	_apply_lifetime_opacity(0.0)
 
 	area_entered.connect(_apply_status_effects)
 	body_entered.connect(_apply_status_effects)
@@ -41,7 +43,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	_elapsed = minf(_elapsed + delta, data.duration)
-	_apply_lifetime_state(_elapsed / data.duration)
+	_apply_lifetime_opacity(_elapsed / data.duration)
 
 	if _elapsed >= data.duration:
 		queue_free()
@@ -96,11 +98,32 @@ func _configure_visual() -> void:
 		queue_redraw()
 
 
-func _apply_lifetime_state(progress: float) -> void:
-	var amount := clampf(progress, 0.0, 1.0)
-	var lifetime_scale := maxf(lerpf(data.start_scale, data.end_scale, amount), 0.001)
-	scale = _base_scale * lifetime_scale
+func _start_pulse_animation() -> void:
+	var spawn_scale := maxf(data.spawn_scale, 0.001)
+	var spawn_size := _base_scale * spawn_scale
+	scale = spawn_size
 
+	if data.pulse_amount <= 0.0:
+		return
+
+	var maximum_size := _base_scale * spawn_scale * (1.0 + data.pulse_amount)
+	var minimum_factor := maxf(spawn_scale * (1.0 - data.pulse_amount), 0.001)
+	var minimum_size := _base_scale * minimum_factor
+	var quarter_period := maxf(data.pulse_period * 0.25, 0.025)
+
+	_pulse_tween = create_tween()
+	_pulse_tween.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
+	_pulse_tween.set_trans(Tween.TRANS_SINE)
+	_pulse_tween.set_ease(Tween.EASE_IN_OUT)
+	_pulse_tween.set_loops()
+	_pulse_tween.tween_property(self, "scale", maximum_size, quarter_period)
+	_pulse_tween.tween_property(self, "scale", spawn_size, quarter_period)
+	_pulse_tween.tween_property(self, "scale", minimum_size, quarter_period)
+	_pulse_tween.tween_property(self, "scale", spawn_size, quarter_period)
+
+
+func _apply_lifetime_opacity(progress: float) -> void:
+	var amount := clampf(progress, 0.0, 1.0)
 	var colour := data.tint
 	colour.a *= lerpf(data.start_opacity, data.end_opacity, amount)
 	_sprite.modulate = colour

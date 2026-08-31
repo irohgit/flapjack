@@ -13,7 +13,7 @@ display_name = "Confusion"
 description = "Movement controls are reversed."
 icon = ExtResource("3_texture")
 show_in_hud = true
-duration = 1.25
+duration = 3.0
 reapply_policy = 2
 flags = Array[StringName]([&"reverse_controls"])
 
@@ -24,6 +24,7 @@ status_effects = Array[ExtResource("2_status")]([SubResource("Status_confusion")
 reapply_interval = 0.75
 hitbox_radius = 64.0
 duration = 5.0
-end_scale = 1.25
+pulse_amount = 0.15
+pulse_period = 0.9
 texture = ExtResource("3_texture")
 visual_scale = 4.0

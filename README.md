@@ -45,9 +45,11 @@ pieces of combat state.
 
 Ground areas use the same `StatusEffectData` resources as projectiles and
 potions. Create a `GroundEffectData` resource, add one or more status effects,
-then configure its target, radius, lifetime, starting/ending scale, and
-starting/ending opacity. A texture or `SpriteFrames` animation is optional;
-without either one, the area draws a tinted circle for quick prototyping.
+then configure its target, radius, lifetime, spawn scale, pulse amount/period,
+and starting/ending opacity. Ground effects use a looping Tween animation to
+grow and shrink around their spawn scale. A texture or `SpriteFrames` animation
+is optional; without either one, the area draws a tinted circle for quick
+prototyping.
 
 Instance `Actors/GroundEffects/ground_effect.tscn` and assign the resource to
 place an area directly in a level. To create one when a projectile ends, assign
