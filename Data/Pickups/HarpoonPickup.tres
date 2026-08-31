@@ -1,8 +1,18 @@
 [gd_resource type="Resource" script_class="PickupData" format=3 uid="uid://bnh66tw3h3xk8"]
 
+[ext_resource type="Shader" uid="uid://b2g6d0upsk6cx" path="res://Assets/Shaders/pickup.gdshader" id="1_aimca"]
 [ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="1_utt5t"]
 [ext_resource type="Texture2D" uid="uid://g7lr3i0a17el" path="res://Assets/Projectiles/harpoon.png" id="2_jx40m"]
 [ext_resource type="Resource" uid="uid://gn4h7j4dka1t" path="res://Data/Weapons/Harpoon.tres" id="3_6a02i"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_70v88"]
+shader = ExtResource("1_aimca")
+shader_parameter/outline_color = Color(0.107479475, 0.010116631, 0.00426196, 1)
+shader_parameter/outline_width = 10.0
+shader_parameter/outline_opacity = 0.35
+shader_parameter/pulse_speed = 5.0
+shader_parameter/pulse_min = 0.6
+shader_parameter/pulse_max = 1.5
 
 [resource]
 script = ExtResource("1_utt5t")
@@ -10,4 +20,5 @@ pickup_type = 1
 texture = ExtResource("2_jx40m")
 weapon = ExtResource("3_6a02i")
 notification_name = "Harpoon"
+highlight_material = SubResource("ShaderMaterial_70v88")
 metadata/_custom_type_script = "uid://rau2jwiqd0pd"

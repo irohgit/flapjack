@@ -16,6 +16,9 @@ enum PickupType {AUGMENT, WEAPON, COIN, HEALTH, SHIELD, GIN, POTION}
 @export var coin_amount := 0
 @export var gin_amount := 0
 @export var notification_name: String
+@export var lootweight := 0.0
+
+
 #SFX
 # --- Audio ---
 # Per-variant so a gold coin can sound different from a bronze one. 
@@ -24,6 +27,8 @@ enum PickupType {AUGMENT, WEAPON, COIN, HEALTH, SHIELD, GIN, POTION}
 @export_range(0.0, 0.5, 0.01) var pickup_pitch_spread := 0.04
 @export_range(0.3, 2.0, 0.01) var pickup_pitch := 1.0
 
+#VFX
+@export var highlight_material: ShaderMaterial
 
 func can_pickup(player: Player) -> bool:
 	if player == null:

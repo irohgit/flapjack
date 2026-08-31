@@ -64,6 +64,7 @@ func run_plan(plan: Array[GeneratedEncounter]) -> void:
 		#run_encounter(encounter)
 
 func run_encounter(encounter: GeneratedEncounter) -> void:
+	_spawn_gin_barrels(encounter)      # fire-and-forget; floats the encounter's barrels down
 	match encounter.type:
 		GeneratedEncounter.Type.NORMAL:
 			run_normal_encounter(encounter)
@@ -122,3 +123,7 @@ func run_finale() -> void:
 		(instance as Node2D).position = level_generator.level_data.finale_spawn_position
 
 	add_child(instance)
+	
+func _spawn_gin_barrels(encounter: GeneratedEncounter) -> void:
+	for barrel_data: DestructibleData in encounter.gin_barrels:
+		GameEvents.gin_requested.emit(GinSpawner.Entry.FLOAT_DOWN, encounter.spawn_position, barrel_data)

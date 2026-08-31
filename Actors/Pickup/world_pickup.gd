@@ -26,6 +26,9 @@ func _ready() -> void:
 		_sprite.visible = true
 		_animated_sprite.visible = false
 		_sprite.texture = pickup_texture
+		#Set Shader Material
+		if data.highlight_material != null:
+			_sprite.material = data.highlight_material
 
 
 func _physics_process(delta: float) -> void:

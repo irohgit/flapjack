@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://co6sij38mf2wj" path="res://Data/Upgrades/upgrade_node_card.tscn" id="8_7m6d7"]
 [ext_resource type="Resource" uid="uid://d3f0cebq8y85s" path="res://Data/Upgrades/hull_1.tres" id="9_t3him"]
 [ext_resource type="Resource" uid="uid://8hgoocf84a4a" path="res://Data/Upgrades/hull_2.tres" id="10_d6pfb"]
+[ext_resource type="Texture2D" uid="uid://186dq7ufvnpt" path="res://Assets/Background/upgrade_screen_background.png" id="11_cm27g"]
 [ext_resource type="Resource" uid="uid://bcsbx4yq5aan7" path="res://Data/Upgrades/hull_3.tres" id="11_fx8qg"]
 [ext_resource type="Texture2D" uid="uid://cwvav4wx32kj3" path="res://Assets/UI/Coin/coin_frame.png" id="12_8pby7"]
 [ext_resource type="Resource" uid="uid://bc313u3n1i6ba" path="res://Data/Upgrades/rigging_1.tres" id="12_cm27g"]
@@ -44,6 +45,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+texture = ExtResource("11_cm27g")
 expand_mode = 1
 stretch_mode = 6
 
@@ -148,8 +150,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -250.0
-offset_top = -140.0
+offset_top = -141.0
 offset_right = 250.0
+offset_bottom = -1.0
 grow_horizontal = 2
 grow_vertical = 0
 focus_mode = 0

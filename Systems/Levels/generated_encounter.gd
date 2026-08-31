@@ -13,3 +13,4 @@ var enemies: Array[EnemyData] = []
 var formation: EnemyController.Formation
 var spawn_from_right: bool = false
 var special_scene: PackedScene
+var gin_barrels: Array[DestructibleData] = []

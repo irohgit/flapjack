@@ -1,9 +1,11 @@
-[gd_resource type="Resource" script_class="ProjectileData" load_steps=6 format=3]
+[gd_resource type="Resource" script_class="ProjectileData" format=3 uid="uid://bhikdvcypt0ob"]
 
-[ext_resource type="Script" path="res://Systems/Combat/status_effect_data.gd" id="1_status"]
+[ext_resource type="Script" uid="uid://djyh13b16xtos" path="res://Systems/Combat/status_effect_data.gd" id="1_status"]
 [ext_resource type="Script" uid="uid://cre7gs48pepsi" path="res://Data/Projectiles/projectile_data.gd" id="2_projectile"]
-[ext_resource type="Texture2D" path="res://Assets/Projectiles/voodoo_poison_blob.svg" id="3_texture"]
+[ext_resource type="Texture2D" uid="uid://dupvhyhrod0ce" path="res://Assets/Projectiles/voodoo_poison_blob.svg" id="3_texture"]
+[ext_resource type="Script" uid="uid://bb2hxg3ieta4h" path="res://Systems/Combat/effect_action.gd" id="4_ejs0m"]
 [ext_resource type="AudioStream" uid="uid://byy7pb1556tpq" path="res://Audio/distant_cannon.mp3" id="4_impact"]
+[ext_resource type="Script" uid="uid://bd7w82irghj51" path="res://Systems/Combat/status_effect_modifier.gd" id="6_uuc1w"]
 
 [sub_resource type="Resource" id="Status_confusion"]
 script = ExtResource("1_status")
@@ -13,7 +15,6 @@ description = "Movement controls are reversed."
 icon = ExtResource("3_texture")
 show_in_hud = true
 duration = 10.0
-reapply_policy = 0
 flags = Array[StringName]([&"reverse_controls"])
 
 [resource]

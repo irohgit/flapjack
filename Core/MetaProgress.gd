@@ -10,7 +10,7 @@ enum BoatTier { SKIFF, SCHOONER, GALLEON }
 
 var gin := 0
 var trust := 0   # lifetime total spend, never decreases
-var boat_tier: BoatTier = BoatTier.SKIFF
+var boat_tier: BoatTier = BoatTier.GALLEON
 var upgrade_levels: Dictionary = {}   # node_id -> current level
 var pending_retry_scene_path := ""
 

@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://3mo2067bwo0l"]
+
+[ext_resource type="SpriteFrames" uid="uid://dvw354nqleto6" path="res://Animations/barrel.tres" id="1_kw0gm"]
+[ext_resource type="Script" uid="uid://thhkf2n1acp" path="res://Actors/Pickup/destructible.gd" id="1_n4xh3"]
+[ext_resource type="Resource" uid="uid://b342ifv78fmmg" path="res://Data/Pickups/GinBrownBarrel.tres" id="2_3p5di"]
+[ext_resource type="Script" uid="uid://cv0v6ynhg51ei" path="res://Systems/Combat/HealthComponent.gd" id="2_jwxp1"]
+[ext_resource type="AudioStream" uid="uid://d1qdvxun07jfe" path="res://Audio/SFX/barrel_hit.mp3" id="3_5tnlh"]
+[ext_resource type="Script" uid="uid://csfmjtnriqc1u" path="res://Actors/Pickup/floatmotion.gd" id="3_cdru8"]
+[ext_resource type="Shader" uid="uid://dg7skmuxepsnx" path="res://Assets/Shaders/barrel.gdshader" id="4_b5btn"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5yy73"]
+radius = 32.0
+height = 74.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_30rop"]
+shader = ExtResource("4_b5btn")
+shader_parameter/outline_color = Color(1, 0.95, 0.7, 1)
+shader_parameter/outline_width = 2.238000106305
+shader_parameter/pulse_speed = 4.0
+shader_parameter/pulse_min = 0.35
+shader_parameter/pulse_max = 1.0
+
+[node name="Barrel" type="Area2D" unique_id=526430992]
+collision_layer = 32
+collision_mask = 4
+script = ExtResource("1_n4xh3")
+data = ExtResource("2_3p5di")
+hit_sfx = ExtResource("3_5tnlh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1466701567]
+position = Vector2(4, 6)
+shape = SubResource("CapsuleShape2D_5yy73")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=996954417]
+material = SubResource("ShaderMaterial_30rop")
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("1_kw0gm")
+animation = &"idle"
+
+[node name="HealthComponent" type="Node" parent="." unique_id=781854291]
+script = ExtResource("2_jwxp1")
+metadata/_custom_type_script = "uid://cv0v6ynhg51ei"
+
+[node name="Node2D" type="Node2D" parent="." unique_id=402929529]
+script = ExtResource("3_cdru8")
+bob_pixels = 10.0
+bob_speed = 5.0
