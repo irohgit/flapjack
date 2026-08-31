@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ProjectileData" format=3 uid="uid://bhikdvcypt0ob"]
+[gd_resource type="Resource" script_class="ProjectileData" format=3 uid="uid://c0e48rq103yt6"]
 
 [ext_resource type="Script" uid="uid://djyh13b16xtos" path="res://Systems/Combat/status_effect_data.gd" id="1_status"]
 [ext_resource type="Script" uid="uid://cre7gs48pepsi" path="res://Data/Projectiles/projectile_data.gd" id="2_projectile"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://bb2hxg3ieta4h" path="res://Systems/Combat/effect_action.gd" id="4_ejs0m"]
 [ext_resource type="AudioStream" uid="uid://byy7pb1556tpq" path="res://Audio/distant_cannon.mp3" id="4_impact"]
 [ext_resource type="Script" uid="uid://bd7w82irghj51" path="res://Systems/Combat/status_effect_modifier.gd" id="6_uuc1w"]
+[ext_resource type="Resource" path="res://Data/GroundEffects/confusion_pool.tres" id="7_ground"]
 
 [sub_resource type="Resource" id="Status_confusion"]
 script = ExtResource("1_status")
@@ -28,5 +29,6 @@ hitbox_radius = 18.0
 trail_colour = Color(0.55, 0.12, 0.75, 0.75)
 trail_length = 16
 status_effects = Array[ExtResource("1_status")]([SubResource("Status_confusion")])
+impact_ground_effect = ExtResource("7_ground")
 impact_sound = ExtResource("4_impact")
 expire_time = 6.0

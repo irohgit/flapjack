@@ -1,6 +1,8 @@
 class_name Projectile
 extends Area2D
 
+const GROUND_EFFECT_SCENE := preload("res://Actors/GroundEffects/ground_effect.tscn")
+
 @export var data: ProjectileData
 
 @onready var _sprite: Sprite2D = $Sprite2D
@@ -230,6 +232,7 @@ func _on_area_entered(area: Area2D) -> void:
 			has_done_ricochet = true
 	if area.has_method("take_damage"):
 		area.take_damage(data.damage)
+	_spawn_impact_ground_effect()
 	_on_impact()
 	
 	if pierce == 0:
@@ -241,6 +244,25 @@ func _on_area_entered(area: Area2D) -> void:
 # Override for splitting, explosions, screen shake.
 func _on_impact() -> void:
 	pass
+
+
+func _spawn_impact_ground_effect() -> void:
+	if data.impact_ground_effect == null:
+		return
+
+	var spawn_parent := get_parent() as Node2D
+	if spawn_parent == null:
+		push_error("Projectile needs a Node2D parent to spawn its ground effect")
+		return
+
+	var ground_effect := GROUND_EFFECT_SCENE.instantiate() as GroundEffect
+	if ground_effect == null:
+		push_error("Ground effect scene must inherit from GroundEffect")
+		return
+
+	ground_effect.data = data.impact_ground_effect
+	spawn_parent.add_child(ground_effect)
+	ground_effect.global_position = global_position
 
 func _on_screen_exited() -> void:
 	DebugHud.flash("bullet screen_exited fired")
