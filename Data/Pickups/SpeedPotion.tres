@@ -9,6 +9,6 @@ script = ExtResource("1_pickup")
 pickup_type = 6
 potion = ExtResource("4_potion")
 shop_id = &"speed_potion"
-shop_price = 110
+shop_price = 55
 shop_rarity = "RARE"
 pickup_sfx = ExtResource("2_sfx")

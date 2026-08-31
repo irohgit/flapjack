@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="1_utt5t"]
 [ext_resource type="Texture2D" uid="uid://g7lr3i0a17el" path="res://Assets/Projectiles/harpoon.png" id="2_jx40m"]
 [ext_resource type="Resource" uid="uid://gn4h7j4dka1t" path="res://Data/Weapons/Harpoon.tres" id="3_6a02i"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Items/Weapons/harpoon.png" id="4_shop"]
 
 [resource]
 script = ExtResource("1_utt5t")
@@ -12,6 +13,7 @@ weapon = ExtResource("3_6a02i")
 notification_name = "Harpoon"
 shop_id = &"harpoon"
 shop_description = "A naval harpoon that seeks the closest target and keeps travelling through the enemy line."
-shop_price = 450
+shop_icon = ExtResource("4_shop")
+shop_price = 225
 shop_rarity = "RARE"
 metadata/_custom_type_script = "uid://rau2jwiqd0pd"

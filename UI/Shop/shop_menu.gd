@@ -5,10 +5,6 @@ signal shop_closed
 
 const OFFER_SLOT_COUNT := 3
 
-const CARD_NORMAL := preload("res://Assets/UI/Shop/Cards/card_normal.png")
-const CARD_OWNED := preload("res://Assets/UI/Shop/Cards/card_owned.png")
-const CARD_SOLD_OUT := preload("res://Assets/UI/Shop/Cards/card_sold_out.png")
-
 const RARITY_COLORS := {
 	"COMMON": Color("d8dde2"),
 	"UNCOMMON": Color("83e56a"),
@@ -122,8 +118,7 @@ func _refresh_all_cards(focus_selected_card := false) -> void:
 			card.display_offer(
 				pickup,
 				_state_text(state, pickup.get_shop_price()),
-				_rarity_color(pickup.get_shop_rarity()),
-				_card_texture_for_state(state)
+				_rarity_color(pickup.get_shop_rarity())
 			)
 		else:
 			card.clear_offer()
@@ -155,15 +150,6 @@ func _get_offer_state(pickup: PickupData) -> OfferState:
 		Player.PurchaseResult.ALREADY_OWNED:
 			return OfferState.OWNED
 	return OfferState.UNAVAILABLE
-
-
-func _card_texture_for_state(state: OfferState) -> Texture2D:
-	match state:
-		OfferState.OWNED:
-			return CARD_OWNED
-		OfferState.SOLD_OUT:
-			return CARD_SOLD_OUT
-	return CARD_NORMAL
 
 
 func _state_text(state: OfferState, price: int) -> String:
@@ -268,26 +254,30 @@ func _update_focus_neighbors() -> void:
 	first_focus = _offer_cards[0]
 	for index in _offers.size():
 		var card := _offer_cards[index]
-		var left_target: Control = exit_button if index == 0 else _offer_cards[index - 1]
 		var action_target: Control = (
 			buy_button
 			if _offer_states[index] == OfferState.AVAILABLE
 			else exit_button
 		)
-		var right_target: Control = (
+		var top_target: Control = (
+			exit_button
+			if index == 0
+			else _offer_cards[index - 1]
+		)
+		var bottom_target: Control = (
 			action_target
 			if index == _offers.size() - 1
 			else _offer_cards[index + 1]
 		)
-		card.focus_neighbor_left = card.get_path_to(left_target)
-		card.focus_neighbor_right = card.get_path_to(right_target)
-		card.focus_neighbor_top = card.get_path_to(exit_button)
-		card.focus_neighbor_bottom = card.get_path_to(action_target)
+		card.focus_neighbor_left = card.get_path_to(exit_button)
+		card.focus_neighbor_right = card.get_path_to(action_target)
+		card.focus_neighbor_top = card.get_path_to(top_target)
+		card.focus_neighbor_bottom = card.get_path_to(bottom_target)
 
 	var selected_card := _offer_cards[_selected_index]
 	buy_button.focus_neighbor_top = buy_button.get_path_to(selected_card)
 	buy_button.focus_neighbor_left = buy_button.get_path_to(selected_card)
-	exit_button.focus_neighbor_right = exit_button.get_path_to(_offer_cards[0])
+	exit_button.focus_neighbor_right = exit_button.get_path_to(selected_card)
 	exit_button.focus_neighbor_top = exit_button.get_path_to(selected_card)
 	buy_button.focus_neighbor_bottom = buy_button.get_path_to(exit_button)
 

@@ -259,14 +259,14 @@ theme_override_font_sizes/font_size = 32
 text = "CURRENT STOCK"
 horizontal_alignment = 1
 
-[node name="OfferCards" type="HBoxContainer" parent="Window/OfferPanel"]
+[node name="OfferCards" type="VBoxContainer" parent="Window/OfferPanel"]
 layout_mode = 0
 offset_left = 28.0
 offset_top = 100.0
 offset_right = 807.0
 offset_bottom = 678.0
 mouse_filter = 2
-theme_override_constants/separation = 18
+theme_override_constants/separation = 16
 
 [node name="OfferCard1" parent="Window/OfferPanel/OfferCards" instance=ExtResource("21_offer_card")]
 unique_name_in_owner = true
@@ -292,7 +292,7 @@ offset_bottom = 722.0
 mouse_filter = 2
 theme_override_colors/font_color = Color(0.454902, 0.686275, 0.713726, 1)
 theme_override_font_sizes/font_size = 18
-text = "THREE OFFERS • STOCK DOES NOT REROLL DURING THIS VISIT"
+text = "SELECT AN OFFER • STOCK IS FIXED FOR THIS VISIT"
 horizontal_alignment = 1
 
 [node name="DetailPanel" type="NinePatchRect" parent="Window"]

@@ -20,6 +20,7 @@ enum PickupType {AUGMENT, WEAPON, COIN, HEALTH, SHIELD, GIN, POTION}
 @export_group("Shop Presentation")
 @export var shop_id: StringName = &""
 @export_multiline var shop_description: String
+@export var shop_icon: Texture2D
 @export_range(0, 100000, 1, "or_greater") var shop_price := 0
 @export_enum("COMMON", "UNCOMMON", "RARE", "EPIC") var shop_rarity: String = "COMMON"
 
@@ -134,6 +135,9 @@ func get_shop_name() -> String:
 
 
 func get_shop_icon() -> Texture2D:
+	if shop_icon != null:
+		return shop_icon
+
 	match pickup_type:
 		PickupType.WEAPON:
 			if weapon != null and weapon.texture != null:
