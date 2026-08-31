@@ -16,6 +16,8 @@ enum PickupType {AUGMENT, WEAPON, COIN, HEALTH, SHIELD, GIN, POTION}
 @export var coin_amount := 0
 @export var gin_amount := 0
 @export var notification_name: String
+@export var lootweight := 0.0
+
 
 #SFX
 # --- Audio ---

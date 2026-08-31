@@ -262,9 +262,8 @@ rim_color = Color(0.85061395, 0.93505543, 0.9999997, 1)
 foam_color = Color(0.9341898, 0.97122866, 0.99999994, 1)
 metadata/_edit_use_anchors_ = true
 
-[node name="DockBounds" type="Node2D" parent="." unique_id=1409784210 node_paths=PackedStringArray("islands")]
+[node name="DockBounds" type="Node2D" parent="." unique_id=1409784210]
 script = ExtResource("4_u0fe5")
-islands = [NodePath("VinnieIsland")]
 
 [node name="Water" type="Polygon2D" parent="DockBounds" unique_id=815375415]
 position = Vector2(197, 381)
@@ -282,8 +281,8 @@ scale = Vector2(1.5, 1.5)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Ginny" unique_id=243228473]
 sprite_frames = SubResource("SpriteFrames_5st54")
-animation = &"drink_long"
-autoplay = "drink_long"
+animation = &"sleep"
+autoplay = "sleep"
 
 [node name="Ginny_Interact" type="Area2D" parent="." unique_id=814066058]
 position = Vector2(624, 572)

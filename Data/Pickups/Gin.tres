@@ -9,6 +9,7 @@ script = ExtResource("2_cy0xc")
 pickup_type = 5
 texture = ExtResource("3_croff")
 gin_amount = 1
+lootweight = 0.9
 pickup_sfx = ExtResource("1_croff")
 pickup_pitch_spread = 0.0
 metadata/_custom_type_script = "uid://rau2jwiqd0pd"

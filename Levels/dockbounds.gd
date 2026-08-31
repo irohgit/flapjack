@@ -1,4 +1,3 @@
-# res://.../DockBounds.gd
 class_name DockBounds
 extends Node2D
 
