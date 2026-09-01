@@ -85,6 +85,7 @@ func _apply_allegiance() -> void:
 	if data.allegiance == ProjectileData.Allegiance.PLAYER:
 		set_collision_layer_value(4, true)   # player_bullet
 		set_collision_mask_value(2, true)    # looks for enemy
+		set_collision_mask_value(6, true)    # looks for destructibles
 		add_to_group("player_projectile")
 	else:
 		set_collision_layer_value(3, true)   # enemy_bullet

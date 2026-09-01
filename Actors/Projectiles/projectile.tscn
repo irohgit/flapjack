@@ -13,7 +13,7 @@ colors = PackedColorArray(0.680529, 0.8435728, 0.92674845, 1, 1, 1, 1, 0)
 
 [node name="Projectile" type="Area2D" unique_id=1512241293]
 collision_layer = 4
-collision_mask = 2
+collision_mask = 34
 script = ExtResource("1_sdwb2")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=492757982]

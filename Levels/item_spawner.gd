@@ -62,6 +62,8 @@ func _spawn_drop(drop: PickupData, position: Vector2) -> void:
 	_add_pickup(pickup, position)
 
 
+
 func _add_pickup(pickup: WorldPickup, position: Vector2) -> void:
 	add_child(pickup)
 	pickup.global_position = position
+

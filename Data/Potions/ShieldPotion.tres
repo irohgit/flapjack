@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="PotionData" format=3 uid="uid://bau7v7mpln58f"]
 
+[ext_resource type="AudioStream" uid="uid://8rok2xtwvjs5" path="res://Audio/SFX/potiondrink_2.mp3" id="1_bo6co"]
 [ext_resource type="Script" uid="uid://sx6ump0oii3m" path="res://Data/Potions/potion_data.gd" id="1_potion"]
 [ext_resource type="Script" uid="uid://bb2hxg3ieta4h" path="res://Systems/Combat/effect_action.gd" id="2_action"]
 [ext_resource type="Script" uid="uid://ohnosjqw7vvk" path="res://Systems/Combat/shield_effect_action.gd" id="3_shield"]
@@ -16,3 +17,4 @@ display_name = "Shield"
 description = "Adds one point of protective shielding."
 icon = ExtResource("4_icon")
 instant_actions = Array[ExtResource("2_action")]([SubResource("ShieldAction")])
+drink_sfx = ExtResource("1_bo6co")

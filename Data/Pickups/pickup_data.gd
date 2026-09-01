@@ -32,6 +32,8 @@ enum PickupType {AUGMENT, WEAPON, COIN, HEALTH, SHIELD, GIN, POTION}
 @export_range(0.0, 0.5, 0.01) var pickup_pitch_spread := 0.04
 @export_range(0.3, 2.0, 0.01) var pickup_pitch := 1.0
 
+#VFX
+@export var highlight_material: ShaderMaterial
 
 func can_pickup(player: Player) -> bool:
 	if player == null:

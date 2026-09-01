@@ -1,0 +1,77 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://dxivqebt2hc5p"]
+
+[ext_resource type="Texture2D" uid="uid://d38p28rdhbvwc" path="res://Assets/Destructibles/barrel_gold.png" id="1_ad8vr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1b1um"]
+atlas = ExtResource("1_ad8vr")
+region = Rect2(192, 63, 64, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y2cm5"]
+atlas = ExtResource("1_ad8vr")
+region = Rect2(256, 63, 64, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qnjrq"]
+atlas = ExtResource("1_ad8vr")
+region = Rect2(320, 63, 64, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vjong"]
+atlas = ExtResource("1_ad8vr")
+region = Rect2(384, 63, 64, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_13upe"]
+atlas = ExtResource("1_ad8vr")
+region = Rect2(0, 0, 64, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7gmxc"]
+atlas = ExtResource("1_ad8vr")
+region = Rect2(64, 0, 64, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ojdfo"]
+atlas = ExtResource("1_ad8vr")
+region = Rect2(128, 0, 64, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_htcrf"]
+atlas = ExtResource("1_ad8vr")
+region = Rect2(0, 0, 64, 63)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1b1um")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y2cm5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qnjrq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vjong")
+}],
+"loop": 0,
+"name": &"explode",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_13upe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7gmxc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ojdfo")
+}],
+"loop": 2,
+"name": &"hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_htcrf")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}]
