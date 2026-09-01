@@ -17,5 +17,4 @@ shop_icon = ExtResource("3_shop")
 shop_price = 95
 shop_rarity = "UNCOMMON"
 pickup_sfx = ExtResource("2_br1aa")
-highlight_material = SubResource("ShaderMaterial_0ptqr")
 metadata/_custom_type_script = "uid://rau2jwiqd0pd"

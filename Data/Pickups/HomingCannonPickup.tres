@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="2_15c5x"]
 [ext_resource type="AudioStream" uid="uid://pf5op5wqp6p5" path="res://Audio/SFX/weapon_augment_pickup.mp3" id="2_qrkgb"]
 [ext_resource type="Texture2D" uid="uid://dypelm4js72f1" path="res://Assets/BoatWeapon/Cannon3_color3_1.png" id="4_qrkgb"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Items/Augments/Cannon/homing_cannon.png" id="5_shop"]
+[ext_resource type="Texture2D" uid="uid://cnjw40d858idk" path="res://Assets/UI/Shop/Items/Augments/Cannon/homing_cannon.png" id="5_shop"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mlr3r"]
 shader = ExtResource("2_5fiiy")

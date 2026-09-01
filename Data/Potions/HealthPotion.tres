@@ -1,6 +1,5 @@
 [gd_resource type="Resource" script_class="PotionData" format=3 uid="uid://cvrdvi5dmsnu4"]
 
-[ext_resource type="AudioStream" uid="uid://b7l0u6b2qcgiv" path="res://Audio/SFX/potiondrink_1.mp3" id="1_fv14v"]
 [ext_resource type="Script" uid="uid://sx6ump0oii3m" path="res://Data/Potions/potion_data.gd" id="1_potion"]
 [ext_resource type="Script" uid="uid://bb2hxg3ieta4h" path="res://Systems/Combat/effect_action.gd" id="2_action"]
 [ext_resource type="Script" uid="uid://d0uis0cabk7n" path="res://Systems/Combat/heal_effect_action.gd" id="3_heal"]
@@ -17,4 +16,3 @@ display_name = "Health"
 description = "Repairs one point of damage."
 icon = ExtResource("4_icon")
 instant_actions = Array[ExtResource("2_action")]([SubResource("HealAction")])
-drink_sfx = ExtResource("1_fv14v")

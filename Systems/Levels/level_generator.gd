@@ -61,9 +61,20 @@ func generate_plan() -> Array[GeneratedEncounter]:
 	
 	_assign_gin(_plan_gin())
 	var total_barrels := 0
+	var planned_gin := 0
+	var normal_count := 0
 	for e: GeneratedEncounter in generated_plan:
+		if e.type == GeneratedEncounter.Type.NORMAL:
+			normal_count += 1
 		total_barrels += e.gin_barrels.size()
-	print("GIN PLAN: ", total_barrels, " barrels across ", generated_plan.size(), " encounters")
+		for barrel: DestructibleData in e.gin_barrels:
+			if barrel == level_data.gold_barrel:
+				planned_gin += level_data.gold_value
+			else:
+				planned_gin += level_data.brown_value
+	print("GIN PLAN: %d gin in %d barrels across %d normal encounters (%d total)" % [
+		planned_gin, total_barrels, normal_count, generated_plan.size()
+	])
 	return generated_plan
 
 func choose_finale_encounter() -> PackedScene:
@@ -253,7 +264,7 @@ func _plan_gin() -> Array[DestructibleData]:
 		barrels.append(level_data.gold_barrel)
 	for _i in brown_count:
 		barrels.append(level_data.brown_barrel)
-
+	
 	barrels.shuffle()
 	return barrels
 

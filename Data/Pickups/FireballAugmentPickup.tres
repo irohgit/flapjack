@@ -5,7 +5,7 @@
 [ext_resource type="AudioStream" uid="uid://bhp3mqd4ya5te" path="res://Audio/SFX/plasma_pickup.mp3" id="2_f438p"]
 [ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="3_011jj"]
 [ext_resource type="Texture2D" uid="uid://bx5o4w04hmjw7" path="res://Assets/Pickups/FireBall/FB001.png" id="4_011jj"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Items/Augments/Cannon/fire_cannon.png" id="5_shop"]
+[ext_resource type="Texture2D" uid="uid://dccankan0m376" path="res://Assets/UI/Shop/Items/Augments/Cannon/fire_cannon.png" id="5_shop"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_08pg4"]
 shader = ExtResource("2_011jj")

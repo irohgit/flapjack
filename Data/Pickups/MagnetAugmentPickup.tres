@@ -4,7 +4,6 @@
 [ext_resource type="AudioStream" uid="uid://bhp3mqd4ya5te" path="res://Audio/SFX/plasma_pickup.mp3" id="2_465hc"]
 [ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="3_r08qc"]
 [ext_resource type="Texture2D" uid="uid://cb0n7v17pxqt3" path="res://Assets/Pickups/13.png" id="4_ms5j3"]
-[ext_resource type="Shader" uid="uid://b2g6d0upsk6cx" path="res://Assets/Shaders/pickup.gdshader" id="4_r08qc"]
 
 [resource]
 script = ExtResource("3_r08qc")
@@ -14,5 +13,4 @@ shop_id = &"magnet"
 shop_price = 80
 shop_rarity = "UNCOMMON"
 pickup_sfx = ExtResource("2_465hc")
-highlight_material = SubResource("ShaderMaterial_aimca")
 metadata/_custom_type_script = "uid://rau2jwiqd0pd"

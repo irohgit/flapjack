@@ -20,7 +20,6 @@ pickup_type = 3
 potion = ExtResource("3_potion")
 shop_id = &"health_potion"
 shop_price = 40
-shop_rarity = "COMMON"
 pickup_sfx = ExtResource("1_xdqpg")
 highlight_material = SubResource("ShaderMaterial_2lcsr")
 metadata/_custom_type_script = "uid://rau2jwiqd0pd"

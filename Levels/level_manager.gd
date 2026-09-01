@@ -41,6 +41,7 @@ func run_plan(plan: Array[GeneratedEncounter]) -> void:
 
 
 func run_encounter(encounter: GeneratedEncounter) -> void:
+	_spawn_gin_barrels(encounter) #Floats barrels down
 	match encounter.type:
 		GeneratedEncounter.Type.NORMAL:
 			run_normal_encounter(encounter)
@@ -112,3 +113,8 @@ func run_finale() -> bool:
 func wait_until(condition: Callable) -> void:
 	while is_inside_tree() and not condition.call():
 		await get_tree().process_frame
+
+func _spawn_gin_barrels(encounter: GeneratedEncounter) -> void:
+	for barrel_data: DestructibleData in encounter.gin_barrels:
+		GameEvents.gin_requested.emit(GinSpawner.Entry.FLOAT_DOWN, encounter.spawn_position, barrel_data)
+		
