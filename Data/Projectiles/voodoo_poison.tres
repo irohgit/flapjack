@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="ProjectileData" format=3 uid="uid://c0e48rq103yt6"]
 
+[ext_resource type="Script" uid="uid://djyh13b16xtos" path="res://Systems/Combat/status_effect_data.gd" id="1_status"]
 [ext_resource type="Script" uid="uid://cre7gs48pepsi" path="res://Data/Projectiles/projectile_data.gd" id="2_projectile"]
 [ext_resource type="Texture2D" uid="uid://dupvhyhrod0ce" path="res://Assets/Projectiles/voodoo_poison_blob.svg" id="3_texture"]
 [ext_resource type="AudioStream" uid="uid://byy7pb1556tpq" path="res://Audio/distant_cannon.mp3" id="4_impact"]
