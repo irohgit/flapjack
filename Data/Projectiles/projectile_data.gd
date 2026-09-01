@@ -11,9 +11,13 @@ enum Allegiance { PLAYER, ENEMY }
 @export var scale := 1.0
 @export var speed := 1100.0
 @export var damage := 1
+@export var pierce := 0
 @export var hitbox_radius := 8.0
 @export var trail_colour := Color.WHITE
 @export var trail_length := 12
 @export var status_effects: Array[StatusEffectData] = []
+## Optional area spawned when this projectile ends by impact, endpoint, or expiry.
+@export var death_ground_effect: GroundEffectData
 @export var impact_sound: AudioStream
+## Fallback lifetime in seconds. Zero disables it; a fixed endpoint takes priority.
 @export var expire_time := 5.0

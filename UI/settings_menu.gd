@@ -5,15 +5,13 @@ extends MenuScreen
 
 func _ready() -> void:
 	super()
-	if back_button:                          # <-- add
+	if back_button:
 		back_button.pressed.connect(close_menu)
 	if fullscreen_button:
 		fullscreen_button.pressed.connect(_toggle_fullscreen)
 		_refresh_label()
 
-func _process(_delta: float) -> void:
-	var f := get_viewport().gui_get_focus_owner()
-	DebugHud.watch("focus", f.name if f else "<none>")
+
 func _toggle_fullscreen() -> void:
 	var win := get_window()
 	if win.mode == Window.MODE_WINDOWED:

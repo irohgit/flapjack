@@ -1,6 +1,8 @@
 class_name Projectile
 extends Area2D
 
+const GROUND_EFFECT_SCENE := preload("res://Actors/GroundEffects/ground_effect.tscn")
+
 @export var data: ProjectileData
 
 @onready var _sprite: Sprite2D = $Sprite2D
@@ -34,6 +36,9 @@ var final_speed_boost := 1.0
 
 var direction := Vector2.UP
 var _status_effects: Array[StatusEffectData] = []
+var _is_destroying := false
+var _has_expire_position := false
+var _expire_position := Vector2.ZERO
 
 
 func _ready() -> void:
@@ -45,7 +50,8 @@ func _ready() -> void:
 	area_entered.connect(_on_area_entered)
 	_trail.top_level = true
 	_trail.clear_points()
-	get_tree().create_timer(data.expire_time).timeout.connect(queue_free)
+	if not _has_expire_position and data.expire_time > 0.0:
+		get_tree().create_timer(data.expire_time).timeout.connect(_on_expired)
 	
 
 func _apply_data() -> void:
@@ -68,6 +74,7 @@ func _apply_data() -> void:
 	_shape.shape = circle
 	
 	_trail.default_color = data.trail_colour
+	pierce = data.pierce
 	
 	_apply_allegiance()
 # Layers come from the data, so a spawner never has to know or set them.
@@ -78,6 +85,7 @@ func _apply_allegiance() -> void:
 	if data.allegiance == ProjectileData.Allegiance.PLAYER:
 		set_collision_layer_value(4, true)   # player_bullet
 		set_collision_mask_value(2, true)    # looks for enemy
+		set_collision_mask_value(6, true)    # looks for destructibles
 		add_to_group("player_projectile")
 	else:
 		set_collision_layer_value(3, true)   # enemy_bullet
@@ -90,11 +98,25 @@ func add_status_effect(effect: StatusEffectData) -> void:
 		return
 
 	_status_effects.append(effect.duplicate(true) as StatusEffectData)
-		
+
+
+## Sets a fixed world-space endpoint for a straight projectile. This must be
+## called before the projectile enters the tree so it replaces timed expiry.
+func set_expire_position(world_position: Vector2) -> void:
+	_expire_position = world_position
+	_has_expire_position = true
+
+
 func _physics_process(delta: float) -> void:
 	age_time += delta
 	_move(delta)
 	_update_trail()
+
+	if (
+		_has_expire_position
+		and global_position.distance_squared_to(_expire_position) <= 0.0001
+	):
+		destroy()
 
 
 # Override for homing, arcing, spiralling.
@@ -119,7 +141,15 @@ func _move(delta: float) -> void:
 	_sprite.rotation = direction_angle + PI / 2.0
 	_animated_sprite.rotation = direction_angle
 
-	position += direction * data.speed * final_speed_boost * delta
+	var movement := direction * data.speed * final_speed_boost * delta
+	if _has_expire_position:
+		var distance_remaining := global_position.distance_to(_expire_position)
+		if movement.length() >= distance_remaining:
+			global_position = _expire_position
+			return
+
+	position += movement
+
 
 func _chain_lightning() -> bool:
 	var target := _find_nearest_enemy(500, hit_list)
@@ -216,6 +246,9 @@ func _update_trail() -> void:
 
 
 func _on_area_entered(area: Area2D) -> void:
+	if _is_destroying:
+		return
+
 	Audio.play_sfx(data.impact_sound, -8.0)
 	var is_enemy := area.is_in_group("enemy")
 
@@ -232,7 +265,7 @@ func _on_area_entered(area: Area2D) -> void:
 	_on_impact()
 	
 	if pierce == 0:
-		queue_free()
+		destroy()
 	else:
 		pierce -= 1
 
@@ -241,6 +274,43 @@ func _on_area_entered(area: Area2D) -> void:
 func _on_impact() -> void:
 	pass
 
+
+## The one exit path for impacts, endpoint arrival, and lifetime expiry. Keeping
+## the ground-effect spawn here guarantees a transforming projectile creates
+## exactly one area.
+func destroy(spawn_ground_effect := true) -> void:
+	if _is_destroying or is_queued_for_deletion():
+		return
+
+	_is_destroying = true
+	if spawn_ground_effect:
+		_spawn_death_ground_effect()
+	queue_free()
+
+
+func _spawn_death_ground_effect() -> void:
+	if data.death_ground_effect == null:
+		return
+
+	var spawn_parent := get_parent() as Node2D
+	if spawn_parent == null:
+		push_error("Projectile needs a Node2D parent to spawn its ground effect")
+		return
+
+	var ground_effect := GROUND_EFFECT_SCENE.instantiate() as GroundEffect
+	if ground_effect == null:
+		push_error("Ground effect scene must inherit from GroundEffect")
+		return
+
+	ground_effect.data = data.death_ground_effect
+	spawn_parent.add_child(ground_effect)
+	ground_effect.global_position = global_position
+
+
+func _on_expired() -> void:
+	destroy()
+
+
 func _on_screen_exited() -> void:
 	DebugHud.flash("bullet screen_exited fired")
-	queue_free()
+	destroy(false)

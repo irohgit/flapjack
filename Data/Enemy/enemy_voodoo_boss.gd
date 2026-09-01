@@ -17,7 +17,6 @@ const BERSERK_HEALTH_THRESHOLD := 0.30
 @export_range(0.0, 500.0, 1.0, "or_greater") var playfield_margin := 170.0
 
 @export_group("Poison")
-@export var poison_projectile_scene: PackedScene
 @export var poison_data: ProjectileData
 @export var poison_min_interval := 4.0
 @export var poison_max_interval := 8.0
@@ -33,7 +32,6 @@ const BERSERK_HEALTH_THRESHOLD := 0.30
 @export var bird_data: PatternButcherBirdData
 
 @onready var _cannon_muzzle: Marker2D = $CannonMuzzle
-@onready var _poison_muzzle: Marker2D = $PoisonMuzzle
 
 var _phase: Phase = Phase.NORMAL
 var _poison_timer := 0.0
@@ -45,7 +43,6 @@ var _is_dying := false
 
 func _ready() -> void:
 	super()
-	assert(poison_projectile_scene != null, "Voodoo boss needs a poison projectile scene")
 	assert(poison_data != null, "Voodoo boss needs poison projectile data")
 	assert(bird_scene != null, "Voodoo boss needs a bird scene")
 	assert(bird_data != null, "Voodoo boss needs bird data")
@@ -157,16 +154,31 @@ func _clamp_to_visible_playfield(world_position: Vector2) -> Vector2:
 
 
 func _fire_poison() -> void:
-	var shot := poison_projectile_scene.instantiate() as Projectile
+	var shot := data.projectile_scene.instantiate() as Projectile
 	if shot == null:
-		push_error("Voodoo poison projectile scene must inherit from Projectile")
+		push_error("Projectile scene not set")
 		return
 
+	var fire_position := _get_fire_position()
+	var aim_direction := Vector2.DOWN
+	var expire_position := Vector2.ZERO
+	var has_expire_position := false
+	var player := get_tree().get_first_node_in_group("player") as Node2D
+	if player != null:
+		expire_position = player.global_position
+		has_expire_position = true
+		var direction_to_player := fire_position.direction_to(expire_position)
+		if not direction_to_player.is_zero_approx():
+			aim_direction = direction_to_player
+
 	shot.data = poison_data.duplicate(true) as ProjectileData
-	shot.direction = Vector2.DOWN
+	shot.direction = aim_direction
+	shot.homing = false
+	if has_expire_position:
+		shot.set_expire_position(expire_position)
 
 	get_parent().add_child(shot)
-	shot.global_position = _poison_muzzle.global_position
+	shot.global_position = fire_position
 	_boss_spawns.append(shot)
 
 
@@ -203,6 +215,7 @@ func _spawn_bird(index: int, from_left: bool) -> void:
 	)
 	var direction := 1.0 if from_left else -1.0
 	var spawn_parent := get_parent() as Node2D
+	
 	if spawn_parent == null:
 		bird.queue_free()
 		return

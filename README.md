@@ -43,6 +43,26 @@ components. For example, the Player node runs `Actors/Player/player.gd`, while
 its child `HealthComponent` and `ShieldComponent` nodes manage their individual
 pieces of combat state.
 
+## Creating a ground effect
+
+Ground areas use the same `StatusEffectData` resources as projectiles and
+potions. Create a `GroundEffectData` resource, add one or more status effects,
+then configure its target, radius, lifetime, spawn scale, pulse amount/period,
+and starting/ending opacity. Ground effects use a looping Tween animation to
+grow and shrink around their spawn scale. A texture or `SpriteFrames` animation
+is optional; without either one, the area draws a tinted circle for quick
+prototyping.
+
+Instance `Actors/GroundEffects/ground_effect.tscn` and assign the resource to
+place an area directly in a level. To create one when a projectile ends, assign
+the same resource to `ProjectileData.death_ground_effect`; it will spawn when
+the projectile hits something, reaches a configured endpoint, or reaches its
+fallback expiry time. A reapply interval of zero means entry-only; positive
+intervals refresh overlapping targets using the configured status effect's
+reapply policy. See
+`Data/GroundEffects/confusion_pool.tres` and `fire_pool.tres` for complete
+examples.
+
 ## Art fidelity and pixel rendering
 
 The project contains several independently authored art families: native

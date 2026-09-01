@@ -13,4 +13,3 @@ script = ExtResource("3_game_ui")
 visible = false
 
 [node name="ShopMenu" parent="." instance=ExtResource("4_shop")]
-visible = false

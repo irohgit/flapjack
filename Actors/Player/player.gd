@@ -2,6 +2,14 @@ class_name Player
 
 extends Area2D
 
+enum PurchaseResult {
+	SUCCESS,
+	INVALID_ITEM,
+	NOT_ENOUGH_COINS,
+	ALREADY_OWNED,
+	CANNOT_ACCEPT,
+}
+
 #Movement
 @export var max_speed := 700.0
 @export var responsiveness := 25.0
@@ -9,15 +17,16 @@ extends Area2D
 @export var camera: Camera2D
 
 #Projectile Firing 
-@export var weapons: Array[WeaponData]
+@export var starting_weapons: Array[WeaponData]
 @export_range(1, 20, 1) var max_weapons := 3
 var _weapon_states: Array[WeaponState] = []
+var _player_augments: Array[AugmentData] = []
 
 @export var coin_count:= 0
 @export var gin_count:= 0
 @export_range(1, 5, 1) var potion_slot_count := 3
 
-@export var boatTextures: Array[Texture2D]
+#@export var boatTextures: Array[Texture2D]
 
 @onready var _health: HealthComponent = $HealthComponent
 @onready var _sprite: Sprite2D = $Sprite2D
@@ -25,6 +34,7 @@ var _weapon_states: Array[WeaponState] = []
 @onready var _pickup_range_shape: CollisionShape2D = $PickupRange/CollisionShape2D
 @onready var _hitbox_shape: CollisionShape2D = $CollisionShape2D
 @onready var _status_effects: StatusEffectComponent = $StatusEffectComponent
+
 
 signal coin_changed(amount: int)
 signal gin_changed(amount: int)
@@ -42,6 +52,7 @@ var _potion_slots: Array[PotionData] = []
 var _selected_potion_slot := 0
 var _can_exit_forward := false
 var _has_exited_play_area := false
+var _purchase_in_progress := false
 
 #SFX
 @export var cannon_sfx: AudioStream
@@ -49,29 +60,48 @@ var _has_exited_play_area := false
 @export var death_sfx: AudioStream
 
 #Ship Tier
+@export_range(0.5, 5.0, 0.05) var wake_overhang := 2.4 #2.4 works with skiff,
+@export_range(0.5, 5.0, 0.05) var wake_length := 1.5:
+	set(value):
+		wake_length = value
+		if is_node_ready():
+			_fit_wake_to_hull()
 @export var ship_tiers: Array[ShipTierData] = []
 @export var ship_tier := 1:
 	set(value):
 		ship_tier = clampi(value, 1, 3)
 		if is_node_ready():
 			_update_hull(_health.current_health, _health.max_health)
-			
+			#_fit_wake_to_hull()
+var _current_tier: ShipTierData
+@export var move_threshold := 5.0 
+var _tier_has_mast := false
+@onready var _masts: Node2D = $Masts
+
 #BANK MOVEMENT
 @export var banks: BankGenerator
 @export var bank_push_x := 850.0    # sideways shove out of the sand
 @export var bank_push_down := 150.0 # drag downward, like running aground
 
-#Developer Tool
+#Developer Exports
+@export var scrollDirector: ScrollDirector
+#Developer Tools
 func _unhandled_input(event: InputEvent) -> void:
 	if not OS.is_debug_build():
 		return
+	#1. Kill Self Instantly
 	if event.is_action_pressed("kill_self"):
 		get_viewport().set_input_as_handled()
 		_health.take_damage(9999)
+	#2. Increase scroll speed
+	if event.is_action_pressed("increase_scroll_speed"):
+		scrollDirector.change_move_speed(scrollDirector.scroll_speed + scrollDirector.scroll_speed_change)
+	if event.is_action_pressed("decrease_scroll_speed"):
+		scrollDirector.change_move_speed(scrollDirector.scroll_speed - scrollDirector.scroll_speed_change)
+	
 		
 func _ready() -> void:
 	_apply_meta_upgrades()
-	add_to_group("Player")
 	_potion_slots.resize(potion_slot_count)
 	area_entered.connect(_on_area_entered)
 	_pickup_range.area_entered.connect(_on_pickup_range_entered)
@@ -82,12 +112,21 @@ func _ready() -> void:
 	_health.damaged.connect(_on_damaged)
 	#_health.health_changed.connect(func(c, m): DebugHud.watch("health", "%d/%d" % [c, m]))
 	_health.died.connect(_on_died)
-	coin_changed.emit(coin_count)
+
+	var restored_from_checkpoint := GlobalPlayer.restore_checkpoint(self)
+	if not restored_from_checkpoint:
+		for weapon in starting_weapons:
+			add_weapon(weapon)
+		_emit_run_state_changed()
+
 	gin_changed.emit(gin_count)
+	_fit_wake_to_hull()
 	
-	for weapon in weapons:
-		add_weapon(weapon)
 func _apply_meta_upgrades() -> void:
+	match MetaProgress.boat_tier:
+		MetaProgress.BoatTier.SKIFF:    ship_tier = 1
+		MetaProgress.BoatTier.SCHOONER: ship_tier = 2
+		MetaProgress.BoatTier.GALLEON:  ship_tier = 3
 	max_speed += MetaProgress.get_speed_bonus()
 	max_weapons += int(MetaProgress.get_weapon_slot_bonus())
 	var bonus_health := int(MetaProgress.get_health_bonus())
@@ -109,7 +148,7 @@ func _process(_delta: float) -> void:
 		select_potion_slot(_selected_potion_slot + 1)
 	if Input.is_action_just_pressed("drink_potion"):
 		drink_selected_potion()
-
+		
 func _physics_process(delta: float) -> void:
 	var movement_speed := _status_effects.get_modified_value(
 		StatusEffectData.STAT_MOVEMENT_SPEED,
@@ -117,7 +156,7 @@ func _physics_process(delta: float) -> void:
 	)
 	var target := _move_intent * movement_speed
 	velocity = velocity.lerp(target, 1.0 - exp(-responsiveness * delta))
-	
+		
 	#Before Processing Movement: Adjust for contact with banks
 	#While over sand, shove back out to the water and slightly drag down
 	if banks != null and banks.is_on_bank(global_position):
@@ -129,6 +168,9 @@ func _physics_process(delta: float) -> void:
 	_check_for_forward_exit()
 	_external_force = Vector2.ZERO
 	_update_weapons(delta)
+	#DebugHud.flash(str(velocity))
+	_update_masts()
+	_update_wake()
 	
 func _clamp_to_camera(pos: Vector2) -> Vector2:
 	var camera_center_global: Vector2 = camera.get_screen_center_position()
@@ -200,7 +242,11 @@ func _add_gin(amount: int):
 
 
 func can_add_weapon(weapon: WeaponData) -> bool:
-	return weapon != null and _weapon_states.size() < max_weapons
+	return (
+		weapon != null
+		and not _has_weapon(weapon)
+		and _weapon_states.size() < max_weapons
+	)
 
 
 func add_weapon(weapon: WeaponData) -> bool:
@@ -216,7 +262,11 @@ func get_weapon_count() -> int:
 
 
 func can_add_augment(augment: AugmentData) -> bool:
-	if augment == null or augment.augmentEffect == null:
+	if (
+		augment == null
+		or augment.augmentEffect == null
+		or _has_augment(augment)
+	):
 		return false
 
 	if augment.targetWeapon == null:
@@ -234,7 +284,7 @@ func add_augment(augment: AugmentData) -> bool:
 		return false
 
 	if augment.targetWeapon == null:
-		augment.augmentEffect.apply_to_player(self)
+		_add_player_augment(augment, true)
 		return true
 		
 	for state in _weapon_states:
@@ -243,6 +293,124 @@ func add_augment(augment: AugmentData) -> bool:
 			augment_added.emit(augment)
 			return true
 	return false
+
+
+func _add_player_augment(augment: AugmentData, notify: bool) -> void:
+	_player_augments.append(augment)
+	augment.augmentEffect.apply_to_player(self)
+	if notify:
+		augment_added.emit(augment)
+
+
+func owns_pickup(pickup: PickupData) -> bool:
+	if pickup == null:
+		return false
+
+	match pickup.pickup_type:
+		PickupData.PickupType.WEAPON:
+			return _has_weapon(pickup.weapon)
+		PickupData.PickupType.AUGMENT:
+			return _has_augment(pickup.augment)
+
+	return false
+
+
+func get_purchase_result(pickup: PickupData) -> PurchaseResult:
+	if pickup == null or not pickup.is_sellable():
+		return PurchaseResult.INVALID_ITEM
+	if owns_pickup(pickup):
+		return PurchaseResult.ALREADY_OWNED
+	if not pickup.can_pickup(self):
+		return PurchaseResult.CANNOT_ACCEPT
+	if coin_count < pickup.get_shop_price():
+		return PurchaseResult.NOT_ENOUGH_COINS
+	return PurchaseResult.SUCCESS
+
+
+func try_purchase(pickup: PickupData) -> PurchaseResult:
+	if _purchase_in_progress:
+		return PurchaseResult.CANNOT_ACCEPT
+
+	var result := get_purchase_result(pickup)
+	if result != PurchaseResult.SUCCESS:
+		return result
+
+	var price := pickup.get_shop_price()
+	_purchase_in_progress = true
+	if pickup.apply_to(self):
+		coin_count -= price
+		coin_changed.emit(coin_count)
+		pickup_collected.emit(pickup)
+		result = PurchaseResult.SUCCESS
+	else:
+		result = PurchaseResult.CANNOT_ACCEPT
+	_purchase_in_progress = false
+	return result
+
+
+func _has_weapon(weapon: WeaponData) -> bool:
+	if weapon == null:
+		return false
+
+	for state in _weapon_states:
+		if state != null and state.data == weapon:
+			return true
+
+	return false
+
+
+func _has_augment(augment: AugmentData) -> bool:
+	if augment == null:
+		return false
+
+	if _player_augments.has(augment):
+		return true
+
+	for state in _weapon_states:
+		if state != null and state.augments.has(augment):
+			return true
+
+	return false
+
+
+func export_checkpoint() -> RunCheckpoint:
+	var checkpoint := RunCheckpoint.new()
+	checkpoint.coin_count = coin_count
+	for state in _weapon_states:
+		checkpoint.weapon_states.append(state.clone_for_checkpoint())
+	checkpoint.player_augments.assign(_player_augments)
+	checkpoint.potion_slots.assign(_potion_slots)
+	checkpoint.selected_potion_slot = _selected_potion_slot
+	return checkpoint
+
+
+func import_checkpoint(checkpoint: RunCheckpoint) -> bool:
+	if checkpoint == null:
+		return false
+
+	coin_count = checkpoint.coin_count
+	_weapon_states.clear()
+	for state in checkpoint.weapon_states:
+		_weapon_states.append(state.clone_for_checkpoint())
+
+	_player_augments.clear()
+	for augment in checkpoint.player_augments:
+		_add_player_augment(augment, false)
+
+	_potion_slots.assign(checkpoint.potion_slots)
+	_selected_potion_slot = 0 if _potion_slots.is_empty() else clampi(
+		checkpoint.selected_potion_slot,
+		0,
+		_potion_slots.size() - 1
+	)
+	_emit_run_state_changed()
+	return true
+
+
+func _emit_run_state_changed() -> void:
+	coin_changed.emit(coin_count)
+	potion_inventory_changed.emit()
+	potion_selection_changed.emit(_selected_potion_slot)
 
 
 func can_add_potion(potion: PotionData) -> bool:
@@ -388,7 +556,6 @@ func _get_retry_scene_path() -> String:
 	var current_scene := get_tree().current_scene
 	return current_scene.scene_file_path if current_scene != null else ""
 	
-	
 func _update_hull(current: int, maximum: int) -> void:
 	var tier_index := clampi(ship_tier - 1, 0, ship_tiers.size() - 1)
 	if ship_tiers.is_empty():
@@ -397,29 +564,76 @@ func _update_hull(current: int, maximum: int) -> void:
 	var textures := ship_tiers[tier_index].hull_textures
 	if textures.is_empty() or maximum <= 0:
 		return
-
+	
 	var ratio := float(current) / float(maximum)
 	var index := int((1.0 - ratio) * textures.size())
 	index = clampi(index, 0, textures.size() - 1)
 
 	if _sprite.texture != textures[index]:
 		_sprite.texture = textures[index]
-		
-
+		_fit_wake_to_hull()
+	
 	
 func _apply_tier() -> void:
+	#Guard against null ship tier value
 	if ship_tiers.is_empty():
 		print("ship_tiers_empty")
 		return
+	#1. Apply Tier
 	var tier := ship_tiers[clampi(ship_tier - 1, 0, ship_tiers.size() - 1)]
-	_sprite.scale = Vector2.ONE * tier.display_scale
-
-	var hit := CapsuleShape2D.new()
-	hit.radius = tier.hitbox_radius
-	_hitbox_shape.shape = hit
-
-	var pick := CircleShape2D.new()
-	pick.radius = tier.pickup_radius
-	_pickup_range_shape.shape = pick
-
+	#2. Apply Tier Texture
+	#$Sprite2D.texture = tier.boat_texture   # art decides hull size, no scaling
+	#3. Call function to fit animated wake to hull texture
+	_fit_wake_to_hull()
 	
+	
+	
+	#SET SCALING
+	#_sprite.scale = Vector2.ONE * tier.display_scale
+	
+	#IROH COMMENTED THIS OUT -- 30/8/2026 : Uncomment and fix this if necessary note...
+	#SET HIT BOX CAPSULE RADIUS FOR TIER	
+	#var hit := CapsuleShape2D.new()
+	#hit.radius = tier.hitbox_radius
+	#_hitbox_shape.shape = hit
+	
+	#SET PICKUP CRICLE RADIUS FOR TIER	
+	#var pick := CircleShape2D.new()
+	#pick.radius = tier.pickup_radius
+	#_pickup_range_shape.shape = pick
+
+#ship vfx 
+func _fit_wake_to_hull() -> void:
+	var tier_index := clampi(ship_tier - 1, 0, ship_tiers.size() - 1)
+	var hull_w: float = ship_tiers[tier_index].pixel_hull_width
+	var frame: Texture2D = $Wake.sprite_frames.get_frame_texture($Wake.animation, 0)
+	var wake_w: float = frame.get_width()
+	var fit_x := (hull_w / wake_w) * wake_overhang
+	$Wake.scale = Vector2(fit_x, wake_length)
+	print(wake_w)
+	print(frame)
+	print($Wake.scale)
+	print("hull_w = ", $Sprite2D.texture.get_width())
+	
+
+func _update_wake() -> void:
+	var anim := "wake_forward" #set animation to wake forward
+	if _move_intent.x < -0.4: #if our inpu is less than -0.1 means we are moving left
+		anim = "wake_strafe_left"
+	elif _move_intent.x > 0.4: #if our x input above 0.1 that means we are moving right
+		anim = "wake_strafe_right"
+	# else it stays "wake_forward" for up, down, and idle
+	if $Wake.animation != anim:
+		$Wake.play(anim)
+
+func _update_masts() -> void:
+	var tier := ship_tiers[clampi(ship_tier - 1, 0, ship_tiers.size() - 1)]
+	_masts.visible = tier.has_masts
+	if not tier.has_masts:
+		return
+	var is_moving: bool = _move_intent != Vector2.ZERO #if our moveintent is not 0 that means we are moving
+	var lean := _move_intent.x * 45.0 #rotate masts left/right by 45 degrees
+	for child in _masts.get_children():
+		var mast := child as Mast
+		mast.set_moving(is_moving)
+		mast.rotation_degrees = lean

@@ -83,7 +83,7 @@ func _on_damaged() -> void:
 	
 func _on_died() -> void:
 	Audio.play_sfx(explosion_sfx, -4.0)
-	GameEvents.enemy_died.emit(global_position)
+	GameEvents.enemy_died.emit(global_position, null)
 	
 	for cam in get_tree().get_nodes_in_group("shake_camera"):
 		if cam is ShakeCamera:

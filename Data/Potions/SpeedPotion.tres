@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="PotionData" format=3 uid="uid://c2jmgkqcfbsv0"]
 
 [ext_resource type="Script" uid="uid://sx6ump0oii3m" path="res://Data/Potions/potion_data.gd" id="1_potion"]
+[ext_resource type="AudioStream" uid="uid://b7l0u6b2qcgiv" path="res://Audio/SFX/potiondrink_1.mp3" id="1_rhvcj"]
 [ext_resource type="Script" uid="uid://bb2hxg3ieta4h" path="res://Systems/Combat/effect_action.gd" id="1_y307j"]
 [ext_resource type="Script" uid="uid://djyh13b16xtos" path="res://Systems/Combat/status_effect_data.gd" id="2_effect"]
 [ext_resource type="Script" uid="uid://bd7w82irghj51" path="res://Systems/Combat/status_effect_modifier.gd" id="3_modifier"]
@@ -27,7 +28,5 @@ potion_id = &"speed_potion"
 display_name = "Speed"
 description = "Increases movement speed by 50% for 10 seconds."
 icon = ExtResource("4_icon")
-price = 110
-rarity = "RARE"
-shop_stats = [["movement_speed", "+50%"], ["duration", "10s"]]
 timed_effects = Array[ExtResource("2_effect")]([SubResource("SpeedEffect")])
+drink_sfx = ExtResource("1_rhvcj")

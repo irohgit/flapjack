@@ -46,7 +46,7 @@ scroll_speed = 50.0
 [node name="SettingsPanel" parent="." unique_id=217040426 instance=ExtResource("15_4h1ux")]
 
 [node name="CoinSpawner" parent="." unique_id=1386735529 instance=ExtResource("16_8pef5")]
-loot_pool = Array[ExtResource("17_ybihq")]([ExtResource("18_22sru"), ExtResource("19_msifs"), ExtResource("20_fireball"), ExtResource("21_magnet")])
+level_data = ExtResource("2_m5gh3")
 
 [node name="LevelGenerator" type="Node2D" parent="." unique_id=55350591]
 script = ExtResource("1_nl7aw")
