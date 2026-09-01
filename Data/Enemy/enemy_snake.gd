@@ -2,19 +2,19 @@ class_name EnemySnake
 extends Enemy
 
 ## Melee chaser. Idles until the player enters its detection radius, then
-## beelines for them. Does not fire projectiles - contact damage only.
-## Does not call super()._ready(): the base Enemy._ready() assumes a
-## Sprite2D and a projectile/ammo loadout, neither of which apply here.
+## beelines for them.
 
-@export var detection_radius := 350.0
+const ATTACK_STUN_TIME := 0.5
+const CHASE_TINT := Color(1.0, 0.55, 0.55)
+
 @export var patrol_distance := 150.0
 
 @onready var _detection_area: Area2D = $DetectionRadius
-@onready var _detection_shape: CollisionShape2D = $DetectionRadius/CollisionShape2D
 @onready var _animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 var _chasing := false
 var _target: Node2D = null
+var _stunned := false
 
 var _spawn_position := Vector2.ZERO
 var _patrol_direction := 1.0
@@ -33,12 +33,17 @@ func _ready() -> void:
 	_health.current_health = data.health
 	_health.damaged.connect(_on_damaged)
 	_health.died.connect(_on_died)
-	_reset_initial_timer()
 
-	(_detection_shape.shape as CircleShape2D).radius = detection_radius
 	_detection_area.area_entered.connect(_on_detection_area_entered)
+	_detection_area.area_exited.connect(_on_detection_area_exited)
 
-	_animated_sprite.play(&"idle")
+	# The base contact-damage mask only looks for enemy_bullet (layer 3).
+	# Add the player layer so this body's own area_entered fires on contact,
+	# which is what triggers the attack animation and stun below.
+	set_collision_mask_value(1, true)
+	area_entered.connect(_on_player_contact)
+
+	_animated_sprite.play(&"Idle")
 
 
 func _on_detection_area_entered(area: Area2D) -> void:
@@ -46,14 +51,52 @@ func _on_detection_area_entered(area: Area2D) -> void:
 		return
 	_chasing = true
 	_target = area
-	_detection_area.monitoring = false
+	_animated_sprite.modulate = CHASE_TINT
+
+
+func _on_detection_area_exited(area: Area2D) -> void:
+	if not _chasing or area != _target:
+		return
+	_stop_chasing()
+
+
+func _stop_chasing() -> void:
+	_chasing = false
+	_target = null
+	_animated_sprite.modulate = Color.WHITE
+
+
+func _on_player_contact(area: Area2D) -> void:
+	if _stunned or not area.is_in_group("player"):
+		return
+	_stunned = true
+	_animated_sprite.play(&"Attack")
+	get_tree().create_timer(ATTACK_STUN_TIME).timeout.connect(_on_attack_stun_ended)
+
+
+func _on_attack_stun_ended() -> void:
+	_stunned = false
+	_stop_chasing()
+	_animated_sprite.play(&"Idle")
+
+func _physics_process(delta: float) -> void:
+	var final_speed := _status_effects.get_modified_value(
+		StatusEffectData.STAT_MOVEMENT_SPEED,
+		data.move_speed
+	)
+	_move(delta, final_speed)
+	if Playarea.has_passed_below_screen(global_position, 200.0):
+		queue_free()
 
 
 func _move(delta: float, speed: float) -> void:
+	if _stunned:
+		return
+
 	if _chasing:
 		if _target == null or not is_instance_valid(_target):
 			return
-		_animated_sprite.flip_h = _target.global_position.x < global_position.x
+		_face_toward(_target.global_position.x)
 		global_position = global_position.move_toward(_target.global_position, speed * delta)
 		return
 
@@ -66,14 +109,13 @@ func _move(delta: float, speed: float) -> void:
 
 	var patrol_offset := Vector2(patrol_distance * _patrol_direction, 0.0)
 	var target_position := _spawn_position + patrol_offset
-	_animated_sprite.flip_h = _patrol_direction < 0.0
+	_face_toward(target_position.x)
 	global_position = global_position.move_toward(target_position, speed * delta)
 
 	if global_position.is_equal_approx(target_position):
 		_patrol_direction *= -1.0
 
 
-# Snake has no ranged attack; contact damage handles the "attack" via the
-# hazard group, same as every other enemy.
-func _fire() -> Projectile:
-	return null
+# Sprite faces left by default, so flip_h is true only when moving right.
+func _face_toward(x_position: float) -> void:
+	_animated_sprite.flip_h = x_position > global_position.x

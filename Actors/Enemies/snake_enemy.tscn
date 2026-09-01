@@ -121,7 +121,7 @@ animations = [{
 size = Vector2(65, 24)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_detection"]
-radius = 180.95612
+radius = 125.815125
 
 [node name="SnakeEnemy" type="Area2D" unique_id=1238329062 groups=["enemy", "hazard"]]
 scale = Vector2(3, 3)
