@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dpbyqdwsufn2f"]
+[gd_scene format=3 uid="uid://dpbyqdwsufn2f"]
 
 [ext_resource type="Script" uid="uid://mibkq2861k2d" path="res://UI/Shop/shop_menu.gd" id="1_script"]
 [ext_resource type="FontFile" uid="uid://1qarew2on3k7" path="res://Assets/Fonts/PixelOperator.ttf" id="2_font"]
@@ -14,9 +14,13 @@
 default_font = ExtResource("2_font")
 default_font_size = 22
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_offers"]
+[sub_resource type="ButtonGroup" id="ButtonGroup_txxba"]
 
-[node name="ShopMenu" type="Control" node_paths=PackedStringArray("first_focus")]
+[sub_resource type="ButtonGroup" id="ButtonGroup_6fn2i"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_1tfbm"]
+
+[node name="ShopMenu" type="Control" unique_id=538681344 node_paths=PackedStringArray("first_focus")]
 process_mode = 3
 visible = false
 layout_mode = 3
@@ -30,20 +34,20 @@ script = ExtResource("1_script")
 first_focus = NodePath("SidePanel/OfferCards/OfferCard1")
 pauses_tree = true
 
-[node name="Backdrop" type="ColorRect" parent="."]
+[node name="Backdrop" type="ColorRect" parent="." unique_id=327682091]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 0
 color = Color(0.00392157, 0.0117647, 0.0196078, 0.52)
 
-[node name="SidePanel" type="NinePatchRect" parent="."]
+[node name="SidePanel" type="NinePatchRect" parent="." unique_id=605544239]
 unique_name_in_owner = true
 texture_filter = 1
 layout_mode = 1
+anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
@@ -54,20 +58,18 @@ offset_right = -24.0
 offset_bottom = 465.0
 grow_horizontal = 0
 grow_vertical = 2
-mouse_filter = 2
 texture = ExtResource("3_main")
 patch_margin_left = 14
 patch_margin_top = 14
 patch_margin_right = 14
 patch_margin_bottom = 14
 
-[node name="Title" type="Label" parent="SidePanel"]
+[node name="Title" type="Label" parent="SidePanel" unique_id=1590024352]
 layout_mode = 0
 offset_left = 28.0
 offset_top = 25.0
 offset_right = 430.0
 offset_bottom = 94.0
-mouse_filter = 2
 theme_override_colors/font_color = Color(1, 0.886275, 0.54902, 1)
 theme_override_colors/font_outline_color = Color(0.0588235, 0.0313726, 0.00784314, 1)
 theme_override_constants/outline_size = 4
@@ -75,21 +77,20 @@ theme_override_font_sizes/font_size = 50
 text = "SHOP"
 vertical_alignment = 1
 
-[node name="CoinPanel" type="NinePatchRect" parent="SidePanel"]
+[node name="CoinPanel" type="NinePatchRect" parent="SidePanel" unique_id=355094008]
 texture_filter = 1
 layout_mode = 0
 offset_left = 462.0
 offset_top = 25.0
 offset_right = 794.0
 offset_bottom = 99.0
-mouse_filter = 2
 texture = ExtResource("4_coin_panel")
 patch_margin_left = 14
 patch_margin_top = 12
 patch_margin_right = 14
 patch_margin_bottom = 12
 
-[node name="CoinIcon" type="TextureRect" parent="SidePanel/CoinPanel"]
+[node name="CoinIcon" type="TextureRect" parent="SidePanel/CoinPanel" unique_id=1551296383]
 texture_filter = 1
 layout_mode = 0
 offset_left = 18.0
@@ -101,32 +102,30 @@ texture = ExtResource("5_coin")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="CoinCaption" type="Label" parent="SidePanel/CoinPanel"]
+[node name="CoinCaption" type="Label" parent="SidePanel/CoinPanel" unique_id=893730938]
 layout_mode = 0
 offset_left = 77.0
 offset_top = 7.0
 offset_right = 172.0
 offset_bottom = 35.0
-mouse_filter = 2
 theme_override_colors/font_color = Color(0.905882, 0.764706, 0.415686, 1)
 theme_override_font_sizes/font_size = 17
 text = "COINS"
 
-[node name="CoinAmount" type="Label" parent="SidePanel/CoinPanel"]
+[node name="CoinAmount" type="Label" parent="SidePanel/CoinPanel" unique_id=734529232]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 78.0
 offset_top = 27.0
 offset_right = 310.0
 offset_bottom = 65.0
-mouse_filter = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 30
 text = "0"
 
-[node name="HeaderDivider" type="ColorRect" parent="SidePanel"]
+[node name="HeaderDivider" type="ColorRect" parent="SidePanel" unique_id=1921980964]
 layout_mode = 0
 offset_left = 25.0
 offset_top = 112.0
@@ -135,7 +134,7 @@ offset_bottom = 114.0
 mouse_filter = 2
 color = Color(0.305882, 0.423529, 0.462745, 0.7)
 
-[node name="OfferCards" type="VBoxContainer" parent="SidePanel"]
+[node name="OfferCards" type="VBoxContainer" parent="SidePanel" unique_id=848165347]
 layout_mode = 0
 offset_left = 24.0
 offset_top = 132.0
@@ -144,28 +143,27 @@ offset_bottom = 720.0
 mouse_filter = 2
 theme_override_constants/separation = 16
 
-[node name="OfferCard1" parent="SidePanel/OfferCards" instance=ExtResource("9_offer_card")]
+[node name="OfferCard1" parent="SidePanel/OfferCards" unique_id=338573582 instance=ExtResource("9_offer_card")]
 unique_name_in_owner = true
 layout_mode = 2
-button_group = SubResource("ButtonGroup_offers")
+button_group = SubResource("ButtonGroup_txxba")
 
-[node name="OfferCard2" parent="SidePanel/OfferCards" instance=ExtResource("9_offer_card")]
+[node name="OfferCard2" parent="SidePanel/OfferCards" unique_id=855810235 instance=ExtResource("9_offer_card")]
 unique_name_in_owner = true
 layout_mode = 2
-button_group = SubResource("ButtonGroup_offers")
+button_group = SubResource("ButtonGroup_6fn2i")
 
-[node name="OfferCard3" parent="SidePanel/OfferCards" instance=ExtResource("9_offer_card")]
+[node name="OfferCard3" parent="SidePanel/OfferCards" unique_id=170697957 instance=ExtResource("9_offer_card")]
 unique_name_in_owner = true
 layout_mode = 2
-button_group = SubResource("ButtonGroup_offers")
+button_group = SubResource("ButtonGroup_1tfbm")
 
-[node name="PurchaseHint" type="Label" parent="SidePanel"]
+[node name="PurchaseHint" type="Label" parent="SidePanel" unique_id=1454063618]
 layout_mode = 0
 offset_left = 24.0
 offset_top = 744.0
 offset_right = 796.0
 offset_bottom = 786.0
-mouse_filter = 2
 theme_override_colors/font_color = Color(0.454902, 0.686275, 0.713726, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
@@ -174,7 +172,7 @@ text = "SPACE / A TO PURCHASE"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ExitButton" type="TextureButton" parent="SidePanel"]
+[node name="ExitButton" type="TextureButton" parent="SidePanel" unique_id=1618622317]
 unique_name_in_owner = true
 texture_filter = 1
 layout_mode = 0
@@ -182,7 +180,6 @@ offset_left = 268.0
 offset_top = 824.0
 offset_right = 552.0
 offset_bottom = 905.0
-focus_mode = 2
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("6_exit")
 texture_pressed = ExtResource("8_exit_pressed")
@@ -190,14 +187,13 @@ texture_hover = ExtResource("7_exit_hover")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="Label" type="Label" parent="SidePanel/ExitButton"]
+[node name="Label" type="Label" parent="SidePanel/ExitButton" unique_id=1605393768]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 theme_override_colors/font_color = Color(1, 0.941176, 0.823529, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
