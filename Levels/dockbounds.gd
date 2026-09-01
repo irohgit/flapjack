@@ -1,13 +1,13 @@
 class_name DockBounds
 extends Node2D
-
+const PLAYER_GROUP := &"player"
 @onready var _water: Polygon2D = $Water
 @export var islands: Array[Polygon2D] = []   # obstacles the boat must stay out of
 var _player: Node2D
 var _last_inside: Vector2
 
 func _ready() -> void:
-	_player = get_tree().get_first_node_in_group("Player")
+	_player = get_tree().get_first_node_in_group(PLAYER_GROUP)
 
 func _is_legal(global_pos: Vector2) -> bool:
 	# Must be inside the water...

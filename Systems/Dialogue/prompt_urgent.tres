@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="PromptStyle" format=3 uid="uid://be7cetvnlx4hv"]
+
+[ext_resource type="Script" uid="uid://c5ywokn5mfnvt" path="res://Systems/prompt_style.gd" id="1_t4yt5"]
+
+[resource]
+script = ExtResource("1_t4yt5")
+font_color = Color(0.93740034, 0.8118168, 1.1551381e-06, 1)
+font_size = 40
+wavy = true
+metadata/_custom_type_script = "uid://c5ywokn5mfnvt"

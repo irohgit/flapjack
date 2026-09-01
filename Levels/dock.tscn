@@ -7,11 +7,17 @@
 [ext_resource type="PackedScene" uid="uid://cclwwsegfn8rr" path="res://Actors/Player/player.tscn" id="2_wv1s7"]
 [ext_resource type="Script" uid="uid://c5arswu2ypo5c" path="res://Levels/dockbounds.gd" id="4_u0fe5"]
 [ext_resource type="Texture2D" uid="uid://df607lk1lqag2" path="res://Assets/Characters/ginny_drinking_spritesheet_96x96.png" id="5_4nibh"]
+[ext_resource type="Texture2D" uid="uid://dj466dve2c23g" path="res://Assets/Input/xbox_A_64x64.png" id="5_e3o5v"]
 [ext_resource type="Texture2D" uid="uid://b6vlcs7mjr1q4" path="res://Assets/Characters/Ginny_Idle_spritesheet_96x96.png" id="5_y055y"]
+[ext_resource type="Resource" uid="uid://be7cetvnlx4hv" path="res://Systems/Dialogue/prompt_urgent.tres" id="6_e3o5v"]
 [ext_resource type="Texture2D" uid="uid://bq5au2ufytqr6" path="res://Assets/Characters/ginny_drinking_long_spritesheet_288x48.png" id="6_jlhff"]
 [ext_resource type="Texture2D" uid="uid://bpqus7enchi0o" path="res://Assets/Characters/ginny_wave_spritesheet_96x96.png" id="7_sd5uq"]
 [ext_resource type="Texture2D" uid="uid://dkgautuhavx01" path="res://Assets/Characters/ginny_sleeping_spritesheet_192x48.png" id="8_6f3ff"]
 [ext_resource type="Script" uid="uid://prqvr6dw61gf" path="res://Levels/InteractHotspot.gd" id="11_q2u3x"]
+[ext_resource type="PackedScene" uid="uid://chwdpuo2udybs" path="res://Actors/Player/shipmessage.tscn" id="13_qbsur"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pxqul"]
+radius = 11.751648
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gp6d4"]
 atlas = ExtResource("5_4nibh")
@@ -228,9 +234,6 @@ animations = [{
 "speed": 3.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_5yy73"]
-size = Vector2(137, 127)
-
 [node name="Dock" type="Node2D" unique_id=229493838 node_paths=PackedStringArray("merchant_hotspot")]
 script = ExtResource("1_gp6d4")
 upgrade_screen_scene = ExtResource("2_pxqul")
@@ -243,6 +246,19 @@ offset_top = -6.0
 offset_right = 1921.0
 offset_bottom = 1089.0
 texture = ExtResource("1_jk8js")
+
+[node name="Ginny_Interact" type="Area2D" parent="." unique_id=814066058]
+position = Vector2(624, 572)
+script = ExtResource("11_q2u3x")
+prompt_text = "Upgrade Ship"
+prompt_icon = ExtResource("5_e3o5v")
+prompt_style = ExtResource("6_e3o5v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ginny_Interact" unique_id=1073849320]
+position = Vector2(-9, 9)
+scale = Vector2(4.5100045, 4.8165307)
+shape = SubResource("CapsuleShape2D_pxqul")
+debug_color = Color(2.466701e-07, 0.1333726, 0.1626957, 0.41960785)
 
 [node name="Player" parent="." unique_id=2109576054 node_paths=PackedStringArray("camera") instance=ExtResource("2_wv1s7")]
 position = Vector2(1064, 985)
@@ -262,11 +278,12 @@ rim_color = Color(0.85061395, 0.93505543, 0.9999997, 1)
 foam_color = Color(0.9341898, 0.97122866, 0.99999994, 1)
 metadata/_edit_use_anchors_ = true
 
-[node name="DockBounds" type="Node2D" parent="." unique_id=1409784210]
+[node name="DockBounds" type="Node2D" parent="." unique_id=1409784210 node_paths=PackedStringArray("islands")]
 script = ExtResource("4_u0fe5")
+islands = [NodePath("VinnieIsland")]
 
 [node name="Water" type="Polygon2D" parent="DockBounds" unique_id=815375415]
-position = Vector2(197, 381)
+position = Vector2(197, 380)
 color = Color(1, 1, 1, 0)
 polygon = PackedVector2Array(-203, 366, -178, 374, -156, 376, -160, 353, -140, 355, -128, 367, -110, 371, -98, 380, -110, 388, -126, 395, -137, 415, -133, 425, -114, 434, -87, 432, -79, 408, -32, 416, -5, 409, 21, 427, 35, 456, 25, 478, 54, 514, 71, 567, 95, 584, 132, 615, 193, 615, 263, 615, 303, 632, 324, 647, 365, 666, 423, 673, 456, 646, 504, 635, 570, 623, 640, 601, 654, 564, 717, 541, 653, 519, 595, 496, 611, 471, 597, 441, 577, 441, 550, 422, 538, 446, 534, 471, 539, 485, 480, 462, 455, 441, 427, 442, 382, 419, 344, 394, 315, 358, 279, 347, 251, 337, 247, 289, 242, 259, 235, 237, 239, 216, 360, 216, 350, 124, 505, 134, 503, 78, 363, 83, 352, 62, 308, 72, 301, 11, 313, -4, 472, -5, 470, -43, 616, -45, 616, -76, 523, -79, 525, -119, 1104, -113, 1135, -82, 1161, -42, 1210, -14, 1236, 7, 1253, 7, 1252, 75, 1318, 78, 1319, 304, 1345, 307, 1348, 343, 1310, 396, 1247, 430, 1227, 464, 1128, 485, 1111, 507, 1066, 523, 1031, 536, 1013, 581, 1028, 608, 1097, 614, 1160, 623, 1259, 632, 1298, 607, 1360, 599, 1427, 553, 1525, 482, 1587, 447, 1653, 408, 1721, 341, 1729, 733, -223, 720)
 
@@ -284,11 +301,6 @@ sprite_frames = SubResource("SpriteFrames_5st54")
 animation = &"sleep"
 autoplay = "sleep"
 
-[node name="Ginny_Interact" type="Area2D" parent="." unique_id=814066058]
-position = Vector2(624, 572)
-script = ExtResource("11_q2u3x")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Ginny_Interact" unique_id=1073849320]
-shape = SubResource("RectangleShape2D_5yy73")
-
 [node name="UpgradeScreen_UILayer" type="CanvasLayer" parent="." unique_id=1997797273]
+
+[node name="Shipmessage" parent="." unique_id=1212644660 instance=ExtResource("13_qbsur")]

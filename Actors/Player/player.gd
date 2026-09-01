@@ -59,6 +59,11 @@ var _purchase_in_progress := false
 @export var hit_sfx: AudioStream
 @export var death_sfx: AudioStream
 
+#VFX
+const WAKE_DEADZONE := 0.15
+
+@onready var _wake: AnimatedSprite2D = $Wake
+
 #Ship Tier
 @export_range(0.5, 5.0, 0.05) var wake_overhang := 2.4 #2.4 works with skiff,
 @export_range(0.5, 5.0, 0.05) var wake_length := 1.5:
@@ -617,14 +622,24 @@ func _fit_wake_to_hull() -> void:
 	
 
 func _update_wake() -> void:
+	# Idle: no wake at all.
+	if _move_intent.length() < WAKE_DEADZONE:
+		if _wake.visible:
+			_wake.stop()
+			_wake.hide()
+		return
 	var anim := "wake_forward" #set animation to wake forward
 	if _move_intent.x < -0.4: #if our inpu is less than -0.1 means we are moving left
 		anim = "wake_strafe_left"
 	elif _move_intent.x > 0.4: #if our x input above 0.1 that means we are moving right
 		anim = "wake_strafe_right"
-	# else it stays "wake_forward" for up, down, and idle
-	if $Wake.animation != anim:
-		$Wake.play(anim)
+	if not _wake.visible:
+		_wake.show()
+	if _wake.animation != anim or not _wake.is_playing():
+		_wake.play(anim)
+	## else it stays "wake_forward" for up, down, and idle
+	#if $Wake.animation != anim:
+		#$Wake.play(anim)
 
 func _update_masts() -> void:
 	var tier := ship_tiers[clampi(ship_tier - 1, 0, ship_tiers.size() - 1)]

@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="PromptStyle" format=3 uid="uid://sveyc2qfc0ou"]
+
+[ext_resource type="Script" uid="uid://c5ywokn5mfnvt" path="res://Systems/prompt_style.gd" id="1_2u177"]
+
+[resource]
+script = ExtResource("1_2u177")
+metadata/_custom_type_script = "uid://c5ywokn5mfnvt"
