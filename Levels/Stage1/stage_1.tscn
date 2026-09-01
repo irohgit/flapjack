@@ -15,30 +15,16 @@
 [ext_resource type="Script" uid="uid://bo6li876odoia" path="res://Data/Enemy/enemy_data.gd" id="12_fkloy"]
 [ext_resource type="PackedScene" uid="uid://luquvycpj4hd" path="res://Actors/Pickup/coin_spawner.tscn" id="14_rvay1"]
 [ext_resource type="Script" uid="uid://ddmjy6ihgdk7k" path="res://Systems/Levels/level_generator.gd" id="16_cvtwx"]
-[ext_resource type="Resource" uid="uid://bcj4lyhuitxi2" path="res://Data/Pickups/ShieldPotion.tres" id="16_e24f3"]
-[ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="16_m3y4m"]
-[ext_resource type="Resource" uid="uid://e2bxh85j6kul" path="res://Data/Pickups/PierceAugmentPickup.tres" id="17_qr3gx"]
-[ext_resource type="Resource" uid="uid://c8prjyekwi7hm" path="res://Data/Pickups/HomingCannonPickup.tres" id="17_uwhja"]
 [ext_resource type="Resource" uid="uid://b2xa4hm5ib5ca" path="res://Data/Levels/Stages/Stage1.tres" id="18_6vwij"]
-[ext_resource type="Resource" uid="uid://5vagi0atsu3m" path="res://Data/Pickups/PlasmaAugmentPickup.tres" id="18_p2t5c"]
-[ext_resource type="Resource" uid="uid://e8bbiwbkus1o" path="res://Data/Pickups/OrbitalRicochetPickup.tres" id="18_xq76v"]
 [ext_resource type="PackedScene" uid="uid://bws0ib2ep02xb" path="res://Actors/Environment/cloud_overlay.tscn" id="19_aqmxt"]
-[ext_resource type="Resource" uid="uid://bnh66tw3h3xk8" path="res://Data/Pickups/HarpoonPickup.tres" id="19_ht8rm"]
 [ext_resource type="PackedScene" uid="uid://de1bc11i6qosg" path="res://Actors/Environment/bg_layer_1_fish.tscn" id="20_p2t5c"]
-[ext_resource type="Resource" uid="uid://cpynird4edptk" path="res://Data/Pickups/FireballAugmentPickup.tres" id="21_fireball"]
 [ext_resource type="Script" uid="uid://bbwfptmjbqmy8" path="res://Systems/ParallaxDirector2.gd" id="22_0rlpp"]
-[ext_resource type="Resource" uid="uid://cesmcj6ctad" path="res://Data/Pickups/MagnetAugmentPickup.tres" id="22_magnet"]
 [ext_resource type="Script" uid="uid://8sxccskaloo3" path="res://Systems/Environment/WeightedProp.gd" id="25_jrq28"]
-[ext_resource type="Resource" uid="uid://bvtbthku5smhg" path="res://Data/Pickups/Gin.tres" id="26_cmsr7"]
 [ext_resource type="PackedScene" uid="uid://ckkn43tmuuln0" path="res://Actors/Environment/ParallaxObjects/far_coral.tscn" id="26_edqev"]
 [ext_resource type="PackedScene" uid="uid://cnl7v1qfhh014" path="res://Actors/Environment/ParallaxObjects/far_rock.tscn" id="27_1xfup"]
-[ext_resource type="Resource" uid="uid://7x5vq7u18w0i" path="res://Data/Pickups/GoldGin.tres" id="27_pgwwf"]
 [ext_resource type="PackedScene" uid="uid://b7wmf0ym3lvi6" path="res://Actors/Environment/ParallaxObjects/far_statues.tscn" id="28_54op2"]
 [ext_resource type="Script" uid="uid://b80ljucjchi54" path="res://Systems/Environment/bankGenerator.gd" id="29_6xawf"]
 [ext_resource type="PackedScene" uid="uid://bc2g5sxmhx1p2" path="res://Actors/Environment/ParallaxObjects/near_wood.tscn" id="31_gp8qq"]
-[ext_resource type="Resource" uid="uid://bkqumwc6jcphy" path="res://Data/Pickups/HealthPotion.tres" id="32_health"]
-[ext_resource type="Resource" uid="uid://cs41wqbjx3rya" path="res://Data/Pickups/RapidFirePotion.tres" id="33_rapid"]
-[ext_resource type="Resource" uid="uid://b5mc7v6dicmvg" path="res://Data/Pickups/SpeedPotion.tres" id="34_speed"]
 [ext_resource type="PackedScene" uid="uid://3mo2067bwo0l" path="res://Actors/Pickup/barrel.tscn" id="42_30rop"]
 [ext_resource type="Script" uid="uid://dk4cjbt8xm0wc" path="res://Actors/Pickup/ginspawner.gd" id="42_pgwwf"]
 
@@ -77,14 +63,14 @@ scene = ExtResource("19_aqmxt")
 weight = 0.9
 metadata/_custom_type_script = "uid://8sxccskaloo3"
 
-[node name="Stage1" type="Node2D" unique_id=1126219472 node_paths=PackedStringArray("level_generator", "screen_encounter_parent", "scroll_director", "enemy_controller")]
+[node name="Stage1" type="Node2D" unique_id=1126219472 node_paths=PackedStringArray("scroll_director", "enemy_controller", "level_generator", "screen_encounter_parent")]
 script = ExtResource("1_thckm")
+scroll_director = NodePath("ScrollDirector")
+enemy_controller = NodePath("EnemyController")
 level_generator = NodePath("LevelGenerator")
 screen_encounter_parent = NodePath("ScrollRig/ScreenEncounters")
 stage_music = ExtResource("2_yvgdk")
 stage_music_db = -30.0
-scroll_director = NodePath("ScrollDirector")
-enemy_controller = NodePath("EnemyController")
 metadata/_edit_vertical_guides_ = [960.0]
 
 [node name="GameUI" parent="." unique_id=1532914546 instance=ExtResource("3_p2t5c")]
@@ -112,12 +98,7 @@ rows_behind = 100
 [node name="World" type="Node2D" parent="." unique_id=790454155]
 
 [node name="CoinSpawner" parent="." unique_id=1386735529 instance=ExtResource("14_rvay1")]
-loot_pool = Array[ExtResource("16_m3y4m")]([ExtResource("17_uwhja"), ExtResource("18_p2t5c"), ExtResource("21_fireball"), ExtResource("22_magnet"), ExtResource("17_qr3gx"), ExtResource("18_xq76v"), ExtResource("19_ht8rm"), ExtResource("32_health"), ExtResource("16_e24f3"), ExtResource("33_rapid"), ExtResource("34_speed"), ExtResource("26_cmsr7"), ExtResource("27_pgwwf")])
-augment_weight = 10
-life_weight = 0
-weapon_weight = 10
-potion_weight = 10
-gin_weight = 3
+level_data = ExtResource("18_6vwij")
 
 [node name="LevelGenerator" type="Node2D" parent="." unique_id=593108892]
 script = ExtResource("16_cvtwx")

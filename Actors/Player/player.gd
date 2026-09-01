@@ -2,6 +2,14 @@ class_name Player
 
 extends Area2D
 
+enum PurchaseResult {
+	SUCCESS,
+	INVALID_ITEM,
+	NOT_ENOUGH_COINS,
+	ALREADY_OWNED,
+	CANNOT_ACCEPT,
+}
+
 #Movement
 @export var max_speed := 700.0
 @export var responsiveness := 25.0
@@ -9,9 +17,10 @@ extends Area2D
 @export var camera: Camera2D
 
 #Projectile Firing 
-@export var weapons: Array[WeaponData]
+@export var starting_weapons: Array[WeaponData]
 @export_range(1, 20, 1) var max_weapons := 3
 var _weapon_states: Array[WeaponState] = []
+var _player_augments: Array[AugmentData] = []
 
 @export var coin_count:= 0
 @export var gin_count:= 0
@@ -43,6 +52,7 @@ var _potion_slots: Array[PotionData] = []
 var _selected_potion_slot := 0
 var _can_exit_forward := false
 var _has_exited_play_area := false
+var _purchase_in_progress := false
 
 #SFX
 @export var cannon_sfx: AudioStream
@@ -92,7 +102,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		
 func _ready() -> void:
 	_apply_meta_upgrades()
-	add_to_group("Player")
 	_potion_slots.resize(potion_slot_count)
 	area_entered.connect(_on_area_entered)
 	_pickup_range.area_entered.connect(_on_pickup_range_entered)
@@ -103,12 +112,16 @@ func _ready() -> void:
 	_health.damaged.connect(_on_damaged)
 	#_health.health_changed.connect(func(c, m): DebugHud.watch("health", "%d/%d" % [c, m]))
 	_health.died.connect(_on_died)
-	coin_changed.emit(coin_count)
+
+	var restored_from_checkpoint := GlobalPlayer.restore_checkpoint(self)
+	if not restored_from_checkpoint:
+		for weapon in starting_weapons:
+			add_weapon(weapon)
+		_emit_run_state_changed()
+
 	gin_changed.emit(gin_count)
 	_fit_wake_to_hull()
 	
-	for weapon in weapons:
-		add_weapon(weapon)
 func _apply_meta_upgrades() -> void:
 	match MetaProgress.boat_tier:
 		MetaProgress.BoatTier.SKIFF:    ship_tier = 1
@@ -229,7 +242,11 @@ func _add_gin(amount: int):
 
 
 func can_add_weapon(weapon: WeaponData) -> bool:
-	return weapon != null and _weapon_states.size() < max_weapons
+	return (
+		weapon != null
+		and not _has_weapon(weapon)
+		and _weapon_states.size() < max_weapons
+	)
 
 
 func add_weapon(weapon: WeaponData) -> bool:
@@ -245,7 +262,11 @@ func get_weapon_count() -> int:
 
 
 func can_add_augment(augment: AugmentData) -> bool:
-	if augment == null or augment.augmentEffect == null:
+	if (
+		augment == null
+		or augment.augmentEffect == null
+		or _has_augment(augment)
+	):
 		return false
 
 	if augment.targetWeapon == null:
@@ -263,7 +284,7 @@ func add_augment(augment: AugmentData) -> bool:
 		return false
 
 	if augment.targetWeapon == null:
-		augment.augmentEffect.apply_to_player(self)
+		_add_player_augment(augment, true)
 		return true
 		
 	for state in _weapon_states:
@@ -272,6 +293,124 @@ func add_augment(augment: AugmentData) -> bool:
 			augment_added.emit(augment)
 			return true
 	return false
+
+
+func _add_player_augment(augment: AugmentData, notify: bool) -> void:
+	_player_augments.append(augment)
+	augment.augmentEffect.apply_to_player(self)
+	if notify:
+		augment_added.emit(augment)
+
+
+func owns_pickup(pickup: PickupData) -> bool:
+	if pickup == null:
+		return false
+
+	match pickup.pickup_type:
+		PickupData.PickupType.WEAPON:
+			return _has_weapon(pickup.weapon)
+		PickupData.PickupType.AUGMENT:
+			return _has_augment(pickup.augment)
+
+	return false
+
+
+func get_purchase_result(pickup: PickupData) -> PurchaseResult:
+	if pickup == null or not pickup.is_sellable():
+		return PurchaseResult.INVALID_ITEM
+	if owns_pickup(pickup):
+		return PurchaseResult.ALREADY_OWNED
+	if not pickup.can_pickup(self):
+		return PurchaseResult.CANNOT_ACCEPT
+	if coin_count < pickup.get_shop_price():
+		return PurchaseResult.NOT_ENOUGH_COINS
+	return PurchaseResult.SUCCESS
+
+
+func try_purchase(pickup: PickupData) -> PurchaseResult:
+	if _purchase_in_progress:
+		return PurchaseResult.CANNOT_ACCEPT
+
+	var result := get_purchase_result(pickup)
+	if result != PurchaseResult.SUCCESS:
+		return result
+
+	var price := pickup.get_shop_price()
+	_purchase_in_progress = true
+	if pickup.apply_to(self):
+		coin_count -= price
+		coin_changed.emit(coin_count)
+		pickup_collected.emit(pickup)
+		result = PurchaseResult.SUCCESS
+	else:
+		result = PurchaseResult.CANNOT_ACCEPT
+	_purchase_in_progress = false
+	return result
+
+
+func _has_weapon(weapon: WeaponData) -> bool:
+	if weapon == null:
+		return false
+
+	for state in _weapon_states:
+		if state != null and state.data == weapon:
+			return true
+
+	return false
+
+
+func _has_augment(augment: AugmentData) -> bool:
+	if augment == null:
+		return false
+
+	if _player_augments.has(augment):
+		return true
+
+	for state in _weapon_states:
+		if state != null and state.augments.has(augment):
+			return true
+
+	return false
+
+
+func export_checkpoint() -> RunCheckpoint:
+	var checkpoint := RunCheckpoint.new()
+	checkpoint.coin_count = coin_count
+	for state in _weapon_states:
+		checkpoint.weapon_states.append(state.clone_for_checkpoint())
+	checkpoint.player_augments.assign(_player_augments)
+	checkpoint.potion_slots.assign(_potion_slots)
+	checkpoint.selected_potion_slot = _selected_potion_slot
+	return checkpoint
+
+
+func import_checkpoint(checkpoint: RunCheckpoint) -> bool:
+	if checkpoint == null:
+		return false
+
+	coin_count = checkpoint.coin_count
+	_weapon_states.clear()
+	for state in checkpoint.weapon_states:
+		_weapon_states.append(state.clone_for_checkpoint())
+
+	_player_augments.clear()
+	for augment in checkpoint.player_augments:
+		_add_player_augment(augment, false)
+
+	_potion_slots.assign(checkpoint.potion_slots)
+	_selected_potion_slot = 0 if _potion_slots.is_empty() else clampi(
+		checkpoint.selected_potion_slot,
+		0,
+		_potion_slots.size() - 1
+	)
+	_emit_run_state_changed()
+	return true
+
+
+func _emit_run_state_changed() -> void:
+	coin_changed.emit(coin_count)
+	potion_inventory_changed.emit()
+	potion_selection_changed.emit(_selected_potion_slot)
 
 
 func can_add_potion(potion: PotionData) -> bool:

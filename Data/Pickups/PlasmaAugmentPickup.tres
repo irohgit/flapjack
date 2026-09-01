@@ -5,6 +5,7 @@
 [ext_resource type="AudioStream" uid="uid://bhp3mqd4ya5te" path="res://Audio/SFX/plasma_pickup.mp3" id="2_f42f2"]
 [ext_resource type="Texture2D" uid="uid://decedubcfymmg" path="res://Assets/Pickups/PlasmaAugmentPickup.png" id="2_iqpjv"]
 [ext_resource type="Resource" uid="uid://cepoytsvun1sb" path="res://Data/Augments/PlasmaAugment.tres" id="3_plasma"]
+[ext_resource type="Texture2D" uid="uid://btpxfflbktbxy" path="res://Assets/UI/Shop/Items/Augments/Cannon/plasma_cannon.png" id="4_shop"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_i2auq"]
 shader = ExtResource("2_dsfrr")
@@ -19,6 +20,11 @@ shader_parameter/pulse_max = 1.5
 script = ExtResource("1_qmc68")
 texture = ExtResource("2_iqpjv")
 augment = ExtResource("3_plasma")
+shop_id = &"plasma_cannon"
+shop_description = "Infuses cannon fire with volatile Azure plasma."
+shop_icon = ExtResource("4_shop")
+shop_price = 90
+shop_rarity = "RARE"
 pickup_sfx = ExtResource("2_f42f2")
 highlight_material = SubResource("ShaderMaterial_i2auq")
 metadata/_custom_type_script = "uid://rau2jwiqd0pd"

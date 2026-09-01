@@ -126,13 +126,14 @@ radius = 31.0
 height = 76.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dxqhr"]
+resource_local_to_scene = true
 radius = 62.03225
 
 [node name="Player" type="Area2D" unique_id=2109576054 groups=["player"]]
 collision_mask = 6
 script = ExtResource("1_5ni5v")
 max_speed = 200.0
-weapons = Array[ExtResource("2_isd1h")]([ExtResource("3_8gtf5")])
+starting_weapons = Array[ExtResource("2_isd1h")]([ExtResource("3_8gtf5")])
 ship_tiers = Array[ExtResource("7_g1lo4")]([ExtResource("8_sciwa"), ExtResource("8_w553y"), ExtResource("9_wmrsf")])
 ship_tier = 3
 

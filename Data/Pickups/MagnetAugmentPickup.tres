@@ -1,36 +1,16 @@
 [gd_resource type="Resource" script_class="PickupData" format=3 uid="uid://cesmcj6ctad"]
 
-[ext_resource type="Script" uid="uid://doc7gd15frkr2" path="res://Data/Augments/magnet_augment_effect.gd" id="1_465hc"]
+[ext_resource type="Resource" uid="uid://dm66rxqo2vo6" path="res://Data/Augments/MagnetAugment.tres" id="1_magnet"]
 [ext_resource type="AudioStream" uid="uid://bhp3mqd4ya5te" path="res://Audio/SFX/plasma_pickup.mp3" id="2_465hc"]
-[ext_resource type="Script" uid="uid://cpp3oou337x" path="res://Data/Augments/augment_data.gd" id="2_r08qc"]
 [ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="3_r08qc"]
 [ext_resource type="Texture2D" uid="uid://cb0n7v17pxqt3" path="res://Assets/Pickups/13.png" id="4_ms5j3"]
-[ext_resource type="Shader" uid="uid://b2g6d0upsk6cx" path="res://Assets/Shaders/pickup.gdshader" id="4_r08qc"]
-
-[sub_resource type="Resource" id="Resource_isd1h"]
-script = ExtResource("1_465hc")
-metadata/_custom_type_script = "uid://dicm5hj6arprk"
-
-[sub_resource type="Resource" id="Resource_8jxyj"]
-script = ExtResource("2_r08qc")
-name = "Magnet"
-texture = ExtResource("4_ms5j3")
-augmentEffect = SubResource("Resource_isd1h")
-metadata/_custom_type_script = "uid://cpp3oou337x"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_aimca"]
-shader = ExtResource("4_r08qc")
-shader_parameter/outline_color = Color(0.8784314, 0.9019608, 0.96862745, 1)
-shader_parameter/outline_width = 10.0
-shader_parameter/outline_opacity = 0.35
-shader_parameter/pulse_speed = 5.0
-shader_parameter/pulse_min = 0.6
-shader_parameter/pulse_max = 1.5
 
 [resource]
 script = ExtResource("3_r08qc")
 texture = ExtResource("4_ms5j3")
-augment = SubResource("Resource_8jxyj")
+augment = ExtResource("1_magnet")
+shop_id = &"magnet"
+shop_price = 80
+shop_rarity = "UNCOMMON"
 pickup_sfx = ExtResource("2_465hc")
-highlight_material = SubResource("ShaderMaterial_aimca")
 metadata/_custom_type_script = "uid://rau2jwiqd0pd"

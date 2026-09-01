@@ -60,10 +60,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	if visible and close_on_cancel and event.is_action_pressed("ui_cancel"):
 		get_viewport().set_input_as_handled()
 		close_menu()
-	if event is InputEventKey and event.pressed and not event.echo:
-		var s := String(open_action)
-		#print("[", name, "] open_action=[", s, "] length=", s.length())
-		#print("[",name,"] got key. open_action = ' ", open_action, "' visible = ", visible) 
 
 ## Show this screen. Override and call super() when opening means something extra.
 func open_menu() -> void:
@@ -73,6 +69,12 @@ func open_menu() -> void:
 	show()
 	if pauses_tree:
 		get_tree().paused = true
+
+
+func take_return_focus() -> Control:
+	var control := _return_focus
+	_return_focus = null
+	return control
 
 
 ## Hide this screen and hand focus back to whatever opened it.

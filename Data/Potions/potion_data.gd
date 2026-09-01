@@ -7,12 +7,6 @@ extends Resource
 @export_multiline var description: String
 @export var icon: Texture2D
 
-@export_group("Shop")
-@export_range(0, 100000, 1, "or_greater") var price := 0
-@export var rarity := "COMMON"
-@export var shop_effects: PackedStringArray = []
-@export var shop_stats: Array = []
-
 @export_group("Effects")
 @export var instant_actions: Array[EffectAction] = []
 @export var timed_effects: Array[StatusEffectData] = []

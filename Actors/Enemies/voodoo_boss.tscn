@@ -1,10 +1,9 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene format=3 uid="uid://cajwvel1mia7c"]
 
 [ext_resource type="PackedScene" uid="uid://buoclsm4meh3f" path="res://Actors/Enemies/enemy.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://l68wphipexp5" path="res://Data/Enemy/enemy_voodoo_boss.gd" id="2_boss"]
 [ext_resource type="Resource" path="res://Data/Enemy/VoodooBoss.tres" id="3_data"]
-[ext_resource type="PackedScene" uid="uid://bl12qi0n68b6i" path="res://Actors/Projectiles/projectile.tscn" id="4_projectile"]
-[ext_resource type="Resource" path="res://Data/Projectiles/voodoo_poison.tres" id="5_poison"]
+[ext_resource type="Resource" uid="uid://bhikdvcypt0ob" path="res://Data/Projectiles/voodoo_poison.tres" id="5_poison"]
 [ext_resource type="PackedScene" uid="uid://bq1hohq82ovyn" path="res://Actors/Enemies/enemy_pattern_butcherbird.tscn" id="6_bird"]
 [ext_resource type="Resource" uid="uid://b1t8pmt6xip8x" path="res://Data/Enemy/ButcherBird_Black.tres" id="7_bird_data"]
 
@@ -12,22 +11,27 @@
 radius = 90.0
 height = 280.0
 
-[node name="VoodooBoss" instance=ExtResource("1_base")]
+[node name="VoodooBoss" unique_id=993672052 instance=ExtResource("1_base")]
 script = ExtResource("2_boss")
-data = ExtResource("3_data")
-min_interval = 2.0
-max_interval = 2.0
-poison_projectile_scene = ExtResource("4_projectile")
+hold_height_ratio = 0.28
+playfield_margin = 170.0
 poison_data = ExtResource("5_poison")
+poison_min_interval = 4.0
+poison_max_interval = 8.0
+berserk_speed_multiplier = 1.5
+berserk_attack_rate_multiplier = 1.5
+minion_wave_interval = 6.0
+minion_wave_size = 3
+minion_spawn_interval = 0.25
+minion_vertical_spacing = 120.0
 bird_scene = ExtResource("6_bird")
 bird_data = ExtResource("7_bird_data")
+data = ExtResource("3_data")
+max_interval = 2.0
 
-[node name="CollisionShape2D" parent="." index="1"]
+[node name="CollisionShape2D" parent="." index="1" unique_id=1631142024]
 position = Vector2(0, 0)
 shape = SubResource("CapsuleShape_boss")
 
-[node name="CannonMuzzle" type="Marker2D" parent="." index="4"]
+[node name="CannonMuzzle" type="Marker2D" parent="." index="4" unique_id=1112929954]
 position = Vector2(0, 145)
-
-[node name="PoisonMuzzle" type="Marker2D" parent="." index="5"]
-position = Vector2(0, 115)
