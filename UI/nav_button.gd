@@ -18,7 +18,7 @@ extends BaseButton
 ## BaseButton, not parent and child, so `extends Button` cannot be attached to a
 ## TextureButton. BaseButton covers both.
 
-enum Act { CHANGE_SCENE, SHOW_SCREEN, RESUME, RESTART, QUIT, CUSTOM }
+enum Act { CHANGE_SCENE, SHOW_SCREEN, RESUME, RESTART, QUIT, CUSTOM, DISMISS}
 
 @export var act: Act = Act.CUSTOM
 
@@ -144,6 +144,12 @@ func _on_pressed() -> void:
 			get_tree().quit()
 		Act.CUSTOM:
 			pass  # connect `pressed` yourself in the owning script
+		Act.DISMISS:
+			var s := _screen()
+			if s == null:
+				push_error("NavButton '%s': DISMISS but no MenuScreen ancestor." % name)
+				return
+			s.close_menu()
 
 
 ## One guarded path for every scene change, so a double confirm cannot fire twice

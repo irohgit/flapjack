@@ -1,15 +1,34 @@
 extends Node2D
 
-@export var upgrade_screen_scene: PackedScene  
-@export var merchant_hotspot: InteractHotspot
+## Routes hotspot interactions to screens. Owns the UI layer and the pause state.
+## Knows nothing about which shops exist.
+
 @onready var _ui_layer: CanvasLayer = $UpgradeScreen_UILayer
 
-func _ready() -> void:
-	if merchant_hotspot == null:
-		print("assign merchant interact spot")
-	merchant_hotspot.interacted.connect(_open_merchant)
+var _current_screen: Node = null
 
-func _open_merchant() -> void:
-	var screen := upgrade_screen_scene.instantiate()
-	_ui_layer.add_child(screen)
+
+func _ready() -> void:
+	for node in get_tree().get_nodes_in_group(Groups.HOTSPOT):
+		var hotspot := node as InteractHotspot
+		if hotspot:
+			hotspot.interacted.connect(_on_hotspot_interacted.bind(hotspot))
+
+func _on_hotspot_interacted(hotspot: InteractHotspot) -> void:
+	if _current_screen != null:
+		return                                    # something is already open
+	if hotspot.screen_scene == null:
+		push_error("Hotspot '%s' has no screen_scene assigned" % hotspot.name)
+		return
+	_current_screen = hotspot.screen_scene.instantiate()
+	_ui_layer.add_child(_current_screen)
+	_current_screen.tree_exited.connect(_on_screen_closed)
 	get_tree().paused = true
+
+func _on_screen_closed() -> void:
+	print("DOCK: screen closed, in_tree=", is_inside_tree())
+	_current_screen = null
+	if not is_inside_tree():
+		return
+	get_tree().paused = false
+	print("DOCK: paused is now ", get_tree().paused)

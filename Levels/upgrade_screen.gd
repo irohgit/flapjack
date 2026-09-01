@@ -1,5 +1,5 @@
 class_name UpgradeScreen
-extends Control
+extends MenuScreen
 
 const MAIN_MENU_SCENE := "res://UI/main_menu.tscn"
 

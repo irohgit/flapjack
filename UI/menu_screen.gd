@@ -17,6 +17,12 @@ extends Control
 @export var open_action: StringName = &""  ## e.g. "pause". Blank means it never self-opens.
 @export var pauses_tree: bool = false      ## true for the pause menu
 
+
+## How this screen dies. On for screens the Dock instantiates: closing frees them.
+## Off for pre-placed panels that hide and show, like the pause menu.
+@export var frees_on_close: bool = false
+
+
 ## While open, make every Control OUTSIDE this screen unfocusable. Godot's
 ## directional focus search works on geometry, not tree depth, so buttons on the
 ## screen underneath are perfectly reachable even when they are hidden behind
@@ -36,6 +42,11 @@ var _suppressed: Dictionary = {}
 func _ready() -> void:
 	visibility_changed.connect(_focus_first)
 	if visible:
+		# Instantiated already-visible (the Dock path). open_menu() was never
+		# called, so do its focus work here.
+		_return_focus = get_viewport().gui_get_focus_owner()
+		if modal_focus:
+			_suppress_outside_focus()
 		_focus_first()
 
 
@@ -82,12 +93,16 @@ func take_return_focus() -> Control:
 func close_menu() -> void:
 	if pauses_tree:
 		get_tree().paused = false
-	hide()
-	_restore_outside_focus()   # BEFORE handing focus back, or the target is still off
+
+	_restore_outside_focus()   # before handing focus back, or the target is still off
 	if _return_focus and is_instance_valid(_return_focus):
 		_return_focus.call_deferred("grab_focus")
 		_return_focus = null
 
+	if frees_on_close:
+		queue_free()           # the Dock unpauses when it hears tree_exited
+	else:
+		hide()
 
 # --- modal focus ------------------------------------------------------------
 
@@ -116,3 +131,8 @@ func _collect_controls(n: Node, out: Array[Control]) -> void:
 		if child is Control:
 			out.append(child)
 		_collect_controls(child, out)
+
+func _exit_tree() -> void:
+	# Covers the free-based close (DISMISS) as well as scene teardown.
+	# Safe to run twice: _restore_outside_focus clears the dictionary.
+	_restore_outside_focus()
