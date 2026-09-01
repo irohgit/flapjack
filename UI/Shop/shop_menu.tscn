@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://vbo8fe6bhsj1" path="res://Assets/UI/Shop/Panels/panel_coin_counter.png" id="4_coin_panel"]
 [ext_resource type="Texture2D" uid="uid://8d7deqyu8e26" path="res://Assets/UI/Shop/Icons/Status/coin.png" id="5_coin"]
 [ext_resource type="Texture2D" uid="uid://c2umggl5jkw6k" path="res://Assets/UI/Shop/Buttons/exit_normal.png" id="6_exit"]
+[ext_resource type="PackedScene" uid="uid://das28foe55u6f" path="res://UI/navbutton.tscn" id="7_6fn2i"]
 [ext_resource type="Texture2D" uid="uid://bq1ohgrh75p4v" path="res://Assets/UI/Shop/Buttons/exit_hover.png" id="7_exit_hover"]
 [ext_resource type="Texture2D" uid="uid://cs8yf6uw1cpav" path="res://Assets/UI/Shop/Buttons/exit_pressed.png" id="8_exit_pressed"]
 [ext_resource type="PackedScene" path="res://UI/Shop/shop_offer_card.tscn" id="9_offer_card"]
@@ -22,7 +23,6 @@ default_font_size = 22
 
 [node name="ShopMenu" type="Control" unique_id=538681344 node_paths=PackedStringArray("first_focus")]
 process_mode = 3
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -32,7 +32,7 @@ grow_vertical = 2
 theme = SubResource("Theme_shop")
 script = ExtResource("1_script")
 first_focus = NodePath("SidePanel/OfferCards/OfferCard1")
-pauses_tree = true
+frees_on_close = true
 
 [node name="Backdrop" type="ColorRect" parent="." unique_id=327682091]
 layout_mode = 1
@@ -135,11 +135,15 @@ mouse_filter = 2
 color = Color(0.305882, 0.423529, 0.462745, 0.7)
 
 [node name="OfferCards" type="VBoxContainer" parent="SidePanel" unique_id=848165347]
-layout_mode = 0
-offset_left = 24.0
-offset_top = 132.0
-offset_right = 796.0
-offset_bottom = 720.0
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -274.0
+offset_bottom = 274.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 theme_override_constants/separation = 16
 
@@ -147,16 +151,19 @@ theme_override_constants/separation = 16
 unique_name_in_owner = true
 layout_mode = 2
 button_group = SubResource("ButtonGroup_txxba")
+enforce_sizing = false
 
 [node name="OfferCard2" parent="SidePanel/OfferCards" unique_id=855810235 instance=ExtResource("9_offer_card")]
 unique_name_in_owner = true
 layout_mode = 2
 button_group = SubResource("ButtonGroup_6fn2i")
+enforce_sizing = false
 
 [node name="OfferCard3" parent="SidePanel/OfferCards" unique_id=170697957 instance=ExtResource("9_offer_card")]
 unique_name_in_owner = true
 layout_mode = 2
 button_group = SubResource("ButtonGroup_1tfbm")
+enforce_sizing = false
 
 [node name="PurchaseHint" type="Label" parent="SidePanel" unique_id=1454063618]
 layout_mode = 0
@@ -172,8 +179,34 @@ text = "SPACE / A TO PURCHASE"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ExitButton" type="TextureButton" parent="SidePanel" unique_id=1618622317]
+[node name="ExitButton" parent="SidePanel" unique_id=395615966 instance=ExtResource("7_6fn2i")]
 unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -250.0
+offset_top = -140.0
+offset_right = 250.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(250, 70)
+texture_normal = ExtResource("6_exit")
+texture_pressed = ExtResource("8_exit_pressed")
+texture_hover = ExtResource("7_exit_hover")
+ignore_texture_size = true
+stretch_mode = 0
+act = 6
+enforce_sizing = null
+label_text = "EXIT"
+label_size = 60
+
+[node name="oldExitButton" type="TextureButton" parent="SidePanel" unique_id=1618622317]
+unique_name_in_owner = true
+visible = false
 texture_filter = 1
 layout_mode = 0
 offset_left = 268.0
@@ -186,18 +219,3 @@ texture_pressed = ExtResource("8_exit_pressed")
 texture_hover = ExtResource("7_exit_hover")
 ignore_texture_size = true
 stretch_mode = 0
-
-[node name="Label" type="Label" parent="SidePanel/ExitButton" unique_id=1605393768]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(1, 0.941176, 0.823529, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 34
-text = "EXIT"
-horizontal_alignment = 1
-vertical_alignment = 1

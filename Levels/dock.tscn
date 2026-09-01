@@ -13,9 +13,14 @@
 [ext_resource type="Texture2D" uid="uid://bq5au2ufytqr6" path="res://Assets/Characters/ginny_drinking_long_spritesheet_288x48.png" id="6_jlhff"]
 [ext_resource type="Texture2D" uid="uid://bpqus7enchi0o" path="res://Assets/Characters/ginny_wave_spritesheet_96x96.png" id="7_sd5uq"]
 [ext_resource type="PackedScene" uid="uid://dpbyqdwsufn2f" path="res://UI/Shop/shop_menu.tscn" id="7_vsn3u"]
+[ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="8_3cuo4"]
 [ext_resource type="Texture2D" uid="uid://dkgautuhavx01" path="res://Assets/Characters/ginny_sleeping_spritesheet_192x48.png" id="8_6f3ff"]
+[ext_resource type="Resource" uid="uid://bkqumwc6jcphy" path="res://Data/Pickups/HealthPotion.tres" id="9_uuko1"]
 [ext_resource type="Script" uid="uid://chic4mwyu7p7a" path="res://Levels/dock_attendant.gd" id="10_17jeg"]
+[ext_resource type="Resource" uid="uid://bcj4lyhuitxi2" path="res://Data/Pickups/ShieldPotion.tres" id="10_pbksv"]
 [ext_resource type="Script" uid="uid://prqvr6dw61gf" path="res://Levels/InteractHotspot.gd" id="11_q2u3x"]
+[ext_resource type="Resource" uid="uid://b5mc7v6dicmvg" path="res://Data/Pickups/SpeedPotion.tres" id="11_x8iy1"]
+[ext_resource type="Resource" uid="uid://cs41wqbjx3rya" path="res://Data/Pickups/RapidFirePotion.tres" id="12_um2y4"]
 [ext_resource type="PackedScene" uid="uid://chwdpuo2udybs" path="res://Actors/Player/shipmessage.tscn" id="13_qbsur"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pxqul"]
@@ -265,9 +270,10 @@ debug_color = Color(2.466701e-07, 0.1333726, 0.1626957, 0.41960785)
 position = Vector2(1008, 673)
 script = ExtResource("11_q2u3x")
 screen_scene = ExtResource("7_vsn3u")
-prompt_text = "Upgrade Ship"
+prompt_text = "Procure Potions"
 prompt_icon = ExtResource("5_e3o5v")
 prompt_style = ExtResource("6_e3o5v")
+shop_offers = Array[ExtResource("8_3cuo4")]([ExtResource("9_uuko1"), ExtResource("10_pbksv"), ExtResource("11_x8iy1"), ExtResource("12_um2y4")])
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Vinny_Interact" unique_id=123093869]
 position = Vector2(-9, 9)

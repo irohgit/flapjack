@@ -84,7 +84,7 @@ var _tier_has_mast := false
 @onready var _masts: Node2D = $Masts
 
 #BANK MOVEMENT
-@export var banks: BankGenerator
+@export var banks: BankPainter
 @export var bank_push_x := 850.0    # sideways shove out of the sand
 @export var bank_push_down := 150.0 # drag downward, like running aground
 
@@ -155,6 +155,8 @@ func _process(_delta: float) -> void:
 		drink_selected_potion()
 		
 func _physics_process(delta: float) -> void:
+	if banks != null:
+		DebugHud.watch("bank", banks.debug_line(global_position))
 	var movement_speed := _status_effects.get_modified_value(
 		StatusEffectData.STAT_MOVEMENT_SPEED,
 		max_speed
@@ -176,6 +178,7 @@ func _physics_process(delta: float) -> void:
 	#DebugHud.flash(str(velocity))
 	_update_masts()
 	_update_wake()
+	
 	
 func _clamp_to_camera(pos: Vector2) -> Vector2:
 	var camera_center_global: Vector2 = camera.get_screen_center_position()
@@ -609,6 +612,8 @@ func _apply_tier() -> void:
 
 #ship vfx 
 func _fit_wake_to_hull() -> void:
+	if ship_tiers.is_empty():
+		return
 	var tier_index := clampi(ship_tier - 1, 0, ship_tiers.size() - 1)
 	var hull_w: float = ship_tiers[tier_index].pixel_hull_width
 	var frame: Texture2D = $Wake.sprite_frames.get_frame_texture($Wake.animation, 0)
@@ -642,6 +647,8 @@ func _update_wake() -> void:
 		#$Wake.play(anim)
 
 func _update_masts() -> void:
+	if ship_tiers.is_empty():
+		return
 	var tier := ship_tiers[clampi(ship_tier - 1, 0, ship_tiers.size() - 1)]
 	_masts.visible = tier.has_masts
 	if not tier.has_masts:

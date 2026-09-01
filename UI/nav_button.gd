@@ -22,6 +22,10 @@ enum Act { CHANGE_SCENE, SHOW_SCREEN, RESUME, RESTART, QUIT, CUSTOM, DISMISS}
 
 @export var act: Act = Act.CUSTOM
 
+## Off for buttons that live in a container and set their own Container Sizing,
+## like the shop's offer cards. On for standalone buttons whose sizing cannot be
+## saved in their own scene.
+@export var enforce_sizing: bool = true
 ## The button's caption. Writes into the child Label, so teammates never need to
 ## tick Editable Children on the instance. The child MUST be named "Label".
 @export var label_text: String = "":
@@ -76,8 +80,9 @@ func _ready() -> void:
 	# Container Sizing is hidden in the Inspector unless the node already sits
 	# inside a Container, so it cannot be saved into a standalone scene.
 	focus_mode = Control.FOCUS_ALL
-	size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	size_flags_vertical = Control.SIZE_FILL
+	if enforce_sizing:
+		size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+		size_flags_vertical = Control.SIZE_FILL
 
 	pressed.connect(_on_pressed)
 

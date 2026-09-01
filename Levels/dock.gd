@@ -22,6 +22,9 @@ func _on_hotspot_interacted(hotspot: InteractHotspot) -> void:
 		return
 	_current_screen = hotspot.screen_scene.instantiate()
 	_ui_layer.add_child(_current_screen)
+	print("DOCK: setup hook present = ", _current_screen.has_method("setup_from_hotspot"))
+	if _current_screen.has_method("setup_from_hotspot"):
+		_current_screen.setup_from_hotspot(hotspot)
 	_current_screen.tree_exited.connect(_on_screen_closed)
 	get_tree().paused = true
 

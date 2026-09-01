@@ -24,6 +24,8 @@ signal player_exited
 @onready var _shape: CollisionShape2D = $CollisionShape2D
 
 var _player_in_range := false
+@export_group("Shop")
+@export var shop_offers: Array[PickupData]
 
 
 func _ready() -> void:
