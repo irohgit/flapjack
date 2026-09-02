@@ -6,15 +6,15 @@ extends Resource
 
 
 @export_group("Stage")
+## Stable identifier used by enemy drop tables. Unlike level_name, this should
+## not change when the display name is edited.
+@export var level_id: StringName = &""
 @export var level_name: String = ""
 @export var end_position: Vector2 = Vector2(0, -10000)
 @export var spawn_ahead_distance: float = 600.0
 
 @export_group("Merchant")
 @export var shop_items: Array[PickupData] = []
-
-@export_group("Drops")
-@export var drop_categories: Array[DropCategoryData] = []
 
 @export_group("Encounter Sequence")
 @export var encounter_sequence: Array[EncounterData] = []
@@ -37,3 +37,7 @@ extends Resource
 
 func get_playfield_center() -> Vector2:
 	return playfield_size * 0.5
+
+
+func get_level_id() -> StringName:
+	return level_id if level_id != &"" else StringName(level_name)

@@ -1,5 +1,5 @@
 class_name PatternButcherBirdData
-extends Resource
+extends EnemyDropSourceData
 
 enum MovementPattern {
 	SINE,

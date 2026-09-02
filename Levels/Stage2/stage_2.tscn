@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://c1hug03muahmo" path="res://Actors/Camera/water_background.tscn" id="5_2ahl2"]
 [ext_resource type="PackedScene" uid="uid://t7alddeyjrep" path="res://Levels/hud.tscn" id="6_1ue76"]
 [ext_resource type="PackedScene" uid="uid://cclwwsegfn8rr" path="res://Actors/Player/player.tscn" id="7_wnqgr"]
-[ext_resource type="PackedScene" uid="uid://luquvycpj4hd" path="res://Actors/Pickup/coin_spawner.tscn" id="9_bq31y"]
+[ext_resource type="PackedScene" uid="uid://luquvycpj4hd" path="res://Actors/Pickup/item_spawner.tscn" id="9_bq31y"]
 [ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="10_a3klg"]
 [ext_resource type="Resource" uid="uid://c8prjyekwi7hm" path="res://Data/Pickups/HomingCannonPickup.tres" id="11_5w86b"]
 [ext_resource type="Resource" uid="uid://5vagi0atsu3m" path="res://Data/Pickups/PlasmaAugmentPickup.tres" id="12_8m7vp"]
@@ -65,8 +65,8 @@ scroll_rig = NodePath("../ScrollRig")
 
 [node name="World" type="Node2D" parent="." unique_id=822996462]
 
-[node name="CoinSpawner" parent="." unique_id=1386735529 instance=ExtResource("9_bq31y")]
-level_data = ExtResource("15_lr66y")
+[node name="ItemSpawner" parent="." unique_id=1386735529 instance=ExtResource("9_bq31y")]
+active_level = ExtResource("15_lr66y")
 
 [node name="LevelGenerator" type="Node2D" parent="." unique_id=711120617]
 script = ExtResource("13_d1opp")

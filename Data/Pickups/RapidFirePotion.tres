@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="PickupData" format=3 uid="uid://cs41wqbjx3rya"]
+[gd_resource type="Resource" script_class="PickupData" format=3 uid="uid://p1kltsl8ervk"]
 
 [ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="1_pickup"]
 [ext_resource type="Shader" uid="uid://b2g6d0upsk6cx" path="res://Assets/Shaders/pickup.gdshader" id="1_vg8c5"]

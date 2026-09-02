@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="EnemyData" load_steps=8 format=3]
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://vv2uregfvbjv"]
 
 [ext_resource type="Script" uid="uid://bo6li876odoia" path="res://Data/Enemy/enemy_data.gd" id="1_enemy"]
 [ext_resource type="Texture2D" uid="uid://bdvwtt7ugbmss" path="res://Assets/Enemies/Voodoo_Pirates/Enemy_Ship_Voodoo_Boss_Pixel_Clean.png" id="3_texture"]
@@ -7,13 +7,94 @@
 [ext_resource type="AudioStream" uid="uid://cbplby7nfcsyw" path="res://Audio/SFX/ship_hit.mp3" id="6_hit"]
 [ext_resource type="AudioStream" uid="uid://bcf81qxqc8nxo" path="res://Audio/SFX/ship_destroyed.mp3" id="7_death"]
 [ext_resource type="AudioStream" uid="uid://41by6wg6cvxx" path="res://Audio/SFX/enemy_cannon_shot_1.mp3" id="8_fire"]
+[ext_resource type="Script" uid="uid://cs7ixklgprmjg" path="res://Data/Loot/weighted_drop_data.gd" id="9_weighted_drop"]
+[ext_resource type="Script" uid="uid://cev20amoxfv48" path="res://Data/Loot/enemy_drop_table_data.gd" id="10_drop_table"]
+[ext_resource type="Resource" uid="uid://c8prjyekwi7hm" path="res://Data/Pickups/HomingCannonPickup.tres" id="11_homing"]
+[ext_resource type="Resource" uid="uid://5vagi0atsu3m" path="res://Data/Pickups/PlasmaAugmentPickup.tres" id="12_plasma"]
+[ext_resource type="Resource" uid="uid://cpynird4edptk" path="res://Data/Pickups/FireballAugmentPickup.tres" id="13_fire"]
+[ext_resource type="Resource" uid="uid://cesmcj6ctad" path="res://Data/Pickups/MagnetAugmentPickup.tres" id="14_magnet"]
+[ext_resource type="Resource" uid="uid://e2bxh85j6kul" path="res://Data/Pickups/PierceAugmentPickup.tres" id="15_pierce"]
+[ext_resource type="Resource" uid="uid://e8bbiwbkus1o" path="res://Data/Pickups/OrbitalRicochetPickup.tres" id="16_ricochet"]
+[ext_resource type="Resource" uid="uid://bnh66tw3h3xk8" path="res://Data/Pickups/HarpoonPickup.tres" id="17_harpoon"]
+[ext_resource type="Resource" uid="uid://bvtbthku5smhg" path="res://Data/Pickups/Gin.tres" id="18_gin"]
+[ext_resource type="Resource" uid="uid://7x5vq7u18w0i" path="res://Data/Pickups/GoldGin.tres" id="19_gold_gin"]
+[ext_resource type="Resource" uid="uid://c2mlimi5p04hl" path="res://Data/Pickups/GoldCoin.tres" id="20_gold"]
+[ext_resource type="Resource" uid="uid://bro26dstx3iic" path="res://Data/Pickups/SilverCoin.tres" id="21_silver"]
+[ext_resource type="Resource" uid="uid://dbvcpemefqpmm" path="res://Data/Pickups/BronzeCoin.tres" id="22_bronze"]
+
+[sub_resource type="Resource" id="Reward_homing"]
+script = ExtResource("9_weighted_drop")
+pickup = ExtResource("11_homing")
+weight = 3.6363636
+
+[sub_resource type="Resource" id="Reward_plasma"]
+script = ExtResource("9_weighted_drop")
+pickup = ExtResource("12_plasma")
+weight = 3.6363636
+
+[sub_resource type="Resource" id="Reward_fire"]
+script = ExtResource("9_weighted_drop")
+pickup = ExtResource("13_fire")
+weight = 3.6363636
+
+[sub_resource type="Resource" id="Reward_magnet"]
+script = ExtResource("9_weighted_drop")
+pickup = ExtResource("14_magnet")
+weight = 3.6363636
+
+[sub_resource type="Resource" id="Reward_pierce"]
+script = ExtResource("9_weighted_drop")
+pickup = ExtResource("15_pierce")
+weight = 3.6363636
+
+[sub_resource type="Resource" id="Reward_ricochet"]
+script = ExtResource("9_weighted_drop")
+pickup = ExtResource("16_ricochet")
+weight = 3.6363636
+
+[sub_resource type="Resource" id="Reward_harpoon"]
+script = ExtResource("9_weighted_drop")
+pickup = ExtResource("17_harpoon")
+weight = 3.6363636
+
+[sub_resource type="Resource" id="Reward_gin"]
+script = ExtResource("9_weighted_drop")
+pickup = ExtResource("18_gin")
+
+[sub_resource type="Resource" id="Reward_gold_gin"]
+script = ExtResource("9_weighted_drop")
+pickup = ExtResource("19_gold_gin")
+
+[sub_resource type="Resource" id="Stage1_reward_drops"]
+script = ExtResource("10_drop_table")
+table_name = "Stage 1 Boss Reward"
+drops = Array[ExtResource("9_weighted_drop")]([SubResource("Reward_homing"), SubResource("Reward_plasma"), SubResource("Reward_fire"), SubResource("Reward_magnet"), SubResource("Reward_pierce"), SubResource("Reward_ricochet"), SubResource("Reward_harpoon"), SubResource("Reward_gin"), SubResource("Reward_gold_gin")])
+
+[sub_resource type="Resource" id="Coins_gold"]
+script = ExtResource("9_weighted_drop")
+pickup = ExtResource("20_gold")
+weight = 6.0
+
+[sub_resource type="Resource" id="Coins_silver"]
+script = ExtResource("9_weighted_drop")
+pickup = ExtResource("21_silver")
+weight = 18.0
+
+[sub_resource type="Resource" id="Coins_bronze"]
+script = ExtResource("9_weighted_drop")
+pickup = ExtResource("22_bronze")
+weight = 36.0
+
+[sub_resource type="Resource" id="Stage1_coin_drops"]
+script = ExtResource("10_drop_table")
+table_name = "Stage 1 Boss Coins"
+rolls = 5
+no_drop_weight = 40.0
+drops = Array[ExtResource("9_weighted_drop")]([SubResource("Coins_gold"), SubResource("Coins_silver"), SubResource("Coins_bronze")])
 
 [resource]
 script = ExtResource("1_enemy")
 health = 250
-contact_damage = 1
-projectile_damage = 1
-projectile_fire_rate = 2
 move_speed = 100.0
 texture = ExtResource("3_texture")
 visual_scale = 0.2
@@ -24,3 +105,4 @@ death_sfx = ExtResource("7_death")
 fire_sfx = ExtResource("8_fire")
 fire_pitch = 0.3
 fire_sfx_volume_db = -10.0
+drop_tables = Array[ExtResource("10_drop_table")]([SubResource("Stage1_reward_drops"), SubResource("Stage1_coin_drops")])
