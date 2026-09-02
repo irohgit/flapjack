@@ -16,6 +16,7 @@ shader_parameter/pulse_max = 1.5
 
 [resource]
 script = ExtResource("1_pickup")
+item_id = &"flapjack:speed_potion"
 pickup_type = 6
 potion = ExtResource("4_potion")
 shop_id = &"speed_potion"

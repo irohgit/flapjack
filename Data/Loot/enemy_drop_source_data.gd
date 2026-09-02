@@ -2,15 +2,30 @@ class_name EnemyDropSourceData
 extends Resource
 
 
-@export_group("Drops")
-## Independent drop tables owned by this enemy. More than one table can apply
-## to the same level, for example a boss reward table plus a coin table.
-@export var drop_tables: Array[EnemyDropTableData] = []
+@export_group("Loot")
+## Flat JSON array containing this enemy's drops.
+@export var loot: JSON
 
 
-func get_drop_tables_for_level(level_id: StringName) -> Array[EnemyDropTableData]:
-	var matching_tables: Array[EnemyDropTableData] = []
-	for table: EnemyDropTableData in drop_tables:
-		if table != null and table.applies_to(level_id):
-			matching_tables.append(table)
-	return matching_tables
+func get_loot_rows() -> Array[Dictionary]:
+	var rows: Array[Dictionary] = []
+	if loot == null:
+		return rows
+	if not loot.data is Array:
+		push_error("Enemy loot JSON must contain an array: %s" % loot.resource_path)
+		return rows
+
+	for row_index: int in loot.data.size():
+		var row: Variant = loot.data[row_index]
+		if not row is Dictionary:
+			push_error(
+				"Enemy loot row %d must be an object: %s"
+				% [row_index, loot.resource_path]
+			)
+			continue
+		rows.append(row)
+	return rows
+
+
+func get_loot_path() -> String:
+	return loot.resource_path if loot != null else ""

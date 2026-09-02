@@ -8,6 +8,7 @@
 
 [resource]
 script = ExtResource("1_wg6ku")
+item_id = &"flapjack:piercing_cannon"
 texture = ExtResource("2_n2jre")
 augment = ExtResource("1_br1aa")
 notification_name = "Piercing Rounds"

@@ -7,6 +7,7 @@
 
 [resource]
 script = ExtResource("1_utt5t")
+item_id = &"flapjack:harpoon"
 pickup_type = 1
 texture = ExtResource("2_jx40m")
 weapon = ExtResource("3_6a02i")

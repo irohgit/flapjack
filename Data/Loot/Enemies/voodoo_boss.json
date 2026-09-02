@@ -1,0 +1,16 @@
+[
+  {"item": "flapjack:homing_cannon", "quantity": 1, "weight": 3.6363636, "level": "stage_1", "pool": "reward"},
+  {"item": "flapjack:plasma_augment", "quantity": 1, "weight": 3.6363636, "level": "stage_1", "pool": "reward"},
+  {"item": "flapjack:fireball_augment", "quantity": 1, "weight": 3.6363636, "level": "stage_1", "pool": "reward"},
+  {"item": "flapjack:magnet_augment", "quantity": 1, "weight": 3.6363636, "level": "stage_1", "pool": "reward"},
+  {"item": "flapjack:piercing_cannon", "quantity": 1, "weight": 3.6363636, "level": "stage_1", "pool": "reward"},
+  {"item": "flapjack:orbital_ricochet", "quantity": 1, "weight": 3.6363636, "level": "stage_1", "pool": "reward"},
+  {"item": "flapjack:harpoon", "quantity": 1, "weight": 3.6363636, "level": "stage_1", "pool": "reward"},
+  {"item": "flapjack:gin", "quantity": 1, "weight": 1, "level": "stage_1", "pool": "reward"},
+  {"item": "flapjack:gold_gin", "quantity": 1, "weight": 1, "level": "stage_1", "pool": "reward"},
+
+  {"item": "flapjack:gold_coin", "quantity": 1, "weight": 6, "level": "stage_1", "pool": "coins", "rolls": 5},
+  {"item": "flapjack:silver_coin", "quantity": 1, "weight": 18, "level": "stage_1", "pool": "coins"},
+  {"item": "flapjack:bronze_coin", "quantity": 1, "weight": 36, "level": "stage_1", "pool": "coins"},
+  {"item": "none", "weight": 40, "level": "stage_1", "pool": "coins"}
+]

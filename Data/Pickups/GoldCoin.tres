@@ -7,6 +7,7 @@
 
 [resource]
 script = ExtResource("1_6fd7w")
+item_id = &"flapjack:gold_coin"
 pickup_type = 2
 texture = ExtResource("2_myq1t")
 sprite_frames = ExtResource("2_1sy38")
