@@ -12,7 +12,6 @@
 
 [resource]
 script = ExtResource("3_i4h7m")
-loot = ExtResource("6_loot")
 scene = ExtResource("5_hunter_scene")
 move_speed = 50.0
 texture = ExtResource("4_yl1jh")
@@ -23,4 +22,5 @@ death_sfx = ExtResource("2_kyuee")
 fire_sfx = ExtResource("3_kyuee")
 fire_pitch = 0.3
 fire_sfx_volume_db = -10.0
+loot = ExtResource("6_loot")
 metadata/_custom_type_script = "uid://bo6li876odoia"
