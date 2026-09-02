@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://bsgvjekiix3lw"]
+
+[ext_resource type="Script" uid="uid://bmpjei5mq0i3u" path="res://Actors/Environment/ParallaxObjects/variantprop.gd" id="1_0fvl4"]
+[ext_resource type="Texture2D" uid="uid://cqxclubd5udc5" path="res://Assets/Environment/tadpole_spritesheet_288x48.png" id="2_vhjk4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sxboc"]
+atlas = ExtResource("2_vhjk4")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2e1hx"]
+atlas = ExtResource("2_vhjk4")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mv4ql"]
+atlas = ExtResource("2_vhjk4")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tu43f"]
+atlas = ExtResource("2_vhjk4")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_urjdf"]
+atlas = ExtResource("2_vhjk4")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1vveg"]
+atlas = ExtResource("2_vhjk4")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sxboc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sxboc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2e1hx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mv4ql")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tu43f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_urjdf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1vveg")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="far_tadpole" type="Node2D" unique_id=2042900424]
+script = ExtResource("1_0fvl4")
+depth_scale = 1.2
+metadata/_custom_type_script = "uid://d06qlr4jj1y3a"
+
+[node name="tadpole" type="AnimatedSprite2D" parent="." unique_id=1397036506]
+sprite_frames = SubResource("SpriteFrames_sxboc")
+autoplay = "default"
+flip_v = true

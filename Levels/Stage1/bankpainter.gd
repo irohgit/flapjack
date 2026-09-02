@@ -68,8 +68,10 @@ func _ready() -> void:
 	# The journey runs from 0 to a negative y, so the top of the strip is the
 	# most negative point and the bottom is behind the start line.
 	_top_y = minf(end_y, 0.0) - margin_top_px
-	var bottom_y := maxf(end_y, 0.0) + margin_bottom_px
-
+	# Always paint at least a full screen below the start line, so the coast
+	# is already in place when the stage opens rather than starting at the ship.
+	var bottom_pad := maxf(float(margin_bottom_px), get_viewport_rect().size.y)
+	var bottom_y := maxf(end_y, 0.0) + bottom_pad
 	_img_w = int(ceil(float(bank_max_px) / float(pixel_size)))
 	_img_h = int(ceil((bottom_y - _top_y) / float(pixel_size)))
 
