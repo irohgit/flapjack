@@ -78,8 +78,14 @@ func open_menu() -> void:
 	if modal_focus:
 		_suppress_outside_focus()
 	show()
+	print("MENU first_focus=", first_focus,
+		" focus_mode=", first_focus.focus_mode if first_focus else -1,
+		" visible=", is_visible_in_tree())
 	if pauses_tree:
 		get_tree().paused = true
+	print("MENU first_focus=", first_focus,
+		" focus_mode=", first_focus.focus_mode if first_focus else -1,
+		" visible=", is_visible_in_tree())
 
 
 func take_return_focus() -> Control:
@@ -136,3 +142,8 @@ func _exit_tree() -> void:
 	# Covers the free-based close (DISMISS) as well as scene teardown.
 	# Safe to run twice: _restore_outside_focus clears the dictionary.
 	_restore_outside_focus()
+
+## Called by the Dock right after this screen is added to the UI layer.
+## Override in a subclass that needs data off the hotspot, and call super() last.
+func setup_from_hotspot(_hotspot: InteractHotspot) -> void:
+	_focus_first()

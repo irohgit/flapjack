@@ -87,6 +87,8 @@ func _input(event: InputEvent) -> void:
 	get_viewport().set_input_as_handled()
 	if event.is_action_pressed(&"ui_accept"):
 		_purchase_selected_offer()
+		$Vinny/RichTextLabel.add_text("Great Choice!")#STUB
+		
 #Split Open_Shop with Load_offers
 ## Fill the shop without opening it. For screens instantiated already-visible.
 func load_offers(player: Player, offers: Array[PickupData]) -> void:
@@ -273,4 +275,4 @@ func setup_from_hotspot(hotspot: InteractHotspot) -> void:
 	var player := get_tree().get_first_node_in_group(Groups.PLAYER) as Player
 	print("SHOP setup: player=", player, " offers=", hotspot.shop_offers.size())
 	load_offers(player, hotspot.shop_offers)
-	_focus_first()
+	super(hotspot)

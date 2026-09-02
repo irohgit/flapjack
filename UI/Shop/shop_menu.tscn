@@ -3,9 +3,13 @@
 [ext_resource type="Script" uid="uid://mibkq2861k2d" path="res://UI/Shop/shop_menu.gd" id="1_script"]
 [ext_resource type="FontFile" uid="uid://1qarew2on3k7" path="res://Assets/Fonts/PixelOperator.ttf" id="2_font"]
 [ext_resource type="Texture2D" uid="uid://k4oa7gcvvrcx" path="res://Assets/UI/Shop/Panels/panel_main.png" id="3_main"]
+[ext_resource type="Texture2D" uid="uid://rgu14womy8pw" path="res://Assets/Characters/vinny_drink_288x48.png" id="4_bpbte"]
 [ext_resource type="Texture2D" uid="uid://vbo8fe6bhsj1" path="res://Assets/UI/Shop/Panels/panel_coin_counter.png" id="4_coin_panel"]
 [ext_resource type="Texture2D" uid="uid://8d7deqyu8e26" path="res://Assets/UI/Shop/Icons/Status/coin.png" id="5_coin"]
+[ext_resource type="Texture2D" uid="uid://c3ujyvsc5o5ba" path="res://Assets/Characters/vinny_pour_LR_288x48.png" id="5_xe745"]
+[ext_resource type="Texture2D" uid="uid://bihdr61twju44" path="res://Assets/Characters/vinny_pour_RL_288x48.png" id="6_dk8pp"]
 [ext_resource type="Texture2D" uid="uid://c2umggl5jkw6k" path="res://Assets/UI/Shop/Buttons/exit_normal.png" id="6_exit"]
+[ext_resource type="Texture2D" uid="uid://b86shmo8hwnt2" path="res://Assets/Characters/vinny_wave_288x48.png" id="7_2w76x"]
 [ext_resource type="PackedScene" uid="uid://das28foe55u6f" path="res://UI/navbutton.tscn" id="7_6fn2i"]
 [ext_resource type="Texture2D" uid="uid://bq1ohgrh75p4v" path="res://Assets/UI/Shop/Buttons/exit_hover.png" id="7_exit_hover"]
 [ext_resource type="Texture2D" uid="uid://cs8yf6uw1cpav" path="res://Assets/UI/Shop/Buttons/exit_pressed.png" id="8_exit_pressed"]
@@ -15,11 +19,197 @@
 default_font = ExtResource("2_font")
 default_font_size = 22
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_txxba"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_gd0uo"]
+atlas = ExtResource("4_bpbte")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r5bhx"]
+atlas = ExtResource("4_bpbte")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t0akb"]
+atlas = ExtResource("4_bpbte")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rvtgx"]
+atlas = ExtResource("4_bpbte")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o25v6"]
+atlas = ExtResource("4_bpbte")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iv25k"]
+atlas = ExtResource("4_bpbte")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ili6q"]
+atlas = ExtResource("5_xe745")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wi8h3"]
+atlas = ExtResource("5_xe745")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_csqlc"]
+atlas = ExtResource("5_xe745")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3tlmr"]
+atlas = ExtResource("5_xe745")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7l0rr"]
+atlas = ExtResource("5_xe745")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_krk81"]
+atlas = ExtResource("5_xe745")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3pdod"]
+atlas = ExtResource("6_dk8pp")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3sp24"]
+atlas = ExtResource("6_dk8pp")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eos8a"]
+atlas = ExtResource("6_dk8pp")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fnkqu"]
+atlas = ExtResource("6_dk8pp")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p7ixg"]
+atlas = ExtResource("6_dk8pp")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u7x63"]
+atlas = ExtResource("6_dk8pp")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ypakx"]
+atlas = ExtResource("7_2w76x")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7s15h"]
+atlas = ExtResource("7_2w76x")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fyd6l"]
+atlas = ExtResource("7_2w76x")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lt6vs"]
+atlas = ExtResource("7_2w76x")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aavxb"]
+atlas = ExtResource("7_2w76x")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_in4q4"]
+atlas = ExtResource("7_2w76x")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3cuo4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gd0uo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r5bhx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t0akb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rvtgx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o25v6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iv25k")
+}],
+"loop": 1,
+"name": &"drink",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ili6q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wi8h3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_csqlc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3tlmr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7l0rr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_krk81")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3pdod")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3sp24")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eos8a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fnkqu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p7ixg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u7x63")
+}],
+"loop": 1,
+"name": &"pour",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ypakx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7s15h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fyd6l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lt6vs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aavxb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_in4q4")
+}],
+"loop": 1,
+"name": &"wave",
+"speed": 5.0
+}]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_6fn2i"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_1tfbm"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_1w5pd"]
 
 [node name="ShopMenu" type="Control" unique_id=538681344 node_paths=PackedStringArray("first_focus")]
 process_mode = 3
@@ -43,19 +233,29 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.00392157, 0.0117647, 0.0196078, 0.52)
 
+[node name="Vinny" type="Node2D" parent="." unique_id=2088595671]
+position = Vector2(442.00003, 501)
+scale = Vector2(5, 5)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Vinny" unique_id=1445988900]
+sprite_frames = SubResource("SpriteFrames_3cuo4")
+animation = &"pour"
+autoplay = "pour"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Vinny" unique_id=182666756]
+offset_left = -20.000006
+offset_top = 24.199999
+offset_right = 19.999994
+offset_bottom = 64.2
+bbcode_enabled = true
+
 [node name="SidePanel" type="NinePatchRect" parent="." unique_id=605544239]
 unique_name_in_owner = true
 texture_filter = 1
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -844.0
-offset_top = -465.0
-offset_right = -24.0
-offset_bottom = 465.0
+layout_mode = 0
+offset_left = 946.0
+offset_right = 974.0
+offset_bottom = 1080.0
 grow_horizontal = 0
 grow_vertical = 2
 texture = ExtResource("3_main")
@@ -150,19 +350,19 @@ theme_override_constants/separation = 16
 [node name="OfferCard1" parent="SidePanel/OfferCards" unique_id=338573582 instance=ExtResource("9_offer_card")]
 unique_name_in_owner = true
 layout_mode = 2
-button_group = SubResource("ButtonGroup_txxba")
+button_group = SubResource("ButtonGroup_6fn2i")
 enforce_sizing = false
 
 [node name="OfferCard2" parent="SidePanel/OfferCards" unique_id=855810235 instance=ExtResource("9_offer_card")]
 unique_name_in_owner = true
 layout_mode = 2
-button_group = SubResource("ButtonGroup_6fn2i")
+button_group = SubResource("ButtonGroup_1tfbm")
 enforce_sizing = false
 
 [node name="OfferCard3" parent="SidePanel/OfferCards" unique_id=170697957 instance=ExtResource("9_offer_card")]
 unique_name_in_owner = true
 layout_mode = 2
-button_group = SubResource("ButtonGroup_1tfbm")
+button_group = SubResource("ButtonGroup_1w5pd")
 enforce_sizing = false
 
 [node name="PurchaseHint" type="Label" parent="SidePanel" unique_id=1454063618]
@@ -200,7 +400,6 @@ texture_hover = ExtResource("7_exit_hover")
 ignore_texture_size = true
 stretch_mode = 0
 act = 6
-enforce_sizing = null
 label_text = "EXIT"
 label_size = 60
 

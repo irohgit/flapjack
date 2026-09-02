@@ -1,6 +1,8 @@
 class_name UpgradeScreen
 extends MenuScreen
 
+signal upgradescreen_closed
+
 const MAIN_MENU_SCENE := "res://UI/main_menu.tscn"
 
 @export var tier1_nodes: Array[UpgradeNodeData]
@@ -13,7 +15,11 @@ const MAIN_MENU_SCENE := "res://UI/main_menu.tscn"
 @export var skiff_texture: Texture2D
 @export var schooner_texture: Texture2D
 @export var galleon_texture: Texture2D
+var _owns_lifetime := false
 
+func _process(_delta: float) -> void:
+	DebugHud.watch("focus", str(get_viewport().gui_get_focus_owner()))
+	
 func _ready() -> void:
 	MetaProgress.gin_changed.connect(func(a): _gin_label.text = str(a))
 	MetaProgress.trust_changed.connect(func(a): _trust_label.text = str(a))
@@ -36,3 +42,12 @@ func _on_retry_pressed() -> void:
 
 func _on_main_menu_pressed() -> void:
 	get_tree().change_scene_to_file(MAIN_MENU_SCENE)
+	
+func setup_from_hotspot(hotspot: InteractHotspot) -> void:
+	super(hotspot)
+
+func close_menu() -> void:
+	if not visible:
+		return
+	super.close_menu()
+	upgradescreen_closed.emit()
