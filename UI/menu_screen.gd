@@ -61,6 +61,12 @@ func _unhandled_input(event: InputEvent) -> void:
 	# _unhandled_input, never _input. _input fires BEFORE Control nodes get
 	# their turn, which is exactly how a focused button silently stops working.
 	if open_action != &"" and event.is_action_pressed(open_action):
+		# A cutscene owns the freeze. No menu may open over it, because
+		# closing that menu would thaw the world mid-cutscene.
+		if CutsceneManager.is_playing():
+			get_viewport().set_input_as_handled()
+			return
+
 		get_viewport().set_input_as_handled()
 		if visible:
 			close_menu()
@@ -97,6 +103,8 @@ func take_return_focus() -> Control:
 ## Hide this screen and hand focus back to whatever opened it.
 ## Override and call super() when closing means something extra.
 func close_menu() -> void:
+	if not CutsceneManager.is_playing():
+		get_tree().paused = false
 	if pauses_tree:
 		get_tree().paused = false
 
