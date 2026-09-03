@@ -1,0 +1,199 @@
+[gd_scene format=3 uid="uid://bmquplii7j1a0"]
+
+[ext_resource type="Script" uid="uid://cjjxw8eicrq6l" path="res://Data/Enemy/enemy_frog.gd" id="1_frog"]
+[ext_resource type="Resource" uid="uid://bruejbm5ygj3c" path="res://Data/Enemy/FrogEnemy.tres" id="4_data"]
+[ext_resource type="Texture2D" uid="uid://kqca78yjdpmn" path="res://Assets/Enemies/ToxicFrog/GreenBrown/ToxicFrogGreenBrown_Idle.png" id="5_idle"]
+[ext_resource type="Texture2D" uid="uid://coh10kg5rw2x4" path="res://Assets/Enemies/ToxicFrog/GreenBrown/ToxicFrogGreenBrown_Hop.png" id="6_hop"]
+[ext_resource type="Texture2D" uid="uid://dafrf46csqhjm" path="res://Assets/Enemies/ToxicFrog/GreenBrown/ToxicFrogGreenBrown_Attack.png" id="7_attack"]
+
+[sub_resource type="AtlasTexture" id="Attack_0"]
+atlas = ExtResource("7_attack")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Attack_1"]
+atlas = ExtResource("7_attack")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Attack_2"]
+atlas = ExtResource("7_attack")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Attack_3"]
+atlas = ExtResource("7_attack")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Attack_4"]
+atlas = ExtResource("7_attack")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Attack_5"]
+atlas = ExtResource("7_attack")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Idle_0"]
+atlas = ExtResource("5_idle")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Idle_1"]
+atlas = ExtResource("5_idle")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Idle_2"]
+atlas = ExtResource("5_idle")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Idle_3"]
+atlas = ExtResource("5_idle")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Idle_4"]
+atlas = ExtResource("5_idle")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Idle_5"]
+atlas = ExtResource("5_idle")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Idle_6"]
+atlas = ExtResource("5_idle")
+region = Rect2(288, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Idle_7"]
+atlas = ExtResource("5_idle")
+region = Rect2(336, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Hop_0"]
+atlas = ExtResource("6_hop")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Hop_1"]
+atlas = ExtResource("6_hop")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Hop_2"]
+atlas = ExtResource("6_hop")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Hop_3"]
+atlas = ExtResource("6_hop")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Hop_4"]
+atlas = ExtResource("6_hop")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Hop_5"]
+atlas = ExtResource("6_hop")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Hop_6"]
+atlas = ExtResource("6_hop")
+region = Rect2(288, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_frog"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Attack_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Attack_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Attack_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Attack_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Attack_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("Attack_5")
+}],
+"loop": 1,
+"name": &"Attack",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Idle_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Idle_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Idle_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Idle_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Idle_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("Idle_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("Idle_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("Idle_7")
+}],
+"loop": 1,
+"name": &"Idle",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Hop_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Hop_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Hop_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Hop_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Hop_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("Hop_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("Hop_6")
+}],
+"loop": 1,
+"name": &"Jump",
+"speed": 8.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+size = Vector2(40, 40)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_attack"]
+radius = 65.69712
+
+[node name="FrogEnemy" type="Area2D" unique_id=1341915596 groups=["hazard"]]
+scale = Vector2(3, 3)
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("1_frog")
+data = ExtResource("4_data")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=383183852]
+sprite_frames = SubResource("SpriteFrames_frog")
+animation = &"Idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1549056636]
+shape = SubResource("RectangleShape2D_body")
+
+[node name="AttackZone" type="Area2D" parent="." unique_id=765372756]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackZone" unique_id=2015921242]
+shape = SubResource("CircleShape2D_attack")
+debug_color = Color(1, 0.3, 0.6, 0.196)

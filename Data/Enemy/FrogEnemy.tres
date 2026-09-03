@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://bruejbm5ygj3c"]
+
+[ext_resource type="Script" uid="uid://bo6li876odoia" path="res://Data/Enemy/enemy_data.gd" id="1_frog"]
+[ext_resource type="AudioStream" uid="uid://cbplby7nfcsyw" path="res://Audio/SFX/ship_hit.mp3" id="4_hit"]
+[ext_resource type="AudioStream" uid="uid://bcf81qxqc8nxo" path="res://Audio/SFX/ship_destroyed.mp3" id="5_death"]
+[ext_resource type="AudioStream" uid="uid://bbl8l1g62mcup" path="res://Audio/SFX/obstacle_hit.mp3" id="6_tongue"]
+
+[resource]
+script = ExtResource("1_frog")
+hit_sfx = ExtResource("4_hit")
+death_sfx = ExtResource("5_death")
+fire_sfx = ExtResource("6_tongue")
+fire_pitch = 0.9
+fire_sfx_volume_db = -10.0
+metadata/_custom_type_script = "uid://bo6li876odoia"
