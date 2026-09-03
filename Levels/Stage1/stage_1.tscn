@@ -193,4 +193,4 @@ banks = NodePath("../../BankGenerator")
 scrollDirector = NodePath("../../ScrollDirector")
 
 [node name="MerchantBoat" parent="." unique_id=1486780532 instance=ExtResource("50_boat")]
-position = Vector2(1650, 126)
+position = Vector2(1650, -8760)
