@@ -22,6 +22,7 @@
 [ext_resource type="Shader" uid="uid://cq85abjo4x30h" path="res://Assets/Shaders/Water/water.gdshader" id="18_a3klg"]
 [ext_resource type="Texture2D" uid="uid://conqv6viso2ly" path="res://Assets/Shaders/Water/water_noise.tres" id="19_5w86b"]
 [ext_resource type="PackedScene" uid="uid://cpy76lvb1x4cb" path="res://UI/GameUI.tscn" id="20_game_ui"]
+[ext_resource type="PackedScene" path="res://Actors/NPC/merchant_boat.tscn" id="21_boat"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8m7vp"]
 shader = ExtResource("18_a3klg")
@@ -95,5 +96,8 @@ metadata/_custom_type_script = "uid://tsoi3lwff5mf"
 [node name="Player" parent="ScrollRig" unique_id=2109576054 node_paths=PackedStringArray("camera") instance=ExtResource("7_wnqgr")]
 position = Vector2(960, 1000)
 camera = NodePath("../ShakeCamera")
+
+[node name="MerchantBoat" parent="." instance=ExtResource("21_boat")]
+position = Vector2(1650, -7760)
 
 [node name="ScreenEncounters" type="Node2D" parent="ScrollRig" unique_id=1683449746]
