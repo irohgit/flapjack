@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="CutsceneLine" format=3 uid="uid://dv0cctmd66k5d"]
+
+[ext_resource type="Script" uid="uid://3ke20rwguryo" path="res://Cinematics/cutscene_line.gd" id="1_uim0y"]
+
+[resource]
+script = ExtResource("1_uim0y")
+speaker = "Vinny"
+text = "Don't say that I did not warn you,"
+layout = 2

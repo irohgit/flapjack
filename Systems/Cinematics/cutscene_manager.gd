@@ -44,7 +44,7 @@ func play(scene: PackedScene) -> void:
 	# Fade before the freeze. A tween cannot tick in a paused tree, and a hard
 	# pause cuts audio mid-sample, which is a click rather than a stop.
 	await _fade_buses(DUCKED_DB)
-
+	Audio.set_world_paused(true)
 	get_tree().paused = true
 	_frozen = true
 
@@ -66,7 +66,7 @@ func _on_finished() -> void:
 
 	_frozen = false
 	get_tree().paused = false
-
+	Audio.set_world_paused(false)
 	await _fade_buses(0.0)
 
 	_busy = false

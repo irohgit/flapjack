@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="CutsceneLine" format=3 uid="uid://dkehav4kvkb6m"]
+
+[ext_resource type="Script" uid="uid://3ke20rwguryo" path="res://Cinematics/cutscene_line.gd" id="1_v6sp0"]
+
+[resource]
+script = ExtResource("1_v6sp0")
+speaker = "Crow's Nest"
+text = "CAPTAIN! ONE NAVY VESSEL AHEAD. IT DOESN'T LOOK LIKE A GALLEON SHIP."

@@ -131,3 +131,30 @@ func set_bus_volume(bus_name: String, linear: float) -> void:
 	if idx < 0:
 		return
 	AudioServer.set_bus_volume_db(idx, linear_to_db(clampf(linear, 0.0, 1.0)))
+
+# Freezes gameplay audio without touching UI or Cinematic voices, which must
+# keep playing while the tree is paused. Called by CutsceneManager.
+func set_world_paused(is_paused: bool) -> void:
+	_music_a.stream_paused = is_paused
+	_music_b.stream_paused = is_paused
+	for p: AudioStreamPlayer in _sfx_pool:
+		if p.bus == "SFX":
+			p.stream_paused = is_paused
+
+# Cutscene audio. Bypasses the Music and SFX buses so the cutscene fade,
+# which ducks those two, does not silence the cutscene itself.
+func play_cinematic(stream: AudioStream, volume_db := 0.0) -> void:
+	if stream == null:
+		return
+
+	var free_voice := _free_voice()
+	if free_voice == null:
+		push_warning("SFX pool exhausted, dropping cinematic sound")
+		return
+
+	free_voice.bus = "Cinematic"
+	free_voice.stream = stream
+	free_voice.volume_db = volume_db
+	free_voice.pitch_scale = 1.0
+	free_voice.play()
+	

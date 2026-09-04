@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CutsceneLine" format=3 uid="uid://p440f7kengud"]
+
+[ext_resource type="Texture2D" uid="uid://d1f1ovq82utgu" path="res://Assets/Cinematics/JACK_EYES_COVERED_512x640.png" id="1_aeotn"]
+[ext_resource type="Script" uid="uid://3ke20rwguryo" path="res://Cinematics/cutscene_line.gd" id="2_leymo"]
+
+[resource]
+script = ExtResource("2_leymo")
+left_portrait = ExtResource("1_aeotn")
+hold_time = 3.0
+use_blur = true
+blur_from = 20.0
+blur_to = 10.0

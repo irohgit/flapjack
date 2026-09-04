@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="CutsceneLine" format=3 uid="uid://dxbp8gdldhc7r"]
+
+[ext_resource type="Script" uid="uid://3ke20rwguryo" path="res://Cinematics/cutscene_line.gd" id="1_mgmxk"]
+
+[resource]
+script = ExtResource("1_mgmxk")
+speaker = "Captain"
+text = "No."
