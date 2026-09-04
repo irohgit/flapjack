@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="PickupData" format=3]
+
+[ext_resource type="Script" path="res://Data/Pickups/pickup_data.gd" id="1_pickup"]
+[ext_resource type="Resource" path="res://Data/Augments/MultishotStinkpots.tres" id="2_content"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Items/Augments/Stinkpot/multishot.png" id="3_icon"]
+
+[resource]
+script = ExtResource("1_pickup")
+item_id = &"flapjack:multishot_stinkpots"
+pickup_type = 0
+augment = ExtResource("2_content")
+notification_name = "Multishot"
+shop_id = &"multishot_stinkpots"
+shop_price = 0
+texture = ExtResource("3_icon")
+shop_icon = ExtResource("3_icon")
+metadata/implementation_status = "scaffold"
