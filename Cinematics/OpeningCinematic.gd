@@ -20,7 +20,7 @@ func _ready() -> void:
 	_boat.impact.connect(_on_boat_impact)
 	_anim.animation_finished.connect(_on_animation_finished)
 	_anim.play("OpeningCinematic")
-
+	finished.emit() #
 
 func _on_animation_finished(anim_name: StringName) -> void:
 	if anim_name == &"OpeningCinematic":

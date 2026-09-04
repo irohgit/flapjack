@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="CutsceneLine" format=3 uid="uid://bc61o8uc7o0bi"]
+
+[ext_resource type="Script" uid="uid://3ke20rwguryo" path="res://Cinematics/cutscene_line.gd" id="1_gta45"]
+
+[resource]
+script = ExtResource("1_gta45")
+layout = 2
+hold_time = 0.8

@@ -128,7 +128,10 @@ func _is_configured(encounter_data: EncounterData, index: int) -> bool:
 			if not _has_valid_special_encounters(encounter_data.special_encounter_pool):
 				push_error("Encounter %d has no valid special encounter scenes" % (index + 1))
 				return false
-
+		EncounterData.Type.CUTSCENE:
+			if encounter_data.cutscene_scene == null:
+				push_error("Encounter %d is a cutscene with no scene assigned" % (index + 1))
+				return false
 		_:
 			push_error("Encounter %d has an unknown type" % (index + 1))
 			return false
@@ -159,7 +162,11 @@ func _generate_encounter(
 			encounter.type = GeneratedEncounter.Type.SPECIAL
 			encounter.special_scene = _choose_special_encounter(encounter_data.special_encounter_pool)
 			encounter.spawn_from_right = rng.randi_range(0, 1) == 1
-
+			
+		EncounterData.Type.CUTSCENE:
+			encounter.type = GeneratedEncounter.Type.CUTSCENE
+			encounter.spawn_position = Vector2(centre_x, anchor_y)
+			encounter.cutscene_scene = encounter_data.cutscene_scene
 		_:
 			return null
 

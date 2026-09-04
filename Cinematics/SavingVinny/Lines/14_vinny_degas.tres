@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="CutsceneLine" format=3 uid="uid://bm5cjh6vsml88"]
+
+[ext_resource type="Script" uid="uid://3ke20rwguryo" path="res://Cinematics/cutscene_line.gd" id="1_83ui1"]
+
+[resource]
+script = ExtResource("1_83ui1")
+speaker = "Vinny"
+text = "...SHIT I brought the DEGAS Potion."

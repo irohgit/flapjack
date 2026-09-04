@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="CutsceneLine" format=3 uid="uid://ctp8b0s0sf6oq"]
+
+[ext_resource type="Script" uid="uid://3ke20rwguryo" path="res://Cinematics/cutscene_line.gd" id="1_8hexl"]
+
+[resource]
+script = ExtResource("1_8hexl")
+metadata/_custom_type_script = "uid://3ke20rwguryo"

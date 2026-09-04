@@ -1,5 +1,5 @@
 class_name ShopOfferCard
-extends Button
+extends NavButton
 
 @onready var rarity_stripe: ColorRect = $RarityStripe
 @onready var item_icon: TextureRect = $ContentMargin/Row/IconFrame/Icon

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="CutsceneLine" format=3 uid="uid://8enmi4hdeo6s"]
+
+[ext_resource type="Script" uid="uid://3ke20rwguryo" path="res://Cinematics/cutscene_line.gd" id="1_7tlc2"]
+
+[resource]
+script = ExtResource("1_7tlc2")
+speaker = "Captain"
+text = "How about we pay you by not making you walk the plank?"

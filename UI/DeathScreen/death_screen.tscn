@@ -9,7 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://dc263ntmf6iew" path="res://Audio/SFX/ui_click_stylized.mp3" id="7_ht1cn"]
 [ext_resource type="FontFile" uid="uid://p6nsf53xeqe8" path="res://Assets/Fonts/Montserrat/static/Montserrat-SemiBold.ttf" id="10_body_font"]
 
-[node name="DeathScreen" type="Control" unique_id=318826695 node_paths=PackedStringArray("first_focus", "retry_button", "upgrade_button", "main_menu_button")]
+[node name="DeathScreen" type="Control" unique_id=318826695 node_paths=PackedStringArray("retry_button", "upgrade_button", "main_menu_button", "first_focus")]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
@@ -19,12 +19,12 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("1_lw348")
-first_focus = NodePath("VBoxContainer/Retry")
-close_on_cancel = false
-pauses_tree = true
 retry_button = NodePath("VBoxContainer/Retry")
 upgrade_button = NodePath("VBoxContainer/Upgrade")
 main_menu_button = NodePath("VBoxContainer/Main Menu")
+first_focus = NodePath("VBoxContainer/Retry")
+close_on_cancel = false
+pauses_tree = true
 
 [node name="Background" type="TextureRect" parent="." unique_id=356206368]
 texture_filter = 1
@@ -95,7 +95,7 @@ focus_tint = Color(0.88833916, 0.73178285, 0.39407146, 1)
 focus_sound = ExtResource("6_dq2wr")
 press_sound = ExtResource("7_ht1cn")
 
-[node name="Upgrade" parent="VBoxContainer" instance=ExtResource("5_e4wqi")]
+[node name="Upgrade" parent="VBoxContainer" unique_id=1695756691 instance=ExtResource("5_e4wqi")]
 layout_mode = 2
 act = 0
 label_text = "Upgrades"

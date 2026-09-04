@@ -37,7 +37,7 @@ func run_plan(plan: Array[GeneratedEncounter]) -> void:
 		await wait_until(func() -> bool:
 			return scroll_director.has_reached_y(encounter.trigger_position.y)
 		)
-		run_encounter(encounter)
+		await run_encounter(encounter)
 
 
 func run_encounter(encounter: GeneratedEncounter) -> void:
@@ -47,7 +47,8 @@ func run_encounter(encounter: GeneratedEncounter) -> void:
 			run_normal_encounter(encounter)
 		GeneratedEncounter.Type.SPECIAL:
 			run_special_encounter(encounter)
-
+		GeneratedEncounter.Type.CUTSCENE:
+			await run_cutscene_encounter(encounter)
 
 func run_normal_encounter(encounter: GeneratedEncounter) -> void:
 	enemy_controller.spawn_pack(
@@ -117,4 +118,11 @@ func wait_until(condition: Callable) -> void:
 func _spawn_gin_barrels(encounter: GeneratedEncounter) -> void:
 	for barrel_data: DestructibleData in encounter.gin_barrels:
 		GameEvents.gin_requested.emit(GinSpawner.Entry.FLOAT_DOWN, encounter.spawn_position, barrel_data)
-		
+
+func run_cutscene_encounter(encounter: GeneratedEncounter) -> void:
+	if encounter.cutscene_scene == null:
+		push_warning("Cutscene encounter has no scene")
+		return
+
+	CutsceneManager.play(encounter.cutscene_scene)
+	await CutsceneManager.cutscene_finished		
