@@ -4,8 +4,18 @@ extends Node2D
 ## Knows nothing about which shops exist.
 
 @onready var _ui_layer: CanvasLayer = $UILayer
+@export var launch_gate: LaunchGate
+@onready var _shape: CollisionShape2D = $DockExit/DockExitCollision
 
+const FIRST_STAGE:= "res://Levels/Stage1/stage_1.tscn"
 var _current_screen: Node = null
+
+#RING
+@export_group("Ring")
+## 0 means match the collision circle's radius.
+@export var radius_override := 0.0
+@export var thickness := 7.0
+@export var ring_color := Color(1.0, 1.0, 1.0)
 
 
 func _ready() -> void:
@@ -13,7 +23,11 @@ func _ready() -> void:
 		var hotspot := node as InteractHotspot
 		if hotspot:
 			hotspot.interacted.connect(_on_hotspot_interacted.bind(hotspot))
-
+	if launch_gate == null:
+		push_error("Dock has no LaunchGate assigned, the player cannot launch")
+		return
+	launch_gate.launch_confirmed.connect(_launch_run)
+	
 func _on_hotspot_interacted(hotspot: InteractHotspot) -> void:
 	if _current_screen != null:
 		return                                    # something is already open
@@ -38,3 +52,6 @@ func _on_screen_closed() -> void:
 		return
 	get_tree().paused = false
 	print("DOCK: paused is now ", get_tree().paused)
+
+func _launch_run() -> void:
+	get_tree().change_scene_to_file(FIRST_STAGE)
