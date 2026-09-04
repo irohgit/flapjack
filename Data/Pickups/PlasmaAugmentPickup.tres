@@ -4,7 +4,7 @@
 [ext_resource type="Shader" uid="uid://b2g6d0upsk6cx" path="res://Assets/Shaders/pickup.gdshader" id="2_dsfrr"]
 [ext_resource type="AudioStream" uid="uid://bhp3mqd4ya5te" path="res://Audio/SFX/plasma_pickup.mp3" id="2_f42f2"]
 [ext_resource type="Texture2D" uid="uid://decedubcfymmg" path="res://Assets/Pickups/PlasmaAugmentPickup.png" id="2_iqpjv"]
-[ext_resource type="Resource" uid="uid://cepoytsvun1sb" path="res://Data/Augments/PlasmaAugment.tres" id="3_plasma"]
+[ext_resource type="Resource" uid="uid://cepoytsvun1sb" path="res://Data/Augments/Cannon/PlasmaAugment.tres" id="3_plasma"]
 [ext_resource type="Texture2D" uid="uid://btpxfflbktbxy" path="res://Assets/UI/Shop/Items/Augments/Cannon/plasma_cannon.png" id="4_shop"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_i2auq"]
