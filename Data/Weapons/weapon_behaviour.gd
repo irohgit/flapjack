@@ -11,10 +11,7 @@ func _configure_projectile(projectile: Projectile, weapon: WeaponState) -> void:
 	var projectile_data := weapon.data.weaponProjectile.duplicate(true) as ProjectileData
 	projectile_data.damage = weapon.data.damage
 	projectile.data = projectile_data
-
-	for augment: AugmentData in weapon.augments:
-		if augment.augmentEffect != null:
-			augment.augmentEffect.apply_to_projectile(projectile)
+	projectile.augments.assign(weapon.augments)
 	
 # Shared by every weapon. Sound data lives on WeaponData
 #SFX

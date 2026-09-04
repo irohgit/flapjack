@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ProjectileData" format=3]
+
+[ext_resource type="Script" path="res://Data/Projectiles/projectile_data.gd" id="1_projectile"]
+[ext_resource type="Texture2D" path="res://Assets/Projectiles/Cannonball.png" id="2_placeholder"]
+[ext_resource type="Resource" path="res://Data/GroundEffects/molotov_fire_pool.tres" id="3_ground"]
+
+[resource]
+script = ExtResource("1_projectile")
+texture = ExtResource("2_placeholder")
+damage = 1
+pierce = 0
+death_ground_effect = ExtResource("3_ground")
+metadata/implementation_status = "scaffold"
