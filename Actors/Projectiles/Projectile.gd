@@ -1,6 +1,8 @@
 class_name Projectile
 extends Area2D
 
+signal bank_hit(world_position: Vector2)
+
 const GROUND_EFFECT_SCENE := preload("res://Actors/GroundEffects/ground_effect.tscn")
 
 @export var data: ProjectileData
@@ -41,10 +43,12 @@ var _status_effects: Array[StatusEffectData] = []
 var _is_destroying := false
 var _has_expire_position := false
 var _expire_position := Vector2.ZERO
+var _banks: BankPainter
 
 
 func _ready() -> void:
 	assert(data != null, "Projectile spawned with no ProjectileData assigned")
+	_banks = get_tree().get_first_node_in_group("banks") as BankPainter
 	for effect: StatusEffectData in data.status_effects:
 		add_status_effect(effect)
 	_apply_data()
@@ -119,8 +123,22 @@ func set_expire_position(world_position: Vector2) -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if _is_destroying:
+		return
+
 	age_time += delta
+	var previous_position := global_position
 	_move(delta)
+	if is_instance_valid(_banks):
+		var hit_fraction := _banks.get_bank_hit_fraction(previous_position, global_position)
+		if hit_fraction >= 0.0:
+			global_position = previous_position.lerp(global_position, hit_fraction)
+			_update_trail()
+			Audio.play_sfx(data.impact_sound, -8.0)
+			bank_hit.emit(global_position)
+			_on_impact()
+			destroy()
+			return
 	_update_trail()
 
 	if (

@@ -57,6 +57,7 @@ var _paint_rng := RandomNumberGenerator.new()
 
 
 func _ready() -> void:
+	add_to_group("banks")
 	_paint_rng.randomize()
 
 	var end_y := end_y_fallback
@@ -195,7 +196,7 @@ func _make_sprite(tex: ImageTexture, pos: Vector2) -> void:
 	add_child(s)
 
 
-# --- Queries for the player push ---
+# --- Shoreline queries ---
 
 func _row_for_local(local_y: float) -> int:
 	return clampi(int((local_y - _top_y) / float(pixel_size)), 0, maxi(_img_h - 1, 0))
@@ -210,6 +211,49 @@ func is_on_bank(world_pos: Vector2) -> bool:
 	var left_edge := _left[row] * float(pixel_size)
 	var right_edge := float(_play_w) - _right[row] * float(pixel_size)
 	return local.x < left_edge or local.x > right_edge
+
+
+## First contact along a point's world-space path, or -1 if it stays in water.
+## Check every crossed profile row so fast shots cannot skip a narrow headland.
+## Like is_on_bank(), the first and last rows extend beyond the painted strip.
+func get_bank_hit_fraction(world_from: Vector2, world_to: Vector2) -> float:
+	if _left.is_empty():
+		return -1.0
+	var start := to_local(world_from)
+	var movement := to_local(world_to) - start
+	var first_row := _row_for_local(minf(start.y, start.y + movement.y))
+	var last_row := _row_for_local(maxf(start.y, start.y + movement.y))
+	var first_hit := INF
+
+	for row: int in range(first_row, last_row + 1):
+		var enter := 0.0
+		var leave := 1.0
+		if movement.y != 0.0:
+			var row_top := _top_y + float(row * pixel_size) if row > 0 else -INF
+			var row_bottom := _top_y + float((row + 1) * pixel_size) if row < _img_h - 1 else INF
+			var top_time := (row_top - start.y) / movement.y
+			var bottom_time := (row_bottom - start.y) / movement.y
+			enter = maxf(enter, minf(top_time, bottom_time))
+			leave = minf(leave, maxf(top_time, bottom_time))
+		if enter > leave or enter >= first_hit:
+			continue
+
+		var left_edge := _left[row] * float(pixel_size)
+		var right_edge := float(_play_w) - _right[row] * float(pixel_size)
+		var entry_x := start.x + movement.x * enter
+		if entry_x <= left_edge or entry_x >= right_edge:
+			first_hit = enter
+			continue
+
+		var hit := INF
+		if movement.x < 0.0:
+			hit = (left_edge - start.x) / movement.x
+		elif movement.x > 0.0:
+			hit = (right_edge - start.x) / movement.x
+		if hit >= enter and hit <= leave:
+			first_hit = minf(first_hit, hit)
+
+	return first_hit if first_hit != INF else -1.0
 
 
 func bank_push_dir(world_pos: Vector2) -> float:
