@@ -64,7 +64,7 @@ func _ready() -> void:
 	_trail.top_level = true
 	_trail.clear_points()
 	if not _has_expire_position and data.expire_time > 0.0:
-		get_tree().create_timer(data.expire_time).timeout.connect(_on_expired)
+		get_tree().create_timer(data.expire_time, false).timeout.connect(_on_expired)
 	
 
 func _apply_data() -> void:
@@ -208,6 +208,8 @@ func _move(delta: float) -> void:
 	_update_rotation()
 
 	var movement := direction * data.speed * final_speed_boost * delta
+	if skewer != null:
+		movement *= skewer.get_speed_multiplier()
 	if _has_expire_position:
 		var distance_remaining := global_position.distance_to(_expire_position)
 		if movement.length() >= distance_remaining:

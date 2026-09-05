@@ -3,13 +3,27 @@ extends Node
 
 const CARRIER_META := &"harpoon_skewer"
 
+var carrying_speed_multiplier := 0.15
+var damage_per_tick := 1
+var damage_interval := 0.5
+
 var _victims: Array[Dictionary] = []
+var _banks: BankPainter
 
 
 func _ready() -> void:
 	# Follow after projectile movement and keep up with the camera before drawing.
 	process_physics_priority = 100
 	process_priority = 100
+	_banks = get_tree().get_first_node_in_group("banks") as BankPainter
+
+
+func get_speed_multiplier() -> float:
+	for victim: Dictionary in _victims:
+		var enemy = victim["enemy"]
+		if is_instance_valid(enemy) and not enemy.is_queued_for_deletion():
+			return clampf(carrying_speed_multiplier, 0.01, 1.0)
+	return 1.0
 
 
 func is_carrying(enemy: Node2D) -> bool:
@@ -25,10 +39,12 @@ func capture(enemy: Node2D) -> void:
 	):
 		return
 
-	var carrier := get_parent() as Node2D
+	var carrier := get_parent() as Projectile
 	_victims.append({
 		"enemy": enemy,
-		"offset": enemy.global_position - carrier.global_position,
+		# Store relative to travel direction, so the catch turns with a bounce.
+		"offset": (enemy.global_position - carrier.global_position).rotated(-carrier.direction.angle()),
+		"damage_elapsed": 0.0,
 		"start": enemy.global_position,
 		"start_local": enemy.position,
 		"process": enemy.is_processing(),
@@ -39,39 +55,49 @@ func capture(enemy: Node2D) -> void:
 	# components keep running, and its collisions and wave ownership stay intact.
 	enemy.set_process(false)
 	enemy.set_physics_process(false)
-	_clamp_to_screen(enemy)
+	_clamp_to_play_area(enemy)
 
 
-func _physics_process(_delta: float) -> void:
-	_update_victims()
+func _physics_process(delta: float) -> void:
+	_update_victims(delta)
 
 
 func _process(_delta: float) -> void:
 	_update_victims()
 
 
-func _update_victims() -> void:
-	var carrier := get_parent() as Node2D
+func _update_victims(delta := 0.0) -> void:
+	var carrier := get_parent() as Projectile
 	if carrier.is_queued_for_deletion():
 		release_all()
 		return
 	for index in range(_victims.size() - 1, -1, -1):
 		var victim := _victims[index]
-		var enemy: Node2D = victim["enemy"]
+		var enemy = victim["enemy"]
 		if not is_instance_valid(enemy) or enemy.is_queued_for_deletion():
 			_victims.remove_at(index)
 			continue
-		enemy.global_position = carrier.global_position + Vector2(victim["offset"])
-		_clamp_to_screen(enemy)
+		enemy.global_position = carrier.global_position + Vector2(victim["offset"]).rotated(carrier.direction.angle())
+		_clamp_to_play_area(enemy)
+		# Only physics advances damage; render updates just follow the camera.
+		if delta <= 0.0 or not enemy.has_method("take_damage"):
+			continue
+		victim["damage_elapsed"] += delta
+		var interval := maxf(damage_interval, 0.05)
+		while victim["damage_elapsed"] >= interval:
+			victim["damage_elapsed"] -= interval
+			enemy.take_damage(maxi(damage_per_tick, 1))
+			if not is_instance_valid(enemy) or enemy.is_queued_for_deletion():
+				break
 
 
 func release_all() -> void:
 	for victim: Dictionary in _victims:
-		var enemy: Node2D = victim["enemy"]
+		var enemy = victim["enemy"]
 		if not is_instance_valid(enemy) or enemy.is_queued_for_deletion():
 			continue
 		if enemy.is_inside_tree():
-			_clamp_to_screen(enemy)
+			_clamp_to_play_area(enemy)
 			if enemy.has_method("on_skewer_released"):
 				enemy.call(
 					"on_skewer_released",
@@ -89,10 +115,8 @@ func _exit_tree() -> void:
 	release_all()
 
 
-func _clamp_to_screen(enemy: Node2D) -> void:
-	var viewport := enemy.get_viewport()
-	var screen := viewport.get_visible_rect().grow(-2.0)
-	var bounds := Rect2(enemy.get_global_transform_with_canvas().origin, Vector2.ZERO)
+func _get_world_bounds(enemy: Node2D) -> Rect2:
+	var bounds := Rect2(enemy.global_position, Vector2.ZERO)
 	# Use actual body and sprite bounds, excluding nested detection-radius areas.
 	for child in enemy.get_children():
 		var local_rect: Rect2
@@ -112,7 +136,15 @@ func _clamp_to_screen(enemy: Node2D) -> void:
 			local_rect = child.shape.get_rect()
 		else:
 			continue
-		bounds = bounds.merge(child.get_global_transform_with_canvas() * local_rect)
+		bounds = bounds.merge(child.global_transform * local_rect)
+	return bounds
+
+
+func _clamp_to_play_area(enemy: Node2D) -> void:
+	var viewport := enemy.get_viewport()
+	var screen := viewport.get_visible_rect().grow(-2.0)
+	var world_bounds := _get_world_bounds(enemy)
+	var bounds := viewport.get_canvas_transform() * world_bounds
 
 	var correction := Vector2.ZERO
 	for axis in range(2):
@@ -125,4 +157,8 @@ func _clamp_to_screen(enemy: Node2D) -> void:
 				screen.end[axis] - bounds.end[axis]
 			)
 	var screen_to_world := viewport.get_canvas_transform().affine_inverse()
-	enemy.global_position += screen_to_world * correction - screen_to_world.origin
+	var world_correction := screen_to_world * correction - screen_to_world.origin
+	enemy.global_position += world_correction
+	world_bounds.position += world_correction
+	if is_instance_valid(_banks):
+		enemy.global_position += _banks.get_water_correction(world_bounds)

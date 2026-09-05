@@ -278,6 +278,27 @@ func get_bank_hit(world_from: Vector2, world_to: Vector2) -> Dictionary:
 	return {"fraction": first_hit, "normal": world_normal}
 
 
+## Keep an entire carried body between the banks, including shore protrusions
+## anywhere along its height. Return a world-space translation into the water.
+func get_water_correction(world_bounds: Rect2) -> Vector2:
+	if _left.is_empty():
+		return Vector2.ZERO
+	var bounds := global_transform.affine_inverse() * world_bounds
+	var first_row := _row_for_local(bounds.position.y)
+	var last_row := _row_for_local(bounds.end.y)
+	var left_edge := -INF
+	var right_edge := INF
+	for row in range(first_row, last_row + 1):
+		left_edge = maxf(left_edge, _left[row] * float(pixel_size) + 2.0)
+		right_edge = minf(right_edge, float(_play_w) - _right[row] * float(pixel_size) - 2.0)
+	var correction := 0.0
+	if bounds.size.x > right_edge - left_edge:
+		correction = (left_edge + right_edge) * 0.5 - bounds.get_center().x
+	else:
+		correction = clampf(0.0, left_edge - bounds.position.x, right_edge - bounds.end.x)
+	return to_global(Vector2(correction, 0.0)) - global_position
+
+
 func bank_push_dir(world_pos: Vector2) -> float:
 	return 1.0 if to_local(world_pos).x < float(_play_w) * 0.5 else -1.
 
