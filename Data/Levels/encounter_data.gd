@@ -5,6 +5,7 @@ extends Resource
 enum Type {
 	NORMAL,
 	SPECIAL,
+	CUTSCENE
 }
 
 
@@ -28,3 +29,6 @@ enum Type {
 
 @export_group("Special Encounter")
 @export var special_encounter_pool: Array[WeightedEncounterData] = []
+
+@export_group("Cutscene")
+@export var cutscene_scene: PackedScene

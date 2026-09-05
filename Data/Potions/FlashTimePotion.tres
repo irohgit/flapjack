@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FlashTimePotionData" format=3]
+
+[ext_resource type="Script" path="res://Data/Potions/flash_time_potion_data.gd" id="1_potion"]
+
+[resource]
+script = ExtResource("1_potion")
+potion_id = &"flash_time_potion"
+display_name = "Flash Time"
+description = "Temporarily slows the surrounding world."
+metadata/optional = true
+metadata/implementation_status = "scaffold"

@@ -1,5 +1,5 @@
 class_name EnemyData
-extends Resource
+extends EnemyDropSourceData
 
 @export var scene: PackedScene
 @export var health := 3

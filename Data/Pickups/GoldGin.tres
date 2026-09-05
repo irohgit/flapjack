@@ -6,10 +6,10 @@
 
 [resource]
 script = ExtResource("2_ynoje")
+item_id = &"flapjack:gold_gin"
 pickup_type = 5
 texture = ExtResource("3_2nctt")
 gin_amount = 5
-lootweight = 0.1
 pickup_sfx = ExtResource("1_2nctt")
 pickup_pitch_spread = 0.0
 metadata/_custom_type_script = "uid://rau2jwiqd0pd"

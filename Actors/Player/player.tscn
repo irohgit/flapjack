@@ -15,6 +15,7 @@
 [ext_resource type="Script" uid="uid://dttjdne32amn0" path="res://Systems/Combat/status_effect_component.gd" id="10_status"]
 [ext_resource type="Texture2D" uid="uid://b1buy6pcwy4q1" path="res://Assets/Boat/Wake_SpriteSheet.png" id="10_wmrsf"]
 [ext_resource type="Script" uid="uid://darf8kfohuabj" path="res://Actors/Player/mast.gd" id="13_nwamd"]
+[ext_resource type="PackedScene" uid="uid://chwdpuo2udybs" path="res://Actors/Player/shipmessage.tscn" id="16_woyfc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_h1i6w"]
 atlas = ExtResource("10_wmrsf")
@@ -148,6 +149,7 @@ texture = ExtResource("9_w553y")
 flip_v = true
 
 [node name="Masts" type="Node2D" parent="." unique_id=119036697]
+scale = Vector2(1.5, 1.5)
 
 [node name="Mast" type="Sprite2D" parent="Masts" unique_id=1290454073]
 flip_v = true
@@ -190,3 +192,6 @@ collision_mask = 16
 visible = false
 shape = SubResource("CircleShape2D_dxqhr")
 debug_color = Color(0.7125058, 0.82186186, 0.5587626, 0.09803922)
+
+[node name="shipmessage" parent="." unique_id=1212644660 instance=ExtResource("16_woyfc")]
+position = Vector2(-65, -69)

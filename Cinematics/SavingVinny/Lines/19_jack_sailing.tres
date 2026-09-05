@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CutsceneLine" format=3 uid="uid://baxpu1gb85u0v"]
+
+[ext_resource type="Script" uid="uid://3ke20rwguryo" path="res://Cinematics/cutscene_line.gd" id="1_mqvhc"]
+[ext_resource type="Texture2D" uid="uid://6aeaxa80m7vb" path="res://Assets/Cinematics/JACK_CONCERNED_512x640.png" id="1_psny4"]
+
+[resource]
+script = ExtResource("1_mqvhc")
+speaker = "Jack"
+text = "Uh. I think they're sailing towards us now."
+layout = 2
+stage_image = ExtResource("1_psny4")

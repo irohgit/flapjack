@@ -59,6 +59,11 @@ var _purchase_in_progress := false
 @export var hit_sfx: AudioStream
 @export var death_sfx: AudioStream
 
+#VFX
+const WAKE_DEADZONE := 0.15
+
+@onready var _wake: AnimatedSprite2D = $Wake
+
 #Ship Tier
 @export_range(0.5, 5.0, 0.05) var wake_overhang := 2.4 #2.4 works with skiff,
 @export_range(0.5, 5.0, 0.05) var wake_length := 1.5:
@@ -79,7 +84,7 @@ var _tier_has_mast := false
 @onready var _masts: Node2D = $Masts
 
 #BANK MOVEMENT
-@export var banks: BankGenerator
+@export var banks: BankPainter
 @export var bank_push_x := 850.0    # sideways shove out of the sand
 @export var bank_push_down := 150.0 # drag downward, like running aground
 
@@ -150,6 +155,8 @@ func _process(_delta: float) -> void:
 		drink_selected_potion()
 		
 func _physics_process(delta: float) -> void:
+	if banks != null:
+		DebugHud.watch("bank", banks.debug_line(global_position))
 	var movement_speed := _status_effects.get_modified_value(
 		StatusEffectData.STAT_MOVEMENT_SPEED,
 		max_speed
@@ -171,6 +178,7 @@ func _physics_process(delta: float) -> void:
 	#DebugHud.flash(str(velocity))
 	_update_masts()
 	_update_wake()
+	
 	
 func _clamp_to_camera(pos: Vector2) -> Vector2:
 	var camera_center_global: Vector2 = camera.get_screen_center_position()
@@ -604,6 +612,8 @@ func _apply_tier() -> void:
 
 #ship vfx 
 func _fit_wake_to_hull() -> void:
+	if ship_tiers.is_empty():
+		return
 	var tier_index := clampi(ship_tier - 1, 0, ship_tiers.size() - 1)
 	var hull_w: float = ship_tiers[tier_index].pixel_hull_width
 	var frame: Texture2D = $Wake.sprite_frames.get_frame_texture($Wake.animation, 0)
@@ -617,16 +627,28 @@ func _fit_wake_to_hull() -> void:
 	
 
 func _update_wake() -> void:
+	# Idle: no wake at all.
+	if _move_intent.length() < WAKE_DEADZONE:
+		if _wake.visible:
+			_wake.stop()
+			_wake.hide()
+		return
 	var anim := "wake_forward" #set animation to wake forward
 	if _move_intent.x < -0.4: #if our inpu is less than -0.1 means we are moving left
 		anim = "wake_strafe_left"
 	elif _move_intent.x > 0.4: #if our x input above 0.1 that means we are moving right
 		anim = "wake_strafe_right"
-	# else it stays "wake_forward" for up, down, and idle
-	if $Wake.animation != anim:
-		$Wake.play(anim)
+	if not _wake.visible:
+		_wake.show()
+	if _wake.animation != anim or not _wake.is_playing():
+		_wake.play(anim)
+	## else it stays "wake_forward" for up, down, and idle
+	#if $Wake.animation != anim:
+		#$Wake.play(anim)
 
 func _update_masts() -> void:
+	if ship_tiers.is_empty():
+		return
 	var tier := ship_tiers[clampi(ship_tier - 1, 0, ship_tiers.size() - 1)]
 	_masts.visible = tier.has_masts
 	if not tier.has_masts:

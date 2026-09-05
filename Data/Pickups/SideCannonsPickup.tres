@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="PickupData" format=3]
+
+[ext_resource type="Script" path="res://Data/Pickups/pickup_data.gd" id="1_pickup"]
+[ext_resource type="Resource" path="res://Data/Weapons/SideCannons.tres" id="2_content"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Items/Weapons/side_cannons.png" id="3_icon"]
+
+[resource]
+script = ExtResource("1_pickup")
+item_id = &"flapjack:side_cannons"
+pickup_type = 1
+weapon = ExtResource("2_content")
+notification_name = "Side Cannons"
+shop_id = &"side_cannons"
+shop_price = 0
+texture = ExtResource("3_icon")
+shop_icon = ExtResource("3_icon")
+metadata/implementation_status = "scaffold"

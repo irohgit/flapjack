@@ -3,7 +3,8 @@ extends RefCounted
 
 enum Type {
 	NORMAL,
-	SPECIAL
+	SPECIAL,
+	CUTSCENE
 }
 
 var type: Type
@@ -14,3 +15,4 @@ var formation: EnemyController.Formation
 var spawn_from_right: bool = false
 var special_scene: PackedScene
 var gin_barrels: Array[DestructibleData] = []
+var cutscene_scene: PackedScene
