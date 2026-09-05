@@ -2,10 +2,9 @@ class_name BouncyHarpoonEffect
 extends AugmentEffect
 
 
-## Scaffold only. Exported values are authoring defaults, not final balance.
-@export var bounce_limit := 1
+## Bank contacts the harpoon can survive before its next bank hit destroys it.
+@export_range(0, 20, 1) var bounce_limit := 1
 
 
-func apply_to_projectile(_projectile: Projectile) -> void:
-	# TODO: Reflect the harpoon at the side edges of the active play area before screen-exit cleanup. Define bounce limit and eventual expiry.
-	pass
+func apply_to_projectile(projectile: Projectile) -> void:
+	projectile.bank_bounces_remaining += maxi(bounce_limit, 0)

@@ -214,16 +214,23 @@ func is_on_bank(world_pos: Vector2) -> bool:
 
 
 ## First contact along a point's world-space path, or -1 if it stays in water.
-## Check every crossed profile row so fast shots cannot skip a narrow headland.
-## Like is_on_bank(), the first and last rows extend beyond the painted strip.
 func get_bank_hit_fraction(world_from: Vector2, world_to: Vector2) -> float:
+	var hit := get_bank_hit(world_from, world_to)
+	return hit.get("fraction", -1.0)
+
+
+## Returns the first contact's fraction and world-space normal pointing into
+## water, or an empty dictionary. Check every crossed profile row so fast shots
+## cannot skip a headland. The first and last rows extend beyond the strip.
+func get_bank_hit(world_from: Vector2, world_to: Vector2) -> Dictionary:
 	if _left.is_empty():
-		return -1.0
+		return {}
 	var start := to_local(world_from)
 	var movement := to_local(world_to) - start
 	var first_row := _row_for_local(minf(start.y, start.y + movement.y))
 	var last_row := _row_for_local(maxf(start.y, start.y + movement.y))
 	var first_hit := INF
+	var hit_normal := Vector2.ZERO
 
 	for row: int in range(first_row, last_row + 1):
 		var enter := 0.0
@@ -243,6 +250,10 @@ func get_bank_hit_fraction(world_from: Vector2, world_to: Vector2) -> float:
 		var entry_x := start.x + movement.x * enter
 		if entry_x <= left_edge or entry_x >= right_edge:
 			first_hit = enter
+			hit_normal = Vector2.RIGHT if entry_x <= left_edge else Vector2.LEFT
+			# Entering the inland part of a new row hits its horizontal ledge.
+			if enter > 0.0 and (entry_x < left_edge or entry_x > right_edge):
+				hit_normal = Vector2(0.0, -signf(movement.y))
 			continue
 
 		var hit := INF
@@ -250,10 +261,21 @@ func get_bank_hit_fraction(world_from: Vector2, world_to: Vector2) -> float:
 			hit = (left_edge - start.x) / movement.x
 		elif movement.x > 0.0:
 			hit = (right_edge - start.x) / movement.x
-		if hit >= enter and hit <= leave:
-			first_hit = minf(first_hit, hit)
+		if hit >= enter and hit <= leave and hit < first_hit:
+			first_hit = hit
+			hit_normal = Vector2.RIGHT if movement.x < 0.0 else Vector2.LEFT
 
-	return first_hit if first_hit != INF else -1.0
+	if first_hit == INF:
+		return {}
+
+	# Transform the tangent first to keep the normal perpendicular even when
+	# the bank node has non-uniform scale, then orient it toward open water.
+	var tangent := Vector2(-hit_normal.y, hit_normal.x)
+	var world_tangent := to_global(tangent) - global_position
+	var world_normal := Vector2(world_tangent.y, -world_tangent.x).normalized()
+	if world_normal.dot(to_global(hit_normal) - global_position) < 0.0:
+		world_normal = -world_normal
+	return {"fraction": first_hit, "normal": world_normal}
 
 
 func bank_push_dir(world_pos: Vector2) -> float:

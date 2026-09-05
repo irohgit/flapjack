@@ -28,6 +28,7 @@ var sprite_frames_override: SpriteFrames
 var animation_name_override: StringName = &"default"
 
 var pierce := 0
+var bank_bounces_remaining := 0
 
 var orbital_ricochet := false
 var boost_speed_multiplier := 1.0
@@ -129,16 +130,9 @@ func _physics_process(delta: float) -> void:
 	age_time += delta
 	var previous_position := global_position
 	_move(delta)
-	if is_instance_valid(_banks):
-		var hit_fraction := _banks.get_bank_hit_fraction(previous_position, global_position)
-		if hit_fraction >= 0.0:
-			global_position = previous_position.lerp(global_position, hit_fraction)
-			_update_trail()
-			Audio.play_sfx(data.impact_sound, -8.0)
-			bank_hit.emit(global_position)
-			_on_impact()
-			destroy()
-			return
+	_resolve_bank_hits(previous_position)
+	if _is_destroying or is_queued_for_deletion():
+		return
 	_update_trail()
 
 	if (
@@ -146,6 +140,50 @@ func _physics_process(delta: float) -> void:
 		and global_position.distance_squared_to(_expire_position) <= 0.0001
 	):
 		destroy()
+
+
+func _resolve_bank_hits(previous_position: Vector2) -> void:
+	if not is_instance_valid(_banks):
+		return
+
+	var destination := global_position
+	while true:
+		var hit := _banks.get_bank_hit(previous_position, destination)
+		if hit.is_empty():
+			global_position = destination
+			return
+
+		global_position = previous_position.lerp(destination, hit["fraction"])
+		_update_trail()
+		Audio.play_sfx(data.impact_sound, -8.0)
+		bank_hit.emit(global_position)
+		_on_impact()
+		if _is_destroying or is_queued_for_deletion():
+			return
+		if bank_bounces_remaining <= 0:
+			destroy()
+			return
+
+		var normal: Vector2 = hit["normal"]
+		var incoming := previous_position.direction_to(destination)
+		if incoming.dot(normal) >= 0.0:
+			# A shot spawned inland or moving along the shore cannot reflect out.
+			destroy()
+			return
+
+		bank_bounces_remaining -= 1
+		# Reflect the incoming direction about the surface normal using a dot product.
+		direction = (incoming - 2.0 * incoming.dot(normal) * normal).normalized()
+		_update_rotation()
+		var remaining_distance := global_position.distance_to(destination)
+		var endpoint_distance := global_position.distance_to(_expire_position)
+		# Move just into water to avoid detecting this same contact again.
+		global_position += normal * 0.1
+		if _has_expire_position:
+			_expire_position = global_position + direction * endpoint_distance
+		previous_position = global_position
+		destination = global_position + direction * remaining_distance
+		# Spend the remaining movement this frame; each contact consumes a bounce.
 
 
 # Override for homing, arcing, spiralling.
@@ -166,9 +204,7 @@ func _move(delta: float) -> void:
 		if age_time >= 0.5:
 			_orbital_ricochet(delta)
 
-	var direction_angle := direction.angle()
-	_sprite.rotation = direction_angle + PI / 2.0
-	_animated_sprite.rotation = direction_angle
+	_update_rotation()
 
 	var movement := direction * data.speed * final_speed_boost * delta
 	if _has_expire_position:
@@ -178,6 +214,12 @@ func _move(delta: float) -> void:
 			return
 
 	position += movement
+
+
+func _update_rotation() -> void:
+	var direction_angle := direction.angle()
+	_sprite.rotation = direction_angle + PI / 2.0
+	_animated_sprite.rotation = direction_angle
 
 
 func _chain_lightning() -> bool:
