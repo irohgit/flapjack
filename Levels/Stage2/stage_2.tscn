@@ -17,7 +17,9 @@
 [ext_resource type="Shader" uid="uid://cq85abjo4x30h" path="res://Assets/Shaders/Water/water.gdshader" id="18_a3klg"]
 [ext_resource type="Texture2D" uid="uid://conqv6viso2ly" path="res://Assets/Shaders/Water/water_noise.tres" id="19_5w86b"]
 [ext_resource type="PackedScene" uid="uid://cpy76lvb1x4cb" path="res://UI/GameUI.tscn" id="20_game_ui"]
-[ext_resource type="PackedScene" uid="uid://b15w84odyyp3h" path="res://Actors/NPC/merchant_boat.tscn" id="21_boat"]
+[ext_resource type="Script" uid="uid://ju4n35f5wbjs" path="res://Systems/LilypadSpawner.gd" id="22_lilypad_spawner"]
+[ext_resource type="PackedScene" uid="uid://cqxdxpmlp6pbj" path="res://Actors/Environment/bg_layer_1_lilypads.tscn" id="23_lilypad"]
+[ext_resource type="PackedScene" uid="uid://bmquplii7j1a0" path="res://Actors/Enemies/frog_enemy.tscn" id="24_frog"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8m7vp"]
 shader = ExtResource("18_a3klg")
@@ -94,5 +96,11 @@ camera = NodePath("../ShakeCamera")
 
 [node name="ScreenEncounters" type="Node2D" parent="ScrollRig" unique_id=1683449746]
 
-[node name="MerchantBoat" parent="." unique_id=497215161 instance=ExtResource("21_boat")]
-position = Vector2(1650, -7760)
+[node name="LilypadSpawner" type="Node2D" parent="." unique_id=1987112815 node_paths=PackedStringArray("parent", "scroll_director")]
+script = ExtResource("22_lilypad_spawner")
+lilypad_scene = ExtResource("23_lilypad")
+frog_scene = ExtResource("24_frog")
+frog_chance = 0.604
+parent = NodePath("../World")
+scroll_director = NodePath("../ScrollDirector")
+level_data = ExtResource("15_lr66y")

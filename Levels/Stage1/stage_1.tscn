@@ -27,7 +27,6 @@
 [ext_resource type="PackedScene" uid="uid://bc2g5sxmhx1p2" path="res://Actors/Environment/ParallaxObjects/near_wood.tscn" id="31_gp8qq"]
 [ext_resource type="PackedScene" uid="uid://3mo2067bwo0l" path="res://Actors/Pickup/barrel.tscn" id="42_30rop"]
 [ext_resource type="Script" uid="uid://dk4cjbt8xm0wc" path="res://Actors/Pickup/ginspawner.gd" id="42_pgwwf"]
-[ext_resource type="PackedScene" uid="uid://b15w84odyyp3h" path="res://Actors/NPC/merchant_boat.tscn" id="50_boat"]
 
 [sub_resource type="Resource" id="Resource_54op2"]
 script = ExtResource("25_jrq28")
@@ -191,6 +190,3 @@ position = Vector2(960, 853)
 camera = NodePath("../ShakeCamera")
 banks = NodePath("../../BankGenerator")
 scrollDirector = NodePath("../../ScrollDirector")
-
-[node name="MerchantBoat" parent="." unique_id=1486780532 instance=ExtResource("50_boat")]
-position = Vector2(1656, -8554)

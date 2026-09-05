@@ -34,15 +34,12 @@ func _ready() -> void:
 
 	_play_random_idle_animation()
 
-
 # Frogs have no HealthComponent and can't be hit by player weapons.
 func take_damage(_amount: int) -> void:
 	pass
 
-
 func apply_status_effect(_effect: StatusEffectData) -> bool:
 	return false
-
 
 func _on_attack_zone_entered(area: Area2D) -> void:
 	if not area.is_in_group("player"):
@@ -50,12 +47,10 @@ func _on_attack_zone_entered(area: Area2D) -> void:
 	_target = area
 	_attack_cooldown = 0.0
 
-
 func _on_attack_zone_exited(area: Area2D) -> void:
 	if area != _target:
 		return
 	_target = null
-
 
 # Overrides Enemy._physics_process(): this enemy is stationary (no _move
 # call needed) and its tongue strikes on zone entry rather than the base
@@ -76,12 +71,10 @@ func _physics_process(delta: float) -> void:
 	if _idle_timer <= 0.0:
 		_play_random_idle_animation()
 
-
 func _attack() -> void:
 	_animated_sprite.play(&"Attack")
 	if _target.has_method("take_damage"):
 		_target.take_damage(data.projectile_damage)
-
 
 func _play_random_idle_animation() -> void:
 	_animated_sprite.play(&"Idle" if randf() < idle_animation_chance else &"Jump")
