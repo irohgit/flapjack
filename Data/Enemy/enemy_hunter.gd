@@ -4,9 +4,8 @@ extends Enemy
 
 @export var patrol_distance := 250.0
 
-var _spawn_position := Vector2.ZERO
 var _patrol_direction := 1.0
-var _has_spawn_position := false
+
 
 #func _fire() -> void:
 	#var shot := data.projectile_scene.instantiate() as Projectile
@@ -21,11 +20,7 @@ var _has_spawn_position := false
 	#shot.global_position = global_position + Vector2(0, 60)
 
 func _move(delta: float, speed: float) -> void:
-	# Capture this after spawning because the controller assigns the enemy's
-	# global position after adding it to the scene tree.
-	if not _has_spawn_position:
-		_spawn_position = global_position
-		_has_spawn_position = true
+	_capture_spawn_position()
 
 	# This offset is relative to where the Hunter originally spawned.
 	var patrol_offset := Vector2(patrol_distance * _patrol_direction, 0.0)

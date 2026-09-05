@@ -13,6 +13,23 @@ extends Area2D
 @onready var _status_effects: StatusEffectComponent = $StatusEffectComponent
 
 var _fire_timer := 0.0
+var _spawn_position := Vector2.ZERO
+var _has_spawn_position := false
+
+
+## Capture lazily because spawners assign global_position after adding enemies.
+func _capture_spawn_position() -> void:
+	if not _has_spawn_position:
+		_spawn_position = global_position
+		_has_spawn_position = true
+
+
+## Keep movement anchored to the release location after being carried.
+## Enemy subclasses with a different movement coordinate system can override this.
+func on_skewer_released(displacement: Vector2, _local_displacement: Vector2) -> void:
+	if _has_spawn_position:
+		_spawn_position += displacement
+
 
 func _ready() -> void:
 	assert(data != null, "Enemy spawned with no EnemyData assigned")

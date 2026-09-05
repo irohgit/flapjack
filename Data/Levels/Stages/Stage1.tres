@@ -22,6 +22,7 @@
 [ext_resource type="Resource" uid="uid://e8bbiwbkus1o" path="res://Data/Pickups/OrbitalRicochetPickup.tres" id="7_ricochet"]
 [ext_resource type="Resource" uid="uid://bcj4lyhuitxi2" path="res://Data/Pickups/ShieldPotion.tres" id="7_shield"]
 [ext_resource type="Resource" uid="uid://do5a365f2ffty" path="res://Data/Pickups/SpeedPotion.tres" id="7_speed"]
+[ext_resource type="Resource" path="res://Data/Pickups/SkewerHarpoonPickup.tres" id="7_skewer"]
 [ext_resource type="PackedScene" uid="uid://3gxxy4myod8b" path="res://Actors/Enemies/PatternEnemyWaveSpawner.tscn" id="8_birds"]
 [ext_resource type="Resource" uid="uid://qygik8ixvyxj" path="res://Data/Pickups/GinGoldBarrel.tres" id="30_36n2v"]
 
@@ -209,7 +210,7 @@ metadata/_custom_type_script = "uid://bhsc86o70es47"
 script = ExtResource("4_level")
 level_id = &"stage_1"
 level_name = "Stage1"
-shop_items = Array[ExtResource("7_pickup_data")]([ExtResource("7_homing"), ExtResource("7_plasma"), ExtResource("7_fire"), ExtResource("7_magnet"), ExtResource("7_pierce"), ExtResource("7_ricochet"), ExtResource("7_harpoon"), ExtResource("7_health"), ExtResource("7_shield"), ExtResource("7_rapid"), ExtResource("7_speed")])
+shop_items = Array[ExtResource("7_pickup_data")]([ExtResource("7_homing"), ExtResource("7_plasma"), ExtResource("7_fire"), ExtResource("7_magnet"), ExtResource("7_pierce"), ExtResource("7_ricochet"), ExtResource("7_harpoon"), ExtResource("7_health"), ExtResource("7_shield"), ExtResource("7_rapid"), ExtResource("7_speed"), ExtResource("7_skewer")])
 encounter_sequence = Array[ExtResource("6_encounter")]([SubResource("Encounter_01_intro_line"), SubResource("Encounter_02_intro_v"), SubResource("Encounter_03_first_hunters"), SubResource("Encounter_04_optional_reinforcement"), SubResource("Encounter_05_mixed_fleet"), SubResource("Encounter_06_bird_warning"), SubResource("Encounter_07_grid_intro"), SubResource("Encounter_08_optional_circle"), SubResource("Encounter_09_midpoint_fleet"), SubResource("Encounter_10_bird_return"), SubResource("Encounter_11_advanced_fleet"), SubResource("Encounter_12_optional_pressure"), SubResource("Encounter_13_late_fleet"), SubResource("Encounter_14_final_fleet"), SubResource("Encounter_15_final_birds")])
 finale_trigger_position = Vector2(0, -10000)
 finale_spawn_position = Vector2(960, -9700)

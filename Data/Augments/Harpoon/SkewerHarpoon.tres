@@ -4,12 +4,9 @@
 [ext_resource type="Script" path="res://Data/Augments/Harpoon/skewer_harpoon_effect.gd" id="2_effect"]
 [ext_resource type="Resource" path="res://Data/Weapons/Harpoon.tres" id="3_weapon"]
 [ext_resource type="Texture2D" path="res://Assets/UI/Shop/Items/Augments/Harpoon/skewer_harpoon.png" id="4_icon"]
-[ext_resource type="Resource" path="res://Data/Augments/Harpoon/ExplosiveHarpoon.tres" id="ingredient_0"]
-[ext_resource type="Resource" path="res://Data/Augments/Harpoon/ChainLightningHarpoon.tres" id="ingredient_1"]
 
 [sub_resource type="Resource" id="Effect"]
 script = ExtResource("2_effect")
-required_augments = Array[ExtResource("1_augment")]([ExtResource("ingredient_0"), ExtResource("ingredient_1")])
 
 [resource]
 script = ExtResource("1_augment")
@@ -17,5 +14,3 @@ name = "Skewer Harpoon"
 targetWeapon = ExtResource("3_weapon")
 augmentEffect = SubResource("Effect")
 texture = ExtResource("4_icon")
-metadata/combo_only = true
-metadata/implementation_status = "scaffold"

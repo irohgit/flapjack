@@ -29,6 +29,7 @@ var animation_name_override: StringName = &"default"
 
 var pierce := 0
 var bank_bounces_remaining := 0
+var skewer: HarpoonSkewer
 
 var orbital_ricochet := false
 var boost_speed_multiplier := 1.0
@@ -319,6 +320,8 @@ func _update_trail() -> void:
 func _on_area_entered(area: Area2D) -> void:
 	if _is_destroying:
 		return
+	if skewer != null and skewer.is_carrying(area):
+		return
 
 	Audio.play_sfx(data.impact_sound, -8.0)
 	var is_enemy := area.is_in_group("enemy")
@@ -333,6 +336,8 @@ func _on_area_entered(area: Area2D) -> void:
 			has_done_ricochet = true
 	if area.has_method("take_damage"):
 		area.take_damage(data.damage)
+	if skewer != null and is_enemy and is_instance_valid(area):
+		skewer.capture(area)
 	_on_impact()
 	
 	if pierce == 0:
@@ -354,6 +359,8 @@ func destroy(spawn_ground_effect := true) -> void:
 		return
 
 	_is_destroying = true
+	if skewer != null:
+		skewer.release_all()
 	if spawn_ground_effect:
 		_spawn_death_ground_effect()
 	queue_free()

@@ -16,9 +16,7 @@ var _chasing := false
 var _target: Node2D = null
 var _stunned := false
 
-var _spawn_position := Vector2.ZERO
 var _patrol_direction := 1.0
-var _has_spawn_position := false
 
 
 func _ready() -> void:
@@ -101,11 +99,7 @@ func _move(delta: float, speed: float) -> void:
 		return
 
 	# Patrol left and right around the spawn point until the chase triggers.
-	# Captured here rather than in _ready(): the spawner assigns global_position
-	# after adding this node to the scene tree, so _ready() sees the old spot.
-	if not _has_spawn_position:
-		_spawn_position = global_position
-		_has_spawn_position = true
+	_capture_spawn_position()
 
 	var patrol_offset := Vector2(patrol_distance * _patrol_direction, 0.0)
 	var target_position := _spawn_position + patrol_offset

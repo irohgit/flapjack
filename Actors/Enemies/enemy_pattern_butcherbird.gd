@@ -95,6 +95,12 @@ func move_sine(delta: float, speed: float) -> void:
 	position.y = start_position.y + sin(time_alive * data.frequency) * data.amplitude
 
 
+func on_skewer_released(_displacement: Vector2, local_displacement: Vector2) -> void:
+	# Pattern coordinates are local to the spawn parent. Rebase the frozen
+	# pattern so the next frame continues from the release position.
+	start_position += local_displacement
+
+
 func move_zigzag(delta: float, speed: float) -> void:
 	position.x += speed * delta * horizontal_direction
 
