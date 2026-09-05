@@ -23,21 +23,24 @@ func _ready() -> void:
 	_container.add_theme_constant_override("separation", 2)
 	add_child(_container)
 
-	# Only ever available in debug builds. F3 toggles within those.
-	_enabled = OS.is_debug_build()
-	visible = _enabled
+	GameSettings.changed.connect(_refresh_enabled)
+	_refresh_enabled()
 	_apply_corner()
 
 
 func _input(event: InputEvent) -> void:
-	if not OS.is_debug_build():
-		return
 	if event.is_action_pressed("toggle_debug"):
-		_enabled = not _enabled
-		visible = _enabled
-	elif event.is_action_pressed("cycle_debug_corner"):
+		GameSettings.set_debug_screen(not GameSettings.debug_screen_enabled)
+		get_viewport().set_input_as_handled()
+	elif _enabled and event.is_action_pressed("cycle_debug_corner"):
 		corner = (corner + 1) % Corner.size()
 		_apply_corner()
+		get_viewport().set_input_as_handled()
+
+
+func _refresh_enabled() -> void:
+	_enabled = GameSettings.debug_screen_enabled
+	visible = _enabled
 
 
 func _apply_corner() -> void:

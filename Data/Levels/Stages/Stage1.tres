@@ -21,8 +21,8 @@
 [ext_resource type="Resource" uid="uid://p1kltsl8ervk" path="res://Data/Pickups/RapidFirePotion.tres" id="7_rapid"]
 [ext_resource type="Resource" uid="uid://e8bbiwbkus1o" path="res://Data/Pickups/OrbitalRicochetPickup.tres" id="7_ricochet"]
 [ext_resource type="Resource" uid="uid://bcj4lyhuitxi2" path="res://Data/Pickups/ShieldPotion.tres" id="7_shield"]
-[ext_resource type="Resource" uid="uid://do5a365f2ffty" path="res://Data/Pickups/SpeedPotion.tres" id="7_speed"]
 [ext_resource type="Resource" path="res://Data/Pickups/SkewerHarpoonPickup.tres" id="7_skewer"]
+[ext_resource type="Resource" uid="uid://do5a365f2ffty" path="res://Data/Pickups/SpeedPotion.tres" id="7_speed"]
 [ext_resource type="PackedScene" uid="uid://3gxxy4myod8b" path="res://Actors/Enemies/PatternEnemyWaveSpawner.tscn" id="8_birds"]
 [ext_resource type="Resource" uid="uid://qygik8ixvyxj" path="res://Data/Pickups/GinGoldBarrel.tres" id="30_36n2v"]
 
