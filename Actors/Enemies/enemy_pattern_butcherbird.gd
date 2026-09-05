@@ -1,121 +1,61 @@
 class_name PatternBird
-extends Area2D
-
-
-@export var data: PatternButcherBirdData
-
-@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var _health: HealthComponent = $HealthComponent
-@onready var _status_effects: StatusEffectComponent = $StatusEffectComponent
+extends Enemy
 
 var time_alive: float = 0.0
-var start_position: Vector2
 var horizontal_direction: float = 1.0
 
+var _pattern_data: PatternButcherBirdData
 var _has_entered_play_area := false
 
-# SFX
-@export var hit_sfx: AudioStream
-@export var explosion_sfx: AudioStream
 
-
-func _ready() -> void:
-	_health.damaged.connect(_on_damaged)
-	_health.died.connect(_on_died)
-
-
-func _on_damaged() -> void:
-	Audio.play_sfx(hit_sfx, 5.0, 0.1)
-	modulate = Color(1, 0.4, 0.4)
-	create_tween().tween_property(self, "modulate", Color.WHITE, 0.15)
-
-
-func take_damage(amount: int) -> void:
-	_health.take_damage(amount)
-
-
-func get_contact_damage() -> int:
-	return data.contact_damage if data != null else 0
-
-
-func _on_died() -> void:
-	Audio.play_sfx(explosion_sfx, 5.0)
-	GameEvents.enemy_died.emit(global_position, data)
-
-	for camera in get_tree().get_nodes_in_group("shake_camera"):
-		if camera is ShakeCamera:
-			camera.add_trauma(0.15)
-			break
-
-	queue_free()
+func _init() -> void:
+	_spawn_position_is_local = true
 
 
 func setup(new_data: PatternButcherBirdData, spawn_position: Vector2, direction: float) -> void:
 	assert(new_data != null, "PatternBird needs PatternButcherBirdData")
-	data = new_data
 	position = spawn_position
-	start_position = spawn_position
+	_spawn_position = spawn_position
+	_has_spawn_position = true
 	horizontal_direction = direction
-	_health.max_health = maxi(data.health, 1)
-	_health.current_health = _health.max_health
-
-	sprite.sprite_frames = data.sprite_frames
-	sprite.flip_h = horizontal_direction < 0.0
-	sprite.play("fly")
+	configure(new_data)
 
 
-func _process(delta: float) -> void:
-	if data == null:
-		return
+func _configure_visuals() -> void:
+	assert(data is PatternButcherBirdData, "PatternBird needs PatternButcherBirdData")
+	_pattern_data = data as PatternButcherBirdData
+	super()
+	_animated_sprite.flip_h = horizontal_direction < 0.0
 
-	_update_play_area_state()
 
-	if is_queued_for_deletion():
-		return
-
+func _move(delta: float, speed: float) -> void:
+	_capture_spawn_position()
 	time_alive += delta
-	var movement_speed := _status_effects.get_modified_value(
-		StatusEffectData.STAT_MOVEMENT_SPEED,
-		data.speed
-	)
 
-	match data.movement_pattern:
+	match _pattern_data.movement_pattern:
 		PatternButcherBirdData.MovementPattern.SINE:
-			move_sine(delta, movement_speed)
-
+			move_sine(delta, speed)
 		PatternButcherBirdData.MovementPattern.ZIGZAG:
-			move_zigzag(delta, movement_speed)
-
+			move_zigzag(delta, speed)
 		PatternButcherBirdData.MovementPattern.SWOOP:
-			move_swoop(delta, movement_speed)
+			move_swoop(delta, speed)
 
 
 func move_sine(delta: float, speed: float) -> void:
 	position.x += speed * delta * horizontal_direction
-	position.y = start_position.y + sin(time_alive * data.frequency) * data.amplitude
-
-
-func on_skewer_released(_displacement: Vector2, local_displacement: Vector2) -> void:
-	# Pattern coordinates are local to the spawn parent. Rebase the frozen
-	# pattern so the next frame continues from the release position.
-	start_position += local_displacement
+	position.y = _spawn_position.y + sin(time_alive * _pattern_data.frequency) * _pattern_data.amplitude
 
 
 func move_zigzag(delta: float, speed: float) -> void:
 	position.x += speed * delta * horizontal_direction
 
-	var phase: float = fmod(time_alive * data.frequency, 2.0)
+	var phase: float = fmod(time_alive * _pattern_data.frequency, 2.0)
 	var zigzag: float = 1.0 - 2.0 * abs(phase - 1.0)
-
-	position.y = start_position.y + zigzag * data.amplitude
+	position.y = _spawn_position.y + zigzag * _pattern_data.amplitude
 
 
 func move_swoop(delta: float, speed: float) -> void:
 	position.x += speed * delta * horizontal_direction
-
-
-func apply_status_effect(effect: StatusEffectData) -> bool:
-	return _status_effects.apply_effect(effect)
 
 
 func _update_play_area_state() -> void:
