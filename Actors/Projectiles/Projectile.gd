@@ -2,6 +2,8 @@ class_name Projectile
 extends Area2D
 
 signal bank_hit(world_position: Vector2)
+## Emitted once on gameplay destruction, before releasing carried enemies.
+signal expiring
 
 const GROUND_EFFECT_SCENE := preload("res://Actors/GroundEffects/ground_effect.tscn")
 
@@ -361,6 +363,7 @@ func destroy(spawn_ground_effect := true) -> void:
 		return
 
 	_is_destroying = true
+	expiring.emit()
 	if skewer != null:
 		skewer.release_all()
 	if spawn_ground_effect:

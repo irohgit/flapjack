@@ -14,4 +14,3 @@ name = "Explosive Harpoon"
 targetWeapon = ExtResource("3_weapon")
 augmentEffect = SubResource("Effect")
 texture = ExtResource("4_icon")
-metadata/implementation_status = "scaffold"

@@ -43,6 +43,19 @@ components. For example, the Player node runs `Actors/Player/player.gd`, while
 its child `HealthComponent` and `ShieldComponent` nodes manage their individual
 pieces of combat state.
 
+## Cannon augment combinations
+
+Chain lightning and laser are emergent behaviours from existing upgrades;
+they have no separate augment resources, pickups, or shop items.
+
+- Piercing + Orbital Ricochet + Plasma produces chain lightning behaviour.
+  The interaction is implemented in `Actors/Projectiles/Projectile.gd`.
+- Plasma + an active Rapid Fire potion produces the laser effect. This
+  interaction still needs implementation and should last only while the potion
+  is active.
+
+Grape Cannon has been dropped from the planned augments.
+
 ## Creating a ground effect
 
 Ground areas use the same `StatusEffectData` resources as projectiles and

@@ -30,6 +30,15 @@ func is_carrying(enemy: Node2D) -> bool:
 	return enemy.get_meta(CARRIER_META, null) == self
 
 
+func get_carried_enemies() -> Array[Node2D]:
+	var enemies: Array[Node2D] = []
+	for victim: Dictionary in _victims:
+		var enemy = victim["enemy"]
+		if is_instance_valid(enemy) and not enemy.is_queued_for_deletion():
+			enemies.append(enemy)
+	return enemies
+
+
 func capture(enemy: Node2D) -> void:
 	if (
 		enemy.is_queued_for_deletion()
