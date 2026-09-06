@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CactusPotionData" format=3]
+
+[ext_resource type="Script" path="res://Data/Potions/cactus_potion_data.gd" id="1_potion"]
+
+[resource]
+script = ExtResource("1_potion")
+potion_id = &"cactus_potion"
+display_name = "Cactus"
+description = "Temporarily damages enemies that touch the boat."
+metadata/implementation_status = "scaffold"

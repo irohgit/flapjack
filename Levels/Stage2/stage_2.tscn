@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://c1hug03muahmo" path="res://Actors/Camera/water_background.tscn" id="5_2ahl2"]
 [ext_resource type="PackedScene" uid="uid://t7alddeyjrep" path="res://Levels/hud.tscn" id="6_1ue76"]
 [ext_resource type="PackedScene" uid="uid://cclwwsegfn8rr" path="res://Actors/Player/player.tscn" id="7_wnqgr"]
-[ext_resource type="PackedScene" uid="uid://luquvycpj4hd" path="res://Actors/Pickup/coin_spawner.tscn" id="9_bq31y"]
+[ext_resource type="PackedScene" uid="uid://luquvycpj4hd" path="res://Actors/Pickup/item_spawner.tscn" id="9_bq31y"]
 [ext_resource type="Script" uid="uid://c8rvuh3fmlyx" path="res://Levels/Stage1/bankpainter.gd" id="13_1t5xe"]
 [ext_resource type="Script" uid="uid://ddmjy6ihgdk7k" path="res://Systems/Levels/level_generator.gd" id="13_d1opp"]
 [ext_resource type="Script" uid="uid://bbwfptmjbqmy8" path="res://Systems/ParallaxDirector2.gd" id="13_jxxny"]
@@ -119,8 +119,8 @@ scroll_rig = NodePath("../ScrollRig")
 
 [node name="World" type="Node2D" parent="." unique_id=822996462]
 
-[node name="CoinSpawner" parent="." unique_id=1386735529 instance=ExtResource("9_bq31y")]
-level_data = ExtResource("15_lr66y")
+[node name="ItemSpawner" parent="." unique_id=1386735529 instance=ExtResource("9_bq31y")]
+active_level = ExtResource("15_lr66y")
 
 [node name="LevelGenerator" type="Node2D" parent="." unique_id=711120617]
 script = ExtResource("13_d1opp")
@@ -155,7 +155,6 @@ camera = NodePath("../ScrollRig/ShakeCamera")
 
 [node name="BankPainter" type="Node2D" parent="." unique_id=1758400772]
 z_index = -5
-position = Vector2(0, 1)
 script = ExtResource("13_1t5xe")
 level_data = ExtResource("14_1t5xe")
 min_width_px = 120
@@ -231,5 +230,3 @@ position = Vector2(960, 1000)
 camera = NodePath("../ShakeCamera")
 banks = NodePath("../../BankPainter")
 scrollDirector = NodePath("../../ScrollDirector")
-
-[node name="HUD2" parent="." unique_id=542498023 instance=ExtResource("6_1ue76")]

@@ -7,6 +7,7 @@
 
 [resource]
 script = ExtResource("3_r08qc")
+item_id = &"flapjack:magnet_augment"
 texture = ExtResource("4_ms5j3")
 augment = ExtResource("1_magnet")
 shop_id = &"magnet"

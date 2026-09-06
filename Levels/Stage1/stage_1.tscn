@@ -12,7 +12,7 @@
 [ext_resource type="Resource" uid="uid://cnxtqo5woe8ja" path="res://Data/Enemy/HunterEnemy.tres" id="6_rvay1"]
 [ext_resource type="PackedScene" uid="uid://b27tvj4v653m2" path="res://Levels/enemy_controller.tscn" id="10_8p85k"]
 [ext_resource type="Script" uid="uid://bo6li876odoia" path="res://Data/Enemy/enemy_data.gd" id="12_fkloy"]
-[ext_resource type="PackedScene" uid="uid://luquvycpj4hd" path="res://Actors/Pickup/coin_spawner.tscn" id="14_rvay1"]
+[ext_resource type="PackedScene" uid="uid://luquvycpj4hd" path="res://Actors/Pickup/item_spawner.tscn" id="14_rvay1"]
 [ext_resource type="Script" uid="uid://ddmjy6ihgdk7k" path="res://Systems/Levels/level_generator.gd" id="16_cvtwx"]
 [ext_resource type="Resource" uid="uid://b2xa4hm5ib5ca" path="res://Data/Levels/Stages/Stage1.tres" id="18_6vwij"]
 [ext_resource type="PackedScene" uid="uid://bws0ib2ep02xb" path="res://Actors/Environment/cloud_overlay.tscn" id="19_aqmxt"]
@@ -86,8 +86,8 @@ scroll_rig = NodePath("../ScrollRig")
 
 [node name="World" type="Node2D" parent="." unique_id=790454155]
 
-[node name="CoinSpawner" parent="." unique_id=1386735529 instance=ExtResource("14_rvay1")]
-level_data = ExtResource("18_6vwij")
+[node name="ItemSpawner" parent="." unique_id=1386735529 instance=ExtResource("14_rvay1")]
+active_level = ExtResource("18_6vwij")
 
 [node name="LevelGenerator" type="Node2D" parent="." unique_id=593108892]
 script = ExtResource("16_cvtwx")
