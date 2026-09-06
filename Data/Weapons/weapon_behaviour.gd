@@ -7,6 +7,14 @@ func fire(shooter: Node2D, weapon: WeaponState) -> void:
 	pass
 
 
+## Return true while a continuous mode replaces this weapon's normal shots.
+func update_continuous_fire(
+	_shooter: Player, _weapon: WeaponState, _delta: float,
+	_firing: bool, _fire_rate_multiplier: float
+) -> bool:
+	return false
+
+
 func _configure_projectile(projectile: Projectile, weapon: WeaponState) -> void:
 	var projectile_data := weapon.data.weaponProjectile.duplicate(true) as ProjectileData
 	projectile_data.damage = weapon.data.damage

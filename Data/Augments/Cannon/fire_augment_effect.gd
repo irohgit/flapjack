@@ -11,7 +11,11 @@ func apply_to_projectile(_projectile: Projectile) -> void:
 	_projectile.fire = true
 	_projectile.sprite_frames_override = fireball_frames
 	_projectile.animation_name_override = fireball_animation
+	for effect in get_status_effects():
+		_projectile.add_status_effect(effect)
 
+
+func get_status_effects() -> Array[StatusEffectData]:
 	var burn := StatusEffectData.new()
 	burn.effect_id = StatusEffectData.EFFECT_BURN
 	burn.display_name = "Burn"
@@ -22,4 +26,4 @@ func apply_to_projectile(_projectile: Projectile) -> void:
 	var damage_action := DamageEffectAction.new()
 	damage_action.amount = burn_damage_per_tick
 	burn.tick_actions.append(damage_action)
-	_projectile.add_status_effect(burn)
+	return [burn]

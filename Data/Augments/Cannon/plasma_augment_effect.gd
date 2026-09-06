@@ -7,7 +7,11 @@ extends AugmentEffect
 func apply_to_projectile(_projectile: Projectile) -> void:
 	_projectile.plasma = true
 	_projectile.texture_override = projectile_texture
+	for effect in get_status_effects():
+		_projectile.add_status_effect(effect)
 
+
+func get_status_effects() -> Array[StatusEffectData]:
 	var stun := StatusEffectData.new()
 	stun.effect_id = StatusEffectData.EFFECT_STUN
 	stun.display_name = "Stun"
@@ -19,4 +23,4 @@ func apply_to_projectile(_projectile: Projectile) -> void:
 	speed_modifier.operation = StatusEffectModifier.Operation.MULTIPLY
 	speed_modifier.value = 0.25
 	stun.stat_modifiers.append(speed_modifier)
-	_projectile.add_status_effect(stun)
+	return [stun]

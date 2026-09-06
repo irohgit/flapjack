@@ -414,6 +414,8 @@ func import_checkpoint(checkpoint: RunCheckpoint) -> bool:
 		return false
 
 	coin_count = checkpoint.coin_count
+	for state in _weapon_states:
+		state.stop_continuous_fire()
 	_weapon_states.clear()
 	for state in checkpoint.weapon_states:
 		_weapon_states.append(state.clone_for_checkpoint())
@@ -504,6 +506,11 @@ func _update_weapons(delta: float) -> void:
 	var cooldown_delta := delta * maxf(fire_rate, 0.0)
 	
 	for state in _weapon_states:
+		if state.data.weaponBehaviour.update_continuous_fire(
+			self, state, delta, shoot_pressed, fire_rate
+		):
+			state.cooldown = 0.0
+			continue
 		state.cooldown -= cooldown_delta
 		var should_fire := shoot_pressed
 		

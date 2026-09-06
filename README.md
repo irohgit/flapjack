@@ -50,9 +50,17 @@ they have no separate augment resources, pickups, or shop items.
 
 - Piercing + Orbital Ricochet + Plasma produces chain lightning behaviour.
   The interaction is implemented in `Actors/Projectiles/Projectile.gd`.
-- Plasma + an active Rapid Fire potion produces the laser effect. This
-  interaction still needs implementation and should last only while the potion
-  is active.
+- Plasma + an active Rapid Fire potion replaces Cannon shots with a laser while
+  Shoot is held. A `RayCast2D` stops at the first enemy, barrel, or obstacle;
+  banks and the visible screen edge also limit its length. The blue sprite sheet
+  supplies animated muzzle/tip caps and repeated body segments at 12 fps.
+  Contact damage is checked every 0.1 seconds at Cannon damage divided by its
+  shot interval, multiplied by the player's current fire-rate modifier.
+  Fractional damage accumulates on the current target. Plasma slow, Fire burn,
+  and projectile status data also apply; refreshing burn preserves its tick
+  timer. Releasing Shoot or losing the combo stops the beam. Homing, Piercing,
+  and Ricochet retain their projectile behaviour and do not redirect or extend
+  this first-hit beam.
 
 Grape Cannon has been dropped from the planned augments.
 
