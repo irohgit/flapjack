@@ -28,7 +28,8 @@ func _ready() -> void:
 	_rng.randomize()
 	_pickups_by_id = LootRegistry.build()
 	GameEvents.enemy_died.connect(_on_enemy_died)
-
+	print("[LOOT] registry size = ", _pickups_by_id.size())
+	print("[LOOT] active level id = '", active_level.get_level_id(), "'")
 
 func _on_enemy_died(position: Vector2, enemy_data: Resource) -> void:
 	if active_level == null or pickup_scene == null:

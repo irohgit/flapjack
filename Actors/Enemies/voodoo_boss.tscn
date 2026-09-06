@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://buoclsm4meh3f" path="res://Actors/Enemies/enemy.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://l68wphipexp5" path="res://Data/Enemy/enemy_voodoo_boss.gd" id="2_boss"]
-[ext_resource type="Resource" path="res://Data/Enemy/VoodooBoss.tres" id="3_data"]
-[ext_resource type="Resource" uid="uid://bhikdvcypt0ob" path="res://Data/Projectiles/voodoo_poison.tres" id="5_poison"]
+[ext_resource type="Resource" uid="uid://vv2uregfvbjv" path="res://Data/Enemy/VoodooBoss.tres" id="3_data"]
+[ext_resource type="Resource" uid="uid://c0e48rq103yt6" path="res://Data/Projectiles/voodoo_poison.tres" id="5_poison"]
 [ext_resource type="PackedScene" uid="uid://bq1hohq82ovyn" path="res://Actors/Enemies/enemy_pattern_butcherbird.tscn" id="6_bird"]
 [ext_resource type="Resource" uid="uid://b1t8pmt6xip8x" path="res://Data/Enemy/ButcherBird_Black.tres" id="7_bird_data"]
 

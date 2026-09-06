@@ -24,7 +24,7 @@ stat_modifiers = Array[ExtResource("3_modifier")]([SubResource("FireRateModifier
 
 [resource]
 script = ExtResource("1_potion")
-potion_id = &"rapid_fire_potion"
+potion_id = &"flapjack:rapidfirepotion"
 display_name = "Rapid Fire"
 description = "Doubles weapon fire rate for 10 seconds."
 icon = ExtResource("4_icon")

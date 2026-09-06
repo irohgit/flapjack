@@ -1,15 +1,15 @@
-[gd_resource type="Resource" script_class="GroundEffectData" format=3]
+[gd_resource type="Resource" script_class="GroundEffectData" format=3 uid="uid://cikebkl45vwk5"]
 
-[ext_resource type="Script" path="res://Data/GroundEffects/ground_effect_data.gd" id="1_ground"]
-[ext_resource type="Script" path="res://Systems/Combat/effect_action.gd" id="2_action"]
-[ext_resource type="Script" path="res://Systems/Combat/damage_effect_action.gd" id="3_damage"]
-[ext_resource type="Script" path="res://Systems/Combat/status_effect_data.gd" id="4_status"]
+[ext_resource type="Script" uid="uid://d0cqw0ka110x7" path="res://Data/GroundEffects/ground_effect_data.gd" id="1_ground"]
+[ext_resource type="Script" uid="uid://bb2hxg3ieta4h" path="res://Systems/Combat/effect_action.gd" id="2_action"]
+[ext_resource type="Script" uid="uid://bd52qvtdf37em" path="res://Systems/Combat/damage_effect_action.gd" id="3_damage"]
+[ext_resource type="Script" uid="uid://djyh13b16xtos" path="res://Systems/Combat/status_effect_data.gd" id="4_status"]
 [ext_resource type="SpriteFrames" uid="uid://b33pxcdpd7u2q" path="res://Animations/fireball.tres" id="5_frames"]
+[ext_resource type="Script" uid="uid://bd7w82irghj51" path="res://Systems/Combat/status_effect_modifier.gd" id="6_ey3km"]
 [ext_resource type="Texture2D" uid="uid://pmyluwx7bg43" path="res://Assets/Pickups/FireBall/FB005.png" id="6_icon"]
 
 [sub_resource type="Resource" id="Damage_tick"]
 script = ExtResource("3_damage")
-amount = 1
 
 [sub_resource type="Resource" id="Status_burn"]
 script = ExtResource("4_status")
@@ -30,7 +30,6 @@ reapply_interval = 1.1
 hitbox_radius = 64.0
 duration = 4.0
 start_opacity = 0.9
-end_opacity = 0.0
 pulse_amount = 0.12
 pulse_period = 0.75
 sprite_frames = ExtResource("5_frames")
