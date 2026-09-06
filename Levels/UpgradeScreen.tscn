@@ -17,7 +17,6 @@
 [ext_resource type="PackedScene" uid="uid://das28foe55u6f" path="res://UI/navbutton.tscn" id="15_rkbg3"]
 [ext_resource type="Resource" uid="uid://d022k1elgh4w8" path="res://Data/Upgrades/armament_2.tres" id="16_b88na"]
 [ext_resource type="AudioStream" uid="uid://dshox3m1impsv" path="res://Audio/SFX/soft_hover.mp3" id="16_cm27g"]
-[ext_resource type="Texture2D" uid="uid://s6xw6m0b8tim" path="res://Assets/UI/Health/frame.png" id="16_rkbg3"]
 [ext_resource type="Resource" uid="uid://cyl0qv343v7ne" path="res://Data/Upgrades/armament_3.tres" id="17_o8ke0"]
 [ext_resource type="AudioStream" uid="uid://dc263ntmf6iew" path="res://Audio/SFX/ui_click_stylized.mp3" id="17_rkbg3"]
 [ext_resource type="Script" uid="uid://syfvycgndo0d" path="res://Data/Upgrades/upgrade_node_data.gd" id="18_undata"]
@@ -139,21 +138,20 @@ layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_top = -20.0
-offset_right = 40.0
-offset_bottom = 20.0
+offset_top = -44.0
+offset_right = 104.0
+offset_bottom = 45.0
 grow_vertical = 2
 texture = ExtResource("7_fx8qg")
 
 [node name="ReturnButton" parent="." unique_id=395615966 instance=ExtResource("15_rkbg3")]
 layout_mode = 0
-offset_left = 748.0
-offset_top = 187.0
-offset_right = 1248.0
-offset_bottom = 327.0
-texture_normal = ExtResource("16_rkbg3")
+offset_left = 733.0
+offset_top = 929.0
+offset_right = 1233.0
+offset_bottom = 1069.0
 act = 6
-label_text = "Return"
+label_text = "EXIT TO THE DOCK"
 focus_tint = Color(1.016261, 1.0122128, 0.24325089, 1)
 focus_sound = ExtResource("16_cm27g")
 press_sound = ExtResource("17_rkbg3")

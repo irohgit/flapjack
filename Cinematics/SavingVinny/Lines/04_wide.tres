@@ -1,8 +1,21 @@
 [gd_resource type="Resource" script_class="CutsceneLine" format=3 uid="uid://bc61o8uc7o0bi"]
 
 [ext_resource type="Script" uid="uid://3ke20rwguryo" path="res://Cinematics/cutscene_line.gd" id="1_gta45"]
+[ext_resource type="Texture2D" uid="uid://c1a3kyf8pb43f" path="res://Assets/Cinematics/VINNY_1_1080p.jpg" id="2_gta45"]
 
 [resource]
 script = ExtResource("1_gta45")
 layout = 2
-hold_time = 0.8
+stage_image = ExtResource("2_gta45")
+hold_time = 5.0
+use_blur = true
+blur_time = 3.0
+use_mask = true
+mask_from = 0.35
+mask_to = 1.0
+mask_softness = 0.5
+mask_time = 5.0
+flash_enabled = true
+flash_colour = Color(0, 0, 0, 1)
+flash_hold = 0.05
+flash_fade = 0.5

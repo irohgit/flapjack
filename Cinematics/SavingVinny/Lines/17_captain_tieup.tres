@@ -1,8 +1,11 @@
 [gd_resource type="Resource" script_class="CutsceneLine" format=3 uid="uid://b3dvl4vqc7ns8"]
 
 [ext_resource type="Script" uid="uid://3ke20rwguryo" path="res://Cinematics/cutscene_line.gd" id="1_x14sl"]
+[ext_resource type="Texture2D" uid="uid://bjl6ycqrfk3yx" path="res://Assets/Cinematics/VINNY_8_1080p.jpg" id="2_8p4ev"]
 
 [resource]
 script = ExtResource("1_x14sl")
 speaker = "Captain"
 text = "Tie him up. Let's do what we do best. Pirating."
+layout = 2
+stage_image = ExtResource("2_8p4ev")

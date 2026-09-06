@@ -1,8 +1,19 @@
 [gd_resource type="Resource" script_class="CutsceneLine" format=3 uid="uid://dgmrpltptt5f"]
 
 [ext_resource type="Script" uid="uid://3ke20rwguryo" path="res://Cinematics/cutscene_line.gd" id="1_3i0mg"]
+[ext_resource type="AudioStream" uid="uid://6c6cn2cxym8v" path="res://Audio/SFX/coin_pickup_multiple.mp3" id="2_hkihy"]
+[ext_resource type="Texture2D" uid="uid://c1a3kyf8pb43f" path="res://Assets/Cinematics/VINNY_1_1080p.jpg" id="2_uxnjk"]
 
 [resource]
 script = ExtResource("1_3i0mg")
 speaker = "Vinny"
-text = "That is not what we agreed. I want proper payment."
+text = "33… 34… 35. That’s not what we agreed. I want proper payment."
+layout = 2
+stage_image = ExtResource("2_uxnjk")
+sound = ExtResource("2_hkihy")
+sound_volume_db = -10.0
+sound_repeats = 3
+sound_interval = 1.0
+flash_enabled = true
+flash_colour = Color(0, 0, 0, 1)
+flash_hold = 0.05

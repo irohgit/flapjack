@@ -1,7 +1,11 @@
 [gd_resource type="Resource" script_class="CutsceneLine" format=3 uid="uid://bf5shno13gdde"]
 
 [ext_resource type="Script" uid="uid://3ke20rwguryo" path="res://Cinematics/cutscene_line.gd" id="1_xnij8"]
+[ext_resource type="Texture2D" uid="uid://dwpd7vsrmjaym" path="res://Assets/Cinematics/VINNY_3_1080p.jpg" id="2_ou28e"]
 
 [resource]
 script = ExtResource("1_xnij8")
-hold_time = 1.0
+speaker = "Vinny"
+text = "Don’t say I didn’t warn you."
+layout = 2
+stage_image = ExtResource("2_ou28e")

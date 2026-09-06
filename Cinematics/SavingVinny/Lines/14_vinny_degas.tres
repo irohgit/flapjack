@@ -1,8 +1,11 @@
 [gd_resource type="Resource" script_class="CutsceneLine" format=3 uid="uid://bm5cjh6vsml88"]
 
 [ext_resource type="Script" uid="uid://3ke20rwguryo" path="res://Cinematics/cutscene_line.gd" id="1_83ui1"]
+[ext_resource type="Texture2D" uid="uid://bs6xij1n6hfl8" path="res://Assets/Cinematics/VINNY_6_1080p.jpg" id="2_42kfc"]
 
 [resource]
 script = ExtResource("1_83ui1")
 speaker = "Vinny"
 text = "...SHIT I brought the DEGAS Potion."
+layout = 2
+stage_image = ExtResource("2_42kfc")

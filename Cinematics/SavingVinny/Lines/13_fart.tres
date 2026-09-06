@@ -1,7 +1,11 @@
 [gd_resource type="Resource" script_class="CutsceneLine" format=3 uid="uid://cfiv5mpn7dtuj"]
 
 [ext_resource type="Script" uid="uid://3ke20rwguryo" path="res://Cinematics/cutscene_line.gd" id="1_o2c34"]
+[ext_resource type="Texture2D" uid="uid://tnefxqc788ep" path="res://Assets/Cinematics/VINNY_5_1080p.jpg" id="2_5rmy8"]
 
 [resource]
 script = ExtResource("1_o2c34")
-hold_time = 1.0
+speaker = "Vinny's Butt"
+text = "...poot"
+layout = 2
+stage_image = ExtResource("2_5rmy8")
