@@ -11,14 +11,22 @@ signal sequence_completed
 @export_range(-40.0, 6.0, 0.5) var stage_music_db := -6.0
 @export_range(0.0, 8.0, 0.1) var music_fade_in := 2.0
 
+@export_group("Entry Script")
+@export var entry_enabled := true
+## How far below its start position the ship begins, in pixels.
+@export var entry_distance := 700.0
+@export var entry_time := 1.4
 
 func run_generated_stage() -> bool:
 	Audio.play_music(stage_music, stage_music_db, music_fade_in)
+	
+	
 	assert(scroll_director != null, "%s needs a ScrollDirector" % name)
 	assert(enemy_controller != null, "%s needs an EnemyController" % name)
 	assert(level_generator != null, "%s needs a LevelGenerator" % name)
 	assert(level_generator.level_data != null, "LevelGenerator needs LevelData")
-
+	await play_entry()
+	
 	var plan: Array[GeneratedEncounter] = level_generator.generate_plan()
 	scroll_director.move_to(level_generator.level_data.end_position)
 	await run_plan(plan)
@@ -125,4 +133,26 @@ func run_cutscene_encounter(encounter: GeneratedEncounter) -> void:
 		return
 
 	CutsceneManager.play(encounter.cutscene_scene)
-	await CutsceneManager.cutscene_finished		
+	await CutsceneManager.cutscene_finished	
+		
+func play_entry() -> void:
+	if not entry_enabled:
+		return
+
+	var player := get_tree().get_first_node_in_group("player") as Player
+	if player == null:
+		push_warning("No player to run the stage entry on")
+		return
+
+	var resting := player.position
+	player.position = resting + Vector2(0.0, entry_distance)
+	player.begin_scripted_move()
+
+	# TRANS_BACK overshoots slightly past the target and settles back, which is
+	# the "sail in and drift back" motion in one curve.
+	var tween := create_tween()
+	tween.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tween.tween_property(player, "position", resting, entry_time)
+	await tween.finished
+
+	player.end_scripted_move()

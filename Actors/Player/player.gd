@@ -53,6 +53,9 @@ var _selected_potion_slot := 0
 var _can_exit_forward := false
 var _has_exited_play_area := false
 var _purchase_in_progress := false
+var _scripted := false
+var _can_fire := true
+
 
 #SFX
 @export var cannon_sfx: AudioStream
@@ -143,6 +146,8 @@ func _on_health_changed(current: int, maximum: int) -> void:
 	
 	
 func _process(_delta: float) -> void:
+	if _scripted: #stop normal player process to run an visual entry script for the ship
+		return
 	_move_intent = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 	if _status_effects.has_flag(StatusEffectData.FLAG_REVERSE_CONTROLS):
 		_move_intent *= -1.0
@@ -155,6 +160,7 @@ func _process(_delta: float) -> void:
 		drink_selected_potion()
 		
 func _physics_process(delta: float) -> void:
+
 	if banks != null:
 		DebugHud.watch("bank", banks.debug_line(global_position))
 	var movement_speed := _status_effects.get_modified_value(
@@ -169,7 +175,10 @@ func _physics_process(delta: float) -> void:
 	if banks != null and banks.is_on_bank(global_position):
 		_external_force.x += banks.bank_push_dir(global_position) * bank_push_x
 		_external_force.y += bank_push_down
-		
+	if _scripted:
+		_update_masts()
+		_update_wake()
+		return
 	position += (velocity + _external_force) * delta
 	position = _clamp_to_camera(position)
 	_check_for_forward_exit()
@@ -199,6 +208,18 @@ func _clamp_to_camera(pos: Vector2) -> Vector2:
 	)
 
 
+## While scripted, the ship ignores input and its own clamp so a cutscene or
+## an entry sequence can drive it directly.
+func begin_scripted_move(wake_direction := Vector2.UP) -> void:
+	_scripted = true
+	velocity = Vector2.ZERO
+	_external_force = Vector2.ZERO
+	_move_intent = wake_direction
+
+func end_scripted_move() -> void:
+	_scripted = false
+	_move_intent = Vector2.ZERO
+	
 func allow_forward_exit() -> void:
 	_can_exit_forward = true
 
@@ -478,8 +499,11 @@ func get_selected_potion_slot() -> int:
 	return _selected_potion_slot
 
 ## Combat
+func set_can_fire(allowed: bool) -> void:
+	_can_fire = allowed
+	
 func _update_weapons(delta: float) -> void:
-	var shoot_pressed := Input.is_action_pressed("shoot")
+	var shoot_pressed := _can_fire and Input.is_action_pressed("shoot")
 	var fire_rate := _status_effects.get_modified_value(
 		StatusEffectData.STAT_FIRE_RATE,
 		1.0

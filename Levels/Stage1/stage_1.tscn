@@ -70,6 +70,8 @@ level_generator = NodePath("LevelGenerator")
 screen_encounter_parent = NodePath("ScrollRig/ScreenEncounters")
 stage_music = ExtResource("2_yvgdk")
 stage_music_db = -30.0
+entry_distance = 600.0
+entry_time = 1.5
 metadata/_edit_vertical_guides_ = [960.0]
 
 [node name="GameUI" parent="." unique_id=1532914546 instance=ExtResource("3_p2t5c")]
