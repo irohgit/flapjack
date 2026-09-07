@@ -80,8 +80,18 @@ preserving its exact pixels and transparency. It targets enemies and applies
 Burn instead of Confusion. Burn uses confusion's three-second debuff duration
 and KEEP_LONGEST reapplication policy, with the Molotov's damage per 0.5-second
 tick. Throw rate uses the player's usual fire-rate modifiers. Range, flight
-time, and arc height are editable on the weapon behaviour. Rum, Liqueur, and
-Tequila remain unimplemented.
+time, and arc height are editable on the weapon behaviour.
+
+Molotov augments modify each throw's own fire-effect data:
+
+- Tequila doubles burn damage and halves both patch and lingering-burn duration.
+- Rum doubles both patch and lingering-burn duration.
+- Liqueur doubles burn damage without changing duration.
+
+These defaults stack multiplicatively: all three give 4x burn damage with the
+original five-second patch and three-second debuff durations. The 0.5-second
+tick interval stays the same. Multipliers are editable on each augment effect;
+damage is rounded to whole health units when applying each damage multiplier.
 
 ## Creating a ground effect
 

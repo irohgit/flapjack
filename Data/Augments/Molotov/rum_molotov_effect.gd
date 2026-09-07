@@ -2,10 +2,14 @@ class_name RumMolotovEffect
 extends AugmentEffect
 
 
-## Scaffold only. Exported values are authoring defaults, not final balance.
-@export var burn_duration_multiplier := 1.0
+@export_range(1.0, 10.0, 0.1, "or_greater") var burn_duration_multiplier := 2.0
 
 
-func apply_to_projectile(_projectile: Projectile) -> void:
-	# TODO: Increase Molotov burn duration. Decide whether this changes the ground area's lifetime, the status on victims, or both.
-	pass
+func apply_to_projectile(projectile: Projectile) -> void:
+	var pool := projectile.data.death_ground_effect
+	if pool == null:
+		return
+	pool.duration = maxf(pool.duration * burn_duration_multiplier, 0.05)
+	for effect in pool.status_effects:
+		if effect != null and effect.effect_id == StatusEffectData.EFFECT_BURN:
+			effect.duration = maxf(effect.duration * burn_duration_multiplier, 0.05)

@@ -12,6 +12,6 @@ augment = ExtResource("2_content")
 notification_name = "Tequila"
 shop_id = &"tequila_molotov"
 shop_price = 0
+shop_description = "Molotov burns twice as hot but burns out in half the time. Doubles burn damage and halves fire-patch and lingering-burn durations."
 texture = ExtResource("3_icon")
 shop_icon = ExtResource("3_icon")
-metadata/implementation_status = "scaffold"
