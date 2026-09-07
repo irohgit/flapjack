@@ -64,6 +64,25 @@ they have no separate augment resources, pickups, or shop items.
 
 Grape Cannon has been dropped from the planned augments.
 
+## Molotov
+
+Molotov is a passive weapon: every five seconds it lobs a bottle in a random
+direction, up to 300 world units away. A throw takes one second, with a spinning
+bottle above a ground shadow. Landing positions are clamped inside the visible
+screen. The bottle flies over actors and banks, then breaks into fragments and
+spawns one pulsing fire patch at the landing point.
+
+The patch copies the confusion pool's settings: five-second lifetime, 64-unit
+base radius, 0.75-second reapplication interval, 0.15 pulse amount, 0.9-second
+pulse period, 4x visual scale, and the same default opacity fade and spawn scale.
+It uses the original confusion blob with a red/orange/yellow palette shader,
+preserving its exact pixels and transparency. It targets enemies and applies
+Burn instead of Confusion. Burn uses confusion's three-second debuff duration
+and KEEP_LONGEST reapplication policy, with the Molotov's damage per 0.5-second
+tick. Throw rate uses the player's usual fire-rate modifiers. Range, flight
+time, and arc height are editable on the weapon behaviour. Rum, Liqueur, and
+Tequila remain unimplemented.
+
 ## Creating a ground effect
 
 Ground areas use the same `StatusEffectData` resources as projectiles and

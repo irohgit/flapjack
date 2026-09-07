@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Data/Weapons/weapon_data.gd" id="1_weapon"]
 [ext_resource type="Script" path="res://Data/Weapons/molotov_behaviour.gd" id="2_behaviour"]
-[ext_resource type="PackedScene" path="res://Actors/Projectiles/projectile.tscn" id="3_scene"]
+[ext_resource type="PackedScene" path="res://Actors/Projectiles/molotov_projectile.tscn" id="3_scene"]
 [ext_resource type="Resource" path="res://Data/Projectiles/molotov.tres" id="4_projectile"]
 [ext_resource type="Texture2D" path="res://Assets/UI/Shop/Items/Weapons/molotov.png" id="5_icon"]
 
@@ -19,4 +19,3 @@ texture = ExtResource("5_icon")
 weaponType = 1
 weaponProjectile = ExtResource("4_projectile")
 weaponBehaviour = SubResource("Behaviour")
-metadata/implementation_status = "scaffold"
