@@ -2,7 +2,7 @@ class_name LiqueurMolotovEffect
 extends AugmentEffect
 
 
-@export_range(1.0, 10.0, 0.1, "or_greater") var burn_damage_multiplier := 2.0
+@export_range(0.05, 1.0, 0.05) var movement_speed_multiplier := 0.5
 
 
 func apply_to_projectile(projectile: Projectile) -> void:
@@ -12,6 +12,10 @@ func apply_to_projectile(projectile: Projectile) -> void:
 	for effect in pool.status_effects:
 		if effect == null or effect.effect_id != StatusEffectData.EFFECT_BURN:
 			continue
-		for action in effect.tick_actions:
-			if action is DamageEffectAction:
-				action.amount = maxi(roundi(action.amount * burn_damage_multiplier), 0)
+		# Attach the slow to Burn itself so it lasts exactly as long as the fire
+		# debuff, including any duration changes from Rum or Tequila.
+		var slow := StatusEffectModifier.new()
+		slow.stat_id = StatusEffectData.STAT_MOVEMENT_SPEED
+		slow.operation = StatusEffectModifier.Operation.MULTIPLY
+		slow.value = clampf(movement_speed_multiplier, 0.05, 1.0)
+		effect.stat_modifiers.append(slow)

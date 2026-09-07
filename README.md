@@ -86,11 +86,14 @@ Molotov augments modify each throw's own fire-effect data:
 
 - Tequila doubles burn damage and halves both patch and lingering-burn duration.
 - Rum doubles both patch and lingering-burn duration.
-- Liqueur doubles burn damage without changing duration.
+- Liqueur adds sticky fire: burning enemies move at half speed until Burn ends,
+  including the lingering burn after leaving the patch. It does not boost damage.
 
-These defaults stack multiplicatively: all three give 4x burn damage with the
-original five-second patch and three-second debuff durations. The 0.5-second
-tick interval stays the same. Multipliers are editable on each augment effect;
+These defaults combine: all three give 2x burn damage and a 50% slow with the
+original five-second patch and three-second debuff durations. Rum extends the
+slow along with Burn; Tequila shortens both. Reapplying the same burn does not
+compound the slow. The 0.5-second tick interval stays the same. Multipliers are
+editable on each augment effect;
 damage is rounded to whole health units when applying each damage multiplier.
 
 ## Creating a ground effect

@@ -12,6 +12,6 @@ augment = ExtResource("2_content")
 notification_name = "Liqueur"
 shop_id = &"liqueur_molotov"
 shop_price = 0
-shop_description = "Molotov burns more strongly. Doubles burn damage without changing its duration."
+shop_description = "Molotov leaves sticky fire. Burning enemies move 50% slower until the burn wears off, even after leaving the fire patch."
 texture = ExtResource("3_icon")
 shop_icon = ExtResource("3_icon")
