@@ -5,7 +5,7 @@ extends Enemy
 
 @export_range(0.0, 0.5, 0.01) var hold_height_ratio := 0.25
 @export_range(0.0, 500.0, 1.0, "or_greater") var playfield_margin := 150.0
-
+@export var explosion_scene: PackedScene
 
 # Overrides the base fire entirely. The timer still ticks, it just produces
 # nothing, which is cheaper than fighting the base class's scheduling.
@@ -48,3 +48,39 @@ func _clamp_to_visible_playfield(world_position: Vector2) -> Vector2:
 			visible_rect.end.y - playfield_margin
 		)
 	)
+
+
+func _spawn_explosion(at: Vector2) -> void:
+	if explosion_scene == null:
+		return
+
+	var blast := explosion_scene.instantiate() as Node2D
+	if blast == null:
+		push_error("Explosion scene must inherit from Node2D")
+		return
+
+	# The parent, not self. This ship is about to be freed.
+	get_parent().add_child(blast)
+	blast.global_position = at
+
+	var sprite := _find_animated_sprite(blast)
+	if sprite == null:
+		push_warning("Explosion scene has no AnimatedSprite2D, freeing after 1s")
+		get_tree().create_timer(1.0).timeout.connect(blast.queue_free)
+		return
+
+	sprite.animation_finished.connect(blast.queue_free, CONNECT_ONE_SHOT)
+	sprite.play()
+	
+func _on_died() -> void:
+	_spawn_explosion(global_position)
+	super()
+
+func _find_animated_sprite(node: Node) -> AnimatedSprite2D:
+	if node is AnimatedSprite2D:
+		return node as AnimatedSprite2D
+	for child: Node in node.get_children():
+		var found := _find_animated_sprite(child)
+		if found != null:
+			return found
+	return null

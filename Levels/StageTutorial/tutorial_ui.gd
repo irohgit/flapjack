@@ -18,12 +18,21 @@ extends Control
 @onready var _text: RichTextLabel = $SayBox/VBox/Text
 @onready var _prompt_card: Control = $PromptCard
 @onready var _prompt_label: Label = $PromptCard/Label
-@onready var _tick: Control = $PromptCard/Tick
-@onready var _objective: Label = $Objective
+@onready var _tick: Control =  $PromptCard/Tick #HARDCODED
+@onready var _objective: Label = $Objective/VBox/Label #HARDCODED
+@onready var _objective_root: Control = $Objective
 
 @export_group("Timing")
-## Default hold for say_auto(), in seconds.
+## Default hold for say_auto(), in seconds. 
 @export var auto_line_time := 2.5
+
+@export_group("Animation")
+@onready var _input_anim: AnimatedSprite2D = $Objective/VBox/HBoxContainer/AnimSlot/input_animation
+@onready var _anim_slot: Control = $Objective/VBox/HBoxContainer/AnimSlot
+
+var _objective_keyboard := ""
+var _objective_gamepad := ""
+var _current_animation_key := ""
 
 func _ready() -> void:
 	# The tutorial pauses the world to show prompts, so this layer must not.
@@ -36,12 +45,18 @@ func _ready() -> void:
 	assert(_prompt_label != null, "PromptCard/Label not found")
 	assert(_tick != null, "PromptCard/Tick not found")
 	assert(_objective != null, "Objective not found")
+	assert(_input_anim != null, "InputAnim not found")
 
 	_say_box.visible = false
 	_prompt_card.visible = false
-	_objective.visible = false
+	#_objective.visible = false
+	#hide animations
+	_objective_root.visible = false
+	_anim_slot.visible = false
+	
 	_tick.modulate.a = 0.0
 	_tick.pivot_offset = _tick.size * 0.5
+	InputDevice.scheme_changed.connect(_on_scheme_changed)
 
 
 # --- The two methods the tutorial actually calls ------------------------------
@@ -73,10 +88,18 @@ func say_auto(speaker: String, text: String) -> void:
 ## Shows an input instruction and waits until the player presses one of the
 ## given actions. Freezes the world by default so they can read at their pace.
 func prompt(actions: Array[StringName], label: String, pause_world := true) -> void:
+
 	_prompt_label.text = label
 	_tick.modulate.a = 0.0
 	_prompt_card.visible = true
-
+	
+	print("[PROMPT] card vis %s a %.2f | ui vis %s a %.2f | layer vis %s | text '%s'" % [
+		_prompt_card.visible, _prompt_card.modulate.a,
+		visible, modulate.a,
+		get_parent().visible,
+		_prompt_label.text
+	])
+	
 	var was_paused := get_tree().paused
 	if pause_world:
 		get_tree().paused = true
@@ -93,15 +116,53 @@ func prompt(actions: Array[StringName], label: String, pause_world := true) -> v
 # --- Objective line ----------------------------------------------------------
 
 func set_objective(text: String) -> void:
-	_objective.text = text
-	_objective.visible = true
+	_objective_keyboard = text
+	_objective_gamepad = text
+	_refresh_objective()
 
+#func clear_objective() -> void:
+	#_objective_keyboard = ""
+	#_objective_gamepad = ""
+	#_objective.visible = false
+	#_objective.text = ""
 
 func clear_objective() -> void:
-	_objective.visible = false
+	_objective_keyboard = ""
+	_objective_gamepad = ""
 	_objective.text = ""
+	_objective_root.visible = false
+	play_input_animation("")
 
+func play_input_animation(key: String) -> void:
+	_current_animation_key = key
 
+	if key.is_empty():
+		_anim_slot.visible = false
+		_input_anim.stop()
+		return
+
+	var suffix := "_gamepad" if InputDevice.is_gamepad() else "_keyboard"
+	var clip := key + suffix
+
+	if _input_anim.sprite_frames != null and _input_anim.sprite_frames.has_animation(clip):
+		_anim_slot.visible = true
+		_input_anim.play(clip)
+	else:
+		_anim_slot.visible = false
+		push_warning("No input animation named '%s'" % clip)
+	
+#func play_input_animation(key: String) -> void:
+	#_current_animation_key = key
+	#if key.is_empty():
+		#return
+#
+	#var suffix := "_gamepad" if InputDevice.is_gamepad() else "_keyboard"
+	#var clip := key + suffix
+#
+	#if _input_anim.sprite_frames != null and _input_anim.sprite_frames.has_animation(clip):
+		#_input_anim.play(clip)
+	#else:
+		#push_warning("No input animation named '%s'" % clip)
 # --- Internals ---------------------------------------------------------------
 
 func _wait_for_any(actions: Array[StringName]) -> void:
@@ -155,7 +216,7 @@ func _play_tick() -> void:
 		Audio.play_ui(tick_sound)
 
 	_tick.pivot_offset = _tick.size * 0.5
-	_tick.scale = Vector2.ONE * 0.6
+	_tick.scale = Vector2.ONE * 1.5
 	_tick.modulate.a = 1.0
 
 	var tween := create_tween().set_parallel(true)
@@ -187,3 +248,31 @@ func prompt_hold(actions: Array[StringName], label: String, seconds := 1.0) -> v
 
 	await _play_tick()
 	_prompt_card.visible = false
+
+
+## Objective text for both schemes. Swaps live if the player changes device.
+func set_objective_for_input(keyboard: String, gamepad: String) -> void:
+	_objective_keyboard = keyboard
+	_objective_gamepad = gamepad
+	_refresh_objective()
+
+
+
+func _refresh_objective() -> void:
+	if _objective_keyboard.is_empty() and _objective_gamepad.is_empty():
+		return
+	_objective.text = _objective_gamepad if InputDevice.is_gamepad() else _objective_keyboard
+	_objective.visible = true
+	_objective_root.visible = true
+
+#func _refresh_objective() -> void:
+	#if _objective_keyboard.is_empty() and _objective_gamepad.is_empty():
+		#return
+	#_objective.text = _objective_gamepad if InputDevice.is_gamepad() else _objective_keyboard
+	#_objective.visible = true
+
+
+func _on_scheme_changed(_scheme: int) -> void:
+	_refresh_objective()
+	play_input_animation(_current_animation_key)
+	

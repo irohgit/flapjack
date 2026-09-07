@@ -10,7 +10,7 @@
 
 [resource]
 script = ExtResource("1_4kokw")
-health = 30
+health = 20
 projectile_damage = 0
 projectile_fire_rate = 3
 projectile_speed = 0.75

@@ -34,8 +34,20 @@ const NEXT_SCENE := "res://Levels/Stage1/stage_1.tscn"
 @onready var _tutorial_ui: TutorialUI = $HUD/TutorialLayer/TutorialUI
 @onready var game_ui: GameUI = $GameUI
 
+@export_group("Scripted cannonball")
+@export var cannonball_texture: Texture2D
+## An AnimatedSprite2D scene that plays once and frees itself.
+@export var explosion_scene: PackedScene
+@export var cannonball_speed := 750.0
+@export var cannonball_spin := 6.0
+## How far from the player counts as a hit.
+@export var cannonball_hit_radius := 28.0
+@export var cannon_fire_sfx : AudioStreamMP3
+@export var cannon_impact_sfx : AudioStreamMP3
+@export var potion_min_distance := 260.0
+
 var _player: Player
-var _raider: Node = null
+var _raider: Node2D = null
 var _last_raider_position := Vector2.ZERO
 var _highlight_tween: Tween = null
 
@@ -80,8 +92,8 @@ func _go_to_stage_1() -> void:
 # --- 1. Opening --------------------------------------------------------------
 
 func _beat_opening() -> void:
-	await _tutorial_ui.say("Jack", "Right. Just you and me, Flapjack. And a princess who needs saving.")
-	await _tutorial_ui.say_auto("Jack", "How hard can it be.")
+	#await _tutorial_ui.say("Jack", "Right. Just you and me, Flapjack. And a princess who needs saving.")
+	await _tutorial_ui.say_auto("Jack", "Right. Just you and me, Flapjack. And a princess who needs saving. How hard can it be.")
 
 
 # --- 2. Movement and debris --------------------------------------------------
@@ -89,43 +101,50 @@ func _beat_opening() -> void:
 func _beat_movement() -> void:
 	_spawn_debris()
 	await _tutorial_ui.say_auto("Jack", "Wreckage. Somebody's had a worse morning than us.")
-
+	
+	_tutorial_ui.set_objective_for_input("Sail using W A S D", "Sail using the Left Stick")
+	_tutorial_ui.play_input_animation("move")
 	await _tutorial_ui.prompt(
 		[&"move_left", &"move_right", &"move_forward", &"move_backward"],
-		"WASD  /  LEFT STICK   to steer"
+		""
 	)
-
+	_tutorial_ui.clear_objective()
+	_tutorial_ui.set_objective("floating debris won't hurt you")
 	await _tutorial_ui.say("Flapjack", "It's just driftwood, Jack. It's not going to hurt us.")
 	await _tutorial_ui.say_auto("Jack", "I knew that. I was steering around it out of respect.")
-
+	_tutorial_ui.clear_objective()
 
 # --- 3. The ambush -----------------------------------------------------------
 
 func _beat_ambush() -> void:
 	_raider = _spawn_raider()
-	await _tutorial_ui.say_auto("Jack", "Ship off the bow. Don't see us don't see us don't see us.")
-
+	await _tutorial_ui.say_auto("Jack", "Pirates off the bow. \n please don't see us please don't see us")
+	await _tutorial_ui.say_auto("Flapjack", "Come you mangy sea cretin. Today is the last day you will be on the ocean. ")
+	
 	await _scripted_hit()
-
-	await _tutorial_ui.say_auto("Jack", "THEY SAW US.")
-	await _tutorial_ui.say_auto("Flapjack", "THEY SAW US.")
-
-
-# --- 4. Firing ---------------------------------------------------------------
+	_tutorial_ui.set_objective("BOOM!")
+	await _tutorial_ui.say_auto("Flapjack", "HA! Mine challenge hath found their ears!")
+	_tutorial_ui.clear_objective()
 
 # --- 4. Firing ---------------------------------------------------------------
 func _beat_firing() -> void:
 	# Unlock first, so the very first press fires a real cannonball.
 	_player.set_can_fire(true)
 
-	_tutorial_ui.set_objective("Press RT/SPACE to fire") #TODO: check input type and switch objective to match
-	await _tutorial_ui.prompt([&"shoot"], "RIGHT TRIGGER  /  SPACE   to fire", false)
+	_tutorial_ui.set_objective_for_input("Press SPACE to fire", "Press RT to fire")
+	_tutorial_ui.play_input_animation("fire")
+	await _tutorial_ui.prompt([&"shoot"], "", false)
 
-	_tutorial_ui.say_auto("Jack", "Hold it down and keep firing. We've powder enough to sink the moon.")
+	_tutorial_ui.say_auto("Jack", "Hold it down and keep firing. We've enough powder to reach the moon.")
 
-	_tutorial_ui.set_objective("HOLD RT/SPACE to fire. You have unlimited cannons") #TODO: check input type
-	await _tutorial_ui.prompt_hold([&"shoot"], "HOLD to keep firing", 1.2)
+	_tutorial_ui.set_objective_for_input(
+		"HOLD SPACE to keep firing. \n You have unlimited cannon balls.",
+		"HOLD RT to keep firing. \n You have unlimited cannon balls."
+	)
+	await _tutorial_ui.prompt_hold([&"shoot"], "", 1.2)
 
+	# Goal, not a control, so no per-device text and no glyph.
+	_tutorial_ui.play_input_animation("")
 	_tutorial_ui.set_objective("Sink the raider")
 
 	# Track it while it lives, so the potion can drop where it died.
@@ -140,19 +159,25 @@ func _beat_firing() -> void:
 # --- 5. The potion -----------------------------------------------------------
 
 func _beat_potion() -> void:
-	var potion := _spawn_potion_at(_last_raider_position)
 	await _tutorial_ui.say("Jack", "It dropped something. Our hull could use it.")
 
+	var potion := _spawn_potion_at(_last_raider_position)
 	_tutorial_ui.set_objective("Sail over the potion")
-	_highlight(potion as Node2D)
+	if is_instance_valid(potion):
+		_highlight(potion)
+
 	while is_instance_valid(potion):
 		await get_tree().process_frame
+
 	_clear_highlight()
 	_tutorial_ui.clear_objective()
-
+	
+	_tutorial_ui.set_objective("Q / E  or  D-PAD   to switch potion")
 	await _tutorial_ui.prompt([&"potion_next", &"potion_previous"], "Q / E  or  D-PAD   to switch potion")
+	_tutorial_ui.clear_objective()
+	_tutorial_ui.set_objective("R  /  A   to drink")
 	await _tutorial_ui.prompt([&"drink_potion"], "R  /  A   to drink")
-
+	_tutorial_ui.clear_objective()
 	await _tutorial_ui.say("Jack", "Better. Mostly.")
 
 
@@ -221,7 +246,7 @@ func _spawn_debris() -> void:
 		tween.chain().tween_callback(piece.queue_free)
 
 
-func _spawn_raider() -> Node:
+func _spawn_raider() -> Node2D:
 	if trainer_enemy_scene == null:
 		push_error("Tutorial has no trainer enemy scene assigned")
 		return null
@@ -241,7 +266,7 @@ func _spawn_raider() -> Node:
 	return raider
 
 
-func _spawn_potion_at(where: Vector2) -> Node:
+func _spawn_potion_at(where: Vector2) -> Node2D:
 	if pickup_scene == null or tutorial_potion == null:
 		push_error("Tutorial needs a pickup scene and a potion PickupData")
 		return null
@@ -253,15 +278,8 @@ func _spawn_potion_at(where: Vector2) -> Node:
 
 	potion.data = tutorial_potion
 	_world.add_child(potion)
-
-	# Fall back to the middle of the screen if the raider never existed.
-	var drop_at := where
-	if drop_at.is_zero_approx():
-		drop_at = Playarea.get_visible_world_rect().get_center()
-	potion.global_position = drop_at
-
+	potion.global_position = _drop_point(where)
 	return potion
-
 
 func _spawn_barrel() -> Node:
 	if gin_spawner == null or tutorial_barrel == null:
@@ -272,19 +290,23 @@ func _spawn_barrel() -> Node:
 	)
 
 
-# --- Scripted hit ------------------------------------------------------------
+## Keeps the drop far enough from the player that it is not hoovered up on the
+## frame it appears, and inside the visible area so it can be seen.
+func _drop_point(where: Vector2) -> Vector2:
+	var rect := Playarea.get_visible_world_rect()
+	var target := where
+	if target.is_zero_approx():
+		target = rect.get_center()
 
-## A guaranteed, survivable hit. Computed from current health so it can never
-## kill, whatever state the player arrives in.
-func _scripted_hit() -> void:
-	await get_tree().create_timer(0.9).timeout
+	var away := target - _player.global_position
+	if away.length() < potion_min_distance:
+		away = Vector2.UP * potion_min_distance
+		target = _player.global_position + away
 
-	var health := _player.get_health_component()
-	var floor_health := int(health.max_health * ambush_health_floor)
-	var damage := maxi(health.current_health - floor_health, 1)
-	health.take_damage(damage)
-
-	await get_tree().create_timer(0.7).timeout
+	return Vector2(
+		clampf(target.x, rect.position.x + 120.0, rect.end.x - 120.0),
+		clampf(target.y, rect.position.y + 120.0, rect.end.y - 220.0)
+	)
 
 
 # --- Highlight ---------------------------------------------------------------
@@ -292,7 +314,7 @@ func _scripted_hit() -> void:
 ## Pulses a target so the eye finds it. No extra scene, no drawing.
 func _highlight(target: Node2D) -> void:
 	_clear_highlight()
-	if target == null:
+	if target == null or not is_instance_valid(target):
 		return
 
 	_highlight_tween = target.create_tween().set_loops()
@@ -308,3 +330,91 @@ func _clear_highlight() -> void:
 	
 
 #Helper
+
+## Launches a scripted cannonball from the raider that chases the player,
+## explodes on arrival, and only then applies damage.
+func _fire_scripted_cannonball() -> void:
+	if cannonball_texture == null:
+		push_warning("Tutorial has no cannonball texture, skipping the visual")
+		return
+
+	var ball := Sprite2D.new()
+	ball.texture = cannonball_texture
+	_world.add_child(ball)
+
+	var origin := _player.global_position + Vector2(0.0, -600.0)
+	if is_instance_valid(_raider):
+		origin = (_raider as Node2D).global_position
+	ball.global_position = origin
+
+	# Chases the player's live position rather than a fixed point, so a moving
+	# player still gets hit and it reads as aimed.
+	while true:
+		var delta := get_process_delta_time()
+		var to_player := _player.global_position - ball.global_position
+
+		if to_player.length() <= cannonball_hit_radius:
+			break
+
+		ball.global_position += to_player.normalized() * cannonball_speed * delta
+		ball.rotation += cannonball_spin * delta
+		await get_tree().process_frame
+
+	var impact := ball.global_position
+	ball.queue_free()
+	_spawn_explosion(impact)
+
+
+func _spawn_explosion(at: Vector2) -> void:
+	if explosion_scene == null:
+		return
+
+	var blast := explosion_scene.instantiate() as Node2D
+	if blast == null:
+		push_error("Explosion scene must inherit from Node2D")
+		return
+
+	_world.add_child(blast)
+	blast.global_position = at
+
+	var sprite := _find_animated_sprite(blast)
+	if sprite == null:
+		push_warning("Explosion scene has no AnimatedSprite2D, freeing after 1s")
+		await get_tree().create_timer(1.0).timeout
+		blast.queue_free()
+		return
+
+
+	sprite.animation_finished.connect(blast.queue_free, CONNECT_ONE_SHOT)
+	sprite.play()
+
+
+## The sprite may be the root or a child, depending on how the scene was built.
+func _find_animated_sprite(node: Node) -> AnimatedSprite2D:
+	if node is AnimatedSprite2D:
+		return node as AnimatedSprite2D
+	for child: Node in node.get_children():
+		var found := _find_animated_sprite(child)
+		if found != null:
+			return found
+	return null
+func _scripted_hit() -> void:
+	await get_tree().create_timer(0.6).timeout      # the raider lines up
+
+	Audio.play_sfx(cannon_fire_sfx, 0.0)            # KRAKOOM
+	await _fire_scripted_cannonball()               # travel
+	Audio.play_sfx(cannon_impact_sfx, 0.0)          # KRRRAK
+
+	# Damage lands a beat after the explosion starts, so the eye sees the
+	# cause before it sees the effect.
+	await get_tree().create_timer(0.08).timeout
+
+	var health := _player.get_health_component()
+	var floor_health := int(health.max_health * ambush_health_floor)
+	var damage := maxi(health.current_health - floor_health, 1)
+	health.take_damage(damage)
+
+	await get_tree().create_timer(0.7).timeout
+	
+
+	
