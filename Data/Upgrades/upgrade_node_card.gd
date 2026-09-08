@@ -3,7 +3,7 @@ extends VBoxContainer
 
 @export var node_data: UpgradeNodeData
 
-@onready var _icon: TextureRect = $CardBody/Margin/HBox/Icon
+@onready var _icon: TextureRect = $CardBody/Margin/HBox/IconFrame/Icon
 @onready var _name_label: Label = $CardBody/Margin/HBox/InfoVBox/NameLabel
 @onready var _description_label: Label = $CardBody/Margin/HBox/InfoVBox/DescriptionLabel
 @onready var _progress_bar: ProgressBar = $CardBody/Margin/HBox/InfoVBox/ProgressBar
@@ -47,7 +47,7 @@ func _refresh() -> void:
 	if node_data.tier - 1 > MetaProgress.boat_tier:
 		_cost_label.text = "LOCKED"
 		_buy_button.disabled = true
-		modulate = Color(0.4, 0.4, 0.4)
+		modulate = Color(0.68, 0.68, 0.68, 1.0)
 		return
 		
 	modulate = Color.WHITE

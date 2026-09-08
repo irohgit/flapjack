@@ -13,14 +13,12 @@ const MAIN_MENU_SCENE := "res://UI/main_menu.tscn"
 @onready var _boat_sprite: TextureRect = $BoatPreview
 @onready var _boat_tier_label: Label = %BoatTier
 @onready var _refit_progress: Label = %RefitProgress
+@onready var _tier_columns: Array[Control] = [%TierIColumn, %TierIIColumn, %TierIIIColumn]
 
 @export var skiff_texture: Texture2D
 @export var schooner_texture: Texture2D
 @export var galleon_texture: Texture2D
 var _owns_lifetime := false
-
-func _process(_delta: float) -> void:
-	DebugHud.watch("focus", str(get_viewport().gui_get_focus_owner()))
 	
 func _ready() -> void:
 	MetaProgress.gin_changed.connect(func(a): _gin_label.text = str(a))
@@ -42,18 +40,24 @@ func _on_upgrade_purchased(_id: StringName, _level: int) -> void:
 
 
 func _update_boat_preview() -> void:
+	for index in _tier_columns.size():
+		_tier_columns[index].modulate = (
+			Color.WHITE
+			if index <= MetaProgress.boat_tier
+			else Color(0.72, 0.72, 0.72, 1.0)
+		)
 	match MetaProgress.boat_tier:
 		MetaProgress.BoatTier.SKIFF:
 			_boat_sprite.texture = skiff_texture
-			_boat_tier_label.text = "TIER I  \u2022  SKIFF"
+			_boat_tier_label.text = "TIER I  -  SKIFF"
 			_update_refit_progress(tier1_nodes)
 		MetaProgress.BoatTier.SCHOONER:
 			_boat_sprite.texture = schooner_texture
-			_boat_tier_label.text = "TIER II  \u2022  SCHOONER"
+			_boat_tier_label.text = "TIER II  -  SCHOONER"
 			_update_refit_progress(tier2_nodes)
 		MetaProgress.BoatTier.GALLEON:
 			_boat_sprite.texture = galleon_texture
-			_boat_tier_label.text = "TIER III  \u2022  GALLEON"
+			_boat_tier_label.text = "TIER III  -  GALLEON"
 			_update_refit_progress([
 				MetaProgress.RIGGING_NODES[2],
 				MetaProgress.ARMAMENT_NODES[2],

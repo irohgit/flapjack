@@ -306,7 +306,7 @@ func _pick_line(lines: Array[String]) -> String:
 func _set_merchant_line(line: String) -> void:
 	_last_merchant_line = line
 	if merchant_dialogue != null:
-		merchant_dialogue.text = "\u201c%s\u201d" % line
+		merchant_dialogue.text = "'%s'" % line
 
 
 func _update_focus_neighbors() -> void:

@@ -1,0 +1,249 @@
+[gd_scene load_steps=11 format=3 uid="uid://co6sij38mf2wj"]
+
+[ext_resource type="Script" uid="uid://bdk8hkdfpyigi" path="res://Data/Upgrades/upgrade_node_card.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://Assets/UI/WoodMenu/wood_button.png" id="2_wood"]
+[ext_resource type="FontFile" uid="uid://1qarew2on3k7" path="res://Assets/Fonts/PixelOperator.ttf" id="3_font"]
+[ext_resource type="Texture2D" uid="uid://dypxhdmtkar1y" path="res://Assets/Pickups/cocktail_2.png" id="4_gin"]
+
+[sub_resource type="StyleBoxFlat" id="Style_icon_frame"]
+bg_color = Color(0.025, 0.07, 0.075, 0.94)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.91, 0.66, 0.22, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.55)
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="Style_progress_background"]
+bg_color = Color(0.035, 0.018, 0.008, 0.92)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.25, 0.12, 0.035, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="Style_progress_fill"]
+bg_color = Color(0.06, 0.68, 0.6, 1)
+border_width_top = 2
+border_width_bottom = 2
+border_color = Color(0.31, 0.95, 0.82, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="Style_buy_normal"]
+bg_color = Color(0.035, 0.29, 0.27, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.84, 0.58, 0.16, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="Style_buy_hover"]
+bg_color = Color(0.055, 0.47, 0.42, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0.82, 0.34, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+shadow_color = Color(0.1, 0.95, 0.8, 0.25)
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="Style_buy_pressed"]
+bg_color = Color(0.025, 0.2, 0.19, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.73, 0.43, 0.1, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="Style_buy_disabled"]
+bg_color = Color(0.12, 0.1, 0.085, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.31, 0.27, 0.22, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="UpgradeNodeCard" type="VBoxContainer"]
+custom_minimum_size = Vector2(406, 220)
+theme_override_constants/separation = 2
+script = ExtResource("1_script")
+
+[node name="CardBody" type="Control" parent="."]
+custom_minimum_size = Vector2(406, 166)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Background" type="TextureRect" parent="CardBody"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_wood")
+expand_mode = 1
+
+[node name="Margin" type="MarginContainer" parent="CardBody"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 19.0
+offset_right = -24.0
+offset_bottom = -19.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="HBox" type="HBoxContainer" parent="CardBody/Margin"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 16
+
+[node name="IconFrame" type="PanelContainer" parent="CardBody/Margin/HBox"]
+custom_minimum_size = Vector2(112, 112)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_styles/panel = SubResource("Style_icon_frame")
+
+[node name="Icon" type="TextureRect" parent="CardBody/Margin/HBox/IconFrame"]
+texture_filter = 1
+custom_minimum_size = Vector2(96, 96)
+layout_mode = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="InfoVBox" type="VBoxContainer" parent="CardBody/Margin/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_constants/separation = 3
+alignment = 1
+
+[node name="NameLabel" type="Label" parent="CardBody/Margin/HBox/InfoVBox"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 0.91, 0.68, 1)
+theme_override_colors/font_outline_color = Color(0.035, 0.008, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 25
+text = "RIGGING I"
+text_overrun_behavior = 3
+
+[node name="DescriptionLabel" type="Label" parent="CardBody/Margin/HBox/InfoVBox"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.53, 0.93, 0.85, 1)
+theme_override_colors/font_outline_color = Color(0.02, 0.005, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 17
+text = "+ SPEED"
+text_overrun_behavior = 3
+
+[node name="ProgressBar" type="ProgressBar" parent="CardBody/Margin/HBox/InfoVBox"]
+custom_minimum_size = Vector2(0, 31)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/background = SubResource("Style_progress_background")
+theme_override_styles/fill = SubResource("Style_progress_fill")
+show_percentage = false
+
+[node name="LevelLabel" type="Label" parent="CardBody/Margin/HBox/InfoVBox/ProgressBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 17
+text = "0 / 3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CostRow" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Icon" type="TextureRect" parent="CostRow"]
+texture_filter = 1
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("4_gin")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CostLabel" type="Label" parent="CostRow"]
+custom_minimum_size = Vector2(105, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.62, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 20
+text = "15 GIN"
+vertical_alignment = 1
+
+[node name="BuyButton" type="Button" parent="CostRow"]
+custom_minimum_size = Vector2(142, 40)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(1, 0.94, 0.76, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.9, 0.77, 0.48, 1)
+theme_override_colors/font_disabled_color = Color(0.48, 0.45, 0.4, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("Style_buy_normal")
+theme_override_styles/hover = SubResource("Style_buy_hover")
+theme_override_styles/pressed = SubResource("Style_buy_pressed")
+theme_override_styles/focus = SubResource("Style_buy_hover")
+theme_override_styles/disabled = SubResource("Style_buy_disabled")
+text = "UPGRADE"

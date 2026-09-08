@@ -2,7 +2,7 @@ class_name ShopOfferCard
 extends NavButton
 
 @onready var rarity_stripe: ColorRect = $RarityStripe
-@onready var item_icon: TextureRect = $ContentMargin/Row/IconFrame/Icon
+@onready var item_icon: TextureRect = $ContentMargin/Row/IconFrame/ItemIcon
 @onready var item_name_label: Label = $ContentMargin/Row/TextColumn/ItemName
 @onready var item_type_label: Label = $ContentMargin/Row/TextColumn/ItemType
 @onready var status_caption: Label = $ContentMargin/Row/StatusColumn/StatusCaption
