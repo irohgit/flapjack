@@ -1,217 +1,73 @@
-[gd_scene format=3 uid="uid://dpbyqdwsufn2f"]
+[gd_scene load_steps=19 format=3 uid="uid://dpbyqdwsufn2f"]
 
 [ext_resource type="Script" uid="uid://mibkq2861k2d" path="res://UI/Shop/shop_menu.gd" id="1_script"]
 [ext_resource type="FontFile" uid="uid://1qarew2on3k7" path="res://Assets/Fonts/PixelOperator.ttf" id="2_font"]
-[ext_resource type="Texture2D" uid="uid://k4oa7gcvvrcx" path="res://Assets/UI/Shop/Panels/panel_main.png" id="3_main"]
-[ext_resource type="Texture2D" uid="uid://rgu14womy8pw" path="res://Assets/Characters/vinny_drink_288x48.png" id="4_bpbte"]
-[ext_resource type="Texture2D" uid="uid://vbo8fe6bhsj1" path="res://Assets/UI/Shop/Panels/panel_coin_counter.png" id="4_coin_panel"]
-[ext_resource type="Texture2D" uid="uid://8d7deqyu8e26" path="res://Assets/UI/Shop/Icons/Status/coin.png" id="5_coin"]
-[ext_resource type="Texture2D" uid="uid://c3ujyvsc5o5ba" path="res://Assets/Characters/vinny_pour_LR_288x48.png" id="5_xe745"]
-[ext_resource type="Texture2D" uid="uid://bihdr61twju44" path="res://Assets/Characters/vinny_pour_RL_288x48.png" id="6_dk8pp"]
-[ext_resource type="Texture2D" uid="uid://c2umggl5jkw6k" path="res://Assets/UI/Shop/Buttons/exit_normal.png" id="6_exit"]
-[ext_resource type="Texture2D" uid="uid://b86shmo8hwnt2" path="res://Assets/Characters/vinny_wave_288x48.png" id="7_2w76x"]
-[ext_resource type="PackedScene" uid="uid://das28foe55u6f" path="res://UI/navbutton.tscn" id="7_6fn2i"]
-[ext_resource type="Texture2D" uid="uid://bq1ohgrh75p4v" path="res://Assets/UI/Shop/Buttons/exit_hover.png" id="7_exit_hover"]
-[ext_resource type="Texture2D" uid="uid://cs8yf6uw1cpav" path="res://Assets/UI/Shop/Buttons/exit_pressed.png" id="8_exit_pressed"]
-[ext_resource type="PackedScene" path="res://UI/Shop/shop_offer_card.tscn" id="9_offer_card"]
+[ext_resource type="FontFile" uid="uid://cvo681c1hvgca" path="res://Assets/Fonts/Montserrat/static/Montserrat-Black.ttf" id="3_title_font"]
+[ext_resource type="Texture2D" path="res://Assets/UI/WoodMenu/wood_settings_panel.png" id="4_panel"]
+[ext_resource type="Texture2D" path="res://Assets/UI/WoodMenu/wood_button.png" id="5_button"]
+[ext_resource type="Texture2D" path="res://Assets/UI/WoodMenu/octopus_crest.png" id="6_octopus"]
+[ext_resource type="Texture2D" uid="uid://rgu14womy8pw" path="res://Assets/Characters/vinny_drink_288x48.png" id="7_vinny"]
+[ext_resource type="Texture2D" uid="uid://8d7deqyu8e26" path="res://Assets/UI/Shop/Icons/Status/coin.png" id="8_coin"]
+[ext_resource type="PackedScene" uid="uid://das28foe55u6f" path="res://UI/navbutton.tscn" id="9_nav"]
+[ext_resource type="PackedScene" path="res://UI/Shop/shop_offer_card.tscn" id="10_offer"]
+[ext_resource type="AudioStream" uid="uid://dshox3m1impsv" path="res://Audio/SFX/soft_hover.mp3" id="11_hover"]
+[ext_resource type="AudioStream" uid="uid://dc263ntmf6iew" path="res://Audio/SFX/ui_click_stylized.mp3" id="12_click"]
 
 [sub_resource type="Theme" id="Theme_shop"]
 default_font = ExtResource("2_font")
 default_font_size = 22
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_gd0uo"]
-atlas = ExtResource("4_bpbte")
+[sub_resource type="AtlasTexture" id="Atlas_vinny_0"]
+atlas = ExtResource("7_vinny")
 region = Rect2(0, 0, 48, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_r5bhx"]
-atlas = ExtResource("4_bpbte")
+[sub_resource type="AtlasTexture" id="Atlas_vinny_1"]
+atlas = ExtResource("7_vinny")
 region = Rect2(48, 0, 48, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_t0akb"]
-atlas = ExtResource("4_bpbte")
+[sub_resource type="AtlasTexture" id="Atlas_vinny_2"]
+atlas = ExtResource("7_vinny")
 region = Rect2(96, 0, 48, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_rvtgx"]
-atlas = ExtResource("4_bpbte")
+[sub_resource type="AtlasTexture" id="Atlas_vinny_3"]
+atlas = ExtResource("7_vinny")
 region = Rect2(144, 0, 48, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_o25v6"]
-atlas = ExtResource("4_bpbte")
+[sub_resource type="AtlasTexture" id="Atlas_vinny_4"]
+atlas = ExtResource("7_vinny")
 region = Rect2(192, 0, 48, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_iv25k"]
-atlas = ExtResource("4_bpbte")
+[sub_resource type="AtlasTexture" id="Atlas_vinny_5"]
+atlas = ExtResource("7_vinny")
 region = Rect2(240, 0, 48, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ili6q"]
-atlas = ExtResource("5_xe745")
-region = Rect2(0, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wi8h3"]
-atlas = ExtResource("5_xe745")
-region = Rect2(48, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_csqlc"]
-atlas = ExtResource("5_xe745")
-region = Rect2(96, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3tlmr"]
-atlas = ExtResource("5_xe745")
-region = Rect2(144, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7l0rr"]
-atlas = ExtResource("5_xe745")
-region = Rect2(192, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_krk81"]
-atlas = ExtResource("5_xe745")
-region = Rect2(240, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3pdod"]
-atlas = ExtResource("6_dk8pp")
-region = Rect2(0, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3sp24"]
-atlas = ExtResource("6_dk8pp")
-region = Rect2(48, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_eos8a"]
-atlas = ExtResource("6_dk8pp")
-region = Rect2(96, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fnkqu"]
-atlas = ExtResource("6_dk8pp")
-region = Rect2(144, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_p7ixg"]
-atlas = ExtResource("6_dk8pp")
-region = Rect2(192, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_u7x63"]
-atlas = ExtResource("6_dk8pp")
-region = Rect2(240, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ypakx"]
-atlas = ExtResource("7_2w76x")
-region = Rect2(0, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7s15h"]
-atlas = ExtResource("7_2w76x")
-region = Rect2(48, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fyd6l"]
-atlas = ExtResource("7_2w76x")
-region = Rect2(96, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lt6vs"]
-atlas = ExtResource("7_2w76x")
-region = Rect2(144, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_aavxb"]
-atlas = ExtResource("7_2w76x")
-region = Rect2(192, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_in4q4"]
-atlas = ExtResource("7_2w76x")
-region = Rect2(240, 0, 48, 48)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_3cuo4"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_vinny"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_gd0uo")
+"texture": SubResource("Atlas_vinny_0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_r5bhx")
+"texture": SubResource("Atlas_vinny_1")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_t0akb")
+"texture": SubResource("Atlas_vinny_2")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_rvtgx")
+"texture": SubResource("Atlas_vinny_3")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_o25v6")
+"texture": SubResource("Atlas_vinny_4")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_iv25k")
+"texture": SubResource("Atlas_vinny_5")
 }],
-"loop": 1,
+"loop": true,
 "name": &"drink",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ili6q")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wi8h3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_csqlc")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3tlmr")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7l0rr")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_krk81")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3pdod")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3sp24")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_eos8a")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_fnkqu")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_p7ixg")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_u7x63")
-}],
-"loop": 1,
-"name": &"pour",
-"speed": 3.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ypakx")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7s15h")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_fyd6l")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lt6vs")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_aavxb")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_in4q4")
-}],
-"loop": 1,
-"name": &"wave",
 "speed": 5.0
 }]
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_6fn2i"]
-
-[sub_resource type="ButtonGroup" id="ButtonGroup_1tfbm"]
-
-[sub_resource type="ButtonGroup" id="ButtonGroup_1w5pd"]
-
-[node name="ShopMenu" type="Control" unique_id=538681344 node_paths=PackedStringArray("first_focus")]
+[node name="ShopMenu" type="Control" node_paths=PackedStringArray("first_focus")]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
@@ -224,197 +80,283 @@ script = ExtResource("1_script")
 first_focus = NodePath("SidePanel/OfferCards/OfferCard1")
 frees_on_close = true
 
-[node name="Backdrop" type="ColorRect" parent="." unique_id=327682091]
+[node name="Backdrop" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.00392157, 0.0117647, 0.0196078, 0.52)
+color = Color(0.003, 0.01, 0.014, 0.84)
 
-[node name="Vinny" type="Node2D" parent="." unique_id=2088595671]
-position = Vector2(442.00003, 501)
-scale = Vector2(5, 5)
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Vinny" unique_id=1445988900]
-sprite_frames = SubResource("SpriteFrames_3cuo4")
-animation = &"pour"
-autoplay = "pour"
-
-[node name="RichTextLabel" type="RichTextLabel" parent="Vinny" unique_id=182666756]
-offset_left = -20.000006
-offset_top = 24.199999
-offset_right = 19.999994
-offset_bottom = 64.2
-bbcode_enabled = true
-
-[node name="SidePanel" type="NinePatchRect" parent="." unique_id=605544239]
-unique_name_in_owner = true
+[node name="MerchantPanel" type="TextureRect" parent="."]
 texture_filter = 1
 layout_mode = 0
-offset_left = 946.0
-offset_right = 974.0
-offset_bottom = 1080.0
-grow_horizontal = 0
-grow_vertical = 2
-texture = ExtResource("3_main")
-patch_margin_left = 14
-patch_margin_top = 14
-patch_margin_right = 14
-patch_margin_bottom = 14
-
-[node name="Title" type="Label" parent="SidePanel" unique_id=1590024352]
-layout_mode = 0
-offset_left = 28.0
-offset_top = 25.0
-offset_right = 430.0
-offset_bottom = 94.0
-theme_override_colors/font_color = Color(1, 0.886275, 0.54902, 1)
-theme_override_colors/font_outline_color = Color(0.0588235, 0.0313726, 0.00784314, 1)
-theme_override_constants/outline_size = 4
-theme_override_font_sizes/font_size = 50
-text = "SHOP"
-vertical_alignment = 1
-
-[node name="CoinPanel" type="NinePatchRect" parent="SidePanel" unique_id=355094008]
-texture_filter = 1
-layout_mode = 0
-offset_left = 462.0
-offset_top = 25.0
-offset_right = 794.0
-offset_bottom = 99.0
-texture = ExtResource("4_coin_panel")
-patch_margin_left = 14
-patch_margin_top = 12
-patch_margin_right = 14
-patch_margin_bottom = 12
-
-[node name="CoinIcon" type="TextureRect" parent="SidePanel/CoinPanel" unique_id=1551296383]
-texture_filter = 1
-layout_mode = 0
-offset_left = 18.0
-offset_top = 11.0
-offset_right = 72.0
-offset_bottom = 65.0
+offset_left = 32.0
+offset_top = 36.0
+offset_right = 1036.0
+offset_bottom = 1044.0
 mouse_filter = 2
-texture = ExtResource("5_coin")
+texture = ExtResource("4_panel")
+expand_mode = 1
+
+[node name="Octopus" type="TextureRect" parent="MerchantPanel"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 415.0
+offset_top = 18.0
+offset_right = 589.0
+offset_bottom = 178.0
+mouse_filter = 2
+texture = ExtResource("6_octopus")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="CoinCaption" type="Label" parent="SidePanel/CoinPanel" unique_id=893730938]
+[node name="Title" type="Label" parent="MerchantPanel"]
 layout_mode = 0
-offset_left = 77.0
-offset_top = 7.0
-offset_right = 172.0
-offset_bottom = 35.0
-theme_override_colors/font_color = Color(0.905882, 0.764706, 0.415686, 1)
-theme_override_font_sizes/font_size = 17
-text = "COINS"
+offset_left = 100.0
+offset_top = 166.0
+offset_right = 904.0
+offset_bottom = 232.0
+theme_override_colors/font_color = Color(1, 0.89, 0.64, 1)
+theme_override_colors/font_outline_color = Color(0.035, 0.008, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("3_title_font")
+theme_override_font_sizes/font_size = 43
+text = "VINNY'S MARKET"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="CoinAmount" type="Label" parent="SidePanel/CoinPanel" unique_id=734529232]
+[node name="Subtitle" type="Label" parent="MerchantPanel"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 229.0
+offset_right = 904.0
+offset_bottom = 267.0
+theme_override_colors/font_color = Color(0.49, 0.92, 0.84, 1)
+theme_override_colors/font_outline_color = Color(0.02, 0.004, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 20
+text = "POTIONS, AUGMENTS & QUESTIONABLE ADVICE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Vinny" type="Node2D" parent="."]
+position = Vector2(530, 422)
+scale = Vector2(5.5, 5.5)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Vinny"]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_vinny")
+animation = &"drink"
+autoplay = "drink"
+
+[node name="DialoguePlaque" type="TextureRect" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_left = 112.0
+offset_top = 570.0
+offset_right = 956.0
+offset_bottom = 730.0
+mouse_filter = 2
+texture = ExtResource("5_button")
+expand_mode = 1
+
+[node name="MerchantDialogue" type="Label" parent="DialoguePlaque"]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 78.0
+offset_left = 62.0
+offset_top = 34.0
+offset_right = 782.0
+offset_bottom = 126.0
+theme_override_colors/font_color = Color(1, 0.93, 0.75, 1)
+theme_override_colors/font_outline_color = Color(0.02, 0.004, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 27
+text = "'Pick something that catches your eye.'"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="SelectionPlaque" type="TextureRect" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_left = 112.0
+offset_top = 744.0
+offset_right = 956.0
+offset_bottom = 936.0
+mouse_filter = 2
+texture = ExtResource("5_button")
+expand_mode = 1
+
+[node name="SelectionInfo" type="Label" parent="SelectionPlaque"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 62.0
 offset_top = 27.0
-offset_right = 310.0
-offset_bottom = 65.0
+offset_right = 782.0
+offset_bottom = 162.0
+theme_override_colors/font_color = Color(0.53, 0.93, 0.85, 1)
+theme_override_colors/font_outline_color = Color(0.02, 0.004, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 21
+text = "SELECT AN OFFER TO INSPECT IT."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="SidePanel" type="NinePatchRect" parent="."]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -844.0
+offset_top = 36.0
+offset_right = -24.0
+offset_bottom = -36.0
+grow_horizontal = 0
+grow_vertical = 2
+texture = ExtResource("4_panel")
+patch_margin_left = 96
+patch_margin_top = 96
+patch_margin_right = 96
+patch_margin_bottom = 96
+
+[node name="Title" type="Label" parent="SidePanel"]
+layout_mode = 0
+offset_left = 54.0
+offset_top = 58.0
+offset_right = 466.0
+offset_bottom = 118.0
+theme_override_colors/font_color = Color(1, 0.89, 0.64, 1)
+theme_override_colors/font_outline_color = Color(0.035, 0.008, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_title_font")
+theme_override_font_sizes/font_size = 34
+text = "TODAY'S CARGO"
+vertical_alignment = 1
+
+[node name="CoinPanel" type="NinePatchRect" parent="SidePanel"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 492.0
+offset_top = 52.0
+offset_right = 766.0
+offset_bottom = 126.0
+texture = ExtResource("5_button")
+patch_margin_left = 40
+patch_margin_top = 20
+patch_margin_right = 40
+patch_margin_bottom = 20
+
+[node name="CoinIcon" type="TextureRect" parent="SidePanel/CoinPanel"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 18.0
+offset_top = 10.0
+offset_right = 72.0
+offset_bottom = 64.0
+mouse_filter = 2
+texture = ExtResource("8_coin")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CoinCaption" type="Label" parent="SidePanel/CoinPanel"]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 8.0
+offset_right = 252.0
+offset_bottom = 31.0
+theme_override_colors/font_color = Color(1, 0.76, 0.3, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 15
+text = "COINS"
+horizontal_alignment = 1
+
+[node name="CoinAmount" type="Label" parent="SidePanel/CoinPanel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 80.0
+offset_top = 26.0
+offset_right = 252.0
+offset_bottom = 64.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 28
 text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="HeaderDivider" type="ColorRect" parent="SidePanel" unique_id=1921980964]
+[node name="HeaderDivider" type="ColorRect" parent="SidePanel"]
 layout_mode = 0
-offset_left = 25.0
-offset_top = 112.0
-offset_right = 795.0
-offset_bottom = 114.0
+offset_left = 48.0
+offset_top = 146.0
+offset_right = 772.0
+offset_bottom = 149.0
 mouse_filter = 2
-color = Color(0.305882, 0.423529, 0.462745, 0.7)
+color = Color(0.08, 0.68, 0.61, 0.85)
 
-[node name="OfferCards" type="VBoxContainer" parent="SidePanel" unique_id=848165347]
-layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_top = -274.0
-offset_bottom = 274.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme_override_constants/separation = 16
-
-[node name="OfferCard1" parent="SidePanel/OfferCards" unique_id=338573582 instance=ExtResource("9_offer_card")]
-unique_name_in_owner = true
-layout_mode = 2
-button_group = SubResource("ButtonGroup_6fn2i")
-enforce_sizing = false
-
-[node name="OfferCard2" parent="SidePanel/OfferCards" unique_id=855810235 instance=ExtResource("9_offer_card")]
-unique_name_in_owner = true
-layout_mode = 2
-button_group = SubResource("ButtonGroup_1tfbm")
-enforce_sizing = false
-
-[node name="OfferCard3" parent="SidePanel/OfferCards" unique_id=170697957 instance=ExtResource("9_offer_card")]
-unique_name_in_owner = true
-layout_mode = 2
-button_group = SubResource("ButtonGroup_1w5pd")
-enforce_sizing = false
-
-[node name="PurchaseHint" type="Label" parent="SidePanel" unique_id=1454063618]
+[node name="OfferCards" type="VBoxContainer" parent="SidePanel"]
 layout_mode = 0
-offset_left = 24.0
-offset_top = 744.0
-offset_right = 796.0
-offset_bottom = 786.0
-theme_override_colors/font_color = Color(0.454902, 0.686275, 0.713726, 1)
+offset_left = 48.0
+offset_top = 174.0
+offset_right = 772.0
+offset_bottom = 704.0
+theme_override_constants/separation = 10
+
+[node name="OfferCard1" parent="SidePanel/OfferCards" instance=ExtResource("10_offer")]
+unique_name_in_owner = true
+layout_mode = 2
+enforce_sizing = false
+
+[node name="OfferCard2" parent="SidePanel/OfferCards" instance=ExtResource("10_offer")]
+unique_name_in_owner = true
+layout_mode = 2
+enforce_sizing = false
+
+[node name="OfferCard3" parent="SidePanel/OfferCards" instance=ExtResource("10_offer")]
+unique_name_in_owner = true
+layout_mode = 2
+enforce_sizing = false
+
+[node name="PurchaseHint" type="Label" parent="SidePanel"]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 720.0
+offset_right = 772.0
+offset_bottom = 758.0
+theme_override_colors/font_color = Color(0.48, 0.92, 0.85, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 18
 text = "SPACE / A TO PURCHASE"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ExitButton" parent="SidePanel" unique_id=395615966 instance=ExtResource("7_6fn2i")]
+[node name="ExitButton" parent="SidePanel" instance=ExtResource("9_nav")]
 unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -250.0
-offset_top = -140.0
-offset_right = 250.0
-offset_bottom = 0.0
-grow_horizontal = 2
-grow_vertical = 0
-pivot_offset = Vector2(250, 70)
-texture_normal = ExtResource("6_exit")
-texture_pressed = ExtResource("8_exit_pressed")
-texture_hover = ExtResource("7_exit_hover")
-ignore_texture_size = true
-stretch_mode = 0
-act = 6
-label_text = "EXIT"
-label_size = 60
-
-[node name="oldExitButton" type="TextureButton" parent="SidePanel" unique_id=1618622317]
-unique_name_in_owner = true
-visible = false
-texture_filter = 1
 layout_mode = 0
-offset_left = 268.0
-offset_top = 824.0
-offset_right = 552.0
-offset_bottom = 905.0
-mouse_default_cursor_shape = 2
-texture_normal = ExtResource("6_exit")
-texture_pressed = ExtResource("8_exit_pressed")
-texture_hover = ExtResource("7_exit_hover")
-ignore_texture_size = true
-stretch_mode = 0
+offset_left = 160.0
+offset_top = 776.0
+offset_right = 660.0
+offset_bottom = 916.0
+texture_normal = ExtResource("5_button")
+texture_pressed = ExtResource("5_button")
+texture_hover = ExtResource("5_button")
+texture_focused = ExtResource("5_button")
+act = 6
+label_text = "RETURN TO DOCK"
+label_size = 32
+label_font = ExtResource("2_font")
+label_color = Color(1, 0.93, 0.76, 1)
+label_outline_color = Color(0.02, 0.004, 0, 1)
+label_outline_size = 3
+focus_tint = Color(1.18, 1.08, 0.78, 1)
+focus_sound = ExtResource("11_hover")
+press_sound = ExtResource("12_click")

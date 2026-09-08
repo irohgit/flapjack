@@ -6,8 +6,8 @@
 [resource]
 script = ExtResource("1_764f2")
 id = &"2"
-display_name = "Hull 3"
-display_description = "+ Health"
+display_name = "Hull III"
+display_description = "+ Max Health"
 stat_type = 2
 tier = 3
 icon = ExtResource("1_iroo8")

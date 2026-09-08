@@ -3,7 +3,7 @@
 [ext_resource type="Resource" uid="uid://dqcrvuh0gyty8" path="res://Data/Augments/PiercingCannonBall.tres" id="1_br1aa"]
 [ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="1_wg6ku"]
 [ext_resource type="AudioStream" uid="uid://d2sr3t6n13ye4" path="res://Audio/SFX/soft_pickup.mp3" id="2_br1aa"]
-[ext_resource type="Texture2D" uid="uid://bygt8tb1xwxtv" path="res://Assets/Pickups/18.png" id="2_n2jre"]
+[ext_resource type="Texture2D" path="res://Assets/Pickups/PiercingPickup.png" id="2_n2jre"]
 [ext_resource type="Texture2D" uid="uid://3ql1gxn8qi2u" path="res://Assets/UI/Shop/Items/Augments/Cannon/piercing_cannon.png" id="3_shop"]
 
 [resource]

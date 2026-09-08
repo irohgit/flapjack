@@ -6,8 +6,8 @@
 [resource]
 script = ExtResource("1_gxkpy")
 id = &"5"
-display_name = "Rigging 3"
-display_description = "+ Speed"
+display_name = "Rigging III"
+display_description = "+ Ship Speed"
 tier = 3
 icon = ExtResource("1_ku8v4")
 level_costs = Array[int]([50, 75, 100])
