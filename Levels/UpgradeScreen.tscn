@@ -331,6 +331,7 @@ vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="ReturnButton" parent="." instance=ExtResource("21_nav")]
+custom_minimum_size = Vector2(360, 113)
 layout_mode = 0
 offset_left = 80.0
 offset_top = 892.0
