@@ -36,6 +36,8 @@ enum PanelSide {
 @onready var coin_amount_label: Label = %CoinAmount
 @onready var exit_button: TextureButton = %ExitButton
 @onready var side_panel: NinePatchRect = %SidePanel
+@onready var merchant_dialogue: Label = %MerchantDialogue
+@onready var selection_info: Label = %SelectionInfo
 
 var _player: Player
 var _offers: Array[PickupData] = []
@@ -43,6 +45,7 @@ var _offer_states: Array[OfferState] = []
 var _sold_offer_ids: Dictionary = {}
 var _selected_index := -1
 var _buying := false
+var _last_merchant_line := ""
 
 var _offer_cards: Array[ShopOfferCard] = []
 
@@ -87,7 +90,6 @@ func _input(event: InputEvent) -> void:
 	get_viewport().set_input_as_handled()
 	if event.is_action_pressed(&"ui_accept"):
 		_purchase_selected_offer()
-		$Vinny/RichTextLabel.add_text("Great Choice!")#STUB
 		
 #Split Open_Shop with Load_offers
 ## Fill the shop without opening it. For screens instantiated already-visible.
@@ -204,11 +206,13 @@ func _select_offer(index: int) -> void:
 
 	_selected_index = index
 	_render_selection()
+	_update_merchant_message()
 
 
 func _render_selection() -> void:
 	for card_index in _offer_cards.size():
 		_offer_cards[card_index].set_pressed_no_signal(card_index == _selected_index)
+	_update_selection_info()
 
 
 func _purchase_selected_offer() -> void:
@@ -219,6 +223,7 @@ func _purchase_selected_offer() -> void:
 
 	var pickup := _offers[_selected_index]
 	if _offer_states[_selected_index] != OfferState.AVAILABLE:
+		_update_merchant_message()
 		_refresh_all_cards()
 		return
 
@@ -227,7 +232,81 @@ func _purchase_selected_offer() -> void:
 	_buying = false
 	if result == Player.PurchaseResult.SUCCESS:
 		_sold_offer_ids[pickup.get_shop_id()] = true
+		_set_merchant_line(_pick_line([
+			"Great choice, captain!",
+			"Now that belongs on a proper ship.",
+			"Pleasure doing business with you.",
+			"Try not to break it before the next port.",
+		]))
 	_refresh_all_cards(result == Player.PurchaseResult.SUCCESS)
+
+
+func _update_selection_info() -> void:
+	if selection_info == null:
+		return
+	if _selected_index < 0 or _selected_index >= _offers.size():
+		selection_info.text = "Select an offer to inspect it."
+		return
+	var pickup := _offers[_selected_index]
+	selection_info.text = "%s\n%s" % [
+		pickup.get_shop_name().to_upper(),
+		pickup.get_shop_description(),
+	]
+
+
+func _update_merchant_message() -> void:
+	if _selected_index < 0 or _selected_index >= _offer_states.size():
+		_set_merchant_line("Pick something that catches your eye.")
+		return
+
+	var lines: Array[String]
+	match _offer_states[_selected_index]:
+		OfferState.AVAILABLE:
+			lines = [
+				"Great idea, captain.",
+				"A fine choice for rough waters.",
+				"That one has your name on it.",
+				"Reliable, dangerous, and fairly priced.",
+				"Your enemies will hate this one.",
+			]
+		OfferState.NOT_ENOUGH_COINS:
+			lines = [
+				"No money yet, captain.",
+				"Come back with a heavier coin purse.",
+				"Good taste. Light pockets.",
+				"A few more coins and we can talk.",
+			]
+		OfferState.OWNED:
+			lines = [
+				"You already own that beauty.",
+				"Check your hold, captain. It is already yours.",
+			]
+		OfferState.SOLD_OUT:
+			lines = [
+				"Sold! I knew you had good taste.",
+				"Fresh out. You bought the last one.",
+			]
+		_:
+			lines = [
+				"That one is not ready for sale.",
+				"Not today, captain.",
+			]
+	_set_merchant_line(_pick_line(lines))
+
+
+func _pick_line(lines: Array[String]) -> String:
+	if lines.is_empty():
+		return ""
+	var candidates := lines.filter(func(line: String): return line != _last_merchant_line)
+	if candidates.is_empty():
+		candidates = lines
+	return candidates.pick_random()
+
+
+func _set_merchant_line(line: String) -> void:
+	_last_merchant_line = line
+	if merchant_dialogue != null:
+		merchant_dialogue.text = "\u201c%s\u201d" % line
 
 
 func _update_focus_neighbors() -> void:
@@ -273,6 +352,5 @@ func _rarity_color(rarity: String) -> Color:
 ## The Dock path: already added and visible, just needs its contents.
 func setup_from_hotspot(hotspot: InteractHotspot) -> void:
 	var player := get_tree().get_first_node_in_group(Groups.PLAYER) as Player
-	print("SHOP setup: player=", player, " offers=", hotspot.shop_offers.size())
 	load_offers(player, hotspot.shop_offers)
 	super(hotspot)

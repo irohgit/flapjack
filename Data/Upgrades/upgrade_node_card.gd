@@ -7,6 +7,7 @@ extends VBoxContainer
 @onready var _name_label: Label = $CardBody/Margin/HBox/InfoVBox/NameLabel
 @onready var _description_label: Label = $CardBody/Margin/HBox/InfoVBox/DescriptionLabel
 @onready var _progress_bar: ProgressBar = $CardBody/Margin/HBox/InfoVBox/ProgressBar
+@onready var _level_label: Label = $CardBody/Margin/HBox/InfoVBox/ProgressBar/LevelLabel
 @onready var _cost_label: Label = $CostRow/CostLabel
 @onready var _buy_button: Button = $CostRow/BuyButton
 
@@ -40,6 +41,8 @@ func _refresh() -> void:
 	var level := MetaProgress.get_level(node_data.id)
 	_progress_bar.max_value = node_data.max_level
 	_progress_bar.value = level
+	_level_label.text = "%d / %d" % [level, node_data.max_level]
+	_icon.modulate = Color.WHITE if level > 0 else Color(0.38, 0.38, 0.38, 1.0)
 
 	if node_data.tier - 1 > MetaProgress.boat_tier:
 		_cost_label.text = "LOCKED"
@@ -54,7 +57,9 @@ func _refresh() -> void:
 
 	if is_maxed:
 		_cost_label.text = "MAX"
+		_buy_button.text = "MAXED"
 		_buy_button.disabled = true
 	else:
-		_cost_label.text = str(cost)
+		_cost_label.text = "%d GIN" % cost
+		_buy_button.text = "UPGRADE"
 		_buy_button.disabled = not MetaProgress.can_purchase(node_data)
