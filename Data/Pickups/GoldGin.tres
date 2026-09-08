@@ -6,6 +6,7 @@
 
 [resource]
 script = ExtResource("2_ynoje")
+item_id = &"flapjack:gold_gin"
 pickup_type = 5
 texture = ExtResource("3_2nctt")
 gin_amount = 5

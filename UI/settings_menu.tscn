@@ -1,90 +1,377 @@
 [gd_scene format=3 uid="uid://b2judmr242f45"]
 
-[ext_resource type="Script" uid="uid://6g3u46bnt6da" path="res://UI/settings_menu.gd" id="1_0adsa"]
-[ext_resource type="Texture2D" uid="uid://cu450e8rm8ej3" path="res://Assets/Cinematics/Cinematic_BG_169.png" id="1_jkv84"]
-[ext_resource type="PackedScene" uid="uid://das28foe55u6f" path="res://UI/navbutton.tscn" id="2_0adsa"]
-[ext_resource type="AudioStream" uid="uid://dshox3m1impsv" path="res://Audio/SFX/soft_hover.mp3" id="4_bh3j5"]
-[ext_resource type="AudioStream" uid="uid://dc263ntmf6iew" path="res://Audio/SFX/ui_click_stylized.mp3" id="5_mn6w0"]
+[ext_resource type="Script" uid="uid://6g3u46bnt6da" path="res://UI/settings_menu.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://Assets/UI/WoodMenu/wood_settings_panel.png" id="2_panel"]
+[ext_resource type="Texture2D" path="res://Assets/UI/WoodMenu/octopus_crest.png" id="3_octopus"]
+[ext_resource type="Texture2D" path="res://Assets/UI/WoodMenu/wood_button.png" id="4_button"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Decorations/small_gem.png" id="5_gem"]
+[ext_resource type="FontFile" path="res://Assets/Fonts/Montserrat/static/Montserrat-Black.ttf" id="6_font"]
+[ext_resource type="PackedScene" uid="uid://das28foe55u6f" path="res://UI/navbutton.tscn" id="7_navbutton"]
+[ext_resource type="AudioStream" uid="uid://dshox3m1impsv" path="res://Audio/SFX/soft_hover.mp3" id="8_hover"]
+[ext_resource type="AudioStream" uid="uid://dc263ntmf6iew" path="res://Audio/SFX/ui_click_stylized.mp3" id="9_click"]
 
-[node name="SettingsMenu" type="Control" unique_id=514572451 node_paths=PackedStringArray("fullscreen_button", "back_button", "first_focus")]
+[sub_resource type="StyleBoxFlat" id="Style_slider"]
+content_margin_top = 7.0
+content_margin_bottom = 7.0
+bg_color = Color(0.075, 0.025, 0.01, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.74, 0.47, 0.13, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="Style_grabber_area"]
+bg_color = Color(0.05, 0.56, 0.54, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="Style_control"]
+content_margin_left = 18.0
+content_margin_top = 12.0
+content_margin_right = 18.0
+content_margin_bottom = 12.0
+bg_color = Color(0.11, 0.04, 0.015, 0.94)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.72, 0.43, 0.1, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="Style_control_hover"]
+content_margin_left = 18.0
+content_margin_top = 12.0
+content_margin_right = 18.0
+content_margin_bottom = 12.0
+bg_color = Color(0.18, 0.07, 0.02, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.98, 0.72, 0.23, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[node name="SettingsMenu" type="Control" node_paths=PackedStringArray("first_focus")]
+process_mode = 3
 visible = false
 layout_mode = 3
-anchors_preset = 0
-script = ExtResource("1_0adsa")
-fullscreen_button = NodePath("SettingsPanel/VBoxContainer/Fullscreen Toggle")
-back_button = NodePath("SettingsPanel/VBoxContainer/Return")
-first_focus = NodePath("SettingsPanel/VBoxContainer/Volume")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_script")
+first_focus = NodePath("Panel/Content/Rows/MasterRow/MasterSlider")
 
-[node name="Dimmer" type="ColorRect" parent="." unique_id=211885343]
+[node name="Dimmer" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.003921569, 0.015686275, 0.02745098, 0.84)
+mouse_filter = 2
+color = Color(0.015, 0.007, 0.002, 0.72)
 
-[node name="TextureRect" type="TextureRect" parent="." unique_id=779817431]
-layout_mode = 0
-offset_right = 1920.0
-offset_bottom = 1080.0
-texture = ExtResource("1_jkv84")
-
-[node name="SettingsPanel" type="Control" parent="." unique_id=1304270686]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="SettingsPanel" unique_id=1866112736]
+[node name="Panel" type="TextureRect" parent="."]
+texture_filter = 1
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 690.0
-offset_top = 234.0
-offset_right = 1190.0
-offset_bottom = 806.0
+offset_left = -430.0
+offset_top = -500.0
+offset_right = 430.0
+offset_bottom = 500.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_panel")
+expand_mode = 1
 
-[node name="Volume" parent="SettingsPanel/VBoxContainer" unique_id=395615966 instance=ExtResource("2_0adsa")]
-layout_mode = 2
-label_text = "Volume"
-label_size = 100
-focus_tint = Color(0.88833916, 0.73178285, 0.39407146, 1)
-focus_sound = ExtResource("4_bh3j5")
-press_sound = ExtResource("5_mn6w0")
+[node name="Content" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 108.0
+offset_top = 62.0
+offset_right = -108.0
+offset_bottom = -72.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 14
 
-[node name="Brightness Slider" parent="SettingsPanel/VBoxContainer" unique_id=860370676 instance=ExtResource("2_0adsa")]
+[node name="Header" type="HBoxContainer" parent="Panel/Content"]
+custom_minimum_size = Vector2(0, 112)
 layout_mode = 2
-label_text = "Brightness"
-label_size = 100
-focus_tint = Color(0.88833916, 0.73178285, 0.39407146, 1)
-focus_sound = ExtResource("4_bh3j5")
-press_sound = ExtResource("5_mn6w0")
+alignment = 1
 
-[node name="Resolution" parent="SettingsPanel/VBoxContainer" unique_id=1691588789 instance=ExtResource("2_0adsa")]
+[node name="Octopus" type="TextureRect" parent="Panel/Content/Header"]
+custom_minimum_size = Vector2(100, 100)
+texture_filter = 1
 layout_mode = 2
-label_text = "Display"
-label_size = 100
-focus_tint = Color(0.88833916, 0.73178285, 0.39407146, 1)
-focus_sound = ExtResource("4_bh3j5")
-press_sound = ExtResource("5_mn6w0")
+mouse_filter = 2
+texture = ExtResource("3_octopus")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="Fullscreen Toggle" parent="SettingsPanel/VBoxContainer" unique_id=606832188 instance=ExtResource("2_0adsa")]
+[node name="Title" type="Label" parent="Panel/Content/Header"]
 layout_mode = 2
-label_text = "Fullscreen"
-label_size = 100
-focus_tint = Color(0.88833916, 0.73178285, 0.39407146, 1)
-focus_sound = ExtResource("4_bh3j5")
-press_sound = ExtResource("5_mn6w0")
+theme_override_colors/font_color = Color(1, 0.91, 0.66, 1)
+theme_override_colors/font_outline_color = Color(0.04, 0.012, 0.003, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("6_font")
+theme_override_font_sizes/font_size = 52
+text = "SETTINGS"
+vertical_alignment = 1
 
-[node name="Return" parent="SettingsPanel/VBoxContainer" unique_id=1581923216 instance=ExtResource("2_0adsa")]
+[node name="Divider" type="HSeparator" parent="Panel/Content"]
 layout_mode = 2
-label_text = "Return"
-label_size = 100
-focus_tint = Color(0.88833916, 0.73178285, 0.39407146, 1)
-focus_sound = ExtResource("4_bh3j5")
-press_sound = ExtResource("5_mn6w0")
+modulate = Color(0.95, 0.68, 0.2, 1)
+
+[node name="Rows" type="VBoxContainer" parent="Panel/Content"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="MasterRow" type="HBoxContainer" parent="Panel/Content/Rows"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="Panel/Content/Rows/MasterRow"]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.93, 0.76, 1)
+theme_override_colors/font_outline_color = Color(0.03, 0.01, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("6_font")
+theme_override_font_sizes/font_size = 29
+text = "MASTER VOLUME"
+vertical_alignment = 1
+
+[node name="MasterSlider" type="HSlider" parent="Panel/Content/Rows/MasterRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 2
+theme_override_icons/grabber = ExtResource("5_gem")
+theme_override_icons/grabber_highlight = ExtResource("5_gem")
+theme_override_styles/slider = SubResource("Style_slider")
+theme_override_styles/grabber_area = SubResource("Style_grabber_area")
+value = 85.0
+step = 1.0
+
+[node name="MasterValue" type="Label" parent="Panel/Content/Rows/MasterRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(76, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.51, 0.92, 0.88, 1)
+theme_override_fonts/font = ExtResource("6_font")
+theme_override_font_sizes/font_size = 28
+text = "85%"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="MusicRow" type="HBoxContainer" parent="Panel/Content/Rows"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="Panel/Content/Rows/MusicRow"]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.93, 0.76, 1)
+theme_override_colors/font_outline_color = Color(0.03, 0.01, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("6_font")
+theme_override_font_sizes/font_size = 29
+text = "MUSIC"
+vertical_alignment = 1
+
+[node name="MusicSlider" type="HSlider" parent="Panel/Content/Rows/MusicRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 2
+theme_override_icons/grabber = ExtResource("5_gem")
+theme_override_icons/grabber_highlight = ExtResource("5_gem")
+theme_override_styles/slider = SubResource("Style_slider")
+theme_override_styles/grabber_area = SubResource("Style_grabber_area")
+value = 75.0
+step = 1.0
+
+[node name="MusicValue" type="Label" parent="Panel/Content/Rows/MusicRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(76, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.51, 0.92, 0.88, 1)
+theme_override_fonts/font = ExtResource("6_font")
+theme_override_font_sizes/font_size = 28
+text = "75%"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="SfxRow" type="HBoxContainer" parent="Panel/Content/Rows"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="Panel/Content/Rows/SfxRow"]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.93, 0.76, 1)
+theme_override_colors/font_outline_color = Color(0.03, 0.01, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("6_font")
+theme_override_font_sizes/font_size = 29
+text = "SOUND EFFECTS"
+vertical_alignment = 1
+
+[node name="SfxSlider" type="HSlider" parent="Panel/Content/Rows/SfxRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 2
+theme_override_icons/grabber = ExtResource("5_gem")
+theme_override_icons/grabber_highlight = ExtResource("5_gem")
+theme_override_styles/slider = SubResource("Style_slider")
+theme_override_styles/grabber_area = SubResource("Style_grabber_area")
+value = 85.0
+step = 1.0
+
+[node name="SfxValue" type="Label" parent="Panel/Content/Rows/SfxRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(76, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.51, 0.92, 0.88, 1)
+theme_override_fonts/font = ExtResource("6_font")
+theme_override_font_sizes/font_size = 28
+text = "85%"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="ResolutionRow" type="HBoxContainer" parent="Panel/Content/Rows"]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/Content/Rows/ResolutionRow"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.93, 0.76, 1)
+theme_override_colors/font_outline_color = Color(0.03, 0.01, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("6_font")
+theme_override_font_sizes/font_size = 29
+text = "RESOLUTION"
+vertical_alignment = 1
+
+[node name="ResolutionOption" type="OptionButton" parent="Panel/Content/Rows/ResolutionRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(330, 58)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 2
+theme_override_colors/font_color = Color(1, 0.93, 0.76, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.03, 0.01, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("6_font")
+theme_override_font_sizes/font_size = 27
+theme_override_styles/normal = SubResource("Style_control")
+theme_override_styles/hover = SubResource("Style_control_hover")
+theme_override_styles/pressed = SubResource("Style_control_hover")
+theme_override_styles/focus = SubResource("Style_control_hover")
+
+[node name="FullscreenRow" type="HBoxContainer" parent="Panel/Content/Rows"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/Content/Rows/FullscreenRow"]
+custom_minimum_size = Vector2(440, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.93, 0.76, 1)
+theme_override_colors/font_outline_color = Color(0.03, 0.01, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("6_font")
+theme_override_font_sizes/font_size = 29
+text = "FULLSCREEN"
+vertical_alignment = 1
+
+[node name="FullscreenToggle" type="CheckButton" parent="Panel/Content/Rows/FullscreenRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(190, 58)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 2
+theme_override_colors/font_color = Color(0.51, 0.92, 0.88, 1)
+theme_override_colors/font_hover_color = Color(1, 0.91, 0.45, 1)
+theme_override_fonts/font = ExtResource("6_font")
+theme_override_font_sizes/font_size = 28
+text = "OFF"
+
+[node name="VsyncRow" type="HBoxContainer" parent="Panel/Content/Rows"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/Content/Rows/VsyncRow"]
+custom_minimum_size = Vector2(440, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.93, 0.76, 1)
+theme_override_colors/font_outline_color = Color(0.03, 0.01, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("6_font")
+theme_override_font_sizes/font_size = 29
+text = "V-SYNC"
+vertical_alignment = 1
+
+[node name="VsyncToggle" type="CheckButton" parent="Panel/Content/Rows/VsyncRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(190, 58)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 2
+theme_override_colors/font_color = Color(0.51, 0.92, 0.88, 1)
+theme_override_colors/font_hover_color = Color(1, 0.91, 0.45, 1)
+theme_override_fonts/font = ExtResource("6_font")
+theme_override_font_sizes/font_size = 28
+text = "ON"
+
+[node name="BackButton" parent="Panel/Content" instance=ExtResource("7_navbutton")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(430, 140)
+layout_mode = 2
+size_flags_horizontal = 4
+ignore_texture_size = true
+texture_normal = ExtResource("4_button")
+texture_pressed = ExtResource("4_button")
+texture_hover = ExtResource("4_button")
+texture_focused = ExtResource("4_button")
+label_text = "BACK"
+label_size = 39
+label_font = ExtResource("6_font")
+label_color = Color(1, 0.93, 0.76, 1)
+label_outline_color = Color(0.03, 0.01, 0, 1)
+label_outline_size = 4
+focus_tint = Color(1.22, 1.08, 0.78, 1)
+focus_sound = ExtResource("8_hover")
+press_sound = ExtResource("9_click")
