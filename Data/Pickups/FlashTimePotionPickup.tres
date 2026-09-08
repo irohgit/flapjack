@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PickupData" format=3]
+
+[ext_resource type="Script" path="res://Data/Pickups/pickup_data.gd" id="1_pickup"]
+[ext_resource type="Resource" path="res://Data/Potions/FlashTimePotion.tres" id="2_content"]
+
+[resource]
+script = ExtResource("1_pickup")
+item_id = &"flapjack:flash_time_potion"
+pickup_type = 6
+potion = ExtResource("2_content")
+notification_name = "Flash Time"
+shop_id = &"flash_time_potion"
+shop_price = 0
+metadata/implementation_status = "scaffold"

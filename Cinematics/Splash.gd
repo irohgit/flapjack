@@ -33,6 +33,6 @@ func _finish() -> void:
 	finished.emit()
 
 
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_pressed():
-		_finish()
+#func _unhandled_input(event: InputEvent) -> void:
+	#if event.is_pressed():
+		#_finish()

@@ -5,6 +5,8 @@ const GROUND_EFFECT_SCENE := preload("res://Actors/GroundEffects/ground_effect.t
 
 @export var data: ProjectileData
 
+var augments: Array[AugmentData] = []
+
 @onready var _sprite: Sprite2D = $Sprite2D
 @onready var _animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var _shape: CollisionShape2D = $CollisionShape2D
@@ -46,6 +48,11 @@ func _ready() -> void:
 	for effect: StatusEffectData in data.status_effects:
 		add_status_effect(effect)
 	_apply_data()
+	# Apply augments after base stats, then render their visual overrides.
+	for augment: AugmentData in augments:
+		if augment.augmentEffect != null:
+			augment.augmentEffect.apply_to_projectile(self)
+	_apply_visuals()
 	$VisibleOnScreenNotifier2D.screen_exited.connect(_on_screen_exited)
 	area_entered.connect(_on_area_entered)
 	_trail.top_level = true
@@ -57,16 +64,6 @@ func _ready() -> void:
 func _apply_data() -> void:
 	assert(data.texture != null, "ProjectileData has no texture assigned")
 
-	if sprite_frames_override != null:
-		_sprite.visible = false
-		_animated_sprite.visible = true
-		_animated_sprite.sprite_frames = sprite_frames_override
-		_animated_sprite.play(animation_name_override)
-	else:
-		_sprite.visible = true
-		_animated_sprite.visible = false
-		_sprite.texture = texture_override if texture_override != null else data.texture
-
 	self.apply_scale(Vector2(1, 1) * data.scale)
 	
 	var circle := CircleShape2D.new()
@@ -77,6 +74,20 @@ func _apply_data() -> void:
 	pierce = data.pierce
 	
 	_apply_allegiance()
+
+
+func _apply_visuals() -> void:
+	if sprite_frames_override != null:
+		_sprite.visible = false
+		_animated_sprite.visible = true
+		_animated_sprite.sprite_frames = sprite_frames_override
+		_animated_sprite.play(animation_name_override)
+	else:
+		_sprite.visible = true
+		_animated_sprite.visible = false
+		_sprite.texture = texture_override if texture_override != null else data.texture
+
+
 # Layers come from the data, so a spawner never has to know or set them.
 func _apply_allegiance() -> void:
 	collision_layer = 0

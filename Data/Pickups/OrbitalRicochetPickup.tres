@@ -17,6 +17,7 @@ shader_parameter/pulse_max = 1.5
 
 [resource]
 script = ExtResource("1_7p4su")
+item_id = &"flapjack:orbital_ricochet"
 texture = ExtResource("2_c8inv")
 augment = ExtResource("1_4u47b")
 notification_name = "Orbital Ricochet"

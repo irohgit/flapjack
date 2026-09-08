@@ -8,11 +8,11 @@
 [ext_resource type="AudioStream" uid="uid://cbplby7nfcsyw" path="res://Audio/SFX/ship_hit.mp3" id="4_l6i6k"]
 [ext_resource type="Texture2D" uid="uid://c1i4w0rfv82dy" path="res://Assets/Enemies/Blackbeard_Pirates/Enemy_Ship_Hunter.png" id="4_yl1jh"]
 [ext_resource type="PackedScene" uid="uid://dp8ghl50f4y6s" path="res://Actors/Enemies/hunter_enemy.tscn" id="5_hunter_scene"]
+[ext_resource type="JSON" path="res://Data/Loot/Enemies/hunter.json" id="6_loot"]
 
 [resource]
 script = ExtResource("3_i4h7m")
 scene = ExtResource("5_hunter_scene")
-health = 3
 move_speed = 50.0
 texture = ExtResource("4_yl1jh")
 projectile_scene = ExtResource("2_gc5rt")
@@ -22,4 +22,5 @@ death_sfx = ExtResource("2_kyuee")
 fire_sfx = ExtResource("3_kyuee")
 fire_pitch = 0.3
 fire_sfx_volume_db = -10.0
+loot = ExtResource("6_loot")
 metadata/_custom_type_script = "uid://bo6li876odoia"

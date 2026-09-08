@@ -18,6 +18,7 @@ shader_parameter/pulse_max = 1.5
 
 [resource]
 script = ExtResource("1_qmc68")
+item_id = &"flapjack:plasma_augment"
 texture = ExtResource("2_iqpjv")
 augment = ExtResource("3_plasma")
 shop_id = &"plasma_cannon"

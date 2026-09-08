@@ -17,6 +17,12 @@ extends Control
 @export var open_action: StringName = &""  ## e.g. "pause". Blank means it never self-opens.
 @export var pauses_tree: bool = false      ## true for the pause menu
 
+
+## How this screen dies. On for screens the Dock instantiates: closing frees them.
+## Off for pre-placed panels that hide and show, like the pause menu.
+@export var frees_on_close: bool = false
+
+
 ## While open, make every Control OUTSIDE this screen unfocusable. Godot's
 ## directional focus search works on geometry, not tree depth, so buttons on the
 ## screen underneath are perfectly reachable even when they are hidden behind
@@ -36,6 +42,11 @@ var _suppressed: Dictionary = {}
 func _ready() -> void:
 	visibility_changed.connect(_focus_first)
 	if visible:
+		# Instantiated already-visible (the Dock path). open_menu() was never
+		# called, so do its focus work here.
+		_return_focus = get_viewport().gui_get_focus_owner()
+		if modal_focus:
+			_suppress_outside_focus()
 		_focus_first()
 
 
@@ -50,6 +61,12 @@ func _unhandled_input(event: InputEvent) -> void:
 	# _unhandled_input, never _input. _input fires BEFORE Control nodes get
 	# their turn, which is exactly how a focused button silently stops working.
 	if open_action != &"" and event.is_action_pressed(open_action):
+		# A cutscene owns the freeze. No menu may open over it, because
+		# closing that menu would thaw the world mid-cutscene.
+		if CutsceneManager.is_playing():
+			get_viewport().set_input_as_handled()
+			return
+
 		get_viewport().set_input_as_handled()
 		if visible:
 			close_menu()
@@ -67,8 +84,14 @@ func open_menu() -> void:
 	if modal_focus:
 		_suppress_outside_focus()
 	show()
+	print("MENU first_focus=", first_focus,
+		" focus_mode=", first_focus.focus_mode if first_focus else -1,
+		" visible=", is_visible_in_tree())
 	if pauses_tree:
 		get_tree().paused = true
+	print("MENU first_focus=", first_focus,
+		" focus_mode=", first_focus.focus_mode if first_focus else -1,
+		" visible=", is_visible_in_tree())
 
 
 func take_return_focus() -> Control:
@@ -80,14 +103,20 @@ func take_return_focus() -> Control:
 ## Hide this screen and hand focus back to whatever opened it.
 ## Override and call super() when closing means something extra.
 func close_menu() -> void:
+	if not CutsceneManager.is_playing():
+		get_tree().paused = false
 	if pauses_tree:
 		get_tree().paused = false
-	hide()
-	_restore_outside_focus()   # BEFORE handing focus back, or the target is still off
+
+	_restore_outside_focus()   # before handing focus back, or the target is still off
 	if _return_focus and is_instance_valid(_return_focus):
 		_return_focus.call_deferred("grab_focus")
 		_return_focus = null
 
+	if frees_on_close:
+		queue_free()           # the Dock unpauses when it hears tree_exited
+	else:
+		hide()
 
 # --- modal focus ------------------------------------------------------------
 
@@ -116,3 +145,13 @@ func _collect_controls(n: Node, out: Array[Control]) -> void:
 		if child is Control:
 			out.append(child)
 		_collect_controls(child, out)
+
+func _exit_tree() -> void:
+	# Covers the free-based close (DISMISS) as well as scene teardown.
+	# Safe to run twice: _restore_outside_focus clears the dictionary.
+	_restore_outside_focus()
+
+## Called by the Dock right after this screen is added to the UI layer.
+## Override in a subclass that needs data off the hotspot, and call super() last.
+func setup_from_hotspot(_hotspot: InteractHotspot) -> void:
+	_focus_first()

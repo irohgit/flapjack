@@ -58,7 +58,7 @@ func _ready() -> void:
 		var card := _offer_cards[index]
 		card.pressed.connect(_select_offer.bind(index))
 		card.focus_entered.connect(_select_offer.bind(index))
-		card.mouse_entered.connect(card.grab_focus)
+		#card.mouse_entered.connect(card.grab_focus) <- nav button already does this
 
 	exit_button.pressed.connect(close_menu)
 	_refresh_all_cards()
@@ -76,19 +76,22 @@ func _apply_panel_side() -> void:
 func _input(event: InputEvent) -> void:
 	if not visible or not event.is_action(&"ui_accept"):
 		return
-
-	var focus_owner := get_viewport().gui_get_focus_owner()
-	if focus_owner not in _offer_cards:
+	var card := get_viewport().gui_get_focus_owner() as ShopOfferCard
+	if card == null or not _offer_cards.has(card):
 		return
 
 	# Space/Enter/A buys the focused offer. Consume both the press and release
 	# so the row Button does not also toggle from the same input.
+	if card == null or not _offer_cards.has(card):
+		return
 	get_viewport().set_input_as_handled()
 	if event.is_action_pressed(&"ui_accept"):
 		_purchase_selected_offer()
-
-
-func open_shop(player: Player, offers: Array[PickupData]) -> void:
+		$Vinny/RichTextLabel.add_text("Great Choice!")#STUB
+		
+#Split Open_Shop with Load_offers
+## Fill the shop without opening it. For screens instantiated already-visible.
+func load_offers(player: Player, offers: Array[PickupData]) -> void:
 	_set_player(player)
 	_offers.clear()
 	for pickup in offers:
@@ -97,11 +100,15 @@ func open_shop(player: Player, offers: Array[PickupData]) -> void:
 		_offers.append(pickup)
 		if _offers.size() == OFFER_SLOT_COUNT:
 			break
-
 	_sold_offer_ids.clear()
 	_selected_index = 0 if not _offers.is_empty() else -1
 	_buying = false
 	_refresh_all_cards()
+
+
+## The original push entry point, for callers that open a hidden shop.
+func open_shop(player: Player, offers: Array[PickupData]) -> void:
+	load_offers(player, offers)
 	super.open_menu()
 
 
@@ -260,3 +267,12 @@ func _update_focus_neighbors() -> void:
 
 func _rarity_color(rarity: String) -> Color:
 	return RARITY_COLORS.get(rarity.to_upper(), RARITY_COLORS["COMMON"])
+
+
+##IROH SECTION - Adding Functions to fill shop for Dock
+## The Dock path: already added and visible, just needs its contents.
+func setup_from_hotspot(hotspot: InteractHotspot) -> void:
+	var player := get_tree().get_first_node_in_group(Groups.PLAYER) as Player
+	print("SHOP setup: player=", player, " offers=", hotspot.shop_offers.size())
+	load_offers(player, hotspot.shop_offers)
+	super(hotspot)

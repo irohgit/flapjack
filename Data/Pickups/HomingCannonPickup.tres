@@ -18,6 +18,7 @@ shader_parameter/pulse_max = 1.5
 
 [resource]
 script = ExtResource("2_15c5x")
+item_id = &"flapjack:homing_cannon"
 texture = ExtResource("4_qrkgb")
 augment = ExtResource("1_15c5x")
 shop_id = &"homing_cannon"

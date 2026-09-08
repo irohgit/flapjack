@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="GroundEffectData" format=3]
+
+[ext_resource type="Script" path="res://Data/GroundEffects/ground_effect_data.gd" id="1_ground"]
+
+[resource]
+script = ExtResource("1_ground")
+hitbox_radius = 80.0
+duration = 3.0
+tint = Color(0.65, 0.8, 0.25, 1)
+metadata/implementation_notes = "TODO: Configure gas damage/status and lingering duration. Optional fire ignition needs ground-effect interaction logic."
+metadata/implementation_status = "scaffold"

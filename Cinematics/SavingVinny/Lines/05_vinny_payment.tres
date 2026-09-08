@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="CutsceneLine" format=3 uid="uid://dgmrpltptt5f"]
+
+[ext_resource type="Script" uid="uid://3ke20rwguryo" path="res://Cinematics/cutscene_line.gd" id="1_3i0mg"]
+
+[resource]
+script = ExtResource("1_3i0mg")
+speaker = "Vinny"
+text = "That is not what we agreed. I want proper payment."

@@ -7,10 +7,10 @@
 [ext_resource type="AudioStream" uid="uid://41by6wg6cvxx" path="res://Audio/SFX/enemy_cannon_shot_1.mp3" id="3_7duek"]
 [ext_resource type="Texture2D" uid="uid://bvwwuxlli4ysf" path="res://Assets/Enemies/Blackbeard_Pirates/Enemy_Ship_Bulwark.png" id="4_dul8q"]
 [ext_resource type="AudioStream" uid="uid://cbplby7nfcsyw" path="res://Audio/SFX/ship_hit.mp3" id="4_i8ifh"]
+[ext_resource type="JSON" path="res://Data/Loot/Enemies/bulwark.json" id="5_loot"]
 
 [resource]
 script = ExtResource("1_rl34p")
-health = 3
 texture = ExtResource("4_dul8q")
 projectile_scene = ExtResource("2_v7pu7")
 ammo = ExtResource("1_dul8q")
@@ -19,4 +19,5 @@ death_sfx = ExtResource("2_7duek")
 fire_sfx = ExtResource("3_7duek")
 fire_pitch = 0.3
 fire_sfx_volume_db = -10.0
+loot = ExtResource("5_loot")
 metadata/_custom_type_script = "uid://bo6li876odoia"

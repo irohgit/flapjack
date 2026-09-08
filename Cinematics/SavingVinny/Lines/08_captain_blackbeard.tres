@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="CutsceneLine" format=3 uid="uid://7hu26g14woac"]
+
+[ext_resource type="Script" uid="uid://3ke20rwguryo" path="res://Cinematics/cutscene_line.gd" id="1_0oymj"]
+
+[resource]
+script = ExtResource("1_0oymj")
+speaker = "Captain"
+text = "You? A Tanqueray? If you're a Tanqueray, we're the Blackbeard Pirates. The most despicable, most terrible pirates in these waters."

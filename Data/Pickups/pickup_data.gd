@@ -5,6 +5,11 @@ extends Resource
 # integers in .tres and .tscn files. New pickup types belong at the end.
 enum PickupType {AUGMENT, WEAPON, COIN, HEALTH, SHIELD, GIN, POTION}
 
+@export_group("Identity")
+## Stable ID used by enemy loot JSON, for example "flapjack:gold_coin".
+@export var item_id: StringName
+
+@export_group("Pickup")
 @export var pickup_type: PickupType
 @export var texture: Texture2D
 @export var sprite_frames: SpriteFrames
