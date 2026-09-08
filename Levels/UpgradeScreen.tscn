@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://txmrd1xl2rsq"]
+[gd_scene load_steps=30 format=3 uid="uid://txmrd1xl2rsq"]
 
 [ext_resource type="Script" uid="uid://bry8accis8tu2" path="res://Levels/upgrade_screen.gd" id="1_script"]
 [ext_resource type="PackedScene" uid="uid://co6sij38mf2wj" path="res://Data/Upgrades/upgrade_node_card.tscn" id="2_card"]
@@ -25,6 +25,7 @@
 [ext_resource type="FontFile" uid="uid://cvo681c1hvgca" path="res://Assets/Fonts/Montserrat/static/Montserrat-Black.ttf" id="23_title_font"]
 [ext_resource type="AudioStream" uid="uid://dshox3m1impsv" path="res://Audio/SFX/soft_hover.mp3" id="24_hover"]
 [ext_resource type="AudioStream" uid="uid://dc263ntmf6iew" path="res://Audio/SFX/ui_click_stylized.mp3" id="25_click"]
+[ext_resource type="Texture2D" path="res://Assets/Boat/galleon_masterwork.png" id="26_masterwork"]
 
 [sub_resource type="Theme" id="Theme_upgrade"]
 default_font = ExtResource("22_font")
@@ -64,6 +65,7 @@ tier2_nodes = Array[ExtResource("12_data")]([ExtResource("4_hull2"), ExtResource
 skiff_texture = ExtResource("18_skiff")
 schooner_texture = ExtResource("19_schooner")
 galleon_texture = ExtResource("20_galleon")
+masterwork_texture = ExtResource("26_masterwork")
 first_focus = NodePath("ReturnButton")
 frees_on_close = true
 
@@ -170,14 +172,192 @@ expand_mode = 1
 [node name="BoatPreview" type="TextureRect" parent="."]
 texture_filter = 1
 layout_mode = 0
-offset_left = 150.0
+offset_left = 82.0
 offset_top = 500.0
-offset_right = 370.0
+offset_right = 264.0
 offset_bottom = 660.0
 mouse_filter = 2
 texture = ExtResource("20_galleon")
 expand_mode = 1
 stretch_mode = 5
+
+[node name="ComponentStatus" type="Control" parent="."]
+layout_mode = 0
+offset_left = 268.0
+offset_top = 486.0
+offset_right = 420.0
+offset_bottom = 666.0
+mouse_filter = 2
+
+[node name="Rigging" type="Control" parent="ComponentStatus"]
+layout_mode = 0
+offset_right = 152.0
+offset_bottom = 56.0
+mouse_filter = 2
+
+[node name="Frame" type="TextureRect" parent="ComponentStatus/Rigging"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("14_button")
+expand_mode = 1
+
+[node name="Icon" type="TextureRect" parent="ComponentStatus/Rigging"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 48.0
+offset_bottom = 48.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="ComponentStatus/Rigging"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 3.0
+offset_right = 146.0
+offset_bottom = 28.0
+theme_override_colors/font_color = Color(0.48, 0.92, 0.85, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 14
+text = "RIGGING"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Progress" type="Label" parent="ComponentStatus/Rigging"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 25.0
+offset_right = 146.0
+offset_bottom = 52.0
+theme_override_colors/font_color = Color(1, 0.93, 0.76, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 17
+text = "0 / 3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Armament" type="Control" parent="ComponentStatus"]
+layout_mode = 0
+offset_top = 62.0
+offset_right = 152.0
+offset_bottom = 118.0
+mouse_filter = 2
+
+[node name="Frame" type="TextureRect" parent="ComponentStatus/Armament"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("14_button")
+expand_mode = 1
+
+[node name="Icon" type="TextureRect" parent="ComponentStatus/Armament"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 48.0
+offset_bottom = 48.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="ComponentStatus/Armament"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 3.0
+offset_right = 146.0
+offset_bottom = 28.0
+theme_override_colors/font_color = Color(0.48, 0.92, 0.85, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 12
+text = "ARMAMENT"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Progress" type="Label" parent="ComponentStatus/Armament"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 25.0
+offset_right = 146.0
+offset_bottom = 52.0
+theme_override_colors/font_color = Color(1, 0.93, 0.76, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 17
+text = "0 / 3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Hull" type="Control" parent="ComponentStatus"]
+layout_mode = 0
+offset_top = 124.0
+offset_right = 152.0
+offset_bottom = 180.0
+mouse_filter = 2
+
+[node name="Frame" type="TextureRect" parent="ComponentStatus/Hull"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("14_button")
+expand_mode = 1
+
+[node name="Icon" type="TextureRect" parent="ComponentStatus/Hull"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 48.0
+offset_bottom = 48.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="ComponentStatus/Hull"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 3.0
+offset_right = 146.0
+offset_bottom = 28.0
+theme_override_colors/font_color = Color(0.48, 0.92, 0.85, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 14
+text = "HULL"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Progress" type="Label" parent="ComponentStatus/Hull"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 25.0
+offset_right = 146.0
+offset_bottom = 52.0
+theme_override_colors/font_color = Color(1, 0.93, 0.76, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 17
+text = "0 / 3"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="BoatTier" type="Label" parent="."]
 unique_name_in_owner = true
