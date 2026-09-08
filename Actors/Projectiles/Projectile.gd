@@ -323,5 +323,5 @@ func _on_expired() -> void:
 
 
 func _on_screen_exited() -> void:
-	DebugHud.flash("bullet screen_exited fired")
+	#DebugHud.flash("bullet screen_exited fired")
 	destroy(false)

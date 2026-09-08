@@ -6,19 +6,23 @@ extends Enemy
 @export_range(0.0, 0.5, 0.01) var hold_height_ratio := 0.25
 @export_range(0.0, 500.0, 1.0, "or_greater") var playfield_margin := 150.0
 @export var explosion_scene: PackedScene
-
+## How far outside the visible area the ship still moves, so it can sail in.
+@export_range(0.0, 2000.0, 1.0, "or_greater") var activation_margin := 800.0
 # Overrides the base fire entirely. The timer still ticks, it just produces
 # nothing, which is cheaper than fighting the base class's scheduling.
 func _fire() -> Projectile:
 	return null
 
-
 func _move(delta: float, speed: float) -> void:
-	if not Playarea.is_near_screen(global_position, playfield_margin):
+	if not Playarea.is_near_screen(global_position, activation_margin):
 		return
-	global_position = global_position.move_toward(_get_hold_position(), speed * delta)
-	global_position = _clamp_to_visible_playfield(global_position)
 
+	global_position = global_position.move_toward(_get_hold_position(), speed * delta)
+
+	# Only clamp once the ship is already inside the clamp's own bounds,otherwise switching it on yanks the ship down by playfield_margin.
+	var rect := Playarea.get_visible_world_rect()
+	if global_position.y > rect.position.y + playfield_margin:
+		global_position = _clamp_to_visible_playfield(global_position)
 
 func _get_hold_position() -> Vector2:
 	var visible_rect := Playarea.get_visible_world_rect()

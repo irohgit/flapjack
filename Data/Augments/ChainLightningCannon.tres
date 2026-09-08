@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="AugmentData" format=3]
+[gd_resource type="Resource" script_class="AugmentData" format=3 uid="uid://tn8c5k7o8yv1"]
 
-[ext_resource type="Script" path="res://Data/Augments/augment_data.gd" id="1_augment"]
-[ext_resource type="Script" path="res://Data/Augments/chain_lightning_cannon_effect.gd" id="2_effect"]
-[ext_resource type="Resource" path="res://Data/Weapons/Cannon.tres" id="3_weapon"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Items/Augments/Cannon/chain_lightning_cannon.png" id="4_icon"]
-[ext_resource type="Resource" path="res://Data/Augments/OrbitalRicochetCannon.tres" id="ingredient_0"]
-[ext_resource type="Resource" path="res://Data/Augments/PlasmaAugment.tres" id="ingredient_1"]
+[ext_resource type="Script" uid="uid://cpp3oou337x" path="res://Data/Augments/augment_data.gd" id="1_augment"]
+[ext_resource type="Script" uid="uid://bp56j3ngtq2tv" path="res://Data/Augments/chain_lightning_cannon_effect.gd" id="2_effect"]
+[ext_resource type="Resource" uid="uid://b7nwwwfmfkswx" path="res://Data/Weapons/Cannon.tres" id="3_weapon"]
+[ext_resource type="Texture2D" uid="uid://sxwhbq6y3k7d" path="res://Assets/UI/Shop/Items/Augments/Cannon/chain_lightning_cannon.png" id="4_icon"]
+[ext_resource type="Resource" uid="uid://cqs5vl1fvswhy" path="res://Data/Augments/OrbitalRicochetCannon.tres" id="ingredient_0"]
+[ext_resource type="Resource" uid="uid://cepoytsvun1sb" path="res://Data/Augments/PlasmaAugment.tres" id="ingredient_1"]
 
 [sub_resource type="Resource" id="Effect"]
 script = ExtResource("2_effect")
@@ -15,7 +15,7 @@ required_augments = Array[ExtResource("1_augment")]([ExtResource("ingredient_0")
 script = ExtResource("1_augment")
 name = "Chain Lightning Cannon"
 targetWeapon = ExtResource("3_weapon")
-augmentEffect = SubResource("Effect")
 texture = ExtResource("4_icon")
+augmentEffect = SubResource("Effect")
 metadata/combo_only = true
 metadata/implementation_status = "scaffold"

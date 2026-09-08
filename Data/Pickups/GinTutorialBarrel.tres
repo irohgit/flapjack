@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="DestructibleData" format=3 uid="uid://cewcar26wre16"]
+
+[ext_resource type="Resource" uid="uid://bvtbthku5smhg" path="res://Data/Pickups/Gin.tres" id="1_an3dr"]
+[ext_resource type="PackedScene" uid="uid://dgp73phtjophn" path="res://Actors/Pickup/pickup.tscn" id="2_6xkgc"]
+[ext_resource type="Script" uid="uid://daxvkyodx2tkx" path="res://Data/Pickups/destructibledata.gd" id="3_dmjkg"]
+[ext_resource type="SpriteFrames" uid="uid://dvw354nqleto6" path="res://Animations/barrel.tres" id="4_63bqo"]
+
+[resource]
+script = ExtResource("3_dmjkg")
+sprite_frames = ExtResource("4_63bqo")
+drop_scene = ExtResource("2_6xkgc")
+drop_data = ExtResource("1_an3dr")
+drift_time = 2.5
+stop_at_ratio = 0.4
+auto_despawn = false
+metadata/_custom_type_script = "uid://rau2jwiqd0pd"

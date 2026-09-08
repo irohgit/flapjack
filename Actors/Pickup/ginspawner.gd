@@ -23,16 +23,18 @@ func _on_gin_requested(entry: int, at: Vector2, barrel_data: DestructibleData) -
 		#_:
 			#_float_down(barrel_data)
 
-func _float_down(barrel_data: DestructibleData, auto_despawn := true) -> Node:
+func _float_down(barrel_data: DestructibleData) -> Destructible:
 	if gin_barrel_scene == null:
 		push_error("GinSpawner: no gin_barrel_scene assigned")
 		return null
-
 	if camera == null:
 		push_error("GinSpawner: camera not assigned")
 		return null
 
-	var barrel := gin_barrel_scene.instantiate()
+	var barrel := gin_barrel_scene.instantiate() as Destructible
+	if barrel == null:
+		push_error("GinSpawner: gin_barrel_scene must inherit from Destructible")
+		return null
 	if barrel_data != null:
 		barrel.data = barrel_data
 
@@ -42,15 +44,33 @@ func _float_down(barrel_data: DestructibleData, auto_despawn := true) -> Node:
 	var view := camera.get_viewport_rect().size / camera.zoom
 	var centre := camera.get_screen_center_position()
 	var offset_x := randf_range(-spawn_spread, spawn_spread) * view.x
-	var world_start := Vector2(
+	barrel.position = parent.to_local(Vector2(
 		centre.x + offset_x,
 		centre.y - view.y * 0.5 - spawn_lead - randf_range(0.0, 75.0)
-	)
-	barrel.position = parent.to_local(world_start)
+	))
+
+	# The barrel type decides its own drift. -1.0 means "use the spawner default".
+	var seconds := drift_time
+	var ratio := -1.0
+	var despawn := true
+	if barrel_data != null:
+		if barrel_data.drift_time > 0.0:
+			seconds = barrel_data.drift_time
+		ratio = barrel_data.stop_at_ratio
+		despawn = barrel_data.auto_despawn
+
+	var end_y: float
+	if ratio >= 0.0:
+		var visible_rect := Playarea.get_visible_world_rect()
+		var world_target := Vector2(0.0, visible_rect.position.y + visible_rect.size.y * ratio)
+		end_y = parent.to_local(world_target).y
+	else:
+		end_y = barrel.position.y + drift_distance
 
 	var tween := barrel.create_tween()
-	tween.tween_property(barrel, "position:y", barrel.position.y + drift_distance, drift_time)
-	if auto_despawn:
+	tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	tween.tween_property(barrel, "position:y", end_y, seconds)
+	if despawn:
 		tween.tween_callback(barrel.queue_free)
 
 	return barrel
@@ -59,9 +79,5 @@ func _float_down(barrel_data: DestructibleData, auto_despawn := true) -> Node:
 ## can wait on it. Gameplay keeps using the signal.
 ## `at` is accepted for signal parity but unused: _float_down places the barrel
 ## relative to the camera, not at a world point.
-func spawn_barrel(entry: int,_at: Vector2,barrel_data: DestructibleData,auto_despawn := true) -> Node:
-	match entry:
-		Entry.FLOAT_DOWN, Entry.ENEMY_EXPLOSION, Entry.KEG_ROLL:
-			return _float_down(barrel_data, auto_despawn)
-		_:
-			return _float_down(barrel_data, auto_despawn)
+func spawn_barrel(_entry: int, _at: Vector2, barrel_data: DestructibleData) -> Destructible:
+	return _float_down(barrel_data)

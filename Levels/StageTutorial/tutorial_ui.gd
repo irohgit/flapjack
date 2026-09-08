@@ -1,18 +1,13 @@
 class_name TutorialUI
 extends Control
-## Tutorial presentation. Two jobs: say a line and wait, or show a prompt and
-## wait for the player to press something. Everything else in the tutorial is
-## a plain coroutine calling these.
-
+## Tutorial presentation. Two jobs: say a line and wait, or show a prompt and wait for the player to press something. Everything else in the tutorial is a plain coroutine calling these.
 @export var advance_action: StringName = &"ui_accept"
 ## Ignores presses for this long after something appears, so a held button
 ## cannot skip a line and its prompt in the same frame.
 @export var input_lockout := 0.25
-
 @export_group("Audio")
 @export var line_sound: AudioStream
 @export var tick_sound: AudioStream
-
 @onready var _say_box: Control = $SayBox
 @onready var _speaker: Label = $SayBox/VBox/Speaker
 @onready var _text: RichTextLabel = $SayBox/VBox/Text
@@ -21,19 +16,22 @@ extends Control
 @onready var _tick: Control =  $PromptCard/Tick #HARDCODED
 @onready var _objective: Label = $Objective/VBox/Label #HARDCODED
 @onready var _objective_root: Control = $Objective
-
 @export_group("Timing")
 ## Default hold for say_auto(), in seconds. 
 @export var auto_line_time := 2.5
-
 @export_group("Animation")
 @onready var _input_anim: AnimatedSprite2D = $Objective/VBox/HBoxContainer/AnimSlot/input_animation
 @onready var _anim_slot: Control = $Objective/VBox/HBoxContainer/AnimSlot
+@onready var _portrait: TextureRect = $Portrait
+## Speaker name to portrait. Filled in the Inspector so say() needs no texture.
+@export var portraits: Dictionary = {}
+@export var portrait_fade := 0.2
+@export var portrait_slide := 24.0
 
+var _objective_generation := 0
 var _objective_keyboard := ""
 var _objective_gamepad := ""
 var _current_animation_key := ""
-
 func _ready() -> void:
 	# The tutorial pauses the world to show prompts, so this layer must not.
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -57,14 +55,11 @@ func _ready() -> void:
 	_tick.modulate.a = 0.0
 	_tick.pivot_offset = _tick.size * 0.5
 	InputDevice.scheme_changed.connect(_on_scheme_changed)
-
-
-# --- The two methods the tutorial actually calls ------------------------------
-
 ## Shows a line. With no hold, waits for the player to advance. With a hold,
 ## clears itself after that many seconds, though the player can still advance
 ## early.
-func say(speaker: String, text: String, hold := 0.0) -> void:
+func say(speaker: String, text: String, hold := 0.0, portrait: Texture2D = null) -> void:
+	_show_portrait(portrait if portrait != null else portraits.get(speaker, null) as Texture2D)
 	_speaker.text = speaker
 	_speaker.visible = not speaker.is_empty()
 	_text.text = text
@@ -79,60 +74,87 @@ func say(speaker: String, text: String, hold := 0.0) -> void:
 		await _wait_for_any([advance_action])
 
 	_say_box.visible = false
-
-
 ## A line that reads itself, using auto_line_time.
-func say_auto(speaker: String, text: String) -> void:
-	await say(speaker, text, auto_line_time)
+func say_auto(speaker: String, text: String, portrait: Texture2D = null) -> void:
+	await say(speaker, text, auto_line_time, portrait)
+## Shows a portrait, sliding it in from the left. Null hides it.
+func _show_portrait(texture: Texture2D) -> void:
+	if texture == null:
+		hide_portrait()
+		return
+	if _portrait.texture == texture and _portrait.visible:
+		return
+	_portrait.texture = texture
+	_portrait.visible = true
+	var home := _portrait.position
+	_portrait.position = home - Vector2(portrait_slide, 0.0)
+	_portrait.modulate.a = 0.0
+	var tween := create_tween().set_parallel(true)
+	tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	tween.tween_property(_portrait, "modulate:a", 1.0, portrait_fade)
+	tween.tween_property(_portrait, "position", home, portrait_fade)
 
+
+func hide_portrait() -> void:
+	if not _portrait.visible:
+		return
+	var tween := create_tween()
+	tween.tween_property(_portrait, "modulate:a", 0.0, portrait_fade)
+	await tween.finished
+	_portrait.visible = false
+	_portrait.texture = null
+	
 ## Shows an input instruction and waits until the player presses one of the
 ## given actions. Freezes the world by default so they can read at their pace.
-func prompt(actions: Array[StringName], label: String, pause_world := true) -> void:
-
+## `hold` keeps the tick on screen for a beat before the card fades out.
+func prompt(actions: Array[StringName], label: String, pause_world := true, hold := 0.0) -> void:
 	_prompt_label.text = label
 	_tick.modulate.a = 0.0
+	_prompt_card.modulate.a = 1.0
 	_prompt_card.visible = true
-	
-	print("[PROMPT] card vis %s a %.2f | ui vis %s a %.2f | layer vis %s | text '%s'" % [
-		_prompt_card.visible, _prompt_card.modulate.a,
-		visible, modulate.a,
-		get_parent().visible,
-		_prompt_label.text
-	])
-	
+
 	var was_paused := get_tree().paused
 	if pause_world:
 		get_tree().paused = true
-
 	await _wait_for_any(actions)
-
 	if pause_world:
 		get_tree().paused = was_paused
 
 	await _play_tick()
+	if hold > 0.0:
+		await _wait(hold)
+
+	var fade := create_tween()
+	fade.tween_property(_prompt_card, "modulate:a", 0.0, 0.2)
+	await fade.finished
 	_prompt_card.visible = false
-
-
+	_prompt_card.modulate.a = 1.0
 # --- Objective line ----------------------------------------------------------
-
 func set_objective(text: String) -> void:
 	_objective_keyboard = text
 	_objective_gamepad = text
 	_refresh_objective()
 
-#func clear_objective() -> void:
-	#_objective_keyboard = ""
-	#_objective_gamepad = ""
-	#_objective.visible = false
-	#_objective.text = ""
-
-func clear_objective() -> void:
+## Clears the objective. With `delay`, the clear is scheduled rather than
+## immediate, and is cancelled if a newer objective is set in the meantime.
+## Do not await this. Call it and let the beat continue.
+func clear_objective(delay := 0.0) -> void:
+	if delay <= 0.0:
+		_objective_generation += 1
+		_do_clear_objective()
+		return
+	var generation := _objective_generation
+	await _wait(delay)
+	if generation != _objective_generation:
+		return
+	_do_clear_objective()
+func _do_clear_objective() -> void:
 	_objective_keyboard = ""
 	_objective_gamepad = ""
 	_objective.text = ""
 	_objective_root.visible = false
 	play_input_animation("")
-
+	
 func play_input_animation(key: String) -> void:
 	_current_animation_key = key
 
@@ -151,20 +173,6 @@ func play_input_animation(key: String) -> void:
 		_anim_slot.visible = false
 		push_warning("No input animation named '%s'" % clip)
 	
-#func play_input_animation(key: String) -> void:
-	#_current_animation_key = key
-	#if key.is_empty():
-		#return
-#
-	#var suffix := "_gamepad" if InputDevice.is_gamepad() else "_keyboard"
-	#var clip := key + suffix
-#
-	#if _input_anim.sprite_frames != null and _input_anim.sprite_frames.has_animation(clip):
-		#_input_anim.play(clip)
-	#else:
-		#push_warning("No input animation named '%s'" % clip)
-# --- Internals ---------------------------------------------------------------
-
 func _wait_for_any(actions: Array[StringName]) -> void:
 	var valid: Array[StringName] = []
 	for action: StringName in actions:
@@ -185,7 +193,6 @@ func _wait_for_any(actions: Array[StringName]) -> void:
 			if Input.is_action_just_pressed(action):
 				return
 		await get_tree().process_frame
-
 func _wait_for_any_or_timeout(actions: Array[StringName], seconds: float) -> void:
 	var valid: Array[StringName] = []
 	for action: StringName in actions:
@@ -200,31 +207,22 @@ func _wait_for_any_or_timeout(actions: Array[StringName], seconds: float) -> voi
 			if Input.is_action_just_pressed(action):
 				return
 		await get_tree().process_frame
-		remaining -= get_process_delta_time()
-		
-# process_frame keeps firing while the tree is paused, which is what lets a
-# prompt wait for input during a freeze.
+		remaining -= get_process_delta_time()# prompt wait for input during a freeze.
 func _wait(seconds: float) -> void:
 	var remaining := seconds
 	while remaining > 0.0:
 		await get_tree().process_frame
 		remaining -= get_process_delta_time()
-
-
 func _play_tick() -> void:
 	if tick_sound != null:
 		Audio.play_ui(tick_sound)
-
 	_tick.pivot_offset = _tick.size * 0.5
-	_tick.scale = Vector2.ONE * 1.5
+	_tick.scale = Vector2.ONE * 3
 	_tick.modulate.a = 1.0
-
-	var tween := create_tween().set_parallel(true)
+	var tween := create_tween()
 	tween.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	tween.tween_property(_tick, "scale", Vector2.ONE, 0.25)
-	tween.tween_property(_tick, "modulate:a", 0.0, 0.4).set_delay(0.3)
 	await tween.finished
-	
 ## Like prompt(), but waits until the player has held an action continuously
 ## for `seconds`. Use it to teach holding rather than tapping.
 func prompt_hold(actions: Array[StringName], label: String, seconds := 1.0) -> void:
@@ -276,3 +274,15 @@ func _on_scheme_changed(_scheme: int) -> void:
 	_refresh_objective()
 	play_input_animation(_current_animation_key)
 	
+## Shows a card and waits for a signal rather than a keypress. Never pauses,
+## because the player has to actually do the thing rather than acknowledge it.
+func prompt_until(done: Signal, label: String) -> void:
+	_prompt_label.text = label
+	_tick.modulate.a = 0.0
+	_prompt_card.visible = true
+
+	await _wait(input_lockout)
+	await done
+
+	await _play_tick()
+	_prompt_card.visible = false

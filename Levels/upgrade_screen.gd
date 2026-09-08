@@ -18,7 +18,7 @@ const MAIN_MENU_SCENE := "res://UI/main_menu.tscn"
 var _owns_lifetime := false
 
 func _process(_delta: float) -> void:
-	DebugHud.watch("focus", str(get_viewport().gui_get_focus_owner()))
+	#DebugHud.watch("focus", str(get_viewport().gui_get_focus_owner()))
 	
 func _ready() -> void:
 	MetaProgress.gin_changed.connect(func(a): _gin_label.text = str(a))

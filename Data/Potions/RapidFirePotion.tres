@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="PotionData" format=3 uid="uid://dd77ghcleevsa"]
 
+[ext_resource type="Resource" uid="uid://6cv6kn3pktnq" path="res://Actors/Feedback/firerate_cue.tres" id="1_a0lm8"]
 [ext_resource type="Script" uid="uid://bb2hxg3ieta4h" path="res://Systems/Combat/effect_action.gd" id="1_a6dkx"]
 [ext_resource type="Script" uid="uid://sx6ump0oii3m" path="res://Data/Potions/potion_data.gd" id="1_potion"]
 [ext_resource type="AudioStream" uid="uid://8rok2xtwvjs5" path="res://Audio/SFX/potiondrink_2.mp3" id="1_qdvau"]
@@ -29,4 +30,5 @@ display_name = "Rapid Fire"
 description = "Doubles weapon fire rate for 10 seconds."
 icon = ExtResource("4_icon")
 timed_effects = Array[ExtResource("2_effect")]([SubResource("RapidFireEffect")])
+cue = ExtResource("1_a0lm8")
 drink_sfx = ExtResource("1_qdvau")

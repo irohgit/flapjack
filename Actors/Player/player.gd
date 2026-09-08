@@ -10,6 +10,7 @@ enum PurchaseResult {
 	CANNOT_ACCEPT,
 }
 
+var _developermode:= false
 #Movement
 @export var max_speed := 700.0
 @export var responsiveness := 25.0
@@ -25,6 +26,8 @@ var _player_augments: Array[AugmentData] = []
 @export var coin_count:= 0
 @export var gin_count:= 0
 @export_range(1, 5, 1) var potion_slot_count := 3
+
+
 
 #@export var boatTextures: Array[Texture2D]
 
@@ -42,7 +45,9 @@ signal augment_added(augment: AugmentData)
 signal pickup_collected(pickup: PickupData)
 signal potion_inventory_changed
 signal potion_selection_changed(index: int)
+signal health_full
 signal exited_play_area
+signal potion_drunk(potion: PotionData)
 
 var velocity := Vector2.ZERO
 var _move_intent := Vector2.ZERO
@@ -55,7 +60,8 @@ var _has_exited_play_area := false
 var _purchase_in_progress := false
 var _scripted := false
 var _can_fire := true
-
+var _can_switch_potion := true
+var _can_drink_potion := true
 
 #SFX
 @export var cannon_sfx: AudioStream
@@ -93,6 +99,13 @@ var _tier_has_mast := false
 
 #Developer Exports
 @export var scrollDirector: ScrollDirector
+#GOD MODE
+var _god_mode := false
+var _normal_weapon_data: Array[WeaponData] = []
+
+@onready var _emission: StatusEmission = $StatusEmission
+
+
 #Developer Tools
 func _unhandled_input(event: InputEvent) -> void:
 	if not OS.is_debug_build():
@@ -106,8 +119,32 @@ func _unhandled_input(event: InputEvent) -> void:
 		scrollDirector.change_move_speed(scrollDirector.scroll_speed + scrollDirector.scroll_speed_change)
 	if event.is_action_pressed("decrease_scroll_speed"):
 		scrollDirector.change_move_speed(scrollDirector.scroll_speed - scrollDirector.scroll_speed_change)
-	
+	if event.is_action_pressed("developer_mode"):
+		_developermode = not _developermode
+		DebugHud.flash("DEV MODE %s" % ("ON" if _developermode else "OFF"))
+
+	if _developermode and event.is_action_pressed("god_mode"):
+		_god_mode = not _god_mode
+		if _god_mode:
+			_health.current_health = _health.max_health
+			_normal_weapon_data.clear()
+			for state: WeaponState in _weapon_states:
+				_normal_weapon_data.append(state.data)
+				var buffed: WeaponData = state.data.duplicate()
+				buffed.damage = 999
+				if buffed.weaponProjectile != null:
+					var shot: ProjectileData = buffed.weaponProjectile.duplicate()
+					shot.damage = 999
+					buffed.weaponProjectile = shot
+				state.data = buffed
+		else:
+			for index: int in _weapon_states.size():
+				if index < _normal_weapon_data.size():
+					_weapon_states[index].data = _normal_weapon_data[index]
+			_normal_weapon_data.clear()
+		DebugHud.flash("GOD MODE %s" % ("ON" if _god_mode else "OFF"))
 		
+	
 func _ready() -> void:
 	_apply_meta_upgrades()
 	_potion_slots.resize(potion_slot_count)
@@ -120,7 +157,8 @@ func _ready() -> void:
 	_health.damaged.connect(_on_damaged)
 	#_health.health_changed.connect(func(c, m): DebugHud.watch("health", "%d/%d" % [c, m]))
 	_health.died.connect(_on_died)
-
+	if not _status_effects.effect_started.is_connected(_on_effect_started):
+		_status_effects.effect_started.connect(_on_effect_started)
 	var restored_from_checkpoint := GlobalPlayer.restore_checkpoint(self)
 	if not restored_from_checkpoint:
 		for weapon in starting_weapons:
@@ -129,7 +167,12 @@ func _ready() -> void:
 
 	gin_changed.emit(gin_count)
 	_fit_wake_to_hull()
-	
+
+func _on_effect_started(effect_id: StringName) -> void:
+	var data := _status_effects.get_effect_data(effect_id)
+	if data != null:
+		_emission.play(data.cue)
+		
 func _apply_meta_upgrades() -> void:
 	match MetaProgress.boat_tier:
 		MetaProgress.BoatTier.SKIFF:    ship_tier = 1
@@ -161,8 +204,8 @@ func _process(_delta: float) -> void:
 		
 func _physics_process(delta: float) -> void:
 
-	if banks != null:
-		DebugHud.watch("bank", banks.debug_line(global_position))
+	#if banks != null:
+		#DebugHud.watch("bank", banks.debug_line(global_position))
 	var movement_speed := _status_effects.get_modified_value(
 		StatusEffectData.STAT_MOVEMENT_SPEED,
 		max_speed
@@ -441,7 +484,12 @@ func _emit_run_state_changed() -> void:
 	potion_inventory_changed.emit()
 	potion_selection_changed.emit(_selected_potion_slot)
 
+func set_can_switch_potion(value: bool) -> void:
+	_can_switch_potion = value
 
+
+func set_can_drink_potion(value: bool) -> void:
+	_can_drink_potion = value
 func can_add_potion(potion: PotionData) -> bool:
 	return potion != null and has_potion_space()
 
@@ -464,24 +512,28 @@ func add_potion(potion: PotionData) -> bool:
 
 
 func select_potion_slot(index: int) -> void:
+	if not _can_switch_potion: #Only allow player to switch potion if bCanDrinkPotion is true - useful for skill/potion break enemies
+		return
 	if _potion_slots.is_empty():
 		return
-
 	var wrapped_index := posmod(index, _potion_slots.size())
 	if wrapped_index == _selected_potion_slot:
 		return
-
 	_selected_potion_slot = wrapped_index
 	potion_selection_changed.emit(_selected_potion_slot)
 
 
 func drink_selected_potion() -> bool:
+	if not _can_drink_potion:
+		return false
 	var potion := get_potion_in_slot(_selected_potion_slot)
 	if potion == null or not potion.use_on(self):
 		return false
 
 	_potion_slots[_selected_potion_slot] = null
 	potion_inventory_changed.emit()
+	potion_drunk.emit(potion)
+	_emission.play(potion.cue)
 	return true
 
 
@@ -541,7 +593,9 @@ func add_shield(amount: int) -> bool:
 	
 func heal(amount: int) -> void:
 	_health.heal(amount)
-
+	if _health.current_health >= _health.max_health:
+		health_full.emit()
+		
 func get_health_component() -> HealthComponent:
 	return _health
 
@@ -560,7 +614,6 @@ func _on_damaged() -> void:
 	_shake(0.4) #Camera Shake
 	modulate = Color(1, 0.4, 0.4)
 	create_tween().tween_property(self, "modulate", Color.WHITE, _health.invincibility_time)
-	
 func _on_died() -> void:
 	Audio.play_sfx(death_sfx, 0.0)
 	if _is_dead:
@@ -575,8 +628,7 @@ func _on_died() -> void:
 	DebugHud.flash("PLAYER DESTROYED")
 	GameEvents.player_died.emit(_get_retry_scene_path())
 	queue_free()
-
-
+	
 func _get_retry_scene_path() -> String:
 	# Use the nearest instanced stage, not an outer sequence wrapper such as Iroh.
 	var ancestor := get_parent()
@@ -587,7 +639,6 @@ func _get_retry_scene_path() -> String:
 
 	var current_scene := get_tree().current_scene
 	return current_scene.scene_file_path if current_scene != null else ""
-	
 func _update_hull(current: int, maximum: int) -> void:
 	var tier_index := clampi(ship_tier - 1, 0, ship_tiers.size() - 1)
 	if ship_tiers.is_empty():
@@ -604,8 +655,6 @@ func _update_hull(current: int, maximum: int) -> void:
 	if _sprite.texture != textures[index]:
 		_sprite.texture = textures[index]
 		_fit_wake_to_hull()
-	
-	
 func _apply_tier() -> void:
 	#Guard against null ship tier value
 	if ship_tiers.is_empty():
@@ -633,7 +682,6 @@ func _apply_tier() -> void:
 	#var pick := CircleShape2D.new()
 	#pick.radius = tier.pickup_radius
 	#_pickup_range_shape.shape = pick
-
 #ship vfx 
 func _fit_wake_to_hull() -> void:
 	if ship_tiers.is_empty():
@@ -648,8 +696,6 @@ func _fit_wake_to_hull() -> void:
 	print(frame)
 	print($Wake.scale)
 	print("hull_w = ", $Sprite2D.texture.get_width())
-	
-
 func _update_wake() -> void:
 	# Idle: no wake at all.
 	if _move_intent.length() < WAKE_DEADZONE:
@@ -669,7 +715,6 @@ func _update_wake() -> void:
 	## else it stays "wake_forward" for up, down, and idle
 	#if $Wake.animation != anim:
 		#$Wake.play(anim)
-
 func _update_masts() -> void:
 	if ship_tiers.is_empty():
 		return
