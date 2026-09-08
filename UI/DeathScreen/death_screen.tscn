@@ -1,15 +1,17 @@
 [gd_scene format=3 uid="uid://btdaigjltsc2m"]
 
-[ext_resource type="Script" uid="uid://bst4l0rluxyls" path="res://UI/DeathScreen/death_screen.gd" id="1_lw348"]
+[ext_resource type="Script" uid="uid://bst4l0rluxyls" path="res://UI/DeathScreen/death_screen.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://dfi4akwlw6hxo" path="res://Assets/UI/DeathScreen/death_screen_background.png" id="2_background"]
-[ext_resource type="FontFile" uid="uid://cvo681c1hvgca" path="res://Assets/Fonts/Montserrat/static/Montserrat-Black.ttf" id="3_title_font"]
-[ext_resource type="PackedScene" uid="uid://das28foe55u6f" path="res://UI/navbutton.tscn" id="5_e4wqi"]
-[ext_resource type="AudioStream" uid="uid://dshox3m1impsv" path="res://Audio/SFX/soft_hover.mp3" id="6_dq2wr"]
-[ext_resource type="PackedScene" uid="uid://b2judmr242f45" path="res://UI/settings_menu.tscn" id="6_num61"]
-[ext_resource type="AudioStream" uid="uid://dc263ntmf6iew" path="res://Audio/SFX/ui_click_stylized.mp3" id="7_ht1cn"]
-[ext_resource type="FontFile" uid="uid://p6nsf53xeqe8" path="res://Assets/Fonts/Montserrat/static/Montserrat-SemiBold.ttf" id="10_body_font"]
+[ext_resource type="FontFile" uid="uid://cvo681c1hvgca" path="res://Assets/Fonts/Montserrat/static/Montserrat-Black.ttf" id="3_font"]
+[ext_resource type="PackedScene" uid="uid://das28foe55u6f" path="res://UI/navbutton.tscn" id="4_navbutton"]
+[ext_resource type="AudioStream" uid="uid://dshox3m1impsv" path="res://Audio/SFX/soft_hover.mp3" id="5_hover"]
+[ext_resource type="AudioStream" uid="uid://dc263ntmf6iew" path="res://Audio/SFX/ui_click_stylized.mp3" id="6_click"]
+[ext_resource type="PackedScene" uid="uid://b2judmr242f45" path="res://UI/settings_menu.tscn" id="7_settings"]
+[ext_resource type="Texture2D" path="res://Assets/UI/WoodMenu/wood_settings_panel.png" id="8_panel"]
+[ext_resource type="Texture2D" path="res://Assets/UI/WoodMenu/wood_button.png" id="9_button"]
+[ext_resource type="Texture2D" path="res://Assets/UI/WoodMenu/octopus_crest.png" id="10_octopus"]
 
-[node name="DeathScreen" type="Control" unique_id=318826695 node_paths=PackedStringArray("retry_button", "upgrade_button", "main_menu_button", "first_focus")]
+[node name="DeathScreen" type="Control" node_paths=PackedStringArray("retry_button", "upgrade_button", "main_menu_button", "first_focus")]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
@@ -18,15 +20,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
-script = ExtResource("1_lw348")
-retry_button = NodePath("VBoxContainer/Retry")
-upgrade_button = NodePath("VBoxContainer/Upgrade")
-main_menu_button = NodePath("VBoxContainer/Main Menu")
-first_focus = NodePath("VBoxContainer/Retry")
+script = ExtResource("1_script")
+retry_button = NodePath("Panel/Content/Actions/Retry")
+upgrade_button = NodePath("Panel/Content/Actions/Upgrade")
+main_menu_button = NodePath("Panel/Content/Actions/Main Menu")
+first_focus = NodePath("Panel/Content/Actions/Retry")
 close_on_cancel = false
 pauses_tree = true
 
-[node name="Background" type="TextureRect" parent="." unique_id=356206368]
+[node name="Background" type="TextureRect" parent="."]
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 15
@@ -39,95 +41,197 @@ texture = ExtResource("2_background")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="Title" type="Label" parent="." unique_id=1402522531]
-layout_mode = 0
-offset_left = 360.0
-offset_top = 216.0
-offset_right = 1560.0
-offset_bottom = 362.0
-theme_override_colors/font_color = Color(0.980392, 0.839216, 0.54902, 1)
-theme_override_colors/font_outline_color = Color(0.0156863, 0.027451, 0.0352941, 1)
-theme_override_constants/outline_size = 8
-theme_override_fonts/font = ExtResource("3_title_font")
-theme_override_font_sizes/font_size = 96
-text = "SHIPWRECKED"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="Dimmer" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.00392157, 0.00784314, 0.0117647, 0.46)
 
-[node name="Subtitle" type="Label" parent="." unique_id=1233710738]
-layout_mode = 0
-offset_left = 460.0
-offset_top = 372.0
-offset_right = 1460.0
-offset_bottom = 432.0
-theme_override_colors/font_color = Color(0.572549, 0.823529, 0.819608, 1)
-theme_override_colors/font_outline_color = Color(0.00392157, 0.0156863, 0.027451, 1)
-theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("10_body_font")
-theme_override_font_sizes/font_size = 32
-text = "THE SEA CLAIMED YOUR SHIP"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1122974956]
+[node name="Panel" type="TextureRect" parent="."]
+texture_filter = 1
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -380.0
+offset_top = -460.0
+offset_right = 380.0
+offset_bottom = 460.0
 grow_horizontal = 2
 grow_vertical = 2
-offset_transform_enabled = true
-offset_transform_position_ratio = Vector2(0, 0.25)
-offset_transform_visual_only = false
-theme_override_constants/separation = 20
+mouse_filter = 2
+texture = ExtResource("8_panel")
+expand_mode = 1
 
-[node name="Retry" parent="VBoxContainer" unique_id=395615966 instance=ExtResource("5_e4wqi")]
+[node name="Content" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 88.0
+offset_top = 38.0
+offset_right = -88.0
+offset_bottom = -48.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="Header" type="HBoxContainer" parent="Panel/Content"]
+custom_minimum_size = Vector2(0, 96)
 layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="Octopus" type="TextureRect" parent="Panel/Content/Header"]
+custom_minimum_size = Vector2(88, 88)
+texture_filter = 1
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("10_octopus")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="Panel/Content/Header"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.890196, 0.65098, 1)
+theme_override_colors/font_outline_color = Color(0.0313726, 0.00784314, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 43
+text = "SHIPWRECKED"
+vertical_alignment = 1
+
+[node name="Subtitle" type="Label" parent="Panel/Content"]
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.541176, 0.890196, 0.862745, 1)
+theme_override_colors/font_outline_color = Color(0.0156863, 0.00392157, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 22
+text = "THE SEA CLAIMED YOUR SHIP"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Divider" type="ColorRect" parent="Panel/Content"]
+custom_minimum_size = Vector2(0, 3)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.0431373, 0.635294, 0.603922, 0.9)
+
+[node name="ActionHint" type="Label" parent="Panel/Content"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.968627, 0.760784, 0.352941, 1)
+theme_override_colors/font_outline_color = Color(0.0156863, 0.00392157, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 20
+text = "CHOOSE YOUR NEXT COURSE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Actions" type="VBoxContainer" parent="Panel/Content"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="Retry" parent="Panel/Content/Actions" instance=ExtResource("4_navbutton")]
+custom_minimum_size = Vector2(510, 106)
+layout_mode = 2
+texture_normal = ExtResource("9_button")
+texture_pressed = ExtResource("9_button")
+texture_hover = ExtResource("9_button")
+texture_focused = ExtResource("9_button")
 act = 3
-label_text = "Restart"
-focus_tint = Color(0.88833916, 0.73178285, 0.39407146, 1)
-focus_sound = ExtResource("6_dq2wr")
-press_sound = ExtResource("7_ht1cn")
+label_text = "RETRY VOYAGE"
+label_size = 30
+label_font = ExtResource("3_font")
+label_color = Color(1, 0.929412, 0.760784, 1)
+label_outline_color = Color(0.027451, 0.00784314, 0, 1)
+label_outline_size = 4
+focus_tint = Color(1.2, 1.08, 0.76, 1)
+focus_sound = ExtResource("5_hover")
+press_sound = ExtResource("6_click")
 
-[node name="Upgrade" parent="VBoxContainer" unique_id=1695756691 instance=ExtResource("5_e4wqi")]
+[node name="Upgrade" parent="Panel/Content/Actions" instance=ExtResource("4_navbutton")]
+custom_minimum_size = Vector2(510, 106)
 layout_mode = 2
-act = 0
-label_text = "Upgrades"
-focus_tint = Color(0.88833916, 0.73178285, 0.39407146, 1)
-focus_sound = ExtResource("6_dq2wr")
-press_sound = ExtResource("7_ht1cn")
+texture_normal = ExtResource("9_button")
+texture_pressed = ExtResource("9_button")
+texture_hover = ExtResource("9_button")
+texture_focused = ExtResource("9_button")
+label_text = "SHIP UPGRADES"
+label_size = 30
+label_font = ExtResource("3_font")
+label_color = Color(1, 0.929412, 0.760784, 1)
+label_outline_color = Color(0.027451, 0.00784314, 0, 1)
+label_outline_size = 4
+focus_tint = Color(1.2, 1.08, 0.76, 1)
+focus_sound = ExtResource("5_hover")
+press_sound = ExtResource("6_click")
 
-[node name="Main Menu" parent="VBoxContainer" unique_id=5511419 instance=ExtResource("5_e4wqi")]
+[node name="Main Menu" parent="Panel/Content/Actions" instance=ExtResource("4_navbutton")]
+custom_minimum_size = Vector2(510, 106)
 layout_mode = 2
-act = 0
-label_text = "Main Menu"
-scene_to_load = "uid://dfgiunphxmxmr"
-focus_tint = Color(0.88833916, 0.73178285, 0.39407146, 1)
-focus_sound = ExtResource("6_dq2wr")
-press_sound = ExtResource("7_ht1cn")
+texture_normal = ExtResource("9_button")
+texture_pressed = ExtResource("9_button")
+texture_hover = ExtResource("9_button")
+texture_focused = ExtResource("9_button")
+label_text = "MAIN MENU"
+label_size = 30
+label_font = ExtResource("3_font")
+label_color = Color(1, 0.929412, 0.760784, 1)
+label_outline_color = Color(0.027451, 0.00784314, 0, 1)
+label_outline_size = 4
+focus_tint = Color(1.2, 1.08, 0.76, 1)
+focus_sound = ExtResource("5_hover")
+press_sound = ExtResource("6_click")
 
-[node name="Settings" parent="VBoxContainer" unique_id=529247863 node_paths=PackedStringArray("panel_to_open") instance=ExtResource("5_e4wqi")]
+[node name="Settings" parent="Panel/Content/Actions" node_paths=PackedStringArray("panel_to_open") instance=ExtResource("4_navbutton")]
+custom_minimum_size = Vector2(510, 106)
 layout_mode = 2
+texture_normal = ExtResource("9_button")
+texture_pressed = ExtResource("9_button")
+texture_hover = ExtResource("9_button")
+texture_focused = ExtResource("9_button")
 act = 1
-label_text = "Settings"
-panel_to_open = NodePath("../../SettingsPanel")
-focus_tint = Color(0.88833916, 0.73178285, 0.39407146, 1)
-focus_sound = ExtResource("6_dq2wr")
-press_sound = ExtResource("7_ht1cn")
+label_text = "SETTINGS"
+label_size = 30
+label_font = ExtResource("3_font")
+label_color = Color(1, 0.929412, 0.760784, 1)
+label_outline_color = Color(0.027451, 0.00784314, 0, 1)
+label_outline_size = 4
+panel_to_open = NodePath("../../../../SettingsPanel")
+focus_tint = Color(1.2, 1.08, 0.76, 1)
+focus_sound = ExtResource("5_hover")
+press_sound = ExtResource("6_click")
 
-[node name="Exit Game" parent="VBoxContainer" unique_id=150139310 instance=ExtResource("5_e4wqi")]
+[node name="Exit Game" parent="Panel/Content/Actions" instance=ExtResource("4_navbutton")]
+custom_minimum_size = Vector2(510, 106)
 layout_mode = 2
+texture_normal = ExtResource("9_button")
+texture_pressed = ExtResource("9_button")
+texture_hover = ExtResource("9_button")
+texture_focused = ExtResource("9_button")
 act = 4
-label_text = "Exit Game"
-focus_tint = Color(0.88833916, 0.73178285, 0.39407146, 1)
-focus_sound = ExtResource("6_dq2wr")
-press_sound = ExtResource("7_ht1cn")
+label_text = "EXIT GAME"
+label_size = 30
+label_font = ExtResource("3_font")
+label_color = Color(1, 0.929412, 0.760784, 1)
+label_outline_color = Color(0.027451, 0.00784314, 0, 1)
+label_outline_size = 4
+focus_tint = Color(1.2, 1.08, 0.76, 1)
+focus_sound = ExtResource("5_hover")
+press_sound = ExtResource("6_click")
 
-[node name="SettingsPanel" parent="." unique_id=514572451 instance=ExtResource("6_num61")]
+[node name="SettingsPanel" parent="." instance=ExtResource("7_settings")]
 layout_mode = 0

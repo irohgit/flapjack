@@ -47,6 +47,7 @@ func _ready() -> void:
 	assert(bird_scene != null, "Voodoo boss needs a bird scene")
 	assert(bird_data != null, "Voodoo boss needs bird data")
 	_health.health_changed.connect(_on_health_changed)
+	_on_health_changed(_health.current_health, _health.max_health)
 
 
 func _physics_process(delta: float) -> void:
@@ -119,6 +120,8 @@ func _get_hold_position() -> Vector2:
 func _on_health_changed(current: int, maximum: int) -> void:
 	if maximum <= 0:
 		return
+
+	GameEvents.boss_health_changed.emit(current, maximum)
 
 	var health_ratio := float(current) / float(maximum)
 	if health_ratio <= BERSERK_HEALTH_THRESHOLD and _phase != Phase.BERSERK:
