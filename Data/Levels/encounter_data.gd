@@ -5,7 +5,8 @@ extends Resource
 enum Type {
 	NORMAL,
 	SPECIAL,
-	CUTSCENE
+	CUTSCENE,
+	MERCHANT
 }
 
 
@@ -32,3 +33,6 @@ enum Type {
 
 @export_group("Cutscene")
 @export var cutscene_scene: PackedScene
+
+@export_group("Merchant")
+@export var merchant_scene: PackedScene

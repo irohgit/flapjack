@@ -4,7 +4,8 @@ extends RefCounted
 enum Type {
 	NORMAL,
 	SPECIAL,
-	CUTSCENE
+	CUTSCENE,
+	MERCHANT
 }
 
 var type: Type
@@ -16,3 +17,4 @@ var spawn_from_right: bool = false
 var special_scene: PackedScene
 var gin_barrels: Array[DestructibleData] = []
 var cutscene_scene: PackedScene
+var merchant_scene: PackedScene

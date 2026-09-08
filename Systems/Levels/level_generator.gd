@@ -55,7 +55,7 @@ func generate_plan() -> Array[GeneratedEncounter]:
 		var trigger_y: float = anchor_y - travel_direction * spawn_ahead_distance
 		encounter.trigger_position = Vector2(centre_x, trigger_y)
 		generated_plan.append(encounter)
-
+		
 		previous_anchor_y = anchor_y
 		has_previous_encounter = true
 	
@@ -132,6 +132,10 @@ func _is_configured(encounter_data: EncounterData, index: int) -> bool:
 			if encounter_data.cutscene_scene == null:
 				push_error("Encounter %d is a cutscene with no scene assigned" % (index + 1))
 				return false
+		EncounterData.Type.MERCHANT:
+			if encounter_data.merchant_scene == null:
+				push_error("Encounter %d is a Merchant with no scene assigned" % (index + 1))
+				return false
 		_:
 			push_error("Encounter %d has an unknown type" % (index + 1))
 			return false
@@ -167,9 +171,13 @@ func _generate_encounter(
 			encounter.type = GeneratedEncounter.Type.CUTSCENE
 			encounter.spawn_position = Vector2(centre_x, anchor_y)
 			encounter.cutscene_scene = encounter_data.cutscene_scene
+		EncounterData.Type.MERCHANT:
+			encounter.type = GeneratedEncounter.Type.MERCHANT
+			encounter.spawn_position = Vector2(centre_x, anchor_y)
+			encounter.merchant_scene = encounter_data.merchant_scene
 		_:
 			return null
-
+	print("[ENCOUNTER] generated type = ", encounter.type)
 	return encounter
 
 func _has_valid_enemies(pool: Array[WeightedEnemyData]) -> bool:
