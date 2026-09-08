@@ -4,6 +4,7 @@ extends MenuScreen
 signal upgradescreen_closed
 
 const MAIN_MENU_SCENE := "res://UI/main_menu.tscn"
+const DOCK_SCENE := "res://Levels/dock.tscn"
 
 @export var tier1_nodes: Array[UpgradeNodeData]
 @export var tier2_nodes: Array[UpgradeNodeData]
@@ -14,6 +15,7 @@ const MAIN_MENU_SCENE := "res://UI/main_menu.tscn"
 @onready var _boat_deck: TextureRect = $LeftPanel/BoatDeck
 @onready var _boat_tier_label: Label = %BoatTier
 @onready var _refit_progress: Label = %RefitProgress
+@onready var _return_button: NavButton = $ReturnButton
 @onready var _tier_columns: Array[Control] = [%TierIColumn, %TierIIColumn, %TierIIIColumn]
 @onready var _component_rows: Array[Control] = [
 	$ComponentStatus/Rigging,
@@ -38,6 +40,17 @@ const MAIN_MENU_SCENE := "res://UI/main_menu.tscn"
 var _owns_lifetime := false
 	
 func _ready() -> void:
+	# The Dock instantiates this screen as a modal child, while the death menu
+	# opens it as the entire current scene. Dismissing a standalone scene would
+	# free the only visible root and leave a blank viewport, so that route must
+	# actually load the Dock again.
+	if get_parent() == get_tree().root:
+		_return_button.act = NavButton.Act.CHANGE_SCENE
+		_return_button.scene_to_load = DOCK_SCENE
+	else:
+		_return_button.act = NavButton.Act.DISMISS
+		_return_button.scene_to_load = ""
+
 	MetaProgress.gin_changed.connect(func(a): _gin_label.text = str(a))
 	MetaProgress.trust_changed.connect(func(a): _trust_label.text = str(a))
 	MetaProgress.upgrade_purchased.connect(_on_upgrade_purchased)
