@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://cbcglrppq3751"]
+
+[ext_resource type="Script" uid="uid://dgmhhxl4sebdw" path="res://Levels/KrakenFight/kraken_fight.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://cpy76lvb1x4cb" path="res://UI/GameUI.tscn" id="2_game_ui"]
+[ext_resource type="PackedScene" uid="uid://t7alddeyjrep" path="res://Levels/hud.tscn" id="3_hud"]
+[ext_resource type="PackedScene" uid="uid://c1hug03muahmo" path="res://Actors/Camera/water_background.tscn" id="4_water"]
+[ext_resource type="Script" uid="uid://tsoi3lwff5mf" path="res://Actors/Camera/shake_camera.gd" id="5_shake_cam"]
+[ext_resource type="PackedScene" uid="uid://cclwwsegfn8rr" path="res://Actors/Player/player.tscn" id="6_player"]
+[ext_resource type="PackedScene" uid="uid://jnnuwbexs8mx" path="res://Actors/Enemies/kraken.tscn" id="7_kraken"]
+
+[node name="KrakenFight" type="Node2D" unique_id=822081891]
+script = ExtResource("1_script")
+
+[node name="GameUI" parent="." unique_id=539804581 instance=ExtResource("2_game_ui")]
+
+[node name="HUD" parent="." unique_id=106287085 instance=ExtResource("3_hud")]
+
+[node name="WaterLayer" type="CanvasLayer" parent="." unique_id=1918949219]
+layer = -100
+
+[node name="WaterBack" parent="WaterLayer" unique_id=1341108973 node_paths=PackedStringArray("camera") instance=ExtResource("4_water")]
+camera = NodePath("../../ShakeCamera")
+
+[node name="ShakeCamera" type="Camera2D" parent="." unique_id=1814485993 groups=["shake_camera"]]
+position = Vector2(960, 540)
+script = ExtResource("5_shake_cam")
+
+[node name="Player" parent="." unique_id=17391590 node_paths=PackedStringArray("camera") instance=ExtResource("6_player")]
+position = Vector2(960, 880)
+camera = NodePath("../ShakeCamera")
+
+[node name="KrakenEnemy" parent="." unique_id=1755241343 instance=ExtResource("7_kraken")]
+position = Vector2(960, 260)

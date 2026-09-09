@@ -1,0 +1,100 @@
+[gd_scene format=3 uid="uid://jnnuwbexs8mx"]
+
+[ext_resource type="Script" uid="uid://fhvn78b2d6om" path="res://Data/Enemy/enemy_kraken.gd" id="1_kraken"]
+[ext_resource type="Script" uid="uid://cv0v6ynhg51ei" path="res://Systems/Combat/HealthComponent.gd" id="2_health"]
+[ext_resource type="Texture2D" uid="uid://coi42aosj56pv" path="res://Assets/Enemies/Kraken/kraken_idle.png" id="3_r7krw"]
+[ext_resource type="Script" uid="uid://dttjdne32amn0" path="res://Systems/Combat/status_effect_component.gd" id="3_status"]
+[ext_resource type="Resource" path="res://Data/Enemy/Kraken.tres" id="4_data"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ow00s"]
+atlas = ExtResource("3_r7krw")
+region = Rect2(14, 0, 380, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fx7a1"]
+atlas = ExtResource("3_r7krw")
+region = Rect2(394, 0, 380, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eswaq"]
+atlas = ExtResource("3_r7krw")
+region = Rect2(774, 0, 380, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xfjaf"]
+atlas = ExtResource("3_r7krw")
+region = Rect2(1154, 0, 380, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5xhqd"]
+atlas = ExtResource("3_r7krw")
+region = Rect2(14, 512, 380, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1duyv"]
+atlas = ExtResource("3_r7krw")
+region = Rect2(394, 512, 380, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g4wus"]
+atlas = ExtResource("3_r7krw")
+region = Rect2(774, 512, 380, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jhsys"]
+atlas = ExtResource("3_r7krw")
+region = Rect2(1154, 512, 380, 512)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_t2cet"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ow00s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fx7a1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eswaq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xfjaf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5xhqd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1duyv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g4wus")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jhsys")
+}],
+"loop": 1,
+"name": &"Idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_body"]
+radius = 70.0
+
+[node name="KrakenEnemy" type="Area2D" unique_id=215655582 groups=["enemy", "hazard"]]
+scale = Vector2(2, 2)
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("1_kraken")
+data = ExtResource("4_data")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1149912033]
+scale = Vector2(0.3, 0.3)
+sprite_frames = SubResource("SpriteFrames_t2cet")
+animation = &"Idle"
+frame = 5
+frame_progress = 0.41460365
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1098306222]
+shape = SubResource("CircleShape2D_body")
+
+[node name="HealthComponent" type="Node" parent="." unique_id=112737188]
+script = ExtResource("2_health")
+
+[node name="StatusEffectComponent" type="Node" parent="." unique_id=1641484347]
+script = ExtResource("3_status")
+
+[node name="InkMuzzle" type="Marker2D" parent="." unique_id=1929264664]
+position = Vector2(0, 40)
