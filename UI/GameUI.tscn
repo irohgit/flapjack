@@ -15,3 +15,5 @@ visible = false
 
 [node name="ShopMenu" parent="." unique_id=935064544 instance=ExtResource("4_shop")]
 visible = false
+pauses_tree = true
+frees_on_close = false

@@ -7,9 +7,11 @@ signal sequence_completed
 @export var enemy_controller: EnemyController
 @export var level_generator: LevelGenerator
 @export var screen_encounter_parent: Node2D
+
 @export var stage_music: AudioStream
 @export_range(-40.0, 6.0, 0.5) var stage_music_db := -6.0
 @export_range(0.0, 8.0, 0.1) var music_fade_in := 2.0
+@onready var _world: Node2D = $World
 
 @export_group("Entry Script")
 @export var entry_enabled := true
@@ -57,6 +59,8 @@ func run_encounter(encounter: GeneratedEncounter) -> void:
 			run_special_encounter(encounter)
 		GeneratedEncounter.Type.CUTSCENE:
 			await run_cutscene_encounter(encounter)
+		GeneratedEncounter.Type.MERCHANT:
+			run_merchant_encounter(encounter)
 
 func run_normal_encounter(encounter: GeneratedEncounter) -> void:
 	enemy_controller.spawn_pack(
@@ -134,7 +138,38 @@ func run_cutscene_encounter(encounter: GeneratedEncounter) -> void:
 
 	CutsceneManager.play(encounter.cutscene_scene)
 	await CutsceneManager.cutscene_finished	
-		
+
+
+
+func run_merchant_encounter(encounter: GeneratedEncounter) -> void:
+	## Anchors a merchant boat in world space against one bank, above the view. The scroll rig brings it down into frame. It never moves under its own power, and it does not block the sequence, because visiting it is the player's choice.
+	if encounter.merchant_scene == null:
+		push_warning("Merchant encounter has no scene")
+		return
+	if _world == null:
+		push_error("Stage has no World node, cannot place a merchant")
+		return
+
+	var instance: Node = encounter.merchant_scene.instantiate()
+	if instance == null:
+		push_error("Merchant scene could not be instantiated")
+		return
+	if not (instance is Node2D):
+		push_error("Merchant scene must inherit from Node2D")
+		instance.free()
+		return
+
+	var boat := instance as Node2D
+	_world.add_child(boat)
+
+	# The bank inset must match BankPainter, or the boat sits in open water.
+	var playfield_size: Vector2 = level_generator.level_data.playfield_size
+	var bank_margin := 250.0 #hardcoded value <== should be max width of bank
+	var bank_x := playfield_size.x - bank_margin if encounter.spawn_from_right else bank_margin
+	boat.global_position = Vector2(bank_x, encounter.spawn_position.y)
+
+	print("[MERCHANT] anchored at ", boat.global_position, " right = ", encounter.spawn_from_right)
+
 func play_entry() -> void:
 	if not entry_enabled:
 		return

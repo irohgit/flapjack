@@ -75,6 +75,8 @@ func generate_plan() -> Array[GeneratedEncounter]:
 	print("GIN PLAN: %d gin in %d barrels across %d normal encounters (%d total)" % [
 		planned_gin, total_barrels, normal_count, generated_plan.size()
 	])
+	for e: GeneratedEncounter in generated_plan:
+		print("[PLAN] type = ", e.type, " trigger = ", e.trigger_position, " scene = ", e.merchant_scene)
 	return generated_plan
 
 func choose_finale_encounter() -> PackedScene:
@@ -175,6 +177,7 @@ func _generate_encounter(
 			encounter.type = GeneratedEncounter.Type.MERCHANT
 			encounter.spawn_position = Vector2(centre_x, anchor_y)
 			encounter.merchant_scene = encounter_data.merchant_scene
+			encounter.spawn_from_right = rng.randi_range(0, 1) == 1
 		_:
 			return null
 	print("[ENCOUNTER] generated type = ", encounter.type)

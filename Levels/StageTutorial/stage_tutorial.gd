@@ -18,7 +18,7 @@ const DUO_SHEEPISH := preload("res://Assets/Cinematics/DUO_SHEEPISH_512x640.png"
 @export_group("Highlight") ### --- HIGLIGHT EXPORT GROUP -----------------------------------------------------
 @export var highlight_scale := 1.25
 @export var highlight_period := 0.6
-@onready var _world: Node2D = $World
+#@onready var _world: Node2D = $World
 @onready var _tutorial_ui: TutorialUI = $HUD/TutorialLayer/TutorialUI
 @onready var game_ui: GameUI = $GameUI
 
