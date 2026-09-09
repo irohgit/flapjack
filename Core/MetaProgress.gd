@@ -8,9 +8,11 @@ signal boat_tier_changed(new_tier: int)
 
 enum BoatTier { SKIFF, SCHOONER, GALLEON }
 
-var gin := 0
+## Generous debug balance for testing the shipwright upgrade flow.
+## Exported/release builds still begin with the intended empty balance.
+var gin := 9999 if OS.is_debug_build() else 0
 var trust := 0   # lifetime total spend, never decreases
-var boat_tier: BoatTier = BoatTier.GALLEON
+var boat_tier: BoatTier = BoatTier.SKIFF
 var upgrade_levels: Dictionary = {}   # node_id -> current level
 var pending_retry_scene_path := ""
 
