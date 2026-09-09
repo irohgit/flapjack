@@ -27,6 +27,7 @@
 [ext_resource type="Resource" uid="uid://dng25y4uqbmmw" path="res://Data/Enemy/FrogEnemyGold.tres" id="29_frog_gold"]
 [ext_resource type="Resource" uid="uid://dify06vg1f8wi" path="res://Data/Enemy/FrogEnemyPurple.tres" id="30_frog_purple"]
 [ext_resource type="Script" uid="uid://c8rvuh3fmlyx" path="res://Levels/Stage1/bankpainter.gd" id="31_bankpainter"]
+[ext_resource type="Script" uid="uid://diihmo0necydi" path="res://Systems/BankFrogSpawner.gd" id="32_bank_frog_spawner"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8m7vp"]
 shader = ExtResource("18_a3klg")
@@ -106,7 +107,7 @@ scroll_rig = NodePath("../ScrollRig")
 script = ExtResource("13_d1opp")
 level_data = ExtResource("15_lr66y")
 
-[node name="BankPainter" type="Node2D" parent="."]
+[node name="BankPainter" type="Node2D" parent="." unique_id=2117260925]
 z_index = -5
 script = ExtResource("31_bankpainter")
 level_data = ExtResource("15_lr66y")
@@ -159,6 +160,19 @@ lilypad_scene = ExtResource("23_lilypad")
 frog_scene = ExtResource("24_frog")
 frog_chance = 0.604
 frog_color_pool = Array[ExtResource("25_weighted_enemy")]([SubResource("WeightedFrog_green"), SubResource("WeightedFrog_blue"), SubResource("WeightedFrog_red"), SubResource("WeightedFrog_gold"), SubResource("WeightedFrog_purple")])
+edge_margin = 150.0
+parent = NodePath("../World")
+scroll_director = NodePath("../ScrollDirector")
+level_data = ExtResource("15_lr66y")
+bank_painter = NodePath("../BankPainter")
+
+[node name="BankFrogSpawner" type="Node2D" parent="." unique_id=214649585 node_paths=PackedStringArray("parent", "scroll_director", "bank_painter")]
+script = ExtResource("32_bank_frog_spawner")
+frog_scene = ExtResource("24_frog")
+frog_color_pool = Array[ExtResource("25_weighted_enemy")]([SubResource("WeightedFrog_green"), SubResource("WeightedFrog_blue"), SubResource("WeightedFrog_red"), SubResource("WeightedFrog_gold"), SubResource("WeightedFrog_purple")])
+min_gap = 150.0
+max_gap = 200.0
+spawn_lead = 200.0
 parent = NodePath("../World")
 scroll_director = NodePath("../ScrollDirector")
 level_data = ExtResource("15_lr66y")
