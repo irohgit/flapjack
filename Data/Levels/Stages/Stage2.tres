@@ -129,7 +129,6 @@ metadata/_custom_type_script = "uid://bhsc86o70es47"
 
 [resource]
 script = ExtResource("4_ygboy")
-level_id = &"stage_2"
 level_name = "Stage2"
 shop_items = Array[ExtResource("7_pickup_data")]([ExtResource("7_homing"), ExtResource("7_plasma"), ExtResource("7_fire"), ExtResource("7_magnet")])
 encounter_sequence = Array[ExtResource("6_encounter")]([SubResource("Encounter_01_normal"), SubResource("Encounter_02_normal"), SubResource("Encounter_03_special"), SubResource("Encounter_04_optional_normal"), SubResource("Encounter_05_normal"), SubResource("Encounter_06_optional_normal"), SubResource("Encounter_07_normal"), SubResource("Encounter_08_optional_special"), SubResource("Encounter_09_normal"), SubResource("Encounter_10_optional_normal"), SubResource("Encounter_11_normal"), SubResource("Encounter_12_normal")])

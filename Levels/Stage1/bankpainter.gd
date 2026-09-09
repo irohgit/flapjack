@@ -215,6 +215,21 @@ func is_on_bank(world_pos: Vector2) -> bool:
 func bank_push_dir(world_pos: Vector2) -> float:
 	return 1.0 if to_local(world_pos).x < float(_play_w) * 0.5 else -1.
 
+
+# World-space coastline position at the row matching world_y, on the
+# requested side. For spawners that need to place something ON the bank
+# rather than just testing whether a point is on it.
+func edge_position_at(world_y: float, left_side: bool) -> Vector2:
+	if _left.is_empty():
+		return Vector2(0.0 if left_side else float(_play_w), world_y)
+	var local_y := to_local(Vector2(0.0, world_y)).y
+	var row := _row_for_local(local_y)
+	var local_x := (
+		_left[row] * float(pixel_size) if left_side
+		else float(_play_w) - _right[row] * float(pixel_size)
+	)
+	return to_global(Vector2(local_x, local_y))
+
 #debug helper
 func debug_line(world_pos: Vector2) -> String:
 	if _left.is_empty():
