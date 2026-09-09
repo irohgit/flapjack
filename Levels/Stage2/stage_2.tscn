@@ -26,6 +26,7 @@
 [ext_resource type="Resource" uid="uid://brhyfc80ww2tw" path="res://Data/Enemy/FrogEnemyRed.tres" id="28_frog_red"]
 [ext_resource type="Resource" uid="uid://dng25y4uqbmmw" path="res://Data/Enemy/FrogEnemyGold.tres" id="29_frog_gold"]
 [ext_resource type="Resource" uid="uid://dify06vg1f8wi" path="res://Data/Enemy/FrogEnemyPurple.tres" id="30_frog_purple"]
+[ext_resource type="Script" uid="uid://c8rvuh3fmlyx" path="res://Levels/Stage1/bankpainter.gd" id="31_bankpainter"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8m7vp"]
 shader = ExtResource("18_a3klg")
@@ -105,6 +106,25 @@ scroll_rig = NodePath("../ScrollRig")
 script = ExtResource("13_d1opp")
 level_data = ExtResource("15_lr66y")
 
+[node name="BankPainter" type="Node2D" parent="."]
+z_index = -5
+script = ExtResource("31_bankpainter")
+level_data = ExtResource("15_lr66y")
+min_width_px = 120
+max_width_px = 300
+max_segment_px = 1200
+hold_chance = 0.3
+max_step_px = 140
+ripple_amplitude_px = 20.0
+ripple_wavelength_px = 600.0
+dry_sand = Color(0.2147997, 0.34174186, 0.10563024, 1)
+wet_sand = Color(0.3131549, 0.31039393, 0.12525824, 1)
+foam_colour = Color(0.7647059, 0.83137256, 0.49411765, 0.4862745)
+foam_band_px = 10.0
+foam_wobble_px = 6.0
+foam_wavelength_px = 160.0
+pixel_size = 1
+
 [node name="ScrollRig" type="Node2D" parent="." unique_id=1624221049]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="ScrollRig" unique_id=1411935878]
@@ -125,9 +145,10 @@ script = ExtResource("2_mjwon")
 max_offset = Vector2(0, 0)
 metadata/_custom_type_script = "uid://tsoi3lwff5mf"
 
-[node name="Player" parent="ScrollRig" unique_id=2109576054 node_paths=PackedStringArray("camera", "scrollDirector") instance=ExtResource("7_wnqgr")]
+[node name="Player" parent="ScrollRig" unique_id=2109576054 node_paths=PackedStringArray("camera", "banks", "scrollDirector") instance=ExtResource("7_wnqgr")]
 position = Vector2(960, 1000)
 camera = NodePath("../ShakeCamera")
+banks = NodePath("../../BankPainter")
 scrollDirector = NodePath("../../ScrollDirector")
 
 [node name="ScreenEncounters" type="Node2D" parent="ScrollRig" unique_id=1683449746]
