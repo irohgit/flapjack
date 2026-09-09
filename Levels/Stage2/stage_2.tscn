@@ -153,7 +153,7 @@ scrollDirector = NodePath("../../ScrollDirector")
 
 [node name="ScreenEncounters" type="Node2D" parent="ScrollRig" unique_id=1683449746]
 
-[node name="LilypadSpawner" type="Node2D" parent="." unique_id=1987112815 node_paths=PackedStringArray("parent", "scroll_director")]
+[node name="LilypadSpawner" type="Node2D" parent="." unique_id=1987112815 node_paths=PackedStringArray("parent", "scroll_director", "bank_painter")]
 script = ExtResource("22_lilypad_spawner")
 lilypad_scene = ExtResource("23_lilypad")
 frog_scene = ExtResource("24_frog")
@@ -162,3 +162,4 @@ frog_color_pool = Array[ExtResource("25_weighted_enemy")]([SubResource("Weighted
 parent = NodePath("../World")
 scroll_director = NodePath("../ScrollDirector")
 level_data = ExtResource("15_lr66y")
+bank_painter = NodePath("../BankPainter")

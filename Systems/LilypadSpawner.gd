@@ -36,6 +36,11 @@ extends Node2D
 @export var parent: Node2D
 @export var scroll_director: ScrollDirector
 @export var level_data: LevelData
+## Optional. When set, spawn x is resampled away from the coastline so
+## lilypads only land in open water, never on the banks.
+@export var bank_painter: BankPainter
+
+const MAX_SPAWN_ATTEMPTS := 8
 
 var _next_spawn_y := 0.0
 var _riders: Array[Dictionary] = []
@@ -106,12 +111,29 @@ func _spawn_lilypad() -> void:
 	var depth := randf_range(scroll_range.x, scroll_range.y)
 	lilypad.setup(depth, scroll_director.scroll_rig)
 
-	var x := randf_range(edge_margin, play_width - edge_margin)
 	var top := Playarea.get_visible_world_rect().position.y
-	lilypad.global_position = Vector2(x, top - spawn_lead - randf_range(0.0, 200.0))
+	var y := top - spawn_lead - randf_range(0.0, 200.0)
+	var x := _pick_open_water_x(y)
+	lilypad.global_position = Vector2(x, y)
 
 	if frog_scene != null and randf() < frog_chance:
 		_spawn_frog_on(lilypad)
+
+
+# Samples a random x within the playfield margins, resampling if the
+# BankPainter says that spot is on a bank. Since the coastline winds per
+# row rather than sitting on a straight line, this has to be checked at
+# the specific y the lilypad is spawning at, not just clamped to a range.
+func _pick_open_water_x(y: float) -> float:
+	var x := randf_range(edge_margin, play_width - edge_margin)
+	if bank_painter == null:
+		return x
+
+	for i in MAX_SPAWN_ATTEMPTS:
+		if not bank_painter.is_on_bank(Vector2(x, y)):
+			return x
+		x = randf_range(edge_margin, play_width - edge_margin)
+	return x
 
 
 func _spawn_frog_on(lilypad: Node2D) -> void:
