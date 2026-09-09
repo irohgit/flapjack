@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Data/Enemy/enemy_kraken_tentacle.gd" id="1_tentacle"]
+[ext_resource type="Script" uid="uid://cv0v6ynhg51ei" path="res://Systems/Combat/HealthComponent.gd" id="2_health"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tentacle"]
+radius = 60.0
+
+[node name="KrakenTentacle" type="Area2D" groups=["enemy"]]
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+script = ExtResource("1_tentacle")
+
+[node name="Shadow" type="Polygon2D" parent="."]
+color = Color(0, 0, 0, 0.35)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_tentacle")
+disabled = true
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("2_health")

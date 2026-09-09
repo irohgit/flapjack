@@ -1,58 +1,64 @@
 [gd_scene format=3 uid="uid://jnnuwbexs8mx"]
 
 [ext_resource type="Script" uid="uid://fhvn78b2d6om" path="res://Data/Enemy/enemy_kraken.gd" id="1_kraken"]
-[ext_resource type="Script" uid="uid://cv0v6ynhg51ei" path="res://Systems/Combat/HealthComponent.gd" id="2_health"]
-[ext_resource type="Texture2D" uid="uid://coi42aosj56pv" path="res://Assets/Enemies/Kraken/kraken_idle.png" id="3_r7krw"]
 [ext_resource type="Script" uid="uid://dttjdne32amn0" path="res://Systems/Combat/status_effect_component.gd" id="3_status"]
-[ext_resource type="Resource" path="res://Data/Enemy/Kraken.tres" id="4_data"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ow00s"]
-atlas = ExtResource("3_r7krw")
-region = Rect2(14, 0, 380, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fx7a1"]
-atlas = ExtResource("3_r7krw")
-region = Rect2(394, 0, 380, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_eswaq"]
-atlas = ExtResource("3_r7krw")
-region = Rect2(774, 0, 380, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_xfjaf"]
-atlas = ExtResource("3_r7krw")
-region = Rect2(1154, 0, 380, 512)
+[ext_resource type="Resource" uid="uid://c12ycljon06tg" path="res://Data/Enemy/Kraken.tres" id="4_data"]
+[ext_resource type="Texture2D" uid="uid://c6m7wdawvyf61" path="res://Assets/Enemies/Kraken/kraken_punch.png" id="4_fx7a1"]
+[ext_resource type="Texture2D" uid="uid://blah1qd7g45n" path="res://Assets/Enemies/Kraken/kraken_swipe.png" id="5_eswaq"]
+[ext_resource type="PackedScene" path="res://Actors/Enemies/kraken_tentacle.tscn" id="5_tentacle"]
+[ext_resource type="Texture2D" uid="uid://c4nqn4mjjdu7u" path="res://Assets/Enemies/Kraken/kraken_wave.png" id="6_xfjaf"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5xhqd"]
-atlas = ExtResource("3_r7krw")
-region = Rect2(14, 512, 380, 512)
+atlas = ExtResource("4_fx7a1")
+region = Rect2(0, 0, 768, 512)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1duyv"]
-atlas = ExtResource("3_r7krw")
-region = Rect2(394, 512, 380, 512)
+atlas = ExtResource("4_fx7a1")
+region = Rect2(768, 0, 768, 512)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g4wus"]
-atlas = ExtResource("3_r7krw")
-region = Rect2(774, 512, 380, 512)
+atlas = ExtResource("4_fx7a1")
+region = Rect2(0, 512, 768, 512)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jhsys"]
-atlas = ExtResource("3_r7krw")
-region = Rect2(1154, 512, 380, 512)
+atlas = ExtResource("4_fx7a1")
+region = Rect2(768, 512, 768, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_auwx8"]
+atlas = ExtResource("5_eswaq")
+region = Rect2(0, 0, 1800, 1200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1fkws"]
+atlas = ExtResource("5_eswaq")
+region = Rect2(1800, 0, 1800, 1200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fb4gw"]
+atlas = ExtResource("5_eswaq")
+region = Rect2(0, 1200, 1800, 1200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_csd0f"]
+atlas = ExtResource("5_eswaq")
+region = Rect2(1800, 1200, 1800, 1200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b235j"]
+atlas = ExtResource("6_xfjaf")
+region = Rect2(0, 0, 1800, 1200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bvgnd"]
+atlas = ExtResource("6_xfjaf")
+region = Rect2(1800, 0, 1800, 1200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gbajc"]
+atlas = ExtResource("6_xfjaf")
+region = Rect2(0, 1200, 1800, 1200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a0pn5"]
+atlas = ExtResource("6_xfjaf")
+region = Rect2(1800, 1200, 1800, 1200)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_t2cet"]
 animations = [{
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ow00s")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_fx7a1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_eswaq")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xfjaf")
-}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5xhqd")
 }, {
@@ -68,33 +74,61 @@ animations = [{
 "loop": 1,
 "name": &"Idle",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_auwx8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1fkws")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fb4gw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_csd0f")
+}],
+"loop": 1,
+"name": &"Swipe",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b235j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bvgnd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gbajc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a0pn5")
+}],
+"loop": 1,
+"name": &"Wave",
+"speed": 5.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_body"]
-radius = 70.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s4bsw"]
+size = Vector2(221.33334, 106.66667)
 
-[node name="KrakenEnemy" type="Area2D" unique_id=215655582 groups=["enemy", "hazard"]]
-scale = Vector2(2, 2)
-collision_layer = 2
-collision_mask = 4
+[node name="KrakenEnemy" type="Area2D" unique_id=215655582]
+scale = Vector2(6, 6)
+collision_layer = 0
+collision_mask = 0
 script = ExtResource("1_kraken")
+tentacle_scene = ExtResource("5_tentacle")
 data = ExtResource("4_data")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1149912033]
 scale = Vector2(0.3, 0.3)
 sprite_frames = SubResource("SpriteFrames_t2cet")
 animation = &"Idle"
-frame = 5
-frame_progress = 0.41460365
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1098306222]
-shape = SubResource("CircleShape2D_body")
-
-[node name="HealthComponent" type="Node" parent="." unique_id=112737188]
-script = ExtResource("2_health")
+position = Vector2(0.16666794, -21.166668)
+shape = SubResource("RectangleShape2D_s4bsw")
 
 [node name="StatusEffectComponent" type="Node" parent="." unique_id=1641484347]
 script = ExtResource("3_status")
-
-[node name="InkMuzzle" type="Marker2D" parent="." unique_id=1929264664]
-position = Vector2(0, 40)

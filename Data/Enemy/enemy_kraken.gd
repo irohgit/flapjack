@@ -1,138 +1,129 @@
 class_name EnemyKraken
 extends Enemy
 
-## Stage2 finale boss. Holds near the top of the screen tracking the
-## player's x, same idea as EnemyVoodooBoss. Fires ink shots on the
-## standard Enemy fire-timer (inherited _physics_process/_fire), and on its
-## own separate timer periodically rears up into its Attack pose and slams -
-## a simple distance check against the player, not a projectile, so it only
-## lands if they're close when it happens.
+## KrakenFight boss. Stays put where it's placed in the scene - it never
+## moves or tracks the player. Does not fire and cannot be damaged directly -
+## the fight instead plays out through KrakenTentacle instances it spawns,
+## which telegraph, smash down, and are the only thing the player can
+## actually hit. Clearing every tentacle in a stage advances to the next
+## stage (more tentacles at once); clearing the final stage defeats the
+## Kraken.
 ## Does not call super()._ready(): the base Enemy._ready() assumes a
-## Sprite2D, which this enemy doesn't have (AnimatedSprite2D instead, for
-## the tentacle-sway idle animation).
+## Sprite2D and a working projectile setup, neither of which apply here
+## (AnimatedSprite2D instead, and the Kraken body never fires).
 
-@export_group("Positioning")
-@export_range(0.0, 0.5, 0.01) var hold_height_ratio := 0.22
+@export_group("Tentacles")
+@export var tentacle_scene: PackedScene
+## Tentacles pick a random strike x within this margin from each screen edge.
 @export_range(0.0, 500.0, 1.0, "or_greater") var playfield_margin := 220.0
+## Number of tentacles active at once, one entry per stage. Clearing every
+## tentacle spawned by an entry advances to the next; clearing the last
+## entry defeats the Kraken.
+@export var tentacles_per_stage: Array[int] = [1, 2]
 
-@export_group("Slam")
-@export var slam_radius := 260.0
-@export var slam_damage := 2
-@export var slam_min_interval := 3.0
-@export var slam_max_interval := 6.0
-## How long the Attack pose holds before returning to Idle.
-@export var slam_pose_time := 0.6
-
-@onready var _ink_muzzle: Marker2D = $InkMuzzle
 @onready var _animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
-var _slam_timer := 0.0
-var _slamming := false
+var _stage := 0
+var _active_tentacles: Array[KrakenTentacle] = []
+var _is_defeated := false
 
 
 func _ready() -> void:
 	assert(data != null, "Enemy spawned with no EnemyData assigned")
-	assert(data.projectile_scene != null, "Kraken needs a projectile_scene for ink shots")
-	assert(data.ammo != null, "Kraken needs ammo for ink shots")
+	assert(tentacle_scene != null, "Kraken needs a tentacle_scene to spawn its attacks")
+	assert(not tentacles_per_stage.is_empty(), "Kraken needs at least one stage configured")
 
 	# sprite_frames is baked directly onto the AnimatedSprite2D node in this
-	# scene (not data-driven), unlike the frog - just start it playing.
+	# scene (not data-driven) - just start it playing.
 	_animated_sprite.play(&"Idle")
 
-	# Base Enemy._ready() normally does this wiring; replicated here because
-	# super() is skipped.
-	_health = $HealthComponent
-	_status_effects = $StatusEffectComponent
-	_health.max_health = data.health
-	_health.current_health = data.health
-	_health.damaged.connect(_on_damaged)
-	_health.died.connect(_on_died)
-	_health.health_changed.connect(_on_health_changed)
+	# Base Enemy._physics_process() runs the fire-timer/_fire() loop, which
+	# assumes data.projectile_scene is set - the Kraken body never fires, so
+	# skip that processing entirely rather than leaving it to crash on a null.
+	set_physics_process(false)
 
-	_reset_initial_timer()
-	_reset_slam_timer()
+	# The scene tree is still being assembled during _ready(), so spawning
+	# tentacles (which add_child onto our parent) must wait until it's safe.
+	call_deferred("_start_stage", 0)
 
 
-func _physics_process(delta: float) -> void:
-	super(delta)
+func _start_stage(stage_index: int) -> void:
+	_stage = stage_index
+	_active_tentacles.clear()
 
-	if _slamming or is_queued_for_deletion() or not Playarea.is_near_screen(global_position):
+	var tentacle_count: int = tentacles_per_stage[_stage]
+	for i in range(tentacle_count):
+		_spawn_tentacle()
+
+
+func _spawn_tentacle() -> void:
+	var tentacle := tentacle_scene.instantiate() as KrakenTentacle
+	if tentacle == null:
+		push_error("Kraken tentacle_scene must inherit from KrakenTentacle")
 		return
 
-	_slam_timer -= delta
-	if _slam_timer <= 0.0:
-		_slam()
-		_reset_slam_timer()
+	get_parent().add_child(tentacle)
+	tentacle.tentacle_health_changed.connect(_on_tentacle_health_changed)
+	tentacle.tentacle_destroyed.connect(_on_tentacle_destroyed.bind(tentacle))
+	_active_tentacles.append(tentacle)
+	tentacle.start(_pick_tentacle_spawn_x())
+	_recompute_boss_health()
 
 
-func _move(delta: float, speed: float) -> void:
-	if not Playarea.is_near_screen(global_position, playfield_margin):
-		return
-
-	global_position = global_position.move_toward(_get_hold_position(), speed * delta)
-	global_position = _clamp_to_visible_playfield(global_position)
-
-
-func _get_hold_position() -> Vector2:
+func _pick_tentacle_spawn_x() -> float:
 	var visible_rect := Playarea.get_visible_world_rect()
-	var target_x := visible_rect.get_center().x
-	var player := get_tree().get_first_node_in_group("player") as Node2D
-	if player != null:
-		target_x = player.global_position.x
-
-	return Vector2(
-		target_x,
-		visible_rect.position.y + visible_rect.size.y * hold_height_ratio
+	return randf_range(
+		visible_rect.position.x + playfield_margin,
+		visible_rect.end.x - playfield_margin
 	)
 
 
-func _clamp_to_visible_playfield(world_position: Vector2) -> Vector2:
-	var visible_rect := Playarea.get_visible_world_rect()
-	return Vector2(
-		clampf(
-			world_position.x,
-			visible_rect.position.x + playfield_margin,
-			visible_rect.end.x - playfield_margin
-		),
-		clampf(
-			world_position.y,
-			visible_rect.position.y + playfield_margin,
-			visible_rect.end.y - playfield_margin
-		)
-	)
+func _on_tentacle_health_changed(_current: int, _maximum: int) -> void:
+	_recompute_boss_health()
 
 
-func _get_fire_position() -> Vector2:
-	return _ink_muzzle.global_position
+func _on_tentacle_destroyed(tentacle: KrakenTentacle) -> void:
+	_active_tentacles.erase(tentacle)
+	_recompute_boss_health()
 
-
-func _reset_slam_timer() -> void:
-	_slam_timer = randf_range(slam_min_interval, slam_max_interval)
-
-
-func _slam() -> void:
-	_slamming = true
-	_animated_sprite.play(&"Attack")
-	get_tree().create_timer(slam_pose_time).timeout.connect(_on_slam_pose_ended)
-
-	var player := get_tree().get_first_node_in_group("player") as Node2D
-	if player == null or not player.has_method("take_damage"):
+	if not _active_tentacles.is_empty():
 		return
-	if global_position.distance_to(player.global_position) <= slam_radius:
-		player.take_damage(slam_damage)
+
+	if _stage + 1 < tentacles_per_stage.size():
+		_start_stage(_stage + 1)
+	else:
+		_defeat()
 
 
-func _on_slam_pose_ended() -> void:
-	_slamming = false
-	_animated_sprite.play(&"Idle")
+func _recompute_boss_health() -> void:
+	var current := 0
+	var maximum := 0
+	for tentacle in _active_tentacles:
+		if is_instance_valid(tentacle):
+			current += tentacle.get_current_health()
+			maximum += tentacle.get_max_health()
 
-
-func _on_health_changed(current: int, maximum: int) -> void:
 	if maximum <= 0:
 		return
 	GameEvents.boss_health_changed.emit(current, maximum)
 
 
-func _on_died() -> void:
+func _defeat() -> void:
+	if _is_defeated:
+		return
+	_is_defeated = true
+
+	Audio.play_sfx(data.death_sfx, -4.0)
 	GameEvents.boss_defeated.emit(global_position)
-	super()
+
+	for cam in get_tree().get_nodes_in_group("shake_camera"):
+		if cam is ShakeCamera:
+			cam.add_trauma(0.15)
+			break
+
+	queue_free()
+
+
+# The Kraken body can never be damaged directly - only its tentacles can.
+func take_damage(_amount: int) -> void:
+	pass
