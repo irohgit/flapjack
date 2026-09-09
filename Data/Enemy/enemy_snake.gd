@@ -12,6 +12,10 @@ const ATTACK_STUN_TIME := 1
 const LUNGE_SPEED_MULTIPLIER := 2
 
 @export var patrol_distance := 150.0
+## Optional. When set, the snake can never move onto a bank - patrol
+## reverses early at the shoreline instead of stepping onto it, and chase
+## simply stops advancing at the water's edge if the player is on the bank.
+@export var bank_painter: BankPainter
 
 @onready var _detection_area: Area2D = $DetectionRadius
 @onready var _animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
@@ -125,7 +129,12 @@ func _move(delta: float, speed: float) -> void:
 		if not to_target.is_zero_approx():
 			_face_direction(to_target.normalized())
 		var chase_speed := speed * LUNGE_SPEED_MULTIPLIER if _lunging else speed
-		global_position = global_position.move_toward(_target.global_position, chase_speed * delta)
+		var chase_next := global_position.move_toward(_target.global_position, chase_speed * delta)
+		# Blocked by the shoreline: hold position rather than following the
+		# player onto dry land. No reversal needed, chase isn't a back-and-
+		# forth like patrol - it just waits at the water's edge.
+		if not _is_on_bank(chase_next):
+			global_position = chase_next
 		return
 
 	# Patrol left and right around the spawn point until the chase triggers.
@@ -138,10 +147,19 @@ func _move(delta: float, speed: float) -> void:
 	var patrol_offset := Vector2(patrol_distance * _patrol_direction, 0.0)
 	var target_position := _spawn_position + patrol_offset
 	_face_direction(Vector2.RIGHT if target_position.x > global_position.x else Vector2.LEFT)
-	global_position = global_position.move_toward(target_position, speed * delta)
+	var patrol_next := global_position.move_toward(target_position, speed * delta)
 
-	if global_position.is_equal_approx(target_position):
+	# Reverse early at the shoreline, same as reaching the normal patrol
+	# limit, instead of stepping onto the bank.
+	if global_position.is_equal_approx(target_position) or _is_on_bank(patrol_next):
 		_patrol_direction *= -1.0
+		return
+
+	global_position = patrol_next
+
+
+func _is_on_bank(pos: Vector2) -> bool:
+	return bank_painter != null and bank_painter.is_on_bank(pos)
 
 
 # The art is drawn facing up (north) by default, same convention as

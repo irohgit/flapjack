@@ -2,28 +2,16 @@ class_name LilypadSpawner
 extends Node2D
 
 ## Spawns lilypads (ParallaxProp instances) at random x positions as the
-## level scrolls, same distance-driven approach as ParallaxDirector2. Some
-## fraction spawn with a stationary FrogEnemy riding them.
-##
-## Frogs are NOT parented under their lilypad - instead each frog's position
-## AND rotation are copied from its lilypad every frame in _update_riders(),
-## so it rides and spins in lockstep with the pad. Keeping them as separate
-## siblings (rather than true parent/child) means the frog's own lifecycle
-## (see the freed-instance handling below) stays independent of however the
-## lilypad scene is structured.
+## level scrolls.
 
 @export var lilypad_scene: PackedScene
 @export var frog_scene: PackedScene
 @export_range(0.0, 1.0) var frog_chance := 0.3
 
-## Which EnemyData (colour) a spawned frog gets, chosen by weight - e.g.
-## green weight 40, everything else weight 15 gives green a flat 40% and an
+## Green weight 40, everything else weight 15 gives green a flat 40% and an
 ## even split of the remaining 60% across however many others are listed.
-## Leave empty to just use frog_scene's own baked-in data every time.
 @export var frog_color_pool: Array[WeightedEnemyData] = []
 
-# x is min, y is max depth (see ParallaxProp) - close to 1.0 so lilypads
-# drift only slightly slower than the water they're floating on.
 @export var scroll_range := Vector2(0.85, 1.0)
 
 @export_range(100.0, 2000.0, 50.0) var min_gap := 200.0
@@ -36,8 +24,6 @@ extends Node2D
 @export var parent: Node2D
 @export var scroll_director: ScrollDirector
 @export var level_data: LevelData
-## Optional. When set, spawn x is resampled away from the coastline so
-## lilypads only land in open water, never on the banks.
 @export var bank_painter: BankPainter
 
 const MAX_SPAWN_ATTEMPTS := 8
@@ -76,12 +62,6 @@ func _update_riders() -> void:
 	for i in range(_riders.size() - 1, -1, -1):
 		var pair: Dictionary = _riders[i]
 
-		# Read straight off the Dictionary (Variant) and validate BEFORE
-		# assigning into a typed Node2D var - a typed assignment tries to
-		# cast the value immediately, which errors on a freed instance
-		# before is_instance_valid() ever gets to check it. The frog can
-		# free itself independently of its lilypad (its own off-screen
-		# despawn check), so this isn't just an edge case.
 		var lilypad_valid := is_instance_valid(pair.lilypad)
 		var frog_valid := is_instance_valid(pair.frog)
 
@@ -121,9 +101,7 @@ func _spawn_lilypad() -> void:
 
 
 # Samples a random x within the playfield margins, resampling if the
-# BankPainter says that spot is on a bank. Since the coastline winds per
-# row rather than sitting on a straight line, this has to be checked at
-# the specific y the lilypad is spawning at, not just clamped to a range.
+# BankPainter says that spot is on a bank. 
 func _pick_open_water_x(y: float) -> float:
 	var x := randf_range(edge_margin, play_width - edge_margin)
 	if bank_painter == null:
