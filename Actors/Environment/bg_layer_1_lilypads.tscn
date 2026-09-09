@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://cqxdxpmlp6pbj"]
+
+[ext_resource type="Texture2D" uid="uid://cq4vn7nagw8al" path="res://Assets/Environment/lilypad.png" id="1_cjfvm"]
+[ext_resource type="Script" uid="uid://d06qlr4jj1y3a" path="res://Actors/parallax_prop.gd" id="1_hv7y7"]
+
+[node name="BgLayer1Lilypads" type="Node2D" unique_id=833286177]
+z_index = -1
+script = ExtResource("1_hv7y7")
+push_strength = 50.0
+random_spawn_rotation = true
+spin_enabled = true
+spin_speed_deg = 30.0
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=196851535]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("1_cjfvm")

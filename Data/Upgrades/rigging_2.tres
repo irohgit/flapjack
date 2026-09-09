@@ -6,8 +6,8 @@
 [resource]
 script = ExtResource("1_djsod")
 id = &"4"
-display_name = "Rigging 2"
-display_description = "+ Speed"
+display_name = "Rigging II"
+display_description = "+ Ship Speed"
 tier = 2
 icon = ExtResource("1_52ojq")
 level_costs = Array[int]([20, 30, 40])

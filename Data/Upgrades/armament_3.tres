@@ -6,11 +6,11 @@
 [resource]
 script = ExtResource("1_vtvsx")
 id = &"8"
-display_name = "Armament 3"
-display_description = "+ Weapon"
+display_name = "Armament III"
+display_description = "+ Weapon Slot"
 stat_type = 1
 tier = 3
 icon = ExtResource("1_tibcb")
-level_costs = Array[int]([75, 100])
+level_costs = Array[int]([75, 100, 125])
 bonus_per_level = 1.0
 metadata/_custom_type_script = "uid://syfvycgndo0d"

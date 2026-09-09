@@ -9,6 +9,7 @@ extends EnemyDropSourceData
 @export var projectile_speed := 1.0
 @export var move_speed := 0.0
 @export var texture: Texture2D
+## Animated variants select animation names in their scripts or animation_name.
 @export var sprite_frames: SpriteFrames
 @export var animation_name: StringName = &""
 @export var visual_scale := 1.0 # Sprite scale, so one texture can serve small and large variants.

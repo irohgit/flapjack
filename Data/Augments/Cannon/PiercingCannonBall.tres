@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://cpp3oou337x" path="res://Data/Augments/augment_data.gd" id="1_lbwfg"]
 [ext_resource type="Script" uid="uid://dka1bj5u8eq0v" path="res://Data/Augments/Cannon/piercing_augment_effect.gd" id="1_lgbne"]
 [ext_resource type="Resource" uid="uid://b7nwwwfmfkswx" path="res://Data/Weapons/Cannon.tres" id="2_bsxdd"]
-[ext_resource type="Texture2D" uid="uid://bygt8tb1xwxtv" path="res://Assets/Pickups/18.png" id="4_vj15v"]
+[ext_resource type="Texture2D" path="res://Assets/Pickups/PiercingPickup.png" id="4_vj15v"]
 
 [sub_resource type="Resource" id="Resource_l5fa5"]
 script = ExtResource("1_lgbne")

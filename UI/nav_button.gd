@@ -39,6 +39,38 @@ enum Act { CHANGE_SCENE, SHOW_SCREEN, RESUME, RESTART, QUIT, CUSTOM, DISMISS}
 		label_size = value
 		_apply_label()
 
+@export var label_font: Font:
+	set(value):
+		label_font = value
+		_apply_label()
+@export var label_color := Color.WHITE:
+	set(value):
+		label_color = value
+		_apply_label()
+@export var label_outline_color := Color.BLACK:
+	set(value):
+		label_outline_color = value
+		_apply_label()
+@export_range(0, 16, 1) var label_outline_size := 0:
+	set(value):
+		label_outline_size = value
+		_apply_label()
+
+@export_group("Optional icon")
+@export var icon_texture: Texture2D:
+	set(value):
+		icon_texture = value
+		_apply_icon()
+@export var icon_size := Vector2(64.0, 64.0):
+	set(value):
+		icon_size = value
+		_apply_icon()
+@export_range(0.0, 1.0, 0.01) var icon_x_ratio := 0.16:
+	set(value):
+		icon_x_ratio = value
+		_apply_icon()
+@export_group("")
+
 @export_group("Destination")
 ## CHANGE_SCENE only. A .tscn on disk. The current scene is destroyed and replaced.
 @export_file("*.tscn") var scene_to_load: String
@@ -61,15 +93,57 @@ static var _transitioning := false
 
 
 func _apply_label() -> void:
-	var l := get_node_or_null("Label") as Label
+	var l := _label_node()
 	if l == null:
 		return
 	l.text = label_text
 	l.add_theme_font_size_override("font_size", label_size)
+	l.add_theme_color_override("font_color", label_color)
+	l.add_theme_color_override("font_outline_color", label_outline_color)
+	l.add_theme_constant_override("outline_size", label_outline_size)
+	if label_font:
+		l.add_theme_font_override("font", label_font)
+	else:
+		l.remove_theme_font_override("font")
+
+
+func _apply_icon() -> void:
+	var icon := _icon_node()
+	if icon == null:
+		return
+	icon.texture = icon_texture
+	icon.visible = icon_texture != null
+	icon.custom_minimum_size = icon_size
+	_layout_icon()
+
+
+func _layout_icon() -> void:
+	var icon := _icon_node()
+	if icon == null or not icon.visible:
+		return
+	if icon.get_parent() is Container:
+		return
+	icon.size = icon_size
+	icon.position = Vector2(size.x * icon_x_ratio - icon_size.x * 0.5, (size.y - icon_size.y) * 0.5)
+
+
+func _label_node() -> Label:
+	var direct := get_node_or_null("Label") as Label
+	if direct:
+		return direct
+	return find_child("Label", true, false) as Label
+
+
+func _icon_node() -> TextureRect:
+	var direct := get_node_or_null("Icon") as TextureRect
+	if direct:
+		return direct
+	return find_child("Icon", true, false) as TextureRect
 
 
 func _ready() -> void:
 	_apply_label()
+	_apply_icon()
 	if Engine.is_editor_hint():
 		return   # everything below is runtime-only
 
@@ -104,6 +178,7 @@ func _notification(what: int) -> void:
 	# button would then scale away from its top-left, which looks broken.
 	if what == NOTIFICATION_RESIZED:
 		pivot_offset = size / 2.0
+		_layout_icon()
 
 
 func _highlight(on: bool) -> void:

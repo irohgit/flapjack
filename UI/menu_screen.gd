@@ -84,14 +84,8 @@ func open_menu() -> void:
 	if modal_focus:
 		_suppress_outside_focus()
 	show()
-	print("MENU first_focus=", first_focus,
-		" focus_mode=", first_focus.focus_mode if first_focus else -1,
-		" visible=", is_visible_in_tree())
 	if pauses_tree:
 		get_tree().paused = true
-	print("MENU first_focus=", first_focus,
-		" focus_mode=", first_focus.focus_mode if first_focus else -1,
-		" visible=", is_visible_in_tree())
 
 
 func take_return_focus() -> Control:

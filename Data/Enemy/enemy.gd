@@ -15,10 +15,12 @@ extends Area2D
 @export var death_sfx_volume_db := -4.0
 @export var damage_flash_colour := Color(1.0, 0.0, 0.157, 1.0)
 
-@onready var _health: HealthComponent = $HealthComponent
+## Optional nodes let variants without health or status effects initialize.
+## Base @onready fields also resolve when a subclass does not call super().
+@onready var _health: HealthComponent = get_node_or_null("HealthComponent") as HealthComponent
 @onready var _sprite: Sprite2D = get_node_or_null("Sprite2D") as Sprite2D
 @onready var _animated_sprite: AnimatedSprite2D = get_node_or_null("AnimatedSprite2D") as AnimatedSprite2D
-@onready var _status_effects: StatusEffectComponent = $StatusEffectComponent
+@onready var _status_effects: StatusEffectComponent = get_node_or_null("StatusEffectComponent") as StatusEffectComponent
 
 var _fire_timer := 0.0
 var _spawn_position := Vector2.ZERO

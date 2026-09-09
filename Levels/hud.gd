@@ -5,6 +5,9 @@ extends CanvasLayer
 @onready var health_shield_icons: HBoxContainer = $"health and shield icon/HealthRow"
 @onready var active_effects_container: HBoxContainer = $ActiveEffects
 @onready var potion_slots_container: HBoxContainer = $PotionSlots
+@onready var boss_health_display: Control = $BossHealth
+@onready var boss_health_bar: ProgressBar = $BossHealth/Panel/Margin/Content/BarLayer/Bar
+@onready var boss_health_text: Label = $BossHealth/Panel/Margin/Content/BarLayer/HealthText
 
 var _player: Player
 var _status_effects: StatusEffectComponent
@@ -28,6 +31,11 @@ var _active_effect_entries: Dictionary = {}
 @export_range(32.0, 128.0, 32.0) var potion_slot_size := 96.0
 
 func _ready() -> void:
+	boss_health_display.hide()
+	GameEvents.boss_health_changed.connect(_on_boss_health_changed)
+	GameEvents.boss_defeated.connect(_on_boss_defeated)
+	GameEvents.player_died.connect(_on_player_died)
+
 	_player = get_tree().get_first_node_in_group("player")
 
 	if _player == null:
@@ -103,6 +111,25 @@ func _on_health_changed(current: int, maximum: int) -> void:
 func _on_shield_changed(amount: int) -> void:
 	_shield_amount = amount
 	_update_health_shield_icons()
+
+
+func _on_boss_health_changed(current: int, maximum: int) -> void:
+	if maximum <= 0:
+		boss_health_display.hide()
+		return
+
+	boss_health_bar.max_value = maximum
+	boss_health_bar.value = clampi(current, 0, maximum)
+	boss_health_text.text = "%d / %d" % [current, maximum]
+	boss_health_display.show()
+
+
+func _on_boss_defeated(_world_position: Vector2) -> void:
+	boss_health_display.hide()
+
+
+func _on_player_died(_retry_scene_path: String) -> void:
+	visible = false
 
 func _update_health_shield_icons() -> void:
 	var heart_slot_count := ceili(
