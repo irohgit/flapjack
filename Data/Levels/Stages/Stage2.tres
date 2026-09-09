@@ -15,54 +15,6 @@
 [ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="7_pickup_data"]
 [ext_resource type="Resource" uid="uid://5vagi0atsu3m" path="res://Data/Pickups/PlasmaAugmentPickup.tres" id="7_plasma"]
 [ext_resource type="PackedScene" uid="uid://3gxxy4myod8b" path="res://Actors/Enemies/PatternEnemyWaveSpawner.tscn" id="8_ygboy"]
-[ext_resource type="Script" uid="uid://cs7ixklgprmjg" path="res://Data/Levels/weighted_drop_data.gd" id="9_weighted_drop"]
-[ext_resource type="Script" uid="uid://cev20amoxfv48" path="res://Data/Levels/drop_category_data.gd" id="10_drop_category"]
-[ext_resource type="Resource" uid="uid://c2mlimi5p04hl" path="res://Data/Pickups/GoldCoin.tres" id="11_gold"]
-[ext_resource type="Resource" uid="uid://bro26dstx3iic" path="res://Data/Pickups/SilverCoin.tres" id="12_silver"]
-[ext_resource type="Resource" uid="uid://dbvcpemefqpmm" path="res://Data/Pickups/BronzeCoin.tres" id="13_bronze"]
-[ext_resource type="Resource" uid="uid://b1t8pmt6xip8x" path="res://Data/Enemy/ButcherBird_Black.tres" id="14_black_bird"]
-[ext_resource type="Resource" uid="uid://cklo8eixg31" path="res://Data/Enemy/ButcherBird_Red.tres" id="15_red_bird"]
-
-[sub_resource type="Resource" id="Drop_gold"]
-script = ExtResource("9_weighted_drop")
-pickup = ExtResource("11_gold")
-weight = 6.0
-
-[sub_resource type="Resource" id="Drop_silver"]
-script = ExtResource("9_weighted_drop")
-pickup = ExtResource("12_silver")
-weight = 18.0
-
-[sub_resource type="Resource" id="Drop_bronze"]
-script = ExtResource("9_weighted_drop")
-pickup = ExtResource("13_bronze")
-weight = 36.0
-
-[sub_resource type="Resource" id="Drop_homing"]
-script = ExtResource("9_weighted_drop")
-pickup = ExtResource("7_homing")
-weight = 10.0
-
-[sub_resource type="Resource" id="Drop_plasma"]
-script = ExtResource("9_weighted_drop")
-pickup = ExtResource("7_plasma")
-weight = 10.0
-
-[sub_resource type="Resource" id="Drop_fire"]
-script = ExtResource("9_weighted_drop")
-pickup = ExtResource("7_fire")
-weight = 10.0
-
-[sub_resource type="Resource" id="Drop_magnet"]
-script = ExtResource("9_weighted_drop")
-pickup = ExtResource("7_magnet")
-weight = 10.0
-
-[sub_resource type="Resource" id="DropCategory_standard_enemies"]
-script = ExtResource("10_drop_category")
-category_name = "Standard Drops"
-enemies = Array[Resource]([ExtResource("2_5467k"), ExtResource("3_ygboy"), ExtResource("14_black_bird"), ExtResource("15_red_bird")])
-drops = Array[ExtResource("9_weighted_drop")]([SubResource("Drop_gold"), SubResource("Drop_silver"), SubResource("Drop_bronze"), SubResource("Drop_homing"), SubResource("Drop_plasma"), SubResource("Drop_fire"), SubResource("Drop_magnet")])
 
 [sub_resource type="Resource" id="WeightedEnemy_bulwark"]
 script = ExtResource("1_nj72p")
@@ -179,7 +131,6 @@ metadata/_custom_type_script = "uid://bhsc86o70es47"
 script = ExtResource("4_ygboy")
 level_name = "Stage2"
 shop_items = Array[ExtResource("7_pickup_data")]([ExtResource("7_homing"), ExtResource("7_plasma"), ExtResource("7_fire"), ExtResource("7_magnet")])
-drop_categories = Array[ExtResource("10_drop_category")]([SubResource("DropCategory_standard_enemies")])
 encounter_sequence = Array[ExtResource("6_encounter")]([SubResource("Encounter_01_normal"), SubResource("Encounter_02_normal"), SubResource("Encounter_03_special"), SubResource("Encounter_04_optional_normal"), SubResource("Encounter_05_normal"), SubResource("Encounter_06_optional_normal"), SubResource("Encounter_07_normal"), SubResource("Encounter_08_optional_special"), SubResource("Encounter_09_normal"), SubResource("Encounter_10_optional_normal"), SubResource("Encounter_11_normal"), SubResource("Encounter_12_normal")])
 finale_pool = Array[ExtResource("2_h7gg0")]([SubResource("Finale_boss")])
 metadata/_custom_type_script = "uid://p4ssfrvfj0uw"

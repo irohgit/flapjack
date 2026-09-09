@@ -3,10 +3,95 @@
 [ext_resource type="Script" uid="uid://bo6li876odoia" path="res://Data/Enemy/enemy_data.gd" id="1_frog"]
 [ext_resource type="AudioStream" uid="uid://cbplby7nfcsyw" path="res://Audio/SFX/ship_hit.mp3" id="4_hit"]
 [ext_resource type="AudioStream" uid="uid://bcf81qxqc8nxo" path="res://Audio/SFX/ship_destroyed.mp3" id="5_death"]
+[ext_resource type="Texture2D" uid="uid://cwb6obxu4l7v5" path="res://Assets/Enemies/ToxicFrog/frog-green-attack.png" id="5_s6kqw"]
 [ext_resource type="AudioStream" uid="uid://bbl8l1g62mcup" path="res://Audio/SFX/obstacle_hit.mp3" id="6_tongue"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c8cil"]
+atlas = ExtResource("5_s6kqw")
+region = Rect2(0, 0, 384, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0qkig"]
+atlas = ExtResource("5_s6kqw")
+region = Rect2(384, 0, 384, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1uden"]
+atlas = ExtResource("5_s6kqw")
+region = Rect2(768, 0, 384, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ct4ji"]
+atlas = ExtResource("5_s6kqw")
+region = Rect2(1152, 0, 384, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v51dx"]
+atlas = ExtResource("5_s6kqw")
+region = Rect2(0, 512, 384, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x432a"]
+atlas = ExtResource("5_s6kqw")
+region = Rect2(384, 512, 384, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v7d2i"]
+atlas = ExtResource("5_s6kqw")
+region = Rect2(768, 512, 384, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gdkvv"]
+atlas = ExtResource("5_s6kqw")
+region = Rect2(1152, 512, 384, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_arqh7"]
+atlas = ExtResource("5_s6kqw")
+region = Rect2(0, 0, 384, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s6kqw"]
+atlas = ExtResource("5_s6kqw")
+region = Rect2(384, 0, 384, 512)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jdofd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c8cil")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0qkig")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1uden")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ct4ji")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v51dx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x432a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v7d2i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gdkvv")
+}],
+"loop": 1,
+"name": &"Attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_arqh7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s6kqw")
+}],
+"loop": 1,
+"name": &"Idle",
+"speed": 5.0
+}]
 
 [resource]
 script = ExtResource("1_frog")
+sprite_frames = SubResource("SpriteFrames_jdofd")
 hit_sfx = ExtResource("4_hit")
 death_sfx = ExtResource("5_death")
 fire_sfx = ExtResource("6_tongue")

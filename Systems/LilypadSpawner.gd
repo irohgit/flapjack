@@ -5,15 +5,22 @@ extends Node2D
 ## level scrolls, same distance-driven approach as ParallaxDirector2. Some
 ## fraction spawn with a stationary FrogEnemy riding them.
 ##
-## Frogs are NOT parented under their lilypad: ParallaxProp's optional spin
-## rotates the whole node it's attached to, and a child would spin around
-## with it. Instead each frog's position is copied from its lilypad every
-## frame in _update_riders(), position only, so the frog stays upright while
-## still drifting down in lockstep with the pad underneath it.
+## Frogs are NOT parented under their lilypad - instead each frog's position
+## AND rotation are copied from its lilypad every frame in _update_riders(),
+## so it rides and spins in lockstep with the pad. Keeping them as separate
+## siblings (rather than true parent/child) means the frog's own lifecycle
+## (see the freed-instance handling below) stays independent of however the
+## lilypad scene is structured.
 
 @export var lilypad_scene: PackedScene
 @export var frog_scene: PackedScene
 @export_range(0.0, 1.0) var frog_chance := 0.3
+
+## Which EnemyData (colour) a spawned frog gets, chosen by weight - e.g.
+## green weight 40, everything else weight 15 gives green a flat 40% and an
+## even split of the remaining 60% across however many others are listed.
+## Leave empty to just use frog_scene's own baked-in data every time.
+@export var frog_color_pool: Array[WeightedEnemyData] = []
 
 # x is min, y is max depth (see ParallaxProp) - close to 1.0 so lilypads
 # drift only slightly slower than the water they're floating on.
@@ -83,7 +90,10 @@ func _update_riders() -> void:
 			_riders.remove_at(i)
 			continue
 
-		(pair.frog as Node2D).global_position = (pair.lilypad as Node2D).global_position
+		var frog_node := pair.frog as Node2D
+		var lilypad_node := pair.lilypad as Node2D
+		frog_node.global_position = lilypad_node.global_position
+		frog_node.rotation = lilypad_node.rotation
 
 
 func _spawn_lilypad() -> void:
@@ -110,6 +120,28 @@ func _spawn_frog_on(lilypad: Node2D) -> void:
 		push_error("LilypadSpawner: frog_scene failed to instantiate")
 		return
 
+	var color := _weighted_pick_enemy_data(frog_color_pool)
+	if color != null:
+		frog.data = color
+
 	parent.add_child(frog)
 	frog.global_position = lilypad.global_position
 	_riders.append({"lilypad": lilypad, "frog": frog})
+
+
+func _weighted_pick_enemy_data(pool: Array[WeightedEnemyData]) -> EnemyData:
+	var total := 0.0
+	for weighted in pool:
+		if weighted != null and weighted.enemy != null:
+			total += maxf(weighted.weight, 0.0)
+	if total <= 0.0:
+		return null
+
+	var r := randf() * total
+	for weighted in pool:
+		if weighted == null or weighted.enemy == null:
+			continue
+		r -= maxf(weighted.weight, 0.0)
+		if r <= 0.0:
+			return weighted.enemy
+	return null
