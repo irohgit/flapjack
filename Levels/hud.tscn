@@ -12,12 +12,10 @@
 [ext_resource type="PackedScene" uid="uid://bs3yk1cg3vc6b" path="res://Actors/HUD/augment_entry.tscn" id="11_sn1ph"]
 [ext_resource type="Texture2D" uid="uid://y2oh1hgogp4e" path="res://Assets/UI/Potions/potion_slot.png" id="12_potion_slot"]
 [ext_resource type="Texture2D" uid="uid://c2io1a0l25kwq" path="res://Assets/UI/Potions/potion_slot_selector.png" id="13_potion_selector"]
-[ext_resource type="Texture2D" path="res://Assets/UI/WoodMenu/wood_button.png" id="14_wood_counter"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_augments"]
+[ext_resource type="Texture2D" uid="uid://cjjelj1l1pyip" path="res://Assets/UI/WoodMenu/wood_button.png" id="14_wood_counter"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_boss_panel"]
-bg_color = Color(0.105882, 0.0352941, 0.0117647, 0.96)
+bg_color = Color(0.105882354, 0.03529412, 0.011764706, 0.46666667)
 border_width_left = 4
 border_width_top = 4
 border_width_right = 4
@@ -52,6 +50,8 @@ corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_augments"]
+
 [node name="HUD" type="CanvasLayer" unique_id=228684140]
 script = ExtResource("1_otg58")
 full_heart_icon = ExtResource("4_sn1ph")
@@ -61,9 +61,9 @@ shield_icon = ExtResource("5_6qxyw")
 potion_slot_texture = ExtResource("12_potion_slot")
 potion_selector_texture = ExtResource("13_potion_selector")
 
-[node name="BossHealth" type="Control" parent="."]
-visible = false
-anchors_preset = 10
+[node name="BossHealth" type="Control" parent="." unique_id=982516367]
+layout_mode = 3
+anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -420.0
@@ -73,7 +73,7 @@ offset_bottom = 124.0
 grow_horizontal = 2
 mouse_filter = 2
 
-[node name="Panel" type="PanelContainer" parent="BossHealth"]
+[node name="Panel" type="PanelContainer" parent="BossHealth" unique_id=102084534]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -83,34 +83,33 @@ grow_vertical = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_boss_panel")
 
-[node name="Margin" type="MarginContainer" parent="BossHealth/Panel"]
+[node name="Margin" type="MarginContainer" parent="BossHealth/Panel" unique_id=925750732]
 layout_mode = 2
 theme_override_constants/margin_left = 24
 theme_override_constants/margin_top = 9
 theme_override_constants/margin_right = 24
 theme_override_constants/margin_bottom = 12
 
-[node name="Content" type="VBoxContainer" parent="BossHealth/Panel/Margin"]
+[node name="Content" type="VBoxContainer" parent="BossHealth/Panel/Margin" unique_id=2131856563]
 layout_mode = 2
 theme_override_constants/separation = 3
 
-[node name="BossName" type="Label" parent="BossHealth/Panel/Margin/Content"]
+[node name="BossName" type="Label" parent="BossHealth/Panel/Margin/Content" unique_id=1443352547]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.886275, 0.627451, 1)
 theme_override_colors/font_outline_color = Color(0.0196078, 0.00392157, 0, 1)
 theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("8_uu2l2")
 theme_override_font_sizes/font_size = 27
-text = "VOODOO FLAGSHIP"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="BarLayer" type="Control" parent="BossHealth/Panel/Margin/Content"]
+[node name="BarLayer" type="Control" parent="BossHealth/Panel/Margin/Content" unique_id=310915344]
 custom_minimum_size = Vector2(0, 38)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Bar" type="ProgressBar" parent="BossHealth/Panel/Margin/Content/BarLayer"]
+[node name="Bar" type="ProgressBar" parent="BossHealth/Panel/Margin/Content/BarLayer" unique_id=1248815254]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -124,14 +123,13 @@ max_value = 250.0
 value = 250.0
 show_percentage = false
 
-[node name="HealthText" type="Label" parent="BossHealth/Panel/Margin/Content/BarLayer"]
+[node name="HealthText" type="Label" parent="BossHealth/Panel/Margin/Content/BarLayer" unique_id=818886474]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
@@ -186,7 +184,7 @@ texture = ExtResource("7_2lib2")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Caption" type="Label" parent="Coin"]
+[node name="Caption" type="Label" parent="Coin" unique_id=1023885463]
 layout_mode = 0
 offset_left = 73.0
 offset_top = 7.0
@@ -252,7 +250,7 @@ texture = ExtResource("11_1wnoe")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Caption" type="Label" parent="Gin"]
+[node name="Caption" type="Label" parent="Gin" unique_id=2084258214]
 layout_mode = 0
 offset_left = 73.0
 offset_top = 7.0

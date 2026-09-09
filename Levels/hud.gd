@@ -8,6 +8,7 @@ extends CanvasLayer
 @onready var boss_health_display: Control = $BossHealth
 @onready var boss_health_bar: ProgressBar = $BossHealth/Panel/Margin/Content/BarLayer/Bar
 @onready var boss_health_text: Label = $BossHealth/Panel/Margin/Content/BarLayer/HealthText
+@onready var _boss_name: Label = $BossHealth/Panel/Margin/Content/BossName
 
 var _player: Player
 var _status_effects: StatusEffectComponent
@@ -33,6 +34,7 @@ var _active_effect_entries: Dictionary = {}
 func _ready() -> void:
 	boss_health_display.hide()
 	GameEvents.boss_health_changed.connect(_on_boss_health_changed)
+	GameEvents.boss_name_changed.connect(_on_boss_name_changed)
 	GameEvents.boss_defeated.connect(_on_boss_defeated)
 	GameEvents.player_died.connect(_on_player_died)
 
@@ -47,7 +49,8 @@ func _ready() -> void:
 	MetaProgress.gin_changed.connect(_on_gin_changed)
 
 	call_deferred("_init_display_values")
-
+func _on_boss_name_changed(display_name: String) -> void:
+	_boss_name.text = display_name
 func _init_display_values() -> void:
 	var health = _player.get_health_component()
 
@@ -125,8 +128,9 @@ func _on_boss_health_changed(current: int, maximum: int) -> void:
 
 
 func _on_boss_defeated(_world_position: Vector2) -> void:
+	_boss_name.text = ""
 	boss_health_display.hide()
-
+	
 
 func _on_player_died(_retry_scene_path: String) -> void:
 	visible = false

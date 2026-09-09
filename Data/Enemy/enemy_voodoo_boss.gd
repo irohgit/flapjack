@@ -120,7 +120,7 @@ func _get_hold_position() -> Vector2:
 func _on_health_changed(current: int, maximum: int) -> void:
 	if maximum <= 0:
 		return
-
+	
 	GameEvents.boss_health_changed.emit(current, maximum)
 
 	var health_ratio := float(current) / float(maximum)

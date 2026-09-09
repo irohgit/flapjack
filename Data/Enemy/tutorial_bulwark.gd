@@ -10,6 +10,12 @@ extends Enemy
 @export_range(0.0, 2000.0, 1.0, "or_greater") var activation_margin := 800.0
 # Overrides the base fire entirely. The timer still ticks, it just produces
 # nothing, which is cheaper than fighting the base class's scheduling.
+var _is_dying := false
+func _ready()-> void:
+	super()
+	
+
+		
 func _fire() -> Projectile:
 	return null
 
@@ -24,6 +30,8 @@ func _move(delta: float, speed: float) -> void:
 	if global_position.y > rect.position.y + playfield_margin:
 		global_position = _clamp_to_visible_playfield(global_position)
 
+#GameEvents.boss_health_changed.emit(current, maximum)
+
 func _get_hold_position() -> Vector2:
 	var visible_rect := Playarea.get_visible_world_rect()
 	var target_x := visible_rect.get_center().x
@@ -37,6 +45,8 @@ func _get_hold_position() -> Vector2:
 		visible_rect.position.y + visible_rect.size.y * hold_height_ratio
 	)
 
+
+	
 
 func _clamp_to_visible_playfield(world_position: Vector2) -> Vector2:
 	var visible_rect := Playarea.get_visible_world_rect()
@@ -77,7 +87,11 @@ func _spawn_explosion(at: Vector2) -> void:
 	sprite.play()
 	
 func _on_died() -> void:
+	if _is_dying:
+		return
 	_spawn_explosion(global_position)
+	_is_dying = true
+	GameEvents.boss_defeated.emit(global_position)
 	super()
 
 func _find_animated_sprite(node: Node) -> AnimatedSprite2D:

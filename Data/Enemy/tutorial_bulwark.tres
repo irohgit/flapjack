@@ -10,6 +10,8 @@
 
 [resource]
 script = ExtResource("1_4kokw")
+enemy_name = "Bulwark"
+is_boss = true
 health = 20
 projectile_damage = 0
 projectile_fire_rate = 3

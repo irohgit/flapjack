@@ -45,7 +45,7 @@ const DUO_SHEEPISH := preload("res://Assets/Cinematics/DUO_SHEEPISH_512x640.png"
 @export var raider_spawn_lead := 420.0
 
 var _player: Player
-var _raider: Node2D = null
+var _raider: Enemy = null
 var _last_raider_position := Vector2.ZERO
 var _highlight_tweens: Array[Tween] = []
 
@@ -96,6 +96,7 @@ func _beat_ambush() -> void:
 	await _wait_until_below_ratio(_raider, 0.05) #hardcoded value
 	if not is_instance_valid(_raider):
 		return
+	
 	await _tutorial_ui.say_auto("Jack", "I can see Pirates off the bow.",JACK_MONOCLE)
 	await _tutorial_ui.say_auto("Flapjack", "Come you thieving sea cretins.",FLAPJACK_STAUNCH)
 	_tutorial_ui.hide_portrait()
@@ -125,6 +126,10 @@ func _beat_firing() -> void:
 	if is_instance_valid(_raider):
 		_raider.set_deferred("monitorable", true)
 	# Track it while it lives, so the potion can drop where it died.
+	#Show boss health bar now 
+	var boss: Enemy = _raider as Enemy
+	if boss != null:
+		boss.announce_boss()
 	while is_instance_valid(_raider):
 		_last_raider_position = (_raider as Node2D).global_position
 		await get_tree().process_frame

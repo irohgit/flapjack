@@ -7,7 +7,6 @@ extends Area2D
 # After engagement begins, EnemyData.projectile_fire_rate controls each interval.
 @export var min_interval := 2.0
 @export var max_interval := 5.0
-
 @onready var _health: HealthComponent = $HealthComponent
 @onready var _sprite: Sprite2D = $Sprite2D
 @onready var _status_effects: StatusEffectComponent = $StatusEffectComponent
@@ -26,6 +25,9 @@ func _ready() -> void:
 	_health.current_health = data.health
 	_health.damaged.connect(_on_damaged)
 	_health.died.connect(_on_died)
+	#Setups boss healthbar
+	if data != null and data.is_boss:
+		_health.health_changed.connect(_on_boss_health_changed)
 	_reset_initial_timer()
 
 
@@ -112,3 +114,18 @@ func _on_died() -> void:
 
 func apply_status_effect(effect: StatusEffectData) -> bool:
 	return _status_effects.apply_effect(effect)
+
+#boss
+## Reveals this enemy on the boss bar. Called at the moment the boss should be
+## seen, not at spawn, so an off-screen approach does not light up the HUD early.
+func announce_boss() -> void:
+	if data == null or not data.is_boss:
+		return
+	GameEvents.boss_name_changed.emit(data.enemy_name)
+	_on_boss_health_changed(_health.current_health, _health.max_health)
+	
+
+func _on_boss_health_changed(current: int, maximum: int) -> void:
+	if maximum <= 0:
+		return
+	GameEvents.boss_health_changed.emit(current, maximum)
