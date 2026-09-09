@@ -128,7 +128,7 @@ func _on_boss_health_changed(current: int, maximum: int) -> void:
 
 
 func _on_boss_defeated(_world_position: Vector2) -> void:
-	_boss_name.text = ""
+	#_boss_name.text = ""
 	boss_health_display.hide()
 	
 

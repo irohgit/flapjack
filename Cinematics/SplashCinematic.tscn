@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://clbb7gk5jgf0g"]
 
 [ext_resource type="Script" uid="uid://b657p1iyk2cl2" path="res://Cinematics/Splash.gd" id="1_wslet"]
+[ext_resource type="PackedScene" uid="uid://cbwqh8cwq0yhh" path="res://Cinematics/OpeningCinematic.tscn" id="2_6a0u4"]
 [ext_resource type="FontFile" uid="uid://v5yo0808ccl2" path="res://Assets/Fonts/Bernoru/bernoru-blackultraexpanded.otf" id="2_l5u6c"]
 [ext_resource type="FontFile" uid="uid://dhrhg3s7j7i2b" path="res://Assets/Fonts/Montserrat/static/Montserrat-Regular.ttf" id="3_6a0u4"]
 
@@ -153,6 +154,7 @@ _data = {
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_wslet")
+next_scene = ExtResource("2_6a0u4")
 metadata/_edit_vertical_guides_ = [2157.0, 2001.0, -161.0, 960.0]
 metadata/_edit_horizontal_guides_ = [540.0]
 

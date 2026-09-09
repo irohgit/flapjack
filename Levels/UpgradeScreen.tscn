@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://txmrd1xl2rsq"]
+[gd_scene format=3 uid="uid://txmrd1xl2rsq"]
 
 [ext_resource type="Script" uid="uid://bry8accis8tu2" path="res://Levels/upgrade_screen.gd" id="1_script"]
 [ext_resource type="PackedScene" uid="uid://co6sij38mf2wj" path="res://Data/Upgrades/upgrade_node_card.tscn" id="2_card"]
@@ -12,24 +12,28 @@
 [ext_resource type="Resource" uid="uid://d022k1elgh4w8" path="res://Data/Upgrades/armament_2.tres" id="10_arm2"]
 [ext_resource type="Resource" uid="uid://cyl0qv343v7ne" path="res://Data/Upgrades/armament_3.tres" id="11_arm3"]
 [ext_resource type="Script" uid="uid://syfvycgndo0d" path="res://Data/Upgrades/upgrade_node_data.gd" id="12_data"]
-[ext_resource type="Texture2D" path="res://Assets/UI/WoodMenu/wood_settings_panel.png" id="13_panel"]
-[ext_resource type="Texture2D" path="res://Assets/UI/WoodMenu/wood_button.png" id="14_button"]
-[ext_resource type="Texture2D" path="res://Assets/UI/WoodMenu/octopus_crest.png" id="15_octopus"]
-[ext_resource type="Texture2D" path="res://Assets/Characters/Ginny_Idle_spritesheet_96x96.png" id="16_ginny"]
+[ext_resource type="Texture2D" uid="uid://vdcjhgb07r4x" path="res://Assets/UI/WoodMenu/wood_settings_panel.png" id="13_panel"]
+[ext_resource type="Texture2D" uid="uid://cjjelj1l1pyip" path="res://Assets/UI/WoodMenu/wood_button.png" id="14_button"]
+[ext_resource type="Texture2D" uid="uid://kxxrj3v5jv4l" path="res://Assets/UI/WoodMenu/octopus_crest.png" id="15_octopus"]
+[ext_resource type="Texture2D" uid="uid://b6vlcs7mjr1q4" path="res://Assets/Characters/Ginny_Idle_spritesheet_96x96.png" id="16_ginny"]
 [ext_resource type="Texture2D" uid="uid://dypxhdmtkar1y" path="res://Assets/Pickups/cocktail_2.png" id="17_gin"]
-[ext_resource type="Texture2D" path="res://Assets/Boat/skiff_1_40x80.png" id="18_skiff"]
-[ext_resource type="Texture2D" path="res://Assets/Boat/schooner_1_80x120.png" id="19_schooner"]
-[ext_resource type="Texture2D" path="res://Assets/Boat/Galleon_1_100x140.png" id="20_galleon"]
+[ext_resource type="Texture2D" uid="uid://vaqefn8atoul" path="res://Assets/Boat/skiff_1_40x80.png" id="18_skiff"]
+[ext_resource type="Texture2D" uid="uid://d0qx2e44n5cf7" path="res://Assets/Boat/schooner_1_80x120.png" id="19_schooner"]
+[ext_resource type="Texture2D" uid="uid://c8s78souw2gh3" path="res://Assets/Boat/Galleon_1_100x140.png" id="20_galleon"]
 [ext_resource type="PackedScene" uid="uid://das28foe55u6f" path="res://UI/navbutton.tscn" id="21_nav"]
 [ext_resource type="FontFile" uid="uid://1qarew2on3k7" path="res://Assets/Fonts/PixelOperator.ttf" id="22_font"]
 [ext_resource type="FontFile" uid="uid://cvo681c1hvgca" path="res://Assets/Fonts/Montserrat/static/Montserrat-Black.ttf" id="23_title_font"]
 [ext_resource type="AudioStream" uid="uid://dshox3m1impsv" path="res://Audio/SFX/soft_hover.mp3" id="24_hover"]
 [ext_resource type="AudioStream" uid="uid://dc263ntmf6iew" path="res://Audio/SFX/ui_click_stylized.mp3" id="25_click"]
-[ext_resource type="Texture2D" path="res://Assets/Boat/galleon_masterwork.png" id="26_masterwork"]
+[ext_resource type="Texture2D" uid="uid://p2k87yfualmr" path="res://Assets/Boat/galleon_masterwork.png" id="26_masterwork"]
 
 [sub_resource type="Theme" id="Theme_upgrade"]
 default_font = ExtResource("22_font")
 default_font_size = 20
+
+[sub_resource type="AtlasTexture" id="Atlas_ginny_idle"]
+atlas = ExtResource("16_ginny")
+region = Rect2(0, 0, 48, 48)
 
 [sub_resource type="StyleBoxFlat" id="Style_column"]
 bg_color = Color(0.025, 0.05, 0.055, 0.94)
@@ -46,11 +50,7 @@ shadow_color = Color(0, 0, 0, 0.68)
 shadow_size = 9
 shadow_offset = Vector2(0, 5)
 
-[sub_resource type="AtlasTexture" id="Atlas_ginny_idle"]
-atlas = ExtResource("16_ginny")
-region = Rect2(0, 0, 48, 48)
-
-[node name="UpgradeScreen" type="Control" node_paths=PackedStringArray("first_focus")]
+[node name="UpgradeScreen" type="Control" unique_id=676238142 node_paths=PackedStringArray("first_focus")]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
@@ -69,7 +69,7 @@ masterwork_texture = ExtResource("26_masterwork")
 first_focus = NodePath("ReturnButton")
 frees_on_close = true
 
-[node name="Backdrop" type="ColorRect" parent="."]
+[node name="Backdrop" type="ColorRect" parent="." unique_id=926245797]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -79,7 +79,7 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.005, 0.016, 0.021, 0.88)
 
-[node name="LeftPanel" type="TextureRect" parent="."]
+[node name="LeftPanel" type="TextureRect" parent="." unique_id=1471284359]
 texture_filter = 1
 layout_mode = 0
 offset_left = 28.0
@@ -90,7 +90,7 @@ mouse_filter = 2
 texture = ExtResource("13_panel")
 expand_mode = 1
 
-[node name="Octopus" type="TextureRect" parent="LeftPanel"]
+[node name="Octopus" type="TextureRect" parent="LeftPanel" unique_id=1024094926]
 texture_filter = 1
 layout_mode = 0
 offset_left = 165.0
@@ -102,7 +102,7 @@ texture = ExtResource("15_octopus")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Title" type="Label" parent="LeftPanel"]
+[node name="Title" type="Label" parent="LeftPanel" unique_id=345790857]
 layout_mode = 0
 offset_left = 42.0
 offset_top = 142.0
@@ -117,7 +117,7 @@ text = "GINNY'S SHIPYARD"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Subtitle" type="Label" parent="LeftPanel"]
+[node name="Subtitle" type="Label" parent="LeftPanel" unique_id=365655583]
 layout_mode = 0
 offset_left = 42.0
 offset_top = 193.0
@@ -131,7 +131,7 @@ text = "MASTER SHIPWRIGHT"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="GinnyPortrait" type="TextureRect" parent="LeftPanel"]
+[node name="GinnyPortrait" type="TextureRect" parent="LeftPanel" unique_id=1235991519]
 texture_filter = 1
 layout_mode = 0
 offset_left = 147.0
@@ -143,7 +143,7 @@ texture = SubResource("Atlas_ginny_idle")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Dialogue" type="Label" parent="LeftPanel"]
+[node name="Dialogue" type="Label" parent="LeftPanel" unique_id=1516398610]
 layout_mode = 0
 offset_left = 52.0
 offset_top = 398.0
@@ -158,7 +158,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="BoatDeck" type="TextureRect" parent="LeftPanel"]
+[node name="BoatDeck" type="TextureRect" parent="LeftPanel" unique_id=2098453951]
 texture_filter = 1
 layout_mode = 0
 offset_left = 58.0
@@ -169,7 +169,7 @@ mouse_filter = 2
 texture = ExtResource("14_button")
 expand_mode = 1
 
-[node name="BoatPreview" type="TextureRect" parent="."]
+[node name="BoatPreview" type="TextureRect" parent="." unique_id=1723367764]
 texture_filter = 1
 layout_mode = 0
 offset_left = 82.0
@@ -181,21 +181,21 @@ texture = ExtResource("20_galleon")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="ComponentStatus" type="Control" parent="."]
-layout_mode = 0
+[node name="ComponentStatus" type="Control" parent="." unique_id=688892134]
+anchors_preset = 0
 offset_left = 268.0
 offset_top = 486.0
 offset_right = 420.0
 offset_bottom = 666.0
 mouse_filter = 2
 
-[node name="Rigging" type="Control" parent="ComponentStatus"]
-layout_mode = 0
+[node name="Rigging" type="Control" parent="ComponentStatus" unique_id=287937906]
+anchors_preset = 0
 offset_right = 152.0
 offset_bottom = 56.0
 mouse_filter = 2
 
-[node name="Frame" type="TextureRect" parent="ComponentStatus/Rigging"]
+[node name="Frame" type="TextureRect" parent="ComponentStatus/Rigging" unique_id=672729927]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -206,7 +206,7 @@ mouse_filter = 2
 texture = ExtResource("14_button")
 expand_mode = 1
 
-[node name="Icon" type="TextureRect" parent="ComponentStatus/Rigging"]
+[node name="Icon" type="TextureRect" parent="ComponentStatus/Rigging" unique_id=1835156875]
 texture_filter = 1
 layout_mode = 0
 offset_left = 8.0
@@ -217,7 +217,7 @@ mouse_filter = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Name" type="Label" parent="ComponentStatus/Rigging"]
+[node name="Name" type="Label" parent="ComponentStatus/Rigging" unique_id=1895595440]
 layout_mode = 0
 offset_left = 50.0
 offset_top = 3.0
@@ -231,7 +231,7 @@ text = "RIGGING"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Progress" type="Label" parent="ComponentStatus/Rigging"]
+[node name="Progress" type="Label" parent="ComponentStatus/Rigging" unique_id=2128706057]
 layout_mode = 0
 offset_left = 50.0
 offset_top = 25.0
@@ -245,14 +245,14 @@ text = "0 / 3"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Armament" type="Control" parent="ComponentStatus"]
-layout_mode = 0
+[node name="Armament" type="Control" parent="ComponentStatus" unique_id=116391053]
+anchors_preset = 0
 offset_top = 62.0
 offset_right = 152.0
 offset_bottom = 118.0
 mouse_filter = 2
 
-[node name="Frame" type="TextureRect" parent="ComponentStatus/Armament"]
+[node name="Frame" type="TextureRect" parent="ComponentStatus/Armament" unique_id=440702571]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -263,7 +263,7 @@ mouse_filter = 2
 texture = ExtResource("14_button")
 expand_mode = 1
 
-[node name="Icon" type="TextureRect" parent="ComponentStatus/Armament"]
+[node name="Icon" type="TextureRect" parent="ComponentStatus/Armament" unique_id=1468169652]
 texture_filter = 1
 layout_mode = 0
 offset_left = 8.0
@@ -274,7 +274,7 @@ mouse_filter = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Name" type="Label" parent="ComponentStatus/Armament"]
+[node name="Name" type="Label" parent="ComponentStatus/Armament" unique_id=371700661]
 layout_mode = 0
 offset_left = 50.0
 offset_top = 3.0
@@ -288,7 +288,7 @@ text = "ARMAMENT"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Progress" type="Label" parent="ComponentStatus/Armament"]
+[node name="Progress" type="Label" parent="ComponentStatus/Armament" unique_id=400911140]
 layout_mode = 0
 offset_left = 50.0
 offset_top = 25.0
@@ -302,14 +302,14 @@ text = "0 / 3"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Hull" type="Control" parent="ComponentStatus"]
-layout_mode = 0
+[node name="Hull" type="Control" parent="ComponentStatus" unique_id=1569955142]
+anchors_preset = 0
 offset_top = 124.0
 offset_right = 152.0
 offset_bottom = 180.0
 mouse_filter = 2
 
-[node name="Frame" type="TextureRect" parent="ComponentStatus/Hull"]
+[node name="Frame" type="TextureRect" parent="ComponentStatus/Hull" unique_id=989580867]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -320,7 +320,7 @@ mouse_filter = 2
 texture = ExtResource("14_button")
 expand_mode = 1
 
-[node name="Icon" type="TextureRect" parent="ComponentStatus/Hull"]
+[node name="Icon" type="TextureRect" parent="ComponentStatus/Hull" unique_id=929432259]
 texture_filter = 1
 layout_mode = 0
 offset_left = 8.0
@@ -331,7 +331,7 @@ mouse_filter = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Name" type="Label" parent="ComponentStatus/Hull"]
+[node name="Name" type="Label" parent="ComponentStatus/Hull" unique_id=1406263389]
 layout_mode = 0
 offset_left = 50.0
 offset_top = 3.0
@@ -345,7 +345,7 @@ text = "HULL"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Progress" type="Label" parent="ComponentStatus/Hull"]
+[node name="Progress" type="Label" parent="ComponentStatus/Hull" unique_id=297579510]
 layout_mode = 0
 offset_left = 50.0
 offset_top = 25.0
@@ -359,7 +359,7 @@ text = "0 / 3"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="BoatTier" type="Label" parent="."]
+[node name="BoatTier" type="Label" parent="." unique_id=653963396]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 87.0
@@ -374,7 +374,7 @@ text = "TIER III  -  GALLEON"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="RefitProgress" type="Label" parent="."]
+[node name="RefitProgress" type="Label" parent="." unique_id=393911438]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 87.0
@@ -389,15 +389,15 @@ text = "CURRENT REFIT  0 / 9"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Gin" type="Control" parent="."]
-layout_mode = 0
+[node name="Gin" type="Control" parent="." unique_id=413893396]
+anchors_preset = 0
 offset_left = 62.0
 offset_top = 760.0
 offset_right = 274.0
 offset_bottom = 838.0
 mouse_filter = 2
 
-[node name="Frame" type="TextureRect" parent="Gin"]
+[node name="Frame" type="TextureRect" parent="Gin" unique_id=1697023208]
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 15
@@ -409,7 +409,7 @@ mouse_filter = 2
 texture = ExtResource("14_button")
 expand_mode = 1
 
-[node name="Icon" type="TextureRect" parent="Gin"]
+[node name="Icon" type="TextureRect" parent="Gin" unique_id=1364827910]
 texture_filter = 1
 layout_mode = 0
 offset_left = 20.0
@@ -421,7 +421,7 @@ texture = ExtResource("17_gin")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Caption" type="Label" parent="Gin"]
+[node name="Caption" type="Label" parent="Gin" unique_id=2109098714]
 layout_mode = 0
 offset_left = 72.0
 offset_top = 7.0
@@ -434,7 +434,7 @@ theme_override_font_sizes/font_size = 15
 text = "GIN"
 horizontal_alignment = 1
 
-[node name="Amount" type="Label" parent="Gin"]
+[node name="Amount" type="Label" parent="Gin" unique_id=1745252783]
 layout_mode = 0
 offset_left = 72.0
 offset_top = 26.0
@@ -448,15 +448,15 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Trust" type="Control" parent="."]
-layout_mode = 0
+[node name="Trust" type="Control" parent="." unique_id=1347651820]
+anchors_preset = 0
 offset_left = 280.0
 offset_top = 760.0
 offset_right = 458.0
 offset_bottom = 838.0
 mouse_filter = 2
 
-[node name="Frame" type="TextureRect" parent="Trust"]
+[node name="Frame" type="TextureRect" parent="Trust" unique_id=972219655]
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 15
@@ -468,7 +468,7 @@ mouse_filter = 2
 texture = ExtResource("14_button")
 expand_mode = 1
 
-[node name="Caption" type="Label" parent="Trust"]
+[node name="Caption" type="Label" parent="Trust" unique_id=1865606074]
 layout_mode = 0
 offset_left = 14.0
 offset_top = 7.0
@@ -481,7 +481,7 @@ theme_override_font_sizes/font_size = 15
 text = "TRUST"
 horizontal_alignment = 1
 
-[node name="Amount" type="Label" parent="Trust"]
+[node name="Amount" type="Label" parent="Trust" unique_id=897256025]
 layout_mode = 0
 offset_left = 14.0
 offset_top = 26.0
@@ -495,7 +495,7 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TrustNote" type="Label" parent="."]
+[node name="TrustNote" type="Label" parent="." unique_id=2121631295]
 layout_mode = 0
 offset_left = 72.0
 offset_top = 840.0
@@ -510,13 +510,14 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="ReturnButton" parent="." instance=ExtResource("21_nav")]
+[node name="ReturnButton" parent="." unique_id=1915807516 instance=ExtResource("21_nav")]
 custom_minimum_size = Vector2(360, 113)
 layout_mode = 0
 offset_left = 80.0
 offset_top = 892.0
 offset_right = 440.0
 offset_bottom = 1005.0
+pivot_offset = Vector2(180, 56.5)
 texture_normal = ExtResource("14_button")
 texture_pressed = ExtResource("14_button")
 texture_hover = ExtResource("14_button")
@@ -532,7 +533,7 @@ focus_tint = Color(1.18, 1.08, 0.78, 1)
 focus_sound = ExtResource("24_hover")
 press_sound = ExtResource("25_click")
 
-[node name="HeaderPlaque" type="TextureRect" parent="."]
+[node name="HeaderPlaque" type="TextureRect" parent="." unique_id=1377881007]
 texture_filter = 1
 layout_mode = 0
 offset_left = 534.0
@@ -543,7 +544,7 @@ mouse_filter = 2
 texture = ExtResource("14_button")
 expand_mode = 1
 
-[node name="Title" type="Label" parent="HeaderPlaque"]
+[node name="Title" type="Label" parent="HeaderPlaque" unique_id=1278206635]
 layout_mode = 0
 offset_left = 42.0
 offset_top = 8.0
@@ -557,7 +558,7 @@ theme_override_font_sizes/font_size = 38
 text = "SHIP UPGRADES"
 vertical_alignment = 1
 
-[node name="Subtitle" type="Label" parent="HeaderPlaque"]
+[node name="Subtitle" type="Label" parent="HeaderPlaque" unique_id=529552017]
 layout_mode = 0
 offset_left = 526.0
 offset_top = 23.0
@@ -571,7 +572,7 @@ text = "COMPLETE A TIER TO EVOLVE YOUR SHIP"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="UpgradeColumns" type="HBoxContainer" parent="."]
+[node name="UpgradeColumns" type="HBoxContainer" parent="." unique_id=1681202402]
 layout_mode = 0
 offset_left = 520.0
 offset_top = 150.0
@@ -580,25 +581,25 @@ offset_bottom = 1044.0
 theme_override_constants/separation = 14
 alignment = 1
 
-[node name="TierIColumn" type="PanelContainer" parent="UpgradeColumns"]
+[node name="TierIColumn" type="PanelContainer" parent="UpgradeColumns" unique_id=1329210728]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(438, 884)
 layout_mode = 2
 theme_override_styles/panel = SubResource("Style_column")
 
-[node name="Margin" type="MarginContainer" parent="UpgradeColumns/TierIColumn"]
+[node name="Margin" type="MarginContainer" parent="UpgradeColumns/TierIColumn" unique_id=1471769218]
 layout_mode = 2
 theme_override_constants/margin_left = 15
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 15
 theme_override_constants/margin_bottom = 16
 
-[node name="Content" type="VBoxContainer" parent="UpgradeColumns/TierIColumn/Margin"]
+[node name="Content" type="VBoxContainer" parent="UpgradeColumns/TierIColumn/Margin" unique_id=159611126]
 layout_mode = 2
 theme_override_constants/separation = 9
 alignment = 1
 
-[node name="Header" type="TextureRect" parent="UpgradeColumns/TierIColumn/Margin/Content"]
+[node name="Header" type="TextureRect" parent="UpgradeColumns/TierIColumn/Margin/Content" unique_id=1308146979]
 texture_filter = 1
 custom_minimum_size = Vector2(406, 86)
 layout_mode = 2
@@ -606,7 +607,7 @@ mouse_filter = 2
 texture = ExtResource("14_button")
 expand_mode = 1
 
-[node name="Label" type="Label" parent="UpgradeColumns/TierIColumn/Margin/Content/Header"]
+[node name="Label" type="Label" parent="UpgradeColumns/TierIColumn/Margin/Content/Header" unique_id=69601219]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -621,37 +622,37 @@ text = "TIER I  -  SKIFF"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="RiggingI" parent="UpgradeColumns/TierIColumn/Margin/Content" instance=ExtResource("2_card")]
+[node name="RiggingI" parent="UpgradeColumns/TierIColumn/Margin/Content" unique_id=359783589 instance=ExtResource("2_card")]
 layout_mode = 2
 node_data = ExtResource("6_rig1")
 
-[node name="ArmamentI" parent="UpgradeColumns/TierIColumn/Margin/Content" instance=ExtResource("2_card")]
+[node name="ArmamentI" parent="UpgradeColumns/TierIColumn/Margin/Content" unique_id=1379490818 instance=ExtResource("2_card")]
 layout_mode = 2
 node_data = ExtResource("9_arm1")
 
-[node name="HullI" parent="UpgradeColumns/TierIColumn/Margin/Content" instance=ExtResource("2_card")]
+[node name="HullI" parent="UpgradeColumns/TierIColumn/Margin/Content" unique_id=1782063443 instance=ExtResource("2_card")]
 layout_mode = 2
 node_data = ExtResource("3_hull1")
 
-[node name="TierIIColumn" type="PanelContainer" parent="UpgradeColumns"]
+[node name="TierIIColumn" type="PanelContainer" parent="UpgradeColumns" unique_id=1478523576]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(438, 884)
 layout_mode = 2
 theme_override_styles/panel = SubResource("Style_column")
 
-[node name="Margin" type="MarginContainer" parent="UpgradeColumns/TierIIColumn"]
+[node name="Margin" type="MarginContainer" parent="UpgradeColumns/TierIIColumn" unique_id=691733163]
 layout_mode = 2
 theme_override_constants/margin_left = 15
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 15
 theme_override_constants/margin_bottom = 16
 
-[node name="Content" type="VBoxContainer" parent="UpgradeColumns/TierIIColumn/Margin"]
+[node name="Content" type="VBoxContainer" parent="UpgradeColumns/TierIIColumn/Margin" unique_id=491028912]
 layout_mode = 2
 theme_override_constants/separation = 9
 alignment = 1
 
-[node name="Header" type="TextureRect" parent="UpgradeColumns/TierIIColumn/Margin/Content"]
+[node name="Header" type="TextureRect" parent="UpgradeColumns/TierIIColumn/Margin/Content" unique_id=2139498468]
 texture_filter = 1
 custom_minimum_size = Vector2(406, 86)
 layout_mode = 2
@@ -659,7 +660,7 @@ mouse_filter = 2
 texture = ExtResource("14_button")
 expand_mode = 1
 
-[node name="Label" type="Label" parent="UpgradeColumns/TierIIColumn/Margin/Content/Header"]
+[node name="Label" type="Label" parent="UpgradeColumns/TierIIColumn/Margin/Content/Header" unique_id=583003613]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -674,37 +675,37 @@ text = "TIER II  -  SCHOONER"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="RiggingII" parent="UpgradeColumns/TierIIColumn/Margin/Content" instance=ExtResource("2_card")]
+[node name="RiggingII" parent="UpgradeColumns/TierIIColumn/Margin/Content" unique_id=397164765 instance=ExtResource("2_card")]
 layout_mode = 2
 node_data = ExtResource("7_rig2")
 
-[node name="ArmamentII" parent="UpgradeColumns/TierIIColumn/Margin/Content" instance=ExtResource("2_card")]
+[node name="ArmamentII" parent="UpgradeColumns/TierIIColumn/Margin/Content" unique_id=791696797 instance=ExtResource("2_card")]
 layout_mode = 2
 node_data = ExtResource("10_arm2")
 
-[node name="HullII" parent="UpgradeColumns/TierIIColumn/Margin/Content" instance=ExtResource("2_card")]
+[node name="HullII" parent="UpgradeColumns/TierIIColumn/Margin/Content" unique_id=1716248103 instance=ExtResource("2_card")]
 layout_mode = 2
 node_data = ExtResource("4_hull2")
 
-[node name="TierIIIColumn" type="PanelContainer" parent="UpgradeColumns"]
+[node name="TierIIIColumn" type="PanelContainer" parent="UpgradeColumns" unique_id=1910071621]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(438, 884)
 layout_mode = 2
 theme_override_styles/panel = SubResource("Style_column")
 
-[node name="Margin" type="MarginContainer" parent="UpgradeColumns/TierIIIColumn"]
+[node name="Margin" type="MarginContainer" parent="UpgradeColumns/TierIIIColumn" unique_id=1959460898]
 layout_mode = 2
 theme_override_constants/margin_left = 15
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 15
 theme_override_constants/margin_bottom = 16
 
-[node name="Content" type="VBoxContainer" parent="UpgradeColumns/TierIIIColumn/Margin"]
+[node name="Content" type="VBoxContainer" parent="UpgradeColumns/TierIIIColumn/Margin" unique_id=1532034166]
 layout_mode = 2
 theme_override_constants/separation = 9
 alignment = 1
 
-[node name="Header" type="TextureRect" parent="UpgradeColumns/TierIIIColumn/Margin/Content"]
+[node name="Header" type="TextureRect" parent="UpgradeColumns/TierIIIColumn/Margin/Content" unique_id=93700065]
 texture_filter = 1
 custom_minimum_size = Vector2(406, 86)
 layout_mode = 2
@@ -712,7 +713,7 @@ mouse_filter = 2
 texture = ExtResource("14_button")
 expand_mode = 1
 
-[node name="Label" type="Label" parent="UpgradeColumns/TierIIIColumn/Margin/Content/Header"]
+[node name="Label" type="Label" parent="UpgradeColumns/TierIIIColumn/Margin/Content/Header" unique_id=208615297]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -727,14 +728,14 @@ text = "TIER III  -  GALLEON"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="RiggingIII" parent="UpgradeColumns/TierIIIColumn/Margin/Content" instance=ExtResource("2_card")]
+[node name="RiggingIII" parent="UpgradeColumns/TierIIIColumn/Margin/Content" unique_id=365194765 instance=ExtResource("2_card")]
 layout_mode = 2
 node_data = ExtResource("8_rig3")
 
-[node name="ArmamentIII" parent="UpgradeColumns/TierIIIColumn/Margin/Content" instance=ExtResource("2_card")]
+[node name="ArmamentIII" parent="UpgradeColumns/TierIIIColumn/Margin/Content" unique_id=919093155 instance=ExtResource("2_card")]
 layout_mode = 2
 node_data = ExtResource("11_arm3")
 
-[node name="HullIII" parent="UpgradeColumns/TierIIIColumn/Margin/Content" instance=ExtResource("2_card")]
+[node name="HullIII" parent="UpgradeColumns/TierIIIColumn/Margin/Content" unique_id=1979306918 instance=ExtResource("2_card")]
 layout_mode = 2
 node_data = ExtResource("5_hull3")

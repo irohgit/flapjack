@@ -19,11 +19,12 @@ func _ready() -> void:
 ## Fades to black, swaps the scene, then fades back in.
 func change_scene(path: String, out_time := 0.5, hold := 0.15, in_time := 0.6) -> void:
 	await fade_out(out_time)
+	if CutsceneManager.is_playing():
+		CutsceneManager.cancel()
 	get_tree().change_scene_to_file(path)
 	await get_tree().process_frame
 	await get_tree().create_timer(hold).timeout
 	await fade_in(in_time)
-
 
 func fade_out(duration := 0.5) -> void:
 	_rect.visible = true

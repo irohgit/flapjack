@@ -13,7 +13,7 @@
 script = ExtResource("1_enemy")
 enemy_name = "Voodoom"
 is_boss = true
-health = 250
+health = 50
 move_speed = 100.0
 texture = ExtResource("3_texture")
 visual_scale = 0.2

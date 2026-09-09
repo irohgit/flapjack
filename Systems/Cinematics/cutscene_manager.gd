@@ -15,7 +15,7 @@ var _saved_db: Dictionary = {}
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	layer = 100
-
+	GameEvents.player_died.connect(_on_player_died)
 
 # Deadline guard. Re-asserts the freeze if any other system unpauses the tree
 # while a cutscene is on screen. Revisit after submission: the correct fix is a
@@ -24,13 +24,18 @@ func _process(_delta: float) -> void:
 	if _frozen and not get_tree().paused:
 		push_warning("Something unpaused the tree during a cutscene")
 		get_tree().paused = true
-
-
+	if _busy and get_tree().current_scene != null and get_tree().current_scene.name == "Dock":
+		print("[CUTSCENE] still playing on the dock, this is the bug")
+	
 func is_playing() -> bool:
 	return _busy
 
-
+func _on_player_died(_retry_scene_path: String) -> void:
+	cancel()
+	
 func play(scene: PackedScene) -> void:
+	print("[CUTSCENE] play called, scene = ", scene.resource_path)
+	print_stack()
 	if scene == null:
 		push_error("CutsceneManager.play called with a null scene")
 		return
@@ -117,3 +122,19 @@ func _dump_players(node: Node) -> void:
 		])
 	for child: Node in node.get_children():
 		_dump_players(child)
+
+## Tears down a cutscene that was interrupted, usually by death or a scene
+## change. Restores the tree, the audio buses and the busy flag.
+func cancel() -> void:
+	print("[CUTSCENE] cancel called, busy was ", _busy, " current = ", _current)
+	if not _busy:
+		return
+	if _current != null:
+		_current.queue_free()
+		_current = null
+	_frozen = false
+	get_tree().paused = false
+	Audio.set_world_paused(false)
+	await _fade_buses(0.0)
+	_busy = false
+	cutscene_finished.emit()

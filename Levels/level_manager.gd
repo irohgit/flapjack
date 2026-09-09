@@ -19,6 +19,9 @@ signal sequence_completed
 @export var entry_distance := 700.0
 @export var entry_time := 1.4
 
+var _plan_cancelled := false #Stops the level manager from running as a coroutine
+
+
 func run_generated_stage() -> bool:
 	Audio.play_music(stage_music, stage_music_db, music_fade_in)
 	
@@ -43,14 +46,28 @@ func run_generated_stage() -> bool:
 
 
 func run_plan(plan: Array[GeneratedEncounter]) -> void:
+	_plan_cancelled = false
+	if not GameEvents.player_died.is_connected(_on_player_died):
+		GameEvents.player_died.connect(_on_player_died)
+
 	for encounter: GeneratedEncounter in plan:
+		if _plan_cancelled:
+			return
 		await wait_until(func() -> bool:
 			return scroll_director.has_reached_y(encounter.trigger_position.y)
 		)
+		# Checked again, because the cancel usually lands during that wait.
+		if _plan_cancelled:
+			return
 		await run_encounter(encounter)
 
-
+func _on_player_died(_retry_scene_path: String) -> void:
+	_plan_cancelled = true
+	print("[PLAN] cancelled")
+	
 func run_encounter(encounter: GeneratedEncounter) -> void:
+	if _plan_cancelled:
+		return
 	_spawn_gin_barrels(encounter) #Floats barrels down
 	match encounter.type:
 		GeneratedEncounter.Type.NORMAL:
@@ -121,12 +138,12 @@ func run_finale() -> bool:
 	add_child(instance)
 	return true
 
-
 # Pause the level script until an ordinary boolean expression becomes true.
+# Bails out if the run is cancelled, so a dead player does not leave a coroutine
+# spinning against a condition that can never be satisfied honestly.
 func wait_until(condition: Callable) -> void:
-	while is_inside_tree() and not condition.call():
+	while is_inside_tree() and not _plan_cancelled and not condition.call():
 		await get_tree().process_frame
-
 func _spawn_gin_barrels(encounter: GeneratedEncounter) -> void:
 	for barrel_data: DestructibleData in encounter.gin_barrels:
 		GameEvents.gin_requested.emit(GinSpawner.Entry.FLOAT_DOWN, encounter.spawn_position, barrel_data)
