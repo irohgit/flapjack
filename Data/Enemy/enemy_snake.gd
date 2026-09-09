@@ -4,8 +4,12 @@ extends Enemy
 ## Melee chaser. Idles until the player enters its detection radius, then
 ## beelines for them.
 
-const ATTACK_STUN_TIME := 0.5
-const CHASE_TINT := Color(1.0, 0.55, 0.55)
+const ATTACK_STUN_TIME := 1
+## "Jump forward" on spotting the player: a brief burst of extra speed
+## toward them, not an actual jump - just move_toward() at a higher speed
+## for as long as the Attack animation plays, with the animation itself
+## selling the lunge.
+const LUNGE_SPEED_MULTIPLIER := 2
 
 @export var patrol_distance := 150.0
 
@@ -15,6 +19,7 @@ const CHASE_TINT := Color(1.0, 0.55, 0.55)
 var _chasing := false
 var _target: Node2D = null
 var _stunned := false
+var _lunging := false
 
 var _spawn_position := Vector2.ZERO
 var _patrol_direction := 1.0
@@ -51,7 +56,22 @@ func _on_detection_area_entered(area: Area2D) -> void:
 		return
 	_chasing = true
 	_target = area
-	_animated_sprite.modulate = CHASE_TINT
+	_start_lunge()
+
+
+func _start_lunge() -> void:
+	_lunging = true
+	_animated_sprite.play(&"Attack")
+	# Tied to the animation's own length rather than a fixed timer, so the
+	# lunge never cuts the Attack animation short or outlasts it.
+	await _animated_sprite.animation_finished
+	_on_lunge_ended()
+
+
+func _on_lunge_ended() -> void:
+	_lunging = false
+	if _chasing:
+		_animated_sprite.play(&"Idle")
 
 
 func _on_detection_area_exited(area: Area2D) -> void:
@@ -76,7 +96,12 @@ func _on_player_contact(area: Area2D) -> void:
 
 func _on_attack_stun_ended() -> void:
 	_stunned = false
-	_stop_chasing()
+	# _target already goes null the moment the player leaves DetectionRadius
+	# (see _on_detection_area_exited), so if it's still set here they never
+	# left during the stun - keep chasing instead of dropping to patrol just
+	# because the attack finished.
+	if _target == null or not is_instance_valid(_target):
+		_stop_chasing()
 	_animated_sprite.play(&"Idle")
 
 func _physics_process(delta: float) -> void:
@@ -96,8 +121,11 @@ func _move(delta: float, speed: float) -> void:
 	if _chasing:
 		if _target == null or not is_instance_valid(_target):
 			return
-		_face_toward(_target.global_position.x)
-		global_position = global_position.move_toward(_target.global_position, speed * delta)
+		var to_target := _target.global_position - global_position
+		if not to_target.is_zero_approx():
+			_face_direction(to_target.normalized())
+		var chase_speed := speed * LUNGE_SPEED_MULTIPLIER if _lunging else speed
+		global_position = global_position.move_toward(_target.global_position, chase_speed * delta)
 		return
 
 	# Patrol left and right around the spawn point until the chase triggers.
@@ -109,13 +137,16 @@ func _move(delta: float, speed: float) -> void:
 
 	var patrol_offset := Vector2(patrol_distance * _patrol_direction, 0.0)
 	var target_position := _spawn_position + patrol_offset
-	_face_toward(target_position.x)
+	_face_direction(Vector2.RIGHT if target_position.x > global_position.x else Vector2.LEFT)
 	global_position = global_position.move_toward(target_position, speed * delta)
 
 	if global_position.is_equal_approx(target_position):
 		_patrol_direction *= -1.0
 
 
-# Sprite faces left by default, so flip_h is true only when moving right.
-func _face_toward(x_position: float) -> void:
-	_animated_sprite.flip_h = x_position > global_position.x
+# The art is drawn facing up (north) by default, same convention as
+# Projectile.gd, so aligning it to a direction needs the same +90 degree
+# correction: rotation 0 already points up, and Vector2.RIGHT.angle() is 0,
+# so facing right needs a quarter turn added.
+func _face_direction(direction: Vector2) -> void:
+	_animated_sprite.rotation = direction.angle() + PI / 2.0
