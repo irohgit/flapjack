@@ -10,6 +10,10 @@ extends EnemyDropSourceData
 @export var move_speed := 0.0
 @export var texture: Texture2D
 @export var visual_scale := 1.0 # Sprite scale, so one texture can serve small and large variants.
+## For AnimatedSprite2D-based enemies (e.g. EnemyFrog). Must contain
+## animations named exactly "Idle", "Jump", and "Attack" - the script
+## selects them by those names, not by content.
+@export var sprite_frames: SpriteFrames
 @export var projectile_scene: PackedScene
 @export var ammo: ProjectileData
 

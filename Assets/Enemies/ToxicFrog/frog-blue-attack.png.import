@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b834aqwbt1eme"
-path="res://.godot/imported/snake.png-a12ef811938da140accdc2cfd5abfb73.ctex"
+uid="uid://byegj70soam5a"
+path="res://.godot/imported/frog-blue-attack.png-78a309d5c202cb931d66d3192af3d03b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Enemies/snake.png"
-dest_files=["res://.godot/imported/snake.png-a12ef811938da140accdc2cfd5abfb73.ctex"]
+source_file="res://Assets/Enemies/ToxicFrog/frog-blue-attack.png"
+dest_files=["res://.godot/imported/frog-blue-attack.png-78a309d5c202cb931d66d3192af3d03b.ctex"]
 
 [params]
 

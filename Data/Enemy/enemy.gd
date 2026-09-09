@@ -8,9 +8,14 @@ extends Area2D
 @export var min_interval := 2.0
 @export var max_interval := 5.0
 
-@onready var _health: HealthComponent = $HealthComponent
-@onready var _sprite: Sprite2D = $Sprite2D
-@onready var _status_effects: StatusEffectComponent = $StatusEffectComponent
+## get_node_or_null, not $Path: @onready resolves for the whole inheritance
+## chain regardless of whether a subclass's _ready() calls super() - so a
+## variant with no HealthComponent/Sprite2D/StatusEffectComponent (e.g. an
+## AnimatedSprite2D-based enemy, or one that can't take damage) would
+## otherwise crash here before its own _ready() ever runs.
+@onready var _health: HealthComponent = get_node_or_null("HealthComponent")
+@onready var _sprite: Sprite2D = get_node_or_null("Sprite2D")
+@onready var _status_effects: StatusEffectComponent = get_node_or_null("StatusEffectComponent")
 
 var _fire_timer := 0.0
 
