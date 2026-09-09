@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ku32goopacxa" path="res://Systems/Cinematics/cutscene_player.gd" id="1_s7cop"]
 [ext_resource type="Script" uid="uid://3ke20rwguryo" path="res://Cinematics/cutscene_line.gd" id="2_0mvit"]
+[ext_resource type="SpriteFrames" uid="uid://bfpmsi10fv0m1" path="res://Assets/Cinematics/SpriteFrames/savingvinny.tres" id="2_1mr00"]
 [ext_resource type="Resource" uid="uid://drjormnd6a1en" path="res://Cinematics/SavingVinny/Lines/01_open.tres" id="3_8vlyk"]
 [ext_resource type="Resource" uid="uid://bc61o8uc7o0bi" path="res://Cinematics/SavingVinny/Lines/04_wide.tres" id="4_1mr00"]
 [ext_resource type="Resource" uid="uid://dgmrpltptt5f" path="res://Cinematics/SavingVinny/Lines/05_vinny_payment.tres" id="7_b6fj0"]
@@ -15,7 +16,6 @@
 [ext_resource type="Resource" uid="uid://dkehav4kvkb6m" path="res://Cinematics/SavingVinny/Lines/16_crowsnest.tres" id="18_mjv2e"]
 [ext_resource type="Resource" uid="uid://b3dvl4vqc7ns8" path="res://Cinematics/SavingVinny/Lines/17_captain_tieup.tres" id="19_f4ini"]
 [ext_resource type="Resource" uid="uid://bt8xf44k808ca" path="res://Cinematics/SavingVinny/Lines/18_return_split.tres" id="20_puyer"]
-[ext_resource type="Resource" uid="uid://baxpu1gb85u0v" path="res://Cinematics/SavingVinny/Lines/19_jack_sailing.tres" id="21_uc7be"]
 [ext_resource type="Shader" uid="uid://gicvlvlbijni" path="res://Cinematics/blur.gdshader" id="22_sy76b"]
 [ext_resource type="FontFile" uid="uid://cb51p8cvaifq3" path="res://Assets/Fonts/Montserrat/static/Montserrat-ExtraBold.ttf" id="24_sy76b"]
 [ext_resource type="FontFile" uid="uid://bocifqpdtmlvt" path="res://Assets/Fonts/MontagnaLTD.ttf" id="25_kdtkl"]
@@ -132,7 +132,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_s7cop")
-lines = Array[ExtResource("2_0mvit")]([ExtResource("3_8vlyk"), ExtResource("4_1mr00"), ExtResource("7_b6fj0"), ExtResource("8_qmnhl"), ExtResource("9_hqnsc"), ExtResource("10_7yfy7"), ExtResource("13_mrwvf"), ExtResource("14_8j3bx"), ExtResource("15_lt6up"), ExtResource("16_4gymu"), ExtResource("18_mjv2e"), ExtResource("19_f4ini"), ExtResource("20_puyer"), ExtResource("21_uc7be")])
+stage_frames = ExtResource("2_1mr00")
+lines = Array[ExtResource("2_0mvit")]([ExtResource("3_8vlyk"), ExtResource("4_1mr00"), ExtResource("7_b6fj0"), ExtResource("8_qmnhl"), ExtResource("9_hqnsc"), ExtResource("10_7yfy7"), ExtResource("13_mrwvf"), ExtResource("14_8j3bx"), ExtResource("15_lt6up"), ExtResource("16_4gymu"), ExtResource("18_mjv2e"), ExtResource("19_f4ini"), ExtResource("20_puyer")])
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=44340129]
 libraries/ = SubResource("AnimationLibrary_s7cop")

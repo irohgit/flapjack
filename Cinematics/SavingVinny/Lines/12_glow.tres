@@ -1,11 +1,10 @@
 [gd_resource type="Resource" script_class="CutsceneLine" format=3 uid="uid://cfnwa132qalxn"]
 
 [ext_resource type="Script" uid="uid://3ke20rwguryo" path="res://Cinematics/cutscene_line.gd" id="1_c5leh"]
-[ext_resource type="Texture2D" uid="uid://ccklr5j58mrly" path="res://Assets/Cinematics/VINNY_4_1080p.jpg" id="2_4mflb"]
 
 [resource]
 script = ExtResource("1_c5leh")
 speaker = "Vinny"
 text = "HAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 layout = 2
-stage_image = ExtResource("2_4mflb")
+stage_animation = &"scene05"

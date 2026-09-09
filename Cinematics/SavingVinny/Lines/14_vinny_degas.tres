@@ -9,3 +9,4 @@ speaker = "Vinny"
 text = "...SHIT I brought the DEGAS Potion."
 layout = 2
 stage_image = ExtResource("2_42kfc")
+stage_animation = &"scene07"

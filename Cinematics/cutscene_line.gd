@@ -12,6 +12,8 @@ enum Layout { KEEP, SPLIT, FULL, OVERLAY}
 @export var layout: Layout = Layout.KEEP
 @export var left_portrait: Texture2D
 @export var stage_image: Texture2D
+@export var stage_frames: SpriteFrames
+@export var stage_animation: StringName = &""
 
 @export_group("Visuals")
 @export var animation: StringName = &""

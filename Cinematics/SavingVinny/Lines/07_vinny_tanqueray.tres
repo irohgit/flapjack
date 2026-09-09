@@ -1,11 +1,10 @@
 [gd_resource type="Resource" script_class="CutsceneLine" format=3 uid="uid://c3lo5ecvx2w13"]
 
 [ext_resource type="Script" uid="uid://3ke20rwguryo" path="res://Cinematics/cutscene_line.gd" id="1_131ob"]
-[ext_resource type="Texture2D" uid="uid://cnrdxkqjkjbpy" path="res://Assets/Cinematics/VINNY_2_1080p.jpg" id="2_xa7el"]
 
 [resource]
 script = ExtResource("1_131ob")
 speaker = "Vinny"
 text = "I may not look intimidating. But I warn you against ever crossing a deal with a Tanqueray."
 layout = 2
-stage_image = ExtResource("2_xa7el")
+stage_animation = &"scene03"

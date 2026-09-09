@@ -1,13 +1,12 @@
 [gd_resource type="Resource" script_class="CutsceneLine" format=3 uid="uid://drjormnd6a1en"]
 
 [ext_resource type="Script" uid="uid://3ke20rwguryo" path="res://Cinematics/cutscene_line.gd" id="1_script"]
-[ext_resource type="Texture2D" uid="uid://d2xdvph88spla" path="res://Assets/Cinematics/jack_squint_full_1080p.jpg" id="2_f35f4"]
 
 [resource]
 script = ExtResource("1_script")
 speaker = "Jack"
 layout = 2
-stage_image = ExtResource("2_f35f4")
+stage_animation = &"scene01"
 hold_time = 1.5
 blur_from = 80.0
 flash_enabled = true

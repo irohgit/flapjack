@@ -4,6 +4,7 @@ extends Control
 signal finished
 
 @onready var _flash: ColorRect = $Flash
+@export var stage_frames: SpriteFrames
 @export var lines: Array[CutsceneLine] = []
 @export var skippable := true
 @export var skip_lockout := 0.5
@@ -26,6 +27,8 @@ signal finished
 @onready var _dialogue_box: Control = $DialogueBox
 @onready var _anim: AnimationPlayer = $AnimationPlayer
 
+
+
 var _current_line: CutsceneLine = null
 var _vfx_tweens: Array[Tween] = []
 var _shader_tween: Tween = null
@@ -36,6 +39,9 @@ var _elapsed := 0.0
 var _advance := false
 var _skipping := false
 var _flash_tween: Tween = null
+var _stage_anim: StringName = &""
+var _anim_clock := 0.0
+var _stage_frames: SpriteFrames = null
 
 func _ready() -> void:
 	assert(_left != null, "LeftPortrait not found")
@@ -56,7 +62,18 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	_elapsed += delta
-
+	if _stage_anim == &"" or _stage_frames == null:
+		return
+	_anim_clock += delta
+	var count := _stage_frames.get_frame_count(_stage_anim)
+	if count <= 0:
+		return
+	var i := int(_anim_clock * _stage_frames.get_animation_speed(_stage_anim))
+	if _stage_frames.get_animation_loop(_stage_anim):
+		i = i % count
+	else:
+		i = mini(i, count - 1)
+	_stage_image.texture = _stage_frames.get_frame_texture(_stage_anim, i)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if _elapsed < skip_lockout:
@@ -96,9 +113,7 @@ func _play_line(line: CutsceneLine) -> void:
 	_apply_layout(line.layout)
 	if line.left_portrait != null:
 		_left.texture = line.left_portrait
-	if line.stage_image != null:
-		_stage_image.texture = line.stage_image
-
+	_apply_stage_visual(line)	
 	_apply_stage_shader(line)
 	_apply_motion(_left, line.left_motion)
 	_apply_motion(_stage_image, line.stage_motion)
@@ -360,8 +375,7 @@ func _snap_to_final_frame() -> void:
 		_apply_layout(line.layout)
 		if line.left_portrait != null:
 			_left.texture = line.left_portrait
-		if line.stage_image != null:
-			_stage_image.texture = line.stage_image
+		_apply_stage_visual(line)
 		_blur_target = (line.blur_to / 100.0) if line.use_blur else 0.0
 		_mask_target = line.mask_to if line.use_mask else 2.0
 
@@ -379,8 +393,7 @@ func _prime_first_beat() -> void:
 	_apply_layout(line.layout)
 	if line.left_portrait != null:
 		_left.texture = line.left_portrait
-	if line.stage_image != null:
-		_stage_image.texture = line.stage_image
+	_apply_stage_visual(line)
 	_dialogue_box.visible = false
 
 	var mat: ShaderMaterial = _stage_image.material as ShaderMaterial
@@ -436,3 +449,24 @@ func _kill_flash_tween() -> void:
 	if _flash_tween != null and _flash_tween.is_valid():
 		_flash_tween.kill()
 	_flash_tween = null
+
+# One owner for "what is the stage showing". An animation wins over a still,
+# blank means keep whatever is already up. A line may name its own
+# SpriteFrames, otherwise the player's is used.
+func _apply_stage_visual(line: CutsceneLine) -> void:
+	if line.stage_animation == &"":
+		if line.stage_image != null:
+			_stage_anim = &""
+			_stage_frames = null
+			_stage_image.texture = line.stage_image
+		return
+
+	var frames: SpriteFrames = line.stage_frames if line.stage_frames != null else stage_frames
+	if frames == null or not frames.has_animation(line.stage_animation):
+		push_warning("Stage animation '%s' not found in any assigned SpriteFrames" % line.stage_animation)
+		return
+
+	_stage_frames = frames
+	_stage_anim = line.stage_animation
+	_anim_clock = 0.0
+	_stage_image.texture = frames.get_frame_texture(_stage_anim, 0)
