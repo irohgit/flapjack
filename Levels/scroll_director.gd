@@ -21,6 +21,8 @@ func has_reached_y(y_position: float, tolerance: float = 0.5) -> bool:
 
 
 func change_move_speed(speed: float) -> void:
+	if not GameSettings.dev_mode_enabled:
+		return
 	scroll_speed = clampf(speed,50.0,1000.0)
 
 

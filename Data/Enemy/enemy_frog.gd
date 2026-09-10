@@ -6,7 +6,6 @@ const ATTACK_INTERVAL := 1.2
 const TONGUE_CONTACT_DELAY := 0.5
 
 @onready var _attack_zone: Area2D = $AttackZone
-@onready var _animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 var _target: Node2D = null
 var _attack_cooldown := 0.0

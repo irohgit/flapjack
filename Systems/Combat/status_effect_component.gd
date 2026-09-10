@@ -51,7 +51,8 @@ func apply_effect(effect: StatusEffectData) -> bool:
 		StatusEffectData.ReapplyPolicy.REFRESH:
 			active.data = copied_effect
 			active.remaining = copied_effect.duration
-			active.tick_timer = copied_effect.tick_interval
+			if not copied_effect.preserve_tick_on_refresh:
+				active.tick_timer = copied_effect.tick_interval
 
 		StatusEffectData.ReapplyPolicy.EXTEND:
 			active.remaining += copied_effect.duration

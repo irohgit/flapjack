@@ -1,6 +1,10 @@
 class_name Projectile
 extends Area2D
 
+signal bank_hit(world_position: Vector2)
+## Emitted once on gameplay destruction, before releasing carried enemies.
+signal expiring
+
 const GROUND_EFFECT_SCENE := preload("res://Actors/GroundEffects/ground_effect.tscn")
 
 @export var data: ProjectileData
@@ -26,6 +30,8 @@ var sprite_frames_override: SpriteFrames
 var animation_name_override: StringName = &"default"
 
 var pierce := 0
+var bank_bounces_remaining := 0
+var skewer: HarpoonSkewer
 
 var orbital_ricochet := false
 var boost_speed_multiplier := 1.0
@@ -41,10 +47,12 @@ var _status_effects: Array[StatusEffectData] = []
 var _is_destroying := false
 var _has_expire_position := false
 var _expire_position := Vector2.ZERO
+var _banks: BankPainter
 
 
 func _ready() -> void:
 	assert(data != null, "Projectile spawned with no ProjectileData assigned")
+	_banks = get_tree().get_first_node_in_group("banks") as BankPainter
 	for effect: StatusEffectData in data.status_effects:
 		add_status_effect(effect)
 	_apply_data()
@@ -58,7 +66,7 @@ func _ready() -> void:
 	_trail.top_level = true
 	_trail.clear_points()
 	if not _has_expire_position and data.expire_time > 0.0:
-		get_tree().create_timer(data.expire_time).timeout.connect(_on_expired)
+		get_tree().create_timer(data.expire_time, false).timeout.connect(_on_expired)
 	
 
 func _apply_data() -> void:
@@ -119,8 +127,15 @@ func set_expire_position(world_position: Vector2) -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if _is_destroying:
+		return
+
 	age_time += delta
+	var previous_position := global_position
 	_move(delta)
+	_resolve_bank_hits(previous_position)
+	if _is_destroying or is_queued_for_deletion():
+		return
 	_update_trail()
 
 	if (
@@ -128,6 +143,50 @@ func _physics_process(delta: float) -> void:
 		and global_position.distance_squared_to(_expire_position) <= 0.0001
 	):
 		destroy()
+
+
+func _resolve_bank_hits(previous_position: Vector2) -> void:
+	if not is_instance_valid(_banks):
+		return
+
+	var destination := global_position
+	while true:
+		var hit := _banks.get_bank_hit(previous_position, destination)
+		if hit.is_empty():
+			global_position = destination
+			return
+
+		global_position = previous_position.lerp(destination, hit["fraction"])
+		_update_trail()
+		Audio.play_sfx(data.impact_sound, -8.0)
+		bank_hit.emit(global_position)
+		_on_impact()
+		if _is_destroying or is_queued_for_deletion():
+			return
+		if bank_bounces_remaining <= 0:
+			destroy()
+			return
+
+		var normal: Vector2 = hit["normal"]
+		var incoming := previous_position.direction_to(destination)
+		if incoming.dot(normal) >= 0.0:
+			# A shot spawned inland or moving along the shore cannot reflect out.
+			destroy()
+			return
+
+		bank_bounces_remaining -= 1
+		# Reflect the incoming direction about the surface normal using a dot product.
+		direction = (incoming - 2.0 * incoming.dot(normal) * normal).normalized()
+		_update_rotation()
+		var remaining_distance := global_position.distance_to(destination)
+		var endpoint_distance := global_position.distance_to(_expire_position)
+		# Move just into water to avoid detecting this same contact again.
+		global_position += normal * 0.1
+		if _has_expire_position:
+			_expire_position = global_position + direction * endpoint_distance
+		previous_position = global_position
+		destination = global_position + direction * remaining_distance
+		# Spend the remaining movement this frame; each contact consumes a bounce.
 
 
 # Override for homing, arcing, spiralling.
@@ -148,11 +207,11 @@ func _move(delta: float) -> void:
 		if age_time >= 0.5:
 			_orbital_ricochet(delta)
 
-	var direction_angle := direction.angle()
-	_sprite.rotation = direction_angle + PI / 2.0
-	_animated_sprite.rotation = direction_angle
+	_update_rotation()
 
 	var movement := direction * data.speed * final_speed_boost * delta
+	if skewer != null:
+		movement *= skewer.get_speed_multiplier()
 	if _has_expire_position:
 		var distance_remaining := global_position.distance_to(_expire_position)
 		if movement.length() >= distance_remaining:
@@ -160,6 +219,12 @@ func _move(delta: float) -> void:
 			return
 
 	position += movement
+
+
+func _update_rotation() -> void:
+	var direction_angle := direction.angle()
+	_sprite.rotation = direction_angle + PI / 2.0
+	_animated_sprite.rotation = direction_angle
 
 
 func _chain_lightning() -> bool:
@@ -259,6 +324,8 @@ func _update_trail() -> void:
 func _on_area_entered(area: Area2D) -> void:
 	if _is_destroying:
 		return
+	if skewer != null and skewer.is_carrying(area):
+		return
 
 	Audio.play_sfx(data.impact_sound, -8.0)
 	var is_enemy := area.is_in_group("enemy")
@@ -273,6 +340,8 @@ func _on_area_entered(area: Area2D) -> void:
 			has_done_ricochet = true
 	if area.has_method("take_damage"):
 		area.take_damage(data.damage)
+	if skewer != null and is_enemy and is_instance_valid(area):
+		skewer.capture(area)
 	_on_impact()
 	
 	if pierce == 0:
@@ -294,6 +363,9 @@ func destroy(spawn_ground_effect := true) -> void:
 		return
 
 	_is_destroying = true
+	expiring.emit()
+	if skewer != null:
+		skewer.release_all()
 	if spawn_ground_effect:
 		_spawn_death_ground_effect()
 	queue_free()

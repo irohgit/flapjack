@@ -40,6 +40,8 @@ enum Target {
 ## SpriteFrames takes precedence over texture. With neither assigned, the area
 ## draws a tinted circle, which is handy while an effect is being prototyped.
 @export var texture: Texture2D
+## Optional palette/material override, applied only to this area's sprites.
+@export var sprite_material: Material
 @export var sprite_frames: SpriteFrames
 @export var animation_name: StringName = &"default"
 @export var tint := Color.WHITE

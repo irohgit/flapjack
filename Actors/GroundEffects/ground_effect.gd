@@ -83,6 +83,9 @@ func _configure_collision() -> void:
 func _configure_visual() -> void:
 	_sprite.visible = false
 	_animated_sprite.visible = false
+	if data.sprite_material != null:
+		_sprite.material = data.sprite_material
+		_animated_sprite.material = data.sprite_material
 
 	if data.sprite_frames != null:
 		_animated_sprite.visible = true

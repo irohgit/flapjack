@@ -1,7 +1,7 @@
 class_name SnakeSpawner
 extends Node2D
 
-## Spawns snake enemies infrequently as the level scrolls, 
+## Spawns snake enemies infrequently as the level scrolls,
 
 @export var snake_scene: PackedScene
 
