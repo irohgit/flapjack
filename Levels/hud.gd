@@ -50,6 +50,7 @@ func _ready() -> void:
 
 	call_deferred("_init_display_values")
 func _on_boss_name_changed(display_name: String) -> void:
+	print("[BOSS] hud received name '", display_name, "'")
 	_boss_name.text = display_name
 func _init_display_values() -> void:
 	var health = _player.get_health_component()

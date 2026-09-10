@@ -48,7 +48,7 @@ func _ready() -> void:
 	assert(bird_data != null, "Voodoo boss needs bird data")
 	
 	_health.health_changed.connect(_on_health_changed)
-	_on_health_changed(_health.current_health, _health.max_health)
+	announce_boss() #this also calls on health changed 
 
 
 func _physics_process(delta: float) -> void:
