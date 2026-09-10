@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cmsjswcf8ya1h"]
 
 [ext_resource type="Script" uid="uid://c8kbtx338gi0k" path="res://Systems/Cinematics/cutscene_manager.gd" id="1_k52tw"]
+[ext_resource type="Script" uid="uid://6ur0tpvvd2ay" path="res://Systems/Cinematics/letterbox.gd" id="2_h80hh"]
 
 [node name="CutsceneManager" type="CanvasLayer" unique_id=1384979210]
 process_mode = 3
@@ -14,3 +15,22 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("2_h80hh")
+
+[node name="TopBar" type="ColorRect" parent="Letterbox" unique_id=1920315485]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+grow_horizontal = 2
+color = Color(0, 0, 0, 1)
+
+[node name="BottomBar" type="ColorRect" parent="Letterbox" unique_id=1047710590]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0, 0, 0, 1)
