@@ -27,8 +27,7 @@ signal finished
 @export var fade_out_time := 0.6
 @export var fade_colour := Color.BLACK
 
-#const SKIP_HINT_SCENE := preload("res://UI/skip_hint.tscn")
-#var _skip_hint: SkipHint = null
+
 
 var _current_line: CutsceneLine = null
 var _vfx_tweens: Array[Tween] = []
@@ -56,10 +55,6 @@ func _ready() -> void:
 	assert(_advance_icon != null, "DialogueBox/AdvanceIcon not found")
 	
 	
-	#Setup Skip
-	#_skip_hint = SKIP_HINT_SCENE.instantiate()
-	#add_child(_skip_hint)
-	#move_child(_skip_hint, _flash.get_index())
 	_prime_first_beat()
 
 	# Anchors have not resolved on the first frame, so sizes are still zero.
@@ -95,11 +90,10 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _play_all() -> void:
-	await _play_clip(&"letterbox_in", true)
+	#await _play_clip(&"letterbox_in", true)
 	await _fade_in()
 	if skippable:
 		CutsceneManager.show_skip_hint()
-
 		
 	for line: CutsceneLine in lines:
 		if _skipping:
@@ -107,14 +101,12 @@ func _play_all() -> void:
 		await _play_line(line)
 
 	CutsceneManager.hide_skip_hint()
+	
 	if _skipping:
 		_snap_to_final_frame()
 
-	
 	await _fade_out()
-	
-	await _play_clip(&"letterbox_out", true)
-	
+	#await _play_clip(&"letterbox_out", true)
 	finished.emit()
 
 
@@ -386,7 +378,7 @@ func _snap_to_final_frame() -> void: # A skip should still end on the picture th
 	_dialogue_box.visible = false
 	
 
-func _prime_first_beat() -> void: # The first beat does not run until after letterbox_in, so without this the opening frames show the material's editor defaults: open and crisp.
+func _prime_first_beat() -> void: # The first beat does not run until after the fade in, so without this the opening frames show the material's editor defaults: open and crisp.
 	if lines.is_empty() or lines[0] == null:
 		return
 

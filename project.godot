@@ -28,9 +28,9 @@ Audio="*uid://d316g6l1ugkiy"
 MetaProgress="*uid://c0tuwxifuhojx"
 NewAutoloadScript="*uid://2bn2f0nlte4k"
 GlobalPlayer="*uid://cna1d67vuylas"
-CutsceneManager="*uid://c8kbtx338gi0k"
 InputDevice="*uid://7q7taspkok7q"
 Transition="*uid://c1057w6elsfc6"
+CutsceneManager="*uid://cmsjswcf8ya1h"
 
 [display]
 

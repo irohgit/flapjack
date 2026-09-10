@@ -24,86 +24,6 @@
 
 [sub_resource type="Animation" id="Animation_0mvit"]
 length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Letterbox/TopBar:offset_bottom")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Letterbox/BottomBar:offset_top")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-
-[sub_resource type="Animation" id="Animation_g30i8"]
-resource_name = "letterbox_in"
-length = 0.6
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Letterbox/TopBar:offset_bottom")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.6),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 110.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Letterbox/BottomBar:offset_top")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.6),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, -110.0]
-}
-
-[sub_resource type="Animation" id="Animation_dppea"]
-resource_name = "letterbox_out"
-length = 0.6
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Letterbox/TopBar:offset_bottom")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.6),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [110.0, 0.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Letterbox/BottomBar:offset_top")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.6),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [-110.0, 0.0]
-}
 
 [sub_resource type="Animation" id="Animation_mryr7"]
 resource_name = "savingvinny"
@@ -111,8 +31,6 @@ resource_name = "savingvinny"
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_s7cop"]
 _data = {
 &"RESET": SubResource("Animation_0mvit"),
-&"letterbox_in": SubResource("Animation_g30i8"),
-&"letterbox_out": SubResource("Animation_dppea"),
 &"savingvinny": SubResource("Animation_mryr7")
 }
 
@@ -175,32 +93,6 @@ offset_right = 40.0
 offset_bottom = 40.0
 expand_mode = 1
 stretch_mode = 5
-
-[node name="Letterbox" type="Control" parent="." unique_id=1209601599]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="TopBar" type="ColorRect" parent="Letterbox" unique_id=420977678]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-grow_horizontal = 2
-color = Color(0, 0, 0, 1)
-
-[node name="BottomBar" type="ColorRect" parent="Letterbox" unique_id=948243650]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 0
-color = Color(0, 0, 0, 1)
 
 [node name="Flash" type="ColorRect" parent="." unique_id=2067427494]
 layout_mode = 0

@@ -17,6 +17,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("2_h80hh")
+bar_height = 110.0
 
 [node name="TopBar" type="ColorRect" parent="Letterbox" unique_id=1920315485]
 layout_mode = 1

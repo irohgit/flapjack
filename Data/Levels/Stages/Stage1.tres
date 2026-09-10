@@ -50,7 +50,7 @@ metadata/_custom_type_script = "uid://dgn1ppeend4i1"
 
 [sub_resource type="Resource" id="Encounter_05_mixed_fleet"]
 script = ExtResource("6_encounter")
-distance_after_previous = 1000.0
+distance_after_previous = 600.0
 min_pack_size = 4
 enemy_pool = Array[ExtResource("1_enemy")]([SubResource("Enemy_bulwark"), SubResource("Enemy_hunter_mid")])
 formation_pool = Array[ExtResource("3_formation")]([SubResource("Formation_line"), SubResource("Formation_v")])
@@ -59,7 +59,7 @@ metadata/_custom_type_script = "uid://cytvv5o32ru6e"
 [sub_resource type="Resource" id="Encounter_01_intro_line"]
 script = ExtResource("6_encounter")
 type = 2
-distance_after_previous = 1000.0
+distance_after_previous = 100.0
 max_pack_size = 3
 enemy_pool = Array[ExtResource("1_enemy")]([SubResource("Enemy_bulwark")])
 formation_pool = Array[ExtResource("3_formation")]([SubResource("Formation_line")])

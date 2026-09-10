@@ -2,13 +2,14 @@ extends CanvasLayer
 
 signal cutscene_finished
 
-const FADE_TIME := 0.25
-const DUCKED_DB := -60.0
 const FADED_BUSES: Array[String] = ["Music", "SFX"]
 
-## How far the world slows before the freeze, and how long the ramp takes.
-const SLOW_SCALE := 0.25
-const SLOW_TIME := 0.35
+@export_group("Transition")
+
+@export_range(0.05, 1.0, 0.05) var slow_scale := 0.1 ## How far the world slows before the freeze. 1.0 is normal speed.
+@export_range(0.0, 3.0, 0.05) var slow_time := 1.75 ## How long the world takes to reach that speed.
+@export_range(0.0, 3.0, 0.05) var fade_time := 1.0## How long the audio duck takes, in and out.
+@export_range(-60.0, 0.0, 1.0) var ducked_db := -60.0 ## How far the world's audio drops while a cutscene plays.
 
 const SKIP_HINT_SCENE := preload("res://UI/skip_hint.tscn")
 
@@ -59,12 +60,12 @@ func play(scene: PackedScene) -> void:
 
 	_busy = true
 
-	await _ramp_time(SLOW_SCALE)
+	await _ramp_time(slow_scale)
 	await _letterbox.close_bars()
 
 	# Duck before the freeze. A tween cannot tick in a paused tree, and a hard
 	# pause cuts audio mid-sample, which is a click rather than a stop.
-	await _fade_buses(DUCKED_DB)
+	await _fade_buses(ducked_db)
 
 	Audio.set_world_paused(true)
 	get_tree().paused = true
@@ -141,7 +142,7 @@ func _ramp_time(target: float) -> void:
 	tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	tween.tween_method(
 		func(value: float) -> void: Engine.time_scale = value,
-		Engine.time_scale, target, SLOW_TIME
+		Engine.time_scale, target, slow_time
 	)
 	await tween.finished
 
@@ -151,7 +152,7 @@ func _on_player_died(_retry_scene_path: String) -> void:
 
 
 func _fade_buses(target_db: float) -> void:
-	var tween := create_tween().set_parallel(true)
+	var tween := create_tween().set_parallel(true).set_ignore_time_scale(true)
 
 	for bus_name: String in FADED_BUSES:
 		var index: int = AudioServer.get_bus_index(bus_name)
@@ -167,7 +168,7 @@ func _fade_buses(target_db: float) -> void:
 			func(value: float) -> void: AudioServer.set_bus_volume_db(index, value),
 			AudioServer.get_bus_volume_db(index),
 			to_db,
-			FADE_TIME
+			fade_time
 		)
 
 	await tween.finished
