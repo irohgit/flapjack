@@ -22,3 +22,5 @@ var merchant_scene: PackedScene
 var midboss_scene: PackedScene #required for midboss
 var midboss_intro: PackedScene #optional for midboss
 var midboss_outro: PackedScene #optional for midboss
+var midboss_reward_scene: PackedScene = null
+var midboss_reward_potion: PotionData = null

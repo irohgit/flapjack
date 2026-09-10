@@ -169,27 +169,34 @@ func _generate_encounter(
 			encounter.type = GeneratedEncounter.Type.SPECIAL
 			encounter.special_scene = _choose_special_encounter(encounter_data.special_encounter_pool)
 			encounter.spawn_from_right = rng.randi_range(0, 1) == 1
-			
+
 		EncounterData.Type.CUTSCENE:
 			encounter.type = GeneratedEncounter.Type.CUTSCENE
 			encounter.spawn_position = Vector2(centre_x, anchor_y)
 			encounter.cutscene_scene = encounter_data.cutscene_scene
+
 		EncounterData.Type.MERCHANT:
 			encounter.type = GeneratedEncounter.Type.MERCHANT
 			encounter.spawn_position = Vector2(centre_x, anchor_y)
 			encounter.merchant_scene = encounter_data.merchant_scene
 			encounter.spawn_from_right = rng.randi_range(0, 1) == 1
+
 		EncounterData.Type.MIDBOSS:
 			encounter.type = GeneratedEncounter.Type.MIDBOSS
 			encounter.spawn_position = Vector2(centre_x, anchor_y)
 			encounter.midboss_scene = encounter_data.midboss_scene
 			encounter.midboss_intro = encounter_data.midboss_intro
 			encounter.midboss_outro = encounter_data.midboss_outro
+			encounter.midboss_reward_scene = encounter_data.midboss_reward_scene
+			encounter.midboss_reward_potion = encounter_data.midboss_reward_potion
+
 		_:
 			return null
+
 	print("[ENCOUNTER] generated type = ", encounter.type)
 	return encounter
-
+	
+	
 func _has_valid_enemies(pool: Array[WeightedEnemyData]) -> bool:
 	for entry: WeightedEnemyData in pool:
 		if entry != null and entry.enemy != null and entry.weight > 0.0:

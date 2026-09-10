@@ -8,6 +8,8 @@ signal sequence_completed
 @export var level_generator: LevelGenerator
 @export var screen_encounter_parent: Node2D
 
+@export var potion_flourish_scene: PackedScene
+
 @export var stage_music: AudioStream
 @export_range(-40.0, 6.0, 0.5) var stage_music_db := -6.0
 @export_range(0.0, 8.0, 0.1) var music_fade_in := 2.0
@@ -25,7 +27,7 @@ var _plan_cancelled := false #Stops the level manager from running as a coroutin
 ## How far above the top of the view the boss appears before sailing in.
 ## Must stay below the boss's own activation_margin, or it spawns outside its
 ## movement gate and never arrives.
-@export var midboss_entry_lead := 200.0
+@export var midboss_entry_lead := 100.0
 
 func run_generated_stage() -> bool:
 	Audio.play_music(stage_music, stage_music_db, music_fade_in)
@@ -232,8 +234,11 @@ func run_merchant_encounter(encounter: GeneratedEncounter) -> void:
 		#return
 #
 	#scroll_director.resume() #Resume the scroll-director
+## A mid-boss halts the stage. Dialogue first, then the ship arrives as the
+## payoff, then the fight happens in one place. The reward drops where it died,
+## the outro plays once it is collected, and the stage resumes.
+## This is the only encounter type that blocks the plan on purpose.
 func run_midboss_encounter(encounter: GeneratedEncounter) -> void:
-	print("[MIDBOSS] start. scene=", encounter.midboss_scene, " intro=", encounter.midboss_intro, " outro=", encounter.midboss_outro)
 	if encounter.midboss_scene == null:
 		push_warning("Mid-boss encounter has no scene")
 		return
@@ -242,15 +247,10 @@ func run_midboss_encounter(encounter: GeneratedEncounter) -> void:
 		return
 
 	scroll_director.hold()
-	print("[MIDBOSS] held")
 
 	if encounter.midboss_intro != null:
-		print("[MIDBOSS] playing intro")
 		CutsceneManager.play(encounter.midboss_intro)
 		await CutsceneManager.cutscene_finished
-		print("[MIDBOSS] intro finished")
-	else:
-		print("[MIDBOSS] no intro assigned")
 	if _plan_cancelled:
 		return
 
@@ -260,10 +260,17 @@ func run_midboss_encounter(encounter: GeneratedEncounter) -> void:
 		scroll_director.resume()
 		return
 	_world.add_child(boss)
-	var rect:= Playarea.get_visible_world_rect()
-	boss.global_position = Vector2(encounter.spawn_position.x, rect.position.y - midboss_entry_lead) #place boss at the encounter's spawn position offset by lead
-	
-	#announce boss (show the health bar) once the boss is in view of the screen
+
+	# Spawn relative to the view, not the stage anchor. The rig is held, so an
+	# anchor hundreds of pixels ahead would never come into range.
+	var rect := Playarea.get_visible_world_rect()
+	boss.global_position = Vector2(
+		encounter.spawn_position.x,
+		rect.position.y - midboss_entry_lead
+	)
+
+	# The bar is part of the reveal, so it waits until the ship is actually
+	# inside the view rather than announcing from above the top edge.
 	var view := Playarea.get_visible_world_rect()
 	while is_instance_valid(boss) and not _plan_cancelled and not view.has_point(boss.global_position):
 		await get_tree().process_frame
@@ -272,13 +279,23 @@ func run_midboss_encounter(encounter: GeneratedEncounter) -> void:
 		return
 	if boss is Enemy:
 		(boss as Enemy).announce_boss()
-	
-	
-	print("[MIDBOSS] boss spawned at ", boss.global_position, " visible rect = ", Playarea.get_visible_world_rect())
 
+	# The fight. Track its position so the reward can launch from the wreck.
+	var death_position := boss.global_position
 	while is_instance_valid(boss) and not _plan_cancelled:
+		death_position = boss.global_position
 		await get_tree().process_frame
-	print("[MIDBOSS] fight over. cancelled = ", _plan_cancelled)
+	if _plan_cancelled:
+		return
+
+	# The reward owns its own beat and frees itself once collected.
+	if encounter.midboss_reward_scene != null:
+		var reward := encounter.midboss_reward_scene.instantiate() as Node2D
+		if reward != null:
+			_world.add_child(reward)
+			reward.global_position = death_position
+			while is_instance_valid(reward) and not _plan_cancelled:
+				await get_tree().process_frame
 	if _plan_cancelled:
 		return
 
@@ -288,9 +305,18 @@ func run_midboss_encounter(encounter: GeneratedEncounter) -> void:
 	if _plan_cancelled:
 		return
 
-	scroll_director.resume()
-	print("[MIDBOSS] resumed")
+	if encounter.midboss_reward_potion != null:
+		var player := get_tree().get_first_node_in_group("player") as Player
+		if player != null:
+			if potion_flourish_scene != null:
+				var flourish := potion_flourish_scene.instantiate() as PotionFlourish
+				add_child(flourish)
+				flourish.present(encounter.midboss_reward_potion.icon)
+				await flourish.finished
+				flourish.queue_free()
+			encounter.midboss_reward_potion.use_on(player)
 
+	scroll_director.resume()
 func play_entry() -> void:
 	if not entry_enabled:
 		return

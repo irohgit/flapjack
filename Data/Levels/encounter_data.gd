@@ -40,3 +40,5 @@ enum Type {
 @export var midboss_scene: PackedScene #required
 @export var midboss_intro: PackedScene #optional
 @export var midboss_outro: PackedScene #optional
+@export var midboss_reward_scene: PackedScene ## Spawned where the boss died. The encounter waits for it to free itself, so it owns the whole reward beat: arc, splash, and being collected.
+@export var midboss_reward_potion: PotionData ## Applied to the player after the outro. Vinny's armour potion.

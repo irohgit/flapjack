@@ -1,0 +1,153 @@
+[gd_scene format=3 uid="uid://bktpdwvxtsh2g"]
+
+[ext_resource type="Script" uid="uid://dnoae11v6gbnn" path="res://Actors/NPC/vinny_drop.gd" id="1_62k4b"]
+[ext_resource type="Texture2D" uid="uid://jytdtauush42" path="res://Assets/Characters/vinny_float_spritesheet_512x64.png" id="2_epjhp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_73ihm"]
+atlas = ExtResource("2_epjhp")
+region = Rect2(0, 0, 64, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gq728"]
+atlas = ExtResource("2_epjhp")
+region = Rect2(64, 0, 64, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ujbp6"]
+atlas = ExtResource("2_epjhp")
+region = Rect2(128, 0, 64, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8cb5o"]
+atlas = ExtResource("2_epjhp")
+region = Rect2(192, 0, 64, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iuh63"]
+atlas = ExtResource("2_epjhp")
+region = Rect2(256, 0, 64, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2vlvf"]
+atlas = ExtResource("2_epjhp")
+region = Rect2(320, 0, 64, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5nrpv"]
+atlas = ExtResource("2_epjhp")
+region = Rect2(384, 0, 64, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bqo0p"]
+atlas = ExtResource("2_epjhp")
+region = Rect2(448, 0, 64, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2g2db"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_73ihm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gq728")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ujbp6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8cb5o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iuh63")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2vlvf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5nrpv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bqo0p")
+}],
+"loop": 1,
+"name": &"floating",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_73ihm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gq728")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ujbp6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8cb5o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iuh63")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2vlvf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5nrpv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bqo0p")
+}],
+"loop": 1,
+"name": &"flying",
+"speed": 5.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_73ihm"]
+colors = PackedColorArray(0.17641962, 0.17641893, 0.17641881, 1, 0.17558163, 0.17558163, 0.17558163, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_epjhp"]
+gradient = SubResource("Gradient_73ihm")
+
+[sub_resource type="Curve" id="Curve_epjhp"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.2542373), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_epjhp"]
+curve = SubResource("Curve_epjhp")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_epjhp"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 6.0
+angle_min = -179.99998
+angle_max = 180.00002
+direction = Vector3(1, -1, 0)
+spread = 30.0
+initial_velocity_min = 20.0
+initial_velocity_max = 70.0
+gravity = Vector3(0, -50, 0)
+damping_min = 20.0
+damping_max = 40.0
+scale_min = 3.0
+scale_max = 7.0
+scale_curve = SubResource("CurveTexture_epjhp")
+color_ramp = SubResource("GradientTexture1D_epjhp")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5yy73"]
+radius = 150.0
+
+[node name="VinnyDrop" type="Node2D" unique_id=1209766955]
+script = ExtResource("1_62k4b")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1545448359]
+texture_filter = 1
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_2g2db")
+animation = &"floating"
+
+[node name="Smoke" type="GPUParticles2D" parent="." unique_id=257278925]
+emitting = false
+amount = 24
+randomness = 0.3
+process_material = SubResource("ParticleProcessMaterial_epjhp")
+
+[node name="CollectArea" type="Area2D" parent="." unique_id=844735223]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollectArea" unique_id=1085432648]
+scale = Vector2(1.064, 1)
+shape = SubResource("CircleShape2D_5yy73")
+debug_color = Color(0, 0.6, 0.7019608, 0)
