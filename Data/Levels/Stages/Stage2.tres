@@ -16,6 +16,10 @@
 [ext_resource type="Resource" uid="uid://5vagi0atsu3m" path="res://Data/Pickups/PlasmaAugmentPickup.tres" id="7_plasma"]
 [ext_resource type="PackedScene" uid="uid://3gxxy4myod8b" path="res://Actors/Enemies/PatternEnemyWaveSpawner.tscn" id="8_ygboy"]
 
+[ext_resource type="Resource" path="res://Data/Pickups/SulfurStinkpotsPickup.tres" id="7_stinkpots"]
+[ext_resource type="Resource" path="res://Data/Pickups/ClingfilmPickup.tres" id="7_clingfilm"]
+[ext_resource type="Resource" path="res://Data/Pickups/CrackedPotsPickup.tres" id="7_cracked_pots"]
+
 [sub_resource type="Resource" id="WeightedEnemy_bulwark"]
 script = ExtResource("1_nj72p")
 enemy = ExtResource("2_5467k")
@@ -129,8 +133,9 @@ metadata/_custom_type_script = "uid://bhsc86o70es47"
 
 [resource]
 script = ExtResource("4_ygboy")
+level_id = &"stage_2"
 level_name = "Stage2"
-shop_items = Array[ExtResource("7_pickup_data")]([ExtResource("7_homing"), ExtResource("7_plasma"), ExtResource("7_fire"), ExtResource("7_magnet")])
+shop_items = Array[ExtResource("7_pickup_data")]([ExtResource("7_homing"), ExtResource("7_plasma"), ExtResource("7_fire"), ExtResource("7_magnet"), ExtResource("7_stinkpots"), ExtResource("7_clingfilm"), ExtResource("7_cracked_pots")])
 encounter_sequence = Array[ExtResource("6_encounter")]([SubResource("Encounter_01_normal"), SubResource("Encounter_02_normal"), SubResource("Encounter_03_special"), SubResource("Encounter_04_optional_normal"), SubResource("Encounter_05_normal"), SubResource("Encounter_06_optional_normal"), SubResource("Encounter_07_normal"), SubResource("Encounter_08_optional_special"), SubResource("Encounter_09_normal"), SubResource("Encounter_10_optional_normal"), SubResource("Encounter_11_normal"), SubResource("Encounter_12_normal")])
 finale_pool = Array[ExtResource("2_h7gg0")]([SubResource("Finale_boss")])
 metadata/_custom_type_script = "uid://p4ssfrvfj0uw"

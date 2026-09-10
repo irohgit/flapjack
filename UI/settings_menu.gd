@@ -15,6 +15,9 @@ const BRIGHTNESS_LAYER_NAME := "FlapjackBrightnessOverlay"
 @onready var return_button: NavButton = %ReturnButton
 @onready var volume_value: Label = %VolumeValue
 @onready var brightness_value: Label = %BrightnessValue
+@onready var dev_mode_button: NavButton = %DevMode
+@onready var debug_screen_button: NavButton = %DebugScreen
+@onready var dev_hint: Label = %DevHint
 
 var _volume := 0.85
 var _brightness := 1.0
@@ -22,9 +25,11 @@ var _resolution_index := 0
 var _fullscreen := false
 var _syncing := false
 var _brightness_rect: ColorRect
+var _paused_before_open := false
 
 
 func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	_load_settings()
 	_setup_brightness_overlay()
 	_setup_display_options()
@@ -34,23 +39,37 @@ func _ready() -> void:
 	display_option.item_selected.connect(_on_display_selected)
 	fullscreen_toggle.toggled.connect(_on_fullscreen_toggled)
 	return_button.pressed.connect(close_menu)
+	dev_mode_button.pressed.connect(_toggle_dev_mode)
+	debug_screen_button.pressed.connect(_toggle_debug_screen)
+	GameSettings.changed.connect(_refresh_labels)
 	_sync_controls()
+	_refresh_labels()
 	_apply_all()
 
 
 func open_menu() -> void:
+	if visible:
+		return
+	_paused_before_open = get_tree().paused
 	_sync_controls()
 	super()
 
 
 func close_menu() -> void:
+	if not visible:
+		return
 	# The same settings scene is opened from the main, pause and death screens.
 	# Returning to a paused parent must not resume gameplay behind that menu.
-	var parent_screen := get_parent() as MenuScreen
-	var keep_paused := parent_screen != null and parent_screen.visible and parent_screen.pauses_tree
 	super()
-	if keep_paused:
-		get_tree().paused = true
+	get_tree().paused = _paused_before_open
+
+
+func _toggle_dev_mode() -> void:
+	GameSettings.set_dev_mode(not GameSettings.dev_mode_enabled)
+
+
+func _toggle_debug_screen() -> void:
+	GameSettings.set_debug_screen(not GameSettings.debug_screen_enabled)
 
 
 func _setup_display_options() -> void:
@@ -76,6 +95,9 @@ func _refresh_labels() -> void:
 	volume_value.text = "%d%%" % roundi(volume_slider.value)
 	brightness_value.text = "%d%%" % roundi(brightness_slider.value)
 	fullscreen_toggle.text = "ON" if fullscreen_toggle.button_pressed else "OFF"
+	dev_mode_button.label_text = "DEV MODE: ON" if GameSettings.dev_mode_enabled else "DEV MODE: OFF"
+	debug_screen_button.label_text = "DEBUG SCREEN: ON" if GameSettings.debug_screen_enabled else "DEBUG SCREEN: OFF"
+	dev_hint.visible = GameSettings.dev_mode_enabled
 
 
 func _on_volume_changed(value: float) -> void:

@@ -6,7 +6,8 @@
 
 [resource]
 script = ExtResource("1_snake")
-move_speed = 120.0
+move_speed = 160.0
+visual_scale = 0.2
 hit_sfx = ExtResource("2_hit")
 death_sfx = ExtResource("3_death")
 metadata/_custom_type_script = "uid://bo6li876odoia"

@@ -1,24 +1,72 @@
 [
-  {"item": "flapjack:gold_coin", "quantity": 1, "weight": 6, "level": "stage_1"},
-  {"item": "flapjack:silver_coin", "quantity": 1, "weight": 18, "level": "stage_1"},
-  {"item": "flapjack:bronze_coin", "quantity": 1, "weight": 36, "level": "stage_1"},
-  {"item": "flapjack:homing_cannon", "quantity": 1, "weight": 3.6363636, "level": "stage_1"},
-  {"item": "flapjack:plasma_augment", "quantity": 1, "weight": 3.6363636, "level": "stage_1"},
-  {"item": "flapjack:fireball_augment", "quantity": 1, "weight": 3.6363636, "level": "stage_1"},
-  {"item": "flapjack:magnet_augment", "quantity": 1, "weight": 3.6363636, "level": "stage_1"},
-  {"item": "flapjack:piercing_cannon", "quantity": 1, "weight": 3.6363636, "level": "stage_1"},
-  {"item": "flapjack:orbital_ricochet", "quantity": 1, "weight": 3.6363636, "level": "stage_1"},
-  {"item": "flapjack:harpoon", "quantity": 1, "weight": 3.6363636, "level": "stage_1"},
-  {"item": "flapjack:health_potion", "quantity": 1, "weight": 3.6363636, "level": "stage_1"},
-  {"item": "flapjack:shield_potion", "quantity": 1, "weight": 3.6363636, "level": "stage_1"},
-  {"item": "flapjack:rapid_fire_potion", "quantity": 1, "weight": 3.6363636, "level": "stage_1"},
-  {"item": "flapjack:speed_potion", "quantity": 1, "weight": 3.6363636, "level": "stage_1"},
-
-  {"item": "flapjack:gold_coin", "quantity": 1, "weight": 6, "level": "stage_2"},
-  {"item": "flapjack:silver_coin", "quantity": 1, "weight": 18, "level": "stage_2"},
-  {"item": "flapjack:bronze_coin", "quantity": 1, "weight": 36, "level": "stage_2"},
-  {"item": "flapjack:homing_cannon", "quantity": 1, "weight": 10, "level": "stage_2"},
-  {"item": "flapjack:plasma_augment", "quantity": 1, "weight": 10, "level": "stage_2"},
-  {"item": "flapjack:fireball_augment", "quantity": 1, "weight": 10, "level": "stage_2"},
-  {"item": "flapjack:magnet_augment", "quantity": 1, "weight": 10, "level": "stage_2"}
+	{
+		"item": "flapjack:gold_coin",
+		"quantity": 1.0,
+		"weight": 3.0,
+		"level": "stage_1"
+	},
+	{
+		"item": "flapjack:silver_coin",
+		"quantity": 1.0,
+		"weight": 9.0,
+		"level": "stage_1"
+	},
+	{
+		"item": "flapjack:bronze_coin",
+		"quantity": 1.0,
+		"weight": 18.0,
+		"level": "stage_1"
+	},
+	{
+		"item": "flapjack:health_potion",
+		"quantity": 1.0,
+		"weight": 1.8181818,
+		"level": "stage_1"
+	},
+	{
+		"item": "flapjack:shield_potion",
+		"quantity": 1.0,
+		"weight": 1.8181818,
+		"level": "stage_1"
+	},
+	{
+		"item": "flapjack:rapid_fire_potion",
+		"quantity": 1.0,
+		"weight": 1.8181818,
+		"level": "stage_1"
+	},
+	{
+		"item": "flapjack:speed_potion",
+		"quantity": 1.0,
+		"weight": 1.8181818,
+		"level": "stage_1"
+	},
+	{
+		"item": "none",
+		"weight": 55.4545452,
+		"level": "stage_1"
+	},
+	{
+		"item": "flapjack:gold_coin",
+		"quantity": 1.0,
+		"weight": 3.0,
+		"level": "stage_2"
+	},
+	{
+		"item": "flapjack:silver_coin",
+		"quantity": 1.0,
+		"weight": 9.0,
+		"level": "stage_2"
+	},
+	{
+		"item": "flapjack:bronze_coin",
+		"quantity": 1.0,
+		"weight": 18.0,
+		"level": "stage_2"
+	},
+	{
+		"item": "none",
+		"weight": 80.0,
+		"level": "stage_2"
+	}
 ]

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="AugmentData" format=3 uid="uid://c0e47e331m3fb"]
+
+[ext_resource type="Script" uid="uid://cpp3oou337x" path="res://Data/Augments/augment_data.gd" id="1_augment"]
+[ext_resource type="Script" uid="uid://cwi5qf0boy4" path="res://Data/Augments/Harpoon/skewer_harpoon_effect.gd" id="2_effect"]
+[ext_resource type="Resource" uid="uid://gn4h7j4dka1t" path="res://Data/Weapons/Harpoon.tres" id="3_weapon"]
+[ext_resource type="Texture2D" uid="uid://i7qg2b6rnx13" path="res://Assets/UI/Shop/Items/Augments/Harpoon/skewer_harpoon.png" id="4_icon"]
+
+[sub_resource type="Resource" id="Effect"]
+script = ExtResource("2_effect")
+
+[resource]
+script = ExtResource("1_augment")
+name = "Skewer Harpoon"
+targetWeapon = ExtResource("3_weapon")
+texture = ExtResource("4_icon")
+augmentEffect = SubResource("Effect")

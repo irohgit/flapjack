@@ -97,8 +97,6 @@ var _tier_has_mast := false
 @export var bank_push_x := 850.0    # sideways shove out of the sand
 @export var bank_push_down := 150.0 # drag downward, like running aground
 
-#Developer Exports
-@export var scrollDirector: ScrollDirector
 #GOD MODE
 var _god_mode := false
 var _normal_weapon_data: Array[WeaponData] = []
@@ -110,19 +108,18 @@ var _normal_weapon_data: Array[WeaponData] = []
 func _unhandled_input(event: InputEvent) -> void:
 	if not OS.is_debug_build():
 		return
-	#1. Kill Self Instantly
+
+	#1. Kill self instantly
 	if event.is_action_pressed("kill_self"):
 		get_viewport().set_input_as_handled()
 		_health.take_damage(9999)
-	#2. Increase scroll speed
-	if event.is_action_pressed("increase_scroll_speed"):
-		scrollDirector.change_move_speed(scrollDirector.scroll_speed + scrollDirector.scroll_speed_change)
-	if event.is_action_pressed("decrease_scroll_speed"):
-		scrollDirector.change_move_speed(scrollDirector.scroll_speed - scrollDirector.scroll_speed_change)
+
+	#2. Toggle developer mode
 	if event.is_action_pressed("developer_mode"):
 		_developermode = not _developermode
 		DebugHud.flash("DEV MODE %s" % ("ON" if _developermode else "OFF"))
 
+	#3. God mode, gated behind developer mode
 	if _developermode and event.is_action_pressed("god_mode"):
 		_god_mode = not _god_mode
 		if _god_mode:
@@ -144,7 +141,6 @@ func _unhandled_input(event: InputEvent) -> void:
 			_normal_weapon_data.clear()
 		DebugHud.flash("GOD MODE %s" % ("ON" if _god_mode else "OFF"))
 		
-	
 func _ready() -> void:
 	_apply_meta_upgrades()
 	_potion_slots.resize(potion_slot_count)
@@ -461,6 +457,8 @@ func import_checkpoint(checkpoint: RunCheckpoint) -> bool:
 		return false
 
 	coin_count = checkpoint.coin_count
+	for state in _weapon_states:
+		state.stop_continuous_fire()
 	_weapon_states.clear()
 	for state in checkpoint.weapon_states:
 		_weapon_states.append(state.clone_for_checkpoint())
@@ -563,6 +561,11 @@ func _update_weapons(delta: float) -> void:
 	var cooldown_delta := delta * maxf(fire_rate, 0.0)
 	
 	for state in _weapon_states:
+		if state.data.weaponBehaviour.update_continuous_fire(
+			self, state, delta, shoot_pressed, fire_rate
+		):
+			state.cooldown = 0.0
+			continue
 		state.cooldown -= cooldown_delta
 		var should_fire := shoot_pressed
 		

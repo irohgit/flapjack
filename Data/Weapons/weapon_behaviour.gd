@@ -3,8 +3,17 @@ extends Resource
 
 @export var projectile_scene: PackedScene
 
-func fire(shooter: Node2D, weapon: WeaponState) -> void:
+
+func fire(_shooter: Node2D, _weapon: WeaponState) -> void:
 	pass
+
+
+## Return true while a continuous mode replaces this weapon's normal shots.
+func update_continuous_fire(
+	_shooter: Player, _weapon: WeaponState, _delta: float,
+	_firing: bool, _fire_rate_multiplier: float
+) -> bool:
+	return false
 
 
 func _configure_projectile(projectile: Projectile, weapon: WeaponState) -> void:
@@ -12,20 +21,20 @@ func _configure_projectile(projectile: Projectile, weapon: WeaponState) -> void:
 	projectile_data.damage = weapon.data.damage
 	projectile.data = projectile_data
 	projectile.augments.assign(weapon.augments)
-	
-# Shared by every weapon. Sound data lives on WeaponData
-#SFX
+
+
 func _play_augment_accents(weapon: WeaponState) -> void:
-	print(">>> accent check, augment count: ", weapon.augments.size())
 	for augment in weapon.augments:
-		print(">>> augment: ", augment, " accent: ", augment.fire_accent_sfx)
 		if augment.fire_accent_sfx != null:
 			Audio.play_sfx(augment.fire_accent_sfx, weapon.data.fire_volume_db)
-			
+
+
 func _play_fire_sound(weapon: WeaponState) -> void:
-	Audio.play_sfx(weapon.data.fire_sound, weapon.data.fire_volume_db, weapon.data.fire_pitch_spread, weapon.data.fire_pitch)
-	
+	var data := weapon.data
+	Audio.play_sfx(data.fire_sound, data.fire_volume_db, data.fire_pitch_spread, data.fire_pitch)
+
+
 func _play_fire_sound_random(weapon: WeaponState) -> void:
-	Audio.play_sfx_varied(weapon.data.fire_sounds, weapon.data.fire_volume_db, weapon.data.fire_pitch_spread, weapon.data.fire_pitch)
+	var data := weapon.data
+	Audio.play_sfx_varied(data.fire_sounds, data.fire_volume_db, data.fire_pitch_spread, data.fire_pitch)
 	_play_augment_accents(weapon)
-		

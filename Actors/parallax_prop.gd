@@ -52,6 +52,13 @@ var _player: Node2D
 @export var bob_pixels := 4.0            # how far it bobs up and down
 @export var bob_speed := 1.2             # how fast it bobs
 
+#Visual Polish - Continuous spin. Independent of Float above: sway/bob SET
+#rotation each frame (rocking around _base_rot), spin ADDS to it, so leave
+#float_enabled off on anything spinning or the two will fight over rotation.
+@export_group("Spin")
+@export var spin_enabled := false        # turn on constant rotation for this object
+@export var spin_speed_deg := 45.0       # degrees per second; negative spins the other way
+
 var _t := 0.0
 var _base_rot := 0.0
 var _sway_phase := 0.0
@@ -86,6 +93,8 @@ func _physics_process(delta: float) -> void:
 		return
 	if float_enabled:
 		_apply_float(delta)
+	if spin_enabled:
+		rotation += deg_to_rad(spin_speed_deg) * delta
 	var camera_y := _camera.global_position.y
 	var moved := camera_y - _last_camera_y
 	_last_camera_y = camera_y

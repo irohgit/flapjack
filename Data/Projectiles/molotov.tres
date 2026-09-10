@@ -1,13 +1,15 @@
 [gd_resource type="Resource" script_class="ProjectileData" format=3]
 
 [ext_resource type="Script" path="res://Data/Projectiles/projectile_data.gd" id="1_projectile"]
-[ext_resource type="Texture2D" path="res://Assets/Projectiles/Cannonball.png" id="2_placeholder"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Items/Weapons/molotov_generated.png" id="2_bottle"]
 [ext_resource type="Resource" path="res://Data/GroundEffects/molotov_fire_pool.tres" id="3_ground"]
+[ext_resource type="AudioStream" path="res://Audio/SFX/obstacle_hit.mp3" id="4_impact"]
 
 [resource]
 script = ExtResource("1_projectile")
-texture = ExtResource("2_placeholder")
+texture = ExtResource("2_bottle")
+scale = 0.5
 damage = 1
 pierce = 0
 death_ground_effect = ExtResource("3_ground")
-metadata/implementation_status = "scaffold"
+impact_sound = ExtResource("4_impact")

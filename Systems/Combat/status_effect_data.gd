@@ -1,7 +1,6 @@
 class_name StatusEffectData
 extends Resource
 
-
 enum ReapplyPolicy {
 	REFRESH,
 	EXTEND,
@@ -30,6 +29,8 @@ const STAT_FIRE_RATE := &"fire_rate"
 @export_group("Lifetime")
 @export_range(0.0, 120.0, 0.1, "or_greater") var duration := 1.0
 @export var reapply_policy: ReapplyPolicy = ReapplyPolicy.REFRESH
+## Refresh duration without restarting the tick timer.
+@export var preserve_tick_on_refresh := false
 @export_range(0.0, 30.0, 0.01, "or_greater") var tick_interval := 0.0
 
 @export_group("Behaviour")
