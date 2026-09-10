@@ -15,7 +15,9 @@
 [ext_resource type="Resource" uid="uid://bm5cjh6vsml88" path="res://Cinematics/SavingVinny/Lines/14_vinny_degas.tres" id="16_4gymu"]
 [ext_resource type="Resource" uid="uid://dkehav4kvkb6m" path="res://Cinematics/SavingVinny/Lines/16_crowsnest.tres" id="18_mjv2e"]
 [ext_resource type="Resource" uid="uid://b3dvl4vqc7ns8" path="res://Cinematics/SavingVinny/Lines/17_captain_tieup.tres" id="19_f4ini"]
+[ext_resource type="PackedScene" uid="uid://u3pvu00n4bsx" path="res://Actors/UI/advance_icon.tscn" id="20_1mr00"]
 [ext_resource type="Resource" uid="uid://bt8xf44k808ca" path="res://Cinematics/SavingVinny/Lines/18_return_split.tres" id="20_puyer"]
+[ext_resource type="Script" uid="uid://droccctwb042w" path="res://UI/advance_icon.gd" id="21_ikaef"]
 [ext_resource type="Shader" uid="uid://gicvlvlbijni" path="res://Cinematics/blur.gdshader" id="22_sy76b"]
 [ext_resource type="FontFile" uid="uid://cb51p8cvaifq3" path="res://Assets/Fonts/Montserrat/static/Montserrat-ExtraBold.ttf" id="24_sy76b"]
 [ext_resource type="FontFile" uid="uid://bocifqpdtmlvt" path="res://Assets/Fonts/MontagnaLTD.ttf" id="25_kdtkl"]
@@ -134,6 +136,7 @@ grow_vertical = 2
 script = ExtResource("1_s7cop")
 stage_frames = ExtResource("2_1mr00")
 lines = Array[ExtResource("2_0mvit")]([ExtResource("3_8vlyk"), ExtResource("4_1mr00"), ExtResource("7_b6fj0"), ExtResource("8_qmnhl"), ExtResource("9_hqnsc"), ExtResource("10_7yfy7"), ExtResource("13_mrwvf"), ExtResource("14_8j3bx"), ExtResource("15_lt6up"), ExtResource("16_4gymu"), ExtResource("18_mjv2e"), ExtResource("19_f4ini"), ExtResource("20_puyer")])
+fade_in_time = 1.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=44340129]
 libraries/ = SubResource("AnimationLibrary_s7cop")
@@ -253,3 +256,16 @@ theme_override_fonts/normal_font = ExtResource("25_kdtkl")
 theme_override_font_sizes/normal_font_size = 36
 bbcode_enabled = true
 fit_content = true
+
+[node name="AdvanceIcon" parent="DialogueBox" unique_id=711909256 instance=ExtResource("20_1mr00")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -88.0
+offset_top = -24.0
+offset_right = -40.0
+offset_bottom = 24.0
+script = ExtResource("21_ikaef")

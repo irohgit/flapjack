@@ -1,12 +1,78 @@
 [gd_resource type="SpriteFrames" format=3 uid="uid://b0uotj0bt75cr"]
 
 [ext_resource type="Texture2D" uid="uid://dt4ehdtonb6ub" path="res://Assets/Input/joypad_xbox_southface_spritesheet_1000x100.png" id="1_avlbi"]
+[ext_resource type="Texture2D" uid="uid://bggnnbj62evel" path="res://Assets/UI/advance_xbox_south_spritesheet_384x48.png" id="1_bkocq"]
 [ext_resource type="Texture2D" uid="uid://o6mfj1wv2yq6" path="res://Assets/Input/Key_R_spritesheet_1000x100.png" id="2_b6sot"]
+[ext_resource type="Texture2D" uid="uid://opx8xowil552" path="res://Assets/UI/advance_keyboard_spacebar_spritesheet_384x48.png" id="2_wim5a"]
 [ext_resource type="Texture2D" uid="uid://trjid476drxm" path="res://Assets/Input/RightTrigger_spritesheet_1000x50.png" id="3_bkocq"]
 [ext_resource type="Texture2D" uid="uid://dloy0lxn524j2" path="res://Assets/Input/Spacebar_spritesheet_1000x50.png" id="4_wim5a"]
 [ext_resource type="Texture2D" uid="uid://mxhiq4lk1f0w" path="res://Assets/Input/LStick_spritesheet_1000x200.png" id="5_3fydk"]
 [ext_resource type="Texture2D" uid="uid://6l8lh1u0e7r0" path="res://Assets/Input/WASD_spritesheet_1000x100.png" id="6_o61tc"]
 [ext_resource type="Texture2D" uid="uid://c154vx553btif" path="res://Assets/Input/gamepad_bumper_750x100.png" id="7_ww33o"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3fydk"]
+atlas = ExtResource("1_bkocq")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o61tc"]
+atlas = ExtResource("1_bkocq")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ww33o"]
+atlas = ExtResource("1_bkocq")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f3eok"]
+atlas = ExtResource("1_bkocq")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fdv27"]
+atlas = ExtResource("1_bkocq")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wfcvf"]
+atlas = ExtResource("1_bkocq")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h0ghy"]
+atlas = ExtResource("1_bkocq")
+region = Rect2(288, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r5mg5"]
+atlas = ExtResource("1_bkocq")
+region = Rect2(336, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c5mhe"]
+atlas = ExtResource("2_wim5a")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b5ek0"]
+atlas = ExtResource("2_wim5a")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fx2wj"]
+atlas = ExtResource("2_wim5a")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oko46"]
+atlas = ExtResource("2_wim5a")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_btwt2"]
+atlas = ExtResource("2_wim5a")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_upcjd"]
+atlas = ExtResource("2_wim5a")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sjnqv"]
+atlas = ExtResource("2_wim5a")
+region = Rect2(288, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cfcsx"]
+atlas = ExtResource("2_wim5a")
+region = Rect2(336, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xre48"]
 atlas = ExtResource("1_avlbi")
@@ -214,6 +280,64 @@ region = Rect2(500, 0, 250, 100)
 
 [resource]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3fydk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o61tc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ww33o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f3eok")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fdv27")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wfcvf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h0ghy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r5mg5")
+}],
+"loop": 1,
+"name": &"advance_gamepad",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c5mhe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b5ek0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fx2wj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oko46")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_btwt2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_upcjd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sjnqv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cfcsx")
+}],
+"loop": 1,
+"name": &"advance_keyboard",
+"speed": 8.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_xre48")

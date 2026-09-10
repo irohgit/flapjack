@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://cmsjswcf8ya1h"]
+
+[ext_resource type="Script" uid="uid://c8kbtx338gi0k" path="res://Systems/Cinematics/cutscene_manager.gd" id="1_k52tw"]
+
+[node name="CutsceneManager" type="CanvasLayer" unique_id=1384979210]
+process_mode = 3
+layer = 100
+script = ExtResource("1_k52tw")
+
+[node name="Letterbox" type="Control" parent="." unique_id=2094034988]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

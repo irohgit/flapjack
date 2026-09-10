@@ -13,12 +13,6 @@ signal finished
 @export var advance_lockout := 0.25
 @export var advance_action: StringName = &"ui_accept"
 @export var skip_action: StringName = &"cutscene_skip"
-
-@export_group("Scene fade")
-@export var fade_in_time := 0.6
-@export var fade_out_time := 0.6
-@export var fade_colour := Color.BLACK
-
 @onready var _left: TextureRect = $LeftPortrait
 @onready var _stage: Control = $Stage
 @onready var _stage_image: TextureRect = $Stage/StageImage
@@ -26,6 +20,13 @@ signal finished
 @onready var _text: RichTextLabel = $DialogueBox/VBoxContainer/Text
 @onready var _dialogue_box: Control = $DialogueBox
 @onready var _anim: AnimationPlayer = $AnimationPlayer
+@onready var _advance_icon: AdvanceIcon = $DialogueBox/AdvanceIcon
+
+@export_group("Scene fade")
+@export var fade_in_time := 0.6
+@export var fade_out_time := 0.6
+@export var fade_colour := Color.BLACK
+
 
 
 
@@ -52,7 +53,7 @@ func _ready() -> void:
 	assert(_dialogue_box != null, "DialogueBox not found")
 	assert(_anim != null, "AnimationPlayer not found")
 	assert(_flash != null, "Flash not found. Please create a ColorRect named Flash")
-	
+	assert(_advance_icon != null, "DialogueBox/AdvanceIcon not found")
 	_prime_first_beat()
 
 	# Anchors have not resolved on the first frame, so sizes are still zero.
@@ -88,8 +89,9 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _play_all() -> void:
-	await _fade_in()
 	await _play_clip(&"letterbox_in", true)
+	await _fade_in()
+	
 
 	for line: CutsceneLine in lines:
 		if _skipping:
@@ -99,8 +101,9 @@ func _play_all() -> void:
 	if _skipping:
 		_snap_to_final_frame()
 
-	await _play_clip(&"letterbox_out", true)
+	
 	await _fade_out()
+	await _play_clip(&"letterbox_out", true)
 	finished.emit()
 
 
@@ -139,7 +142,9 @@ func _play_line(line: CutsceneLine) -> void:
 	if line.hold_time > 0.0:
 		await _wait(line.hold_time)
 	elif has_text:
+		_advance_icon.show_icon()
 		await _wait_for_advance()
+		_advance_icon.hide_icon()
 
 	_settle_stage_shader()
 	_settle_motion()
@@ -167,9 +172,9 @@ func _play_clip(clip: StringName, wait: bool) -> void:
 		await _anim.animation_finished
 
 
-# --- Stage shader: blur, tint and the monocle aperture -----------------------
 
-func _apply_stage_shader(line: CutsceneLine) -> void:
+
+func _apply_stage_shader(line: CutsceneLine) -> void: # --- Stage shader: blur, tint and the monocle aperture -----------------------
 	_kill_shader_tween()
 
 	var mat: ShaderMaterial = _stage_image.material as ShaderMaterial
@@ -223,8 +228,8 @@ func _kill_shader_tween() -> void:
 	_shader_tween = null
 
 
-# Ends the beat's shader effects on their intended targets, however it ended.
-func _settle_stage_shader() -> void:
+
+func _settle_stage_shader() -> void: # Ends the beat's shader effects on their intended targets, however it ended.
 	_kill_shader_tween()
 	var mat: ShaderMaterial = _stage_image.material as ShaderMaterial
 	if mat == null:
@@ -232,8 +237,6 @@ func _settle_stage_shader() -> void:
 	mat.set_shader_parameter("blur_amount", _blur_target)
 	mat.set_shader_parameter("mask_radius", _mask_target)
 
-
-# --- Motion ------------------------------------------------------------------
 
 func _apply_motion(node: Control, motion: CutsceneMotion) -> void:
 	# Every beat starts from a clean slate, so a leftover push-in cannot
@@ -267,13 +270,11 @@ func _apply_motion(node: Control, motion: CutsceneMotion) -> void:
 	)
 	_vfx_tweens.append(tween)
 
-
 func _land_motion(node: Control, motion: CutsceneMotion) -> void:
 	node.position = motion.offset_to
 	node.scale = Vector2.ONE * motion.scale_to
 	node.rotation_degrees = motion.rotation_to
 	_set_tint(node, motion.tint_to)
-
 
 func _settle_motion() -> void:
 	for tween: Tween in _vfx_tweens:
@@ -288,17 +289,14 @@ func _settle_motion() -> void:
 	if _current_line.stage_motion != null and _current_line.stage_motion.enabled:
 		_land_motion(_stage_image, _current_line.stage_motion)
 
-
-# A node with a custom shader does not receive modulate, so the tint is handed
-# to the shader as well. Nodes without one behave normally.
-func _set_tint(node: Control, colour: Color) -> void:
+func _set_tint(node: Control, colour: Color) -> void: # A node with a custom shader does not receive modulate, so the tint is handed to the shader as well. Nodes without one behave normally.
 	node.modulate = colour
 	var mat: ShaderMaterial = node.material as ShaderMaterial
 	if mat != null and mat.shader != null:
 		mat.set_shader_parameter("tint", colour)
 
 
-# --- Audio -------------------------------------------------------------------
+
 
 func _play_sound(line: CutsceneLine) -> void:
 	_stop_sound_repeats()
@@ -328,14 +326,14 @@ func _play_sound(line: CutsceneLine) -> void:
 			)
 
 
-# A repeating sound belongs to its beat and must not outlive it.
-func _stop_sound_repeats() -> void:
+
+func _stop_sound_repeats() -> void:# A repeating sound belongs to its beat and must not outlive it.
 	if _sound_tween != null and _sound_tween.is_valid():
 		_sound_tween.kill()
 	_sound_tween = null
 
 
-# --- Waiting -----------------------------------------------------------------
+
 
 func _wait(seconds: float) -> void:
 	var remaining := seconds
@@ -356,19 +354,13 @@ func _wait_for_advance() -> void:
 		await get_tree().process_frame
 	_advance = false
 
-
 func _wait_unskippable(seconds: float) -> void:
 	var remaining := seconds
 	while remaining > 0.0 and not _skipping:
 		await get_tree().process_frame
 		remaining -= get_process_delta_time()
 
-
-# --- Skip --------------------------------------------------------------------
-
-# A skip should still end on the picture the cutscene was heading toward.
-# Replays every beat's visual state with no waits.
-func _snap_to_final_frame() -> void:
+func _snap_to_final_frame() -> void: # A skip should still end on the picture the cutscene was heading toward. Replays every beat's visual state with no waits.
 	for line: CutsceneLine in lines:
 		if line == null:
 			continue
@@ -382,9 +374,8 @@ func _snap_to_final_frame() -> void:
 	_settle_stage_shader()
 	_dialogue_box.visible = false
 	
-# The first beat does not run until after letterbox_in, so without this the
-# opening frames show the material's editor defaults: open and crisp.
-func _prime_first_beat() -> void:
+
+func _prime_first_beat() -> void: # The first beat does not run until after letterbox_in, so without this the opening frames show the material's editor defaults: open and crisp.
 	if lines.is_empty() or lines[0] == null:
 		return
 
@@ -443,17 +434,12 @@ func _fade_out() -> void:
 	_flash_tween = create_tween()
 	_flash_tween.tween_property(_flash, "modulate:a", 1.0, fade_out_time)
 	await _flash_tween.finished
-
-
 func _kill_flash_tween() -> void:
 	if _flash_tween != null and _flash_tween.is_valid():
 		_flash_tween.kill()
 	_flash_tween = null
+func _apply_stage_visual(line: CutsceneLine) -> void: # One owner for "what is the stage showing". An animation wins over a still,blank means keep whatever is already up. A line may name its own SpriteFrames, otherwise the player's is used.
 
-# One owner for "what is the stage showing". An animation wins over a still,
-# blank means keep whatever is already up. A line may name its own
-# SpriteFrames, otherwise the player's is used.
-func _apply_stage_visual(line: CutsceneLine) -> void:
 	if line.stage_animation == &"":
 		if line.stage_image != null:
 			_stage_anim = &""
