@@ -30,10 +30,22 @@ signal collected
 @export var bob_time := 1.4
 @export var launch_sfx: AudioStream
 @export var splash_sfx: AudioStream
+## Time between splashdown and Vinny becoming collectable. Long enough for the
+## player to see him arrive before they can sail over him.
+@export_range(0.0, 3.0, 0.05) var settle_time := 0.7
+## How far the sprite punches out on landing, as a multiplier.
+@export_range(1.0, 3.0, 0.05) var land_punch_scale := 1.6
+@export var land_flash_colour := Color(1.0, 1.0, 1.0, 1.0)
+@export_range(0.05, 1.0, 0.05) var land_flash_time := 0.35
+## Plays when he becomes collectable, so the player knows he is ready.
+@export var ready_sfx: AudioStream
 
 @onready var _sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var _area: Area2D = $CollectArea
 @onready var _smoke: GPUParticles2D = $Smoke
+
+
+
 
 var _landed := false
 
@@ -86,8 +98,15 @@ func _land(at: Vector2) -> void:
 			splash.global_position = at
 	Audio.play_sfx(splash_sfx, -4.0)
 
-	_area.monitoring = true
 	_start_bobbing()
+	await _play_landing_flourish()
+
+	# Only now can the player pick him up. Anything earlier and a player who is
+	# already moving can collect him before they have seen him arrive.
+	if not is_instance_valid(self) or not is_inside_tree():
+		return
+	_area.monitoring = true
+	Audio.play_sfx(ready_sfx, -8.0)
 
 
 ## Plays a clip if it exists, and says so if it does not. A missing clip should
@@ -129,7 +148,25 @@ func _start_bobbing() -> void:
 	tween.tween_property(_sprite, "position", home + Vector2(0.0, bob_distance), bob_time)
 	tween.tween_property(_sprite, "position", home, bob_time)
 
+## The splashdown punch: he pops out, flashes, and settles back. Runs on the
+## sprite, not the root, so the bobbing tween on position is untouched.
+func _play_landing_flourish() -> void:
+	var home_scale := _sprite.scale
+	var home_modulate := _sprite.modulate
 
+	_sprite.scale = home_scale * land_punch_scale
+	_sprite.modulate = land_flash_colour
+
+	var tween := create_tween().set_parallel(true)
+	tween.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tween.tween_property(_sprite, "scale", home_scale, land_flash_time)
+	tween.tween_property(_sprite, "modulate", home_modulate, land_flash_time)
+	await tween.finished
+
+	var remaining := settle_time - land_flash_time
+	if remaining > 0.0:
+		await get_tree().create_timer(remaining).timeout
+		
 func _on_area_entered(area: Area2D) -> void:
 	if not _landed or not area.is_in_group("player"):
 		return

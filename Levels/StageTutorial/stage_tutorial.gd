@@ -66,9 +66,10 @@ func _ready() -> void:
 		_go_to_stage_1()
 		return
 
-	# Cannons stay cold until beat 4 teaches them.
+	# Every verb stays locked until the beat that teaches it.
 	_player.set_can_fire(false)
-
+	_player.set_can_drink_potion(false)
+	_player.set_can_switch_potion(false)
 	await _run_tutorial()
 	MetaProgress.tutorial_seen = true
 	#MetaProgress.save() TODO
@@ -167,17 +168,32 @@ func _beat_potion() -> void:
 		await get_tree().process_frame
 
 	_clear_highlight()
-	
+
+	# Drinking is taught first, so it unlocks first. Switching stays locked so
+	# the player cannot wander the inventory before it has been explained.
+	var potions_held := _count_potions()
+	_player.set_can_drink_potion(true)
 	_tutorial_ui.set_objective_for_input("Press R to drink", "Press A to drink")
 	_tutorial_ui.play_input_animation("drink")
-	await _tutorial_ui.prompt_until(_player.potion_drunk, "")
-	
-	
-	_tutorial_ui.set_objective_for_input("Get to full health!\n Q / E to switch potion","Get to full health!\n L or R Bumper/Shoulder to switch potion")
-	_tutorial_ui.play_input_animation("switch")
+
+	# Waits on inventory state rather than the potion_drunk signal. A signal
+	# fired between the unlock above and this line would be lost, which soft
+	# locked the beat when the key was mashed.
+	while _count_potions() >= potions_held and _count_potions() > 0:
+		await get_tree().process_frame
+
 	var hp := _player.get_health_component()
-	if hp.current_health < hp.max_health:
-		await _tutorial_ui.prompt_until(_player.health_full, "")
+	_player.set_can_switch_potion(true)
+	_tutorial_ui.set_objective_for_input(
+		"Get to full health!\n Q / E to switch potion",
+		"Get to full health!\n L or R Bumper/Shoulder to switch potion"
+	)
+	_tutorial_ui.play_input_animation("switch")
+
+	# Ends on full health, or on running out of potions. Without the second
+	# condition a player who drank everything and is still hurt waits forever.
+	while hp.current_health < hp.max_health and _count_potions() > 0:
+		await get_tree().process_frame
 
 	_tutorial_ui.play_input_animation("")
 	_tutorial_ui.clear_objective()
@@ -456,3 +472,12 @@ func _wait_until_below_ratio(target: Node2D, ratio: float) -> void:
 
 func _advance_key() -> String:
 	return "A" if InputDevice.is_gamepad() else "SPACE"
+
+## Counts filled potion slots. State, not a signal, so a drink that happens on
+## the same frame as an unlock can never be missed.
+func _count_potions() -> int:
+	var total := 0
+	for index: int in _player.get_potion_slot_count():
+		if _player.get_potion_in_slot(index) != null:
+			total += 1
+	return total

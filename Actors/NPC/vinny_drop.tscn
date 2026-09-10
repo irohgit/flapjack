@@ -1,7 +1,10 @@
 [gd_scene format=3 uid="uid://bktpdwvxtsh2g"]
 
 [ext_resource type="Script" uid="uid://dnoae11v6gbnn" path="res://Actors/NPC/vinny_drop.gd" id="1_62k4b"]
+[ext_resource type="AudioStream" uid="uid://d1t77v38kul38" path="res://Audio/SFX/pop_pickup_cute.mp3" id="2_73ihm"]
 [ext_resource type="Texture2D" uid="uid://jytdtauush42" path="res://Assets/Characters/vinny_float_spritesheet_512x64.png" id="2_epjhp"]
+[ext_resource type="AudioStream" uid="uid://fl1kgbns3te0" path="res://Audio/SFX/water_splash.mp3" id="2_gq728"]
+[ext_resource type="AudioStream" uid="uid://b4gqk45sugawl" path="res://Audio/SFX/cannon_shot_3.mp3" id="2_ujbp6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_73ihm"]
 atlas = ExtResource("2_epjhp")
@@ -132,17 +135,24 @@ radius = 150.0
 
 [node name="VinnyDrop" type="Node2D" unique_id=1209766955]
 script = ExtResource("1_62k4b")
+bob_distance = 50.0
+bob_time = 10.0
+launch_sfx = ExtResource("2_ujbp6")
+splash_sfx = ExtResource("2_gq728")
+settle_time = 1.1
+ready_sfx = ExtResource("2_73ihm")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1545448359]
 texture_filter = 1
-scale = Vector2(3, 3)
+scale = Vector2(1.25, 1.25)
 sprite_frames = SubResource("SpriteFrames_2g2db")
 animation = &"floating"
 
 [node name="Smoke" type="GPUParticles2D" parent="." unique_id=257278925]
 emitting = false
 amount = 24
-randomness = 0.3
+lifetime = 2.0
+randomness = 0.5
 process_material = SubResource("ParticleProcessMaterial_epjhp")
 
 [node name="CollectArea" type="Area2D" parent="." unique_id=844735223]
