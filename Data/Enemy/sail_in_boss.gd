@@ -1,7 +1,8 @@
-class_name TutorialBulwark
+## A boss that sails in from off screen, holds station at a fixed height, and
+## only clamps to the playfield once it is already inside it. Sub-class this for
+## any boss that should arrive rather than appear.
+class_name SailInBoss
 extends Enemy
-## Tutorial only. Tracks the player horizontally and never fires. The one hit
-## the player takes in the tutorial is scripted, so this ship is pure target.
 
 @export_range(0.0, 0.5, 0.01) var hold_height_ratio := 0.25
 @export_range(0.0, 500.0, 1.0, "or_greater") var playfield_margin := 150.0
@@ -35,18 +36,9 @@ func _move(delta: float, speed: float) -> void:
 func _get_hold_position() -> Vector2:
 	var visible_rect := Playarea.get_visible_world_rect()
 	var target_x := visible_rect.get_center().x
-
 	var player := get_tree().get_first_node_in_group("player") as Node2D
-	if player != null:
-		target_x = player.global_position.x
-
-	return Vector2(
-		target_x,
-		visible_rect.position.y + visible_rect.size.y * hold_height_ratio
-	)
-
-
-	
+	if player != null: target_x = player.global_position.x
+	return Vector2(target_x, visible_rect.position.y + visible_rect.size.y * hold_height_ratio)
 
 func _clamp_to_visible_playfield(world_position: Vector2) -> Vector2:
 	var visible_rect := Playarea.get_visible_world_rect()

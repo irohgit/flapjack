@@ -64,7 +64,15 @@ func _reset_timer() -> void:
 func _move(delta: float, speed: float) -> void:
 	pass
 
+## The default shot: one, straight down. Subclasses override this to build a
+## pattern out of the primitives below.
 func _fire() -> Projectile:
+	return _spawn_shot(_get_fire_position(), Vector2.DOWN)
+
+
+## Spawns one shot from a position in a direction. Every pattern in the game is
+## built from this, so it is the only place a projectile is actually created.
+func _spawn_shot(from: Vector2, direction: Vector2) -> Projectile:
 	var shot := data.projectile_scene.instantiate() as Projectile
 	if shot == null:
 		push_error("Enemy projectile scene must inherit from Projectile")
@@ -74,13 +82,54 @@ func _fire() -> Projectile:
 	shot_data.damage = data.projectile_damage
 	shot_data.speed *= data.projectile_speed
 	shot.data = shot_data
-	shot.direction = Vector2.DOWN
+	shot.direction = direction
 
 	# Same parent as this ship, so shots shake with the world.
 	get_parent().add_child(shot)
-	shot.global_position = _get_fire_position()
+	shot.global_position = from
 	Audio.play_sfx(data.fire_sfx, data.fire_sfx_volume_db, 0.06, data.fire_pitch)
 	return shot
+
+
+# --- Fire patterns -----------------------------------------------------------
+# Primitives any subclass composes into a pattern. All angles are degrees from straight down, so 0 is forward, 180 is behind, negative is to the left.
+
+## One shot per angle, all from the same point.
+func _fire_angles(from: Vector2, angles: PackedFloat32Array) -> void:
+	for degrees: float in angles:
+		_spawn_shot(from, Vector2.DOWN.rotated(deg_to_rad(degrees)))
+
+
+## An even fan of `count` shots spanning `spread` degrees, centred on `centre`.
+func _fire_fan(from: Vector2, count: int, spread: float, centre := 0.0) -> void:
+	if count <= 1:
+		_spawn_shot(from, Vector2.DOWN.rotated(deg_to_rad(centre)))
+		return
+	var step := spread / float(count - 1)
+	var start := centre - spread * 0.5
+	for index: int in count:
+		_spawn_shot(from, Vector2.DOWN.rotated(deg_to_rad(start + step * float(index))))
+
+
+## A full ring of `count` shots. `offset` rotates the whole ring.
+func _fire_ring(from: Vector2, count: int, offset := 0.0) -> void:
+	if count <= 0:
+		return
+	for index: int in count:
+		var angle := TAU * float(index) / float(count) + deg_to_rad(offset)
+		_spawn_shot(from, Vector2.DOWN.rotated(angle))
+
+
+## Repeats `pattern` `volleys` times with `gap` seconds between each. Bails out
+## if the ship dies mid-burst, so a dead enemy cannot keep shooting.
+## The caller guards against two bursts overlapping.
+func _fire_burst(volleys: int, gap: float, pattern: Callable) -> void:
+	for volley: int in volleys:
+		if not is_inside_tree() or is_queued_for_deletion():
+			return
+		pattern.call()
+		if volley < volleys - 1:
+			await get_tree().create_timer(gap).timeout
 
 
 func _get_fire_position() -> Vector2:
