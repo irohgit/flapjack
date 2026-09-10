@@ -8,4 +8,6 @@
 [resource]
 script = ExtResource("3_bount")
 end_position = Vector2(0, 1)
+stage_title = "Maiden Voyage"
+stage_subtitle = "Tutorial"
 metadata/_custom_type_script = "uid://p4ssfrvfj0uw"

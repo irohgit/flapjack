@@ -46,6 +46,7 @@ func _ready() -> void:
 	assert(poison_data != null, "Voodoo boss needs poison projectile data")
 	assert(bird_scene != null, "Voodoo boss needs a bird scene")
 	assert(bird_data != null, "Voodoo boss needs bird data")
+	
 	_health.health_changed.connect(_on_health_changed)
 	_on_health_changed(_health.current_health, _health.max_health)
 

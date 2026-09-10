@@ -33,7 +33,7 @@
 [ext_resource type="Script" uid="uid://tsoi3lwff5mf" path="res://Actors/Camera/shake_camera.gd" id="23_fgyxx"]
 [ext_resource type="PackedScene" uid="uid://cclwwsegfn8rr" path="res://Actors/Player/player.tscn" id="24_7smvb"]
 
-[node name="StageTutorial" type="Node2D" unique_id=958928528 node_paths=PackedStringArray("gin_spawner")]
+[node name="StageTutorial" type="Node2D" unique_id=958928528 node_paths=PackedStringArray("gin_spawner", "level_generator")]
 script = ExtResource("1_7fw6s")
 highlight_scale = 1.5
 highlight_period = 1.0
@@ -48,6 +48,7 @@ pickup_scene = ExtResource("4_o86e7")
 tutorial_potion = ExtResource("5_khstj")
 gin_spawner = NodePath("GinSpawner")
 tutorial_barrel = ExtResource("6_khstj")
+level_generator = NodePath("LevelGenerator")
 
 [node name="GameUI" parent="." unique_id=1532914546 instance=ExtResource("1_7lj3a")]
 

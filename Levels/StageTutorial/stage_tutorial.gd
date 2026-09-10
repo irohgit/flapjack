@@ -53,9 +53,10 @@ func _ready() -> void:
 	if MetaProgress.tutorial_seen and not force_tutorial and not OS.is_debug_build():
 		_go_to_stage_1()
 		return
-
+	
 	await play_entry()
-
+	
+	
 	_player = get_tree().get_first_node_in_group("player") as Player
 	if _player == null:
 		push_error("Tutorial needs a player")
@@ -73,6 +74,7 @@ func _ready() -> void:
 #Tutorial Beats
 # --- 1. Opening --------------------------------------------------------------
 func _beat_opening() -> void:
+	await _show_stage_title()
 	await _tutorial_ui.say("Jack", "Right,It's just you and me, Flapjack. And our mission to save Princess Ana.",0.0,JACK_DETERMINED)
 	_tutorial_ui.hide_portrait()
 # --- 2. Movement and debris --------------------------------------------------

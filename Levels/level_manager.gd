@@ -221,4 +221,4 @@ func _show_stage_title() -> void:
 	if card == null:
 		push_warning("No StageTitleCard in the scene, skipping the chapter card")
 		return
-	card.show_title(data.stage_title, data.stage_subtitle, data.title_hold)
+	await card.show_title(data.stage_title, data.stage_subtitle, data.title_hold)
