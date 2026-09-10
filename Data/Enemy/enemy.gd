@@ -8,53 +8,105 @@ extends Area2D
 @export var min_interval := 2.0
 @export var max_interval := 5.0
 
-## get_node_or_null, not $Path: @onready resolves for the whole inheritance
-## chain regardless of whether a subclass's _ready() calls super() - so a
-## variant with no HealthComponent/Sprite2D/StatusEffectComponent (e.g. an
-## AnimatedSprite2D-based enemy, or one that can't take damage) would
-## otherwise crash here before its own _ready() ever runs.
-@onready var _health: HealthComponent = get_node_or_null("HealthComponent")
-@onready var _sprite: Sprite2D = get_node_or_null("Sprite2D")
-@onready var _status_effects: StatusEffectComponent = get_node_or_null("StatusEffectComponent")
+## Optional per-scene audio overrides; otherwise use EnemyData's sounds.
+@export var hit_sfx: AudioStream
+@export var explosion_sfx: AudioStream
+@export var hit_sfx_volume_db := -18.0
+@export var death_sfx_volume_db := -4.0
+@export var damage_flash_colour := Color(1.0, 0.0, 0.157, 1.0)
+
+## Optional nodes let variants without health or status effects initialize.
+## Base @onready fields also resolve when a subclass does not call super().
+@onready var _health: HealthComponent = get_node_or_null("HealthComponent") as HealthComponent
+@onready var _sprite: Sprite2D = get_node_or_null("Sprite2D") as Sprite2D
+@onready var _animated_sprite: AnimatedSprite2D = get_node_or_null("AnimatedSprite2D") as AnimatedSprite2D
+@onready var _status_effects: StatusEffectComponent = get_node_or_null("StatusEffectComponent") as StatusEffectComponent
 
 var _fire_timer := 0.0
+var _spawn_position := Vector2.ZERO
+var _has_spawn_position := false
+var _spawn_position_is_local := false
+
+
+## Capture lazily because spawners assign global_position after adding enemies.
+func _capture_spawn_position() -> void:
+	if not _has_spawn_position:
+		_spawn_position = position if _spawn_position_is_local else global_position
+		_has_spawn_position = true
+
+
+## Keep movement anchored to the release location after being carried.
+## Support world-space patrols and patterns local to a scrolling parent.
+func on_skewer_released(displacement: Vector2, local_displacement: Vector2) -> void:
+	if _has_spawn_position:
+		_spawn_position += local_displacement if _spawn_position_is_local else displacement
+
 
 func _ready() -> void:
-	assert(data != null, "Enemy spawned with no EnemyData assigned")
-	assert(data.projectile_scene != null, "EnemyShip has no projectile_scene assigned")
-	assert(data.ammo != null, "EnemyShip has no ammo assigned")
-	assert(data.texture != null, "EnemyData has no texture assigned")
-
-	_sprite.texture = data.texture
-	_sprite.scale = Vector2.ONE * data.visual_scale
-	_health.max_health = data.health
-	_health.current_health = data.health
 	_health.damaged.connect(_on_damaged)
 	_health.died.connect(_on_died)
+	# Some spawners configure enemies immediately after adding them to the tree.
+	if data != null:
+		_apply_data()
+
+
+func configure(new_data: EnemyData) -> void:
+	assert(new_data != null, "Enemy needs EnemyData")
+	data = new_data
+	if is_node_ready():
+		_apply_data()
+
+
+func _apply_data() -> void:
+	_health.set_max_health(data.health)
+	_configure_visuals()
 	_reset_initial_timer()
 
 
+func _configure_visuals() -> void:
+	if _sprite != null and data.texture != null:
+		_sprite.texture = data.texture
+		_sprite.scale = Vector2.ONE * data.visual_scale
+	if _animated_sprite != null:
+		if data.sprite_frames != null:
+			_animated_sprite.sprite_frames = data.sprite_frames
+		_animated_sprite.scale = Vector2.ONE * data.visual_scale
+		if not data.animation_name.is_empty():
+			_animated_sprite.play(data.animation_name)
+
+
 func _physics_process(delta: float) -> void:
+	if data == null or is_queued_for_deletion():
+		return
 	var final_speed := _status_effects.get_modified_value(
 		StatusEffectData.STAT_MOVEMENT_SPEED,
-		data.move_speed
+		data.get_movement_speed()
 	)
 
 	_move(delta, final_speed)
 
-	if Playarea.has_passed_below_screen(global_position, 200.0):
-		queue_free()
+	_update_play_area_state()
+	if is_queued_for_deletion():
 		return
 
 	# Enemies waiting above the camera do not count down or shoot. Their opening
 	# delay begins on the first frame that they are actually visible.
-	if not Playarea.is_near_screen(global_position):
+	if not _can_fire() or not Playarea.is_near_screen(global_position):
 		return
 
 	_fire_timer -= delta
 	if _fire_timer <= 0.0:
 		_fire()
 		_reset_timer()
+
+
+func _update_play_area_state() -> void:
+	if Playarea.has_passed_below_screen(global_position, 200.0):
+		queue_free()
+
+
+func _can_fire() -> bool:
+	return data != null and data.projectile_scene != null and data.ammo != null
 
 
 func _reset_initial_timer() -> void:
@@ -68,6 +120,8 @@ func _move(delta: float, speed: float) -> void:
 	pass
 
 func _fire() -> Projectile:
+	if not _can_fire():
+		return null
 	var shot := data.projectile_scene.instantiate() as Projectile
 	if shot == null:
 		push_error("Enemy projectile scene must inherit from Projectile")
@@ -96,16 +150,18 @@ func take_damage(amount: int) -> void:
 
 
 func get_contact_damage() -> int:
-	return data.contact_damage
+	return data.contact_damage if data != null else 0
 
 func _on_damaged() -> void:
-	Audio.play_sfx(data.hit_sfx, -18.0, 0.1)
-	modulate = Color(1.0, 0.0, 0.157, 1.0)
+	var sound := hit_sfx if hit_sfx != null else (data.hit_sfx if data != null else null)
+	Audio.play_sfx(sound, hit_sfx_volume_db, 0.1)
+	modulate = damage_flash_colour
 	create_tween().tween_property(self, "modulate", Color.WHITE, 0.15)
 
 
 func _on_died() -> void:
-	Audio.play_sfx(data.death_sfx, -4.0)
+	var sound := explosion_sfx if explosion_sfx != null else (data.death_sfx if data != null else null)
+	Audio.play_sfx(sound, death_sfx_volume_db)
 	GameEvents.enemy_died.emit(global_position, data)
 
 	for cam in get_tree().get_nodes_in_group("shake_camera"):

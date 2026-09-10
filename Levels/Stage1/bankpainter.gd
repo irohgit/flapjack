@@ -57,6 +57,7 @@ var _paint_rng := RandomNumberGenerator.new()
 
 
 func _ready() -> void:
+	add_to_group("banks")
 	_paint_rng.randomize()
 
 	var end_y := end_y_fallback
@@ -195,7 +196,7 @@ func _make_sprite(tex: ImageTexture, pos: Vector2) -> void:
 	add_child(s)
 
 
-# --- Queries for the player push ---
+# --- Shoreline queries ---
 
 func _row_for_local(local_y: float) -> int:
 	return clampi(int((local_y - _top_y) / float(pixel_size)), 0, maxi(_img_h - 1, 0))
@@ -210,6 +211,92 @@ func is_on_bank(world_pos: Vector2) -> bool:
 	var left_edge := _left[row] * float(pixel_size)
 	var right_edge := float(_play_w) - _right[row] * float(pixel_size)
 	return local.x < left_edge or local.x > right_edge
+
+
+## First contact along a point's world-space path, or -1 if it stays in water.
+func get_bank_hit_fraction(world_from: Vector2, world_to: Vector2) -> float:
+	var hit := get_bank_hit(world_from, world_to)
+	return hit.get("fraction", -1.0)
+
+
+## Returns the first contact's fraction and world-space normal pointing into
+## water, or an empty dictionary. Check every crossed profile row so fast shots
+## cannot skip a headland. The first and last rows extend beyond the strip.
+func get_bank_hit(world_from: Vector2, world_to: Vector2) -> Dictionary:
+	if _left.is_empty():
+		return {}
+	var start := to_local(world_from)
+	var movement := to_local(world_to) - start
+	var first_row := _row_for_local(minf(start.y, start.y + movement.y))
+	var last_row := _row_for_local(maxf(start.y, start.y + movement.y))
+	var first_hit := INF
+	var hit_normal := Vector2.ZERO
+
+	for row: int in range(first_row, last_row + 1):
+		var enter := 0.0
+		var leave := 1.0
+		if movement.y != 0.0:
+			var row_top := _top_y + float(row * pixel_size) if row > 0 else -INF
+			var row_bottom := _top_y + float((row + 1) * pixel_size) if row < _img_h - 1 else INF
+			var top_time := (row_top - start.y) / movement.y
+			var bottom_time := (row_bottom - start.y) / movement.y
+			enter = maxf(enter, minf(top_time, bottom_time))
+			leave = minf(leave, maxf(top_time, bottom_time))
+		if enter > leave or enter >= first_hit:
+			continue
+
+		var left_edge := _left[row] * float(pixel_size)
+		var right_edge := float(_play_w) - _right[row] * float(pixel_size)
+		var entry_x := start.x + movement.x * enter
+		if entry_x <= left_edge or entry_x >= right_edge:
+			first_hit = enter
+			hit_normal = Vector2.RIGHT if entry_x <= left_edge else Vector2.LEFT
+			# Entering the inland part of a new row hits its horizontal ledge.
+			if enter > 0.0 and (entry_x < left_edge or entry_x > right_edge):
+				hit_normal = Vector2(0.0, -signf(movement.y))
+			continue
+
+		var hit := INF
+		if movement.x < 0.0:
+			hit = (left_edge - start.x) / movement.x
+		elif movement.x > 0.0:
+			hit = (right_edge - start.x) / movement.x
+		if hit >= enter and hit <= leave and hit < first_hit:
+			first_hit = hit
+			hit_normal = Vector2.RIGHT if movement.x < 0.0 else Vector2.LEFT
+
+	if first_hit == INF:
+		return {}
+
+	# Transform the tangent first to keep the normal perpendicular even when
+	# the bank node has non-uniform scale, then orient it toward open water.
+	var tangent := Vector2(-hit_normal.y, hit_normal.x)
+	var world_tangent := to_global(tangent) - global_position
+	var world_normal := Vector2(world_tangent.y, -world_tangent.x).normalized()
+	if world_normal.dot(to_global(hit_normal) - global_position) < 0.0:
+		world_normal = -world_normal
+	return {"fraction": first_hit, "normal": world_normal}
+
+
+## Keep an entire carried body between the banks, including shore protrusions
+## anywhere along its height. Return a world-space translation into the water.
+func get_water_correction(world_bounds: Rect2) -> Vector2:
+	if _left.is_empty():
+		return Vector2.ZERO
+	var bounds := global_transform.affine_inverse() * world_bounds
+	var first_row := _row_for_local(bounds.position.y)
+	var last_row := _row_for_local(bounds.end.y)
+	var left_edge := -INF
+	var right_edge := INF
+	for row in range(first_row, last_row + 1):
+		left_edge = maxf(left_edge, _left[row] * float(pixel_size) + 2.0)
+		right_edge = minf(right_edge, float(_play_w) - _right[row] * float(pixel_size) - 2.0)
+	var correction := 0.0
+	if bounds.size.x > right_edge - left_edge:
+		correction = (left_edge + right_edge) * 0.5 - bounds.get_center().x
+	else:
+		correction = clampf(0.0, left_edge - bounds.position.x, right_edge - bounds.end.x)
+	return to_global(Vector2(correction, 0.0)) - global_position
 
 
 func bank_push_dir(world_pos: Vector2) -> float:

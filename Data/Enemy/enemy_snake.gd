@@ -18,30 +18,17 @@ const LUNGE_SPEED_MULTIPLIER := 2
 @export var bank_painter: BankPainter
 
 @onready var _detection_area: Area2D = $DetectionRadius
-@onready var _animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 var _chasing := false
 var _target: Node2D = null
 var _stunned := false
 var _lunging := false
 
-var _spawn_position := Vector2.ZERO
 var _patrol_direction := 1.0
-var _has_spawn_position := false
 
 
 func _ready() -> void:
-	assert(data != null, "Enemy spawned with no EnemyData assigned")
-
-	# Base Enemy._ready() normally does this onready wiring; replicated here
-	# because super() is skipped.
-	_health = $HealthComponent
-	_status_effects = $StatusEffectComponent
-
-	_health.max_health = data.health
-	_health.current_health = data.health
-	_health.damaged.connect(_on_damaged)
-	_health.died.connect(_on_died)
+	super()
 
 	_detection_area.area_entered.connect(_on_detection_area_entered)
 	_detection_area.area_exited.connect(_on_detection_area_exited)
@@ -108,15 +95,6 @@ func _on_attack_stun_ended() -> void:
 		_stop_chasing()
 	_animated_sprite.play(&"Idle")
 
-func _physics_process(delta: float) -> void:
-	var final_speed := _status_effects.get_modified_value(
-		StatusEffectData.STAT_MOVEMENT_SPEED,
-		data.move_speed
-	)
-	_move(delta, final_speed)
-	if Playarea.has_passed_below_screen(global_position, 200.0):
-		queue_free()
-
 
 func _move(delta: float, speed: float) -> void:
 	if _stunned:
@@ -138,11 +116,7 @@ func _move(delta: float, speed: float) -> void:
 		return
 
 	# Patrol left and right around the spawn point until the chase triggers.
-	# Captured here rather than in _ready(): the spawner assigns global_position
-	# after adding this node to the scene tree, so _ready() sees the old spot.
-	if not _has_spawn_position:
-		_spawn_position = global_position
-		_has_spawn_position = true
+	_capture_spawn_position()
 
 	var patrol_offset := Vector2(patrol_distance * _patrol_direction, 0.0)
 	var target_position := _spawn_position + patrol_offset

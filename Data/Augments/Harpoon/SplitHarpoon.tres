@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="AugmentData" format=3]
+
+[ext_resource type="Script" path="res://Data/Augments/augment_data.gd" id="1_augment"]
+[ext_resource type="Script" path="res://Data/Augments/Harpoon/split_harpoon_effect.gd" id="2_effect"]
+[ext_resource type="Resource" path="res://Data/Weapons/Harpoon.tres" id="3_weapon"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Items/Augments/Harpoon/split_harpoon.png" id="4_icon"]
+
+[sub_resource type="Resource" id="Effect"]
+script = ExtResource("2_effect")
+
+[resource]
+script = ExtResource("1_augment")
+name = "Split Harpoon"
+targetWeapon = ExtResource("3_weapon")
+augmentEffect = SubResource("Effect")
+texture = ExtResource("4_icon")
+metadata/implementation_status = "scaffold"

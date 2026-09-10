@@ -21,6 +21,7 @@ buses/default_bus_layout="uid://bv2vqdlsn4dlf"
 
 [autoload]
 
+GameSettings="*res://Core/game_settings.gd"
 Playarea="*uid://kwik3usbaupe"
 DebugHud="*uid://b0uptuewb1atn"
 GameEvents="*uid://3lsfc782llap"

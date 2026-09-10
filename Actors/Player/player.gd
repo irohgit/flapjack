@@ -92,17 +92,22 @@ var _tier_has_mast := false
 @export var scrollDirector: ScrollDirector
 #Developer Tools
 func _unhandled_input(event: InputEvent) -> void:
-	if not OS.is_debug_build():
+	if not GameSettings.dev_mode_enabled or _is_dead:
 		return
 	#1. Kill Self Instantly
 	if event.is_action_pressed("kill_self"):
 		get_viewport().set_input_as_handled()
 		_health.take_damage(9999)
+		return
 	#2. Increase scroll speed
+	if scrollDirector == null:
+		return
 	if event.is_action_pressed("increase_scroll_speed"):
 		scrollDirector.change_move_speed(scrollDirector.scroll_speed + scrollDirector.scroll_speed_change)
-	if event.is_action_pressed("decrease_scroll_speed"):
+		get_viewport().set_input_as_handled()
+	elif event.is_action_pressed("decrease_scroll_speed"):
 		scrollDirector.change_move_speed(scrollDirector.scroll_speed - scrollDirector.scroll_speed_change)
+		get_viewport().set_input_as_handled()
 	
 		
 func _ready() -> void:
@@ -323,6 +328,18 @@ func owns_pickup(pickup: PickupData) -> bool:
 	return false
 
 
+## Grant through normal pickup rules, including slots and augment prerequisites.
+func grant_developer_pickup(pickup: PickupData) -> bool:
+	if not GameSettings.dev_mode_enabled or _is_dead or is_queued_for_deletion():
+		return false
+	if pickup == null or not pickup.can_pickup(self):
+		return false
+	if not pickup.apply_to(self):
+		return false
+	pickup_collected.emit(pickup)
+	return true
+
+
 func get_purchase_result(pickup: PickupData) -> PurchaseResult:
 	if pickup == null or not pickup.is_sellable():
 		return PurchaseResult.INVALID_ITEM
@@ -397,6 +414,8 @@ func import_checkpoint(checkpoint: RunCheckpoint) -> bool:
 		return false
 
 	coin_count = checkpoint.coin_count
+	for state in _weapon_states:
+		state.stop_continuous_fire()
 	_weapon_states.clear()
 	for state in checkpoint.weapon_states:
 		_weapon_states.append(state.clone_for_checkpoint())
@@ -487,6 +506,11 @@ func _update_weapons(delta: float) -> void:
 	var cooldown_delta := delta * maxf(fire_rate, 0.0)
 	
 	for state in _weapon_states:
+		if state.data.weaponBehaviour.update_continuous_fire(
+			self, state, delta, shoot_pressed, fire_rate
+		):
+			state.cooldown = 0.0
+			continue
 		state.cooldown -= cooldown_delta
 		var should_fire := shoot_pressed
 		

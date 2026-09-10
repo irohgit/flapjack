@@ -101,7 +101,7 @@ func _spawn_lilypad() -> void:
 
 
 # Samples a random x within the playfield margins, resampling if the
-# BankPainter says that spot is on a bank. 
+# BankPainter says that spot is on a bank.
 func _pick_open_water_x(y: float) -> float:
 	var x := randf_range(edge_margin, play_width - edge_margin)
 	if bank_painter == null:

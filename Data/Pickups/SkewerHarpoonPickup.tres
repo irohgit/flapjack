@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="PickupData" format=3 uid="uid://cmqc1v21s0l1b"]
+
+[ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="1_pickup"]
+[ext_resource type="Resource" uid="uid://c0e47e331m3fb" path="res://Data/Augments/Harpoon/SkewerHarpoon.tres" id="2_content"]
+[ext_resource type="Texture2D" uid="uid://i7qg2b6rnx13" path="res://Assets/UI/Shop/Items/Augments/Harpoon/skewer_harpoon.png" id="3_icon"]
+
+[resource]
+script = ExtResource("1_pickup")
+item_id = &"flapjack:skewer_harpoon"
+texture = ExtResource("3_icon")
+augment = ExtResource("2_content")
+notification_name = "Skewer Harpoon"
+shop_id = &"skewer_harpoon"
+shop_description = "Impale non-boss enemies, stopping their movement and attacks. Harpoons slow while carrying their catch and deal damage over time. Works with Bouncy Harpoon."
+shop_icon = ExtResource("3_icon")
+shop_price = 95

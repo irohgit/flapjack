@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="PickupData" format=3]
 
 [ext_resource type="Script" path="res://Data/Pickups/pickup_data.gd" id="1_pickup"]
-[ext_resource type="Resource" path="res://Data/Augments/StrongerArmsStinkpots.tres" id="2_content"]
+[ext_resource type="Resource" path="res://Data/Augments/SulfurStinkpots/StrongerArmsStinkpots.tres" id="2_content"]
 [ext_resource type="Texture2D" path="res://Assets/UI/Shop/Items/Augments/Stinkpot/stronger_arms.png" id="3_icon"]
 
 [resource]

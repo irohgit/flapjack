@@ -103,7 +103,8 @@ scroll_rig = NodePath("../ScrollRig")
 
 [node name="World" type="Node2D" parent="." unique_id=822996462]
 
-[node name="CoinSpawner" parent="." unique_id=1386735529 instance=ExtResource("9_bq31y")]
+[node name="ItemSpawner" parent="." unique_id=1386735529 instance=ExtResource("9_bq31y")]
+active_level = ExtResource("15_lr66y")
 
 [node name="LevelGenerator" type="Node2D" parent="." unique_id=711120617]
 script = ExtResource("13_d1opp")
