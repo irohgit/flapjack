@@ -15,11 +15,7 @@ const BRIGHTNESS_LAYER_NAME := "FlapjackBrightnessOverlay"
 @onready var return_button: NavButton = %ReturnButton
 @onready var volume_value: Label = %VolumeValue
 @onready var brightness_value: Label = %BrightnessValue
-@onready var dev_mode_button: NavButton = %DevMode
 @onready var debug_screen_button: NavButton = %DebugScreen
-@onready var cheat_menu_button: NavButton = %Cheats
-@onready var _cheat_menu: CheatMenu = $CheatMenu
-@onready var _dev_hint: Label = %DevHint
 
 var _volume := 0.85
 var _brightness := 1.0
@@ -41,10 +37,7 @@ func _ready() -> void:
 	display_option.item_selected.connect(_on_display_selected)
 	fullscreen_toggle.toggled.connect(_on_fullscreen_toggled)
 	return_button.pressed.connect(close_menu)
-	dev_mode_button.pressed.connect(_toggle_dev_mode)
 	debug_screen_button.pressed.connect(_toggle_debug_screen)
-	cheat_menu_button.pressed.connect(_open_cheat_menu)
-	_cheat_menu.closed.connect(_on_cheat_menu_closed)
 	GameSettings.changed.connect(_refresh_labels)
 	_sync_controls()
 	_refresh_labels()
@@ -62,31 +55,14 @@ func open_menu() -> void:
 func close_menu() -> void:
 	if not visible:
 		return
-	if _cheat_menu.visible:
-		_cheat_menu.close_menu()
 	# The same settings scene is opened from the main, pause and death screens.
 	# Returning to a paused parent must not resume gameplay behind that menu.
 	super()
 	get_tree().paused = _paused_before_open
 
 
-func _toggle_dev_mode() -> void:
-	GameSettings.set_dev_mode(not GameSettings.dev_mode_enabled)
-
-
 func _toggle_debug_screen() -> void:
 	GameSettings.set_debug_screen(not GameSettings.debug_screen_enabled)
-
-
-func _open_cheat_menu() -> void:
-	_cheat_menu.open_menu()
-	if _cheat_menu.visible:
-		set_process_unhandled_input(false)
-
-
-func _on_cheat_menu_closed() -> void:
-	set_process_unhandled_input(true)
-	_refresh_labels()
 
 
 func _setup_display_options() -> void:
@@ -112,15 +88,7 @@ func _refresh_labels() -> void:
 	volume_value.text = "%d%%" % roundi(volume_slider.value)
 	brightness_value.text = "%d%%" % roundi(brightness_slider.value)
 	fullscreen_toggle.text = "ON" if fullscreen_toggle.button_pressed else "OFF"
-	dev_mode_button.label_text = "DEV MODE: ON" if GameSettings.dev_mode_enabled else "DEV MODE: OFF"
 	debug_screen_button.label_text = "DEBUG SCREEN: ON" if GameSettings.debug_screen_enabled else "DEBUG SCREEN: OFF"
-	cheat_menu_button.visible = GameSettings.dev_mode_enabled
-	var player := get_tree().get_first_node_in_group("player") as Player
-	cheat_menu_button.disabled = not is_instance_valid(player) or player.is_queued_for_deletion()
-	_dev_hint.visible = GameSettings.dev_mode_enabled
-	_dev_hint.text = "Camera speed: − / ="
-	if cheat_menu_button.disabled:
-		_dev_hint.text = "Start a run to use dev tools."
 
 
 func _on_volume_changed(value: float) -> void:
