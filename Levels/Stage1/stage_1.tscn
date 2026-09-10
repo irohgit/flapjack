@@ -191,8 +191,7 @@ metadata/_custom_type_script = "uid://tsoi3lwff5mf"
 
 [node name="ScreenEncounters" type="Node2D" parent="ScrollRig" unique_id=1299489232]
 
-[node name="Player" parent="ScrollRig" unique_id=2109576054 node_paths=PackedStringArray("camera", "banks", "scrollDirector") instance=ExtResource("4_nx2dg")]
+[node name="Player" parent="ScrollRig" unique_id=2109576054 node_paths=PackedStringArray("camera", "banks") instance=ExtResource("4_nx2dg")]
 position = Vector2(960, 853)
 camera = NodePath("../ShakeCamera")
 banks = NodePath("../../BankPainter")
-scrollDirector = NodePath("../../ScrollDirector")

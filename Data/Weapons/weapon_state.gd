@@ -5,6 +5,7 @@ var cooldown := 0.0
 var augments: Array[AugmentData] = []
 var continuous_effect: Node2D
 
+
 func _init(weapon_data: WeaponData) -> void:
 	data = weapon_data
 

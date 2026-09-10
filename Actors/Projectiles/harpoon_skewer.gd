@@ -12,7 +12,7 @@ var _banks: BankPainter
 
 
 func _ready() -> void:
-	# Follow after projectile movement and keep up with the camera before drawing.
+	# Follow after projectile and camera movement.
 	process_physics_priority = 100
 	process_priority = 100
 	_banks = get_tree().get_first_node_in_group("banks") as BankPainter
@@ -51,7 +51,7 @@ func capture(enemy: Node2D) -> void:
 	var carrier := get_parent() as Projectile
 	_victims.append({
 		"enemy": enemy,
-		# Store relative to travel direction, so the catch turns with a bounce.
+		# Local to the heading, so captured enemies turn with a bounce.
 		"offset": (enemy.global_position - carrier.global_position).rotated(-carrier.direction.angle()),
 		"damage_elapsed": 0.0,
 		"start": enemy.global_position,
@@ -60,8 +60,7 @@ func capture(enemy: Node2D) -> void:
 		"physics_process": enemy.is_physics_processing(),
 	})
 	enemy.set_meta(CARRIER_META, self)
-	# Pause the actor's own movement/AI; child health, status and animation
-	# components keep running, and its collisions and wave ownership stay intact.
+	# Pause enemy movement; leave child health, status and animation running.
 	enemy.set_process(false)
 	enemy.set_physics_process(false)
 	_clamp_to_play_area(enemy)
@@ -88,7 +87,7 @@ func _update_victims(delta := 0.0) -> void:
 			continue
 		enemy.global_position = carrier.global_position + Vector2(victim["offset"]).rotated(carrier.direction.angle())
 		_clamp_to_play_area(enemy)
-		# Only physics advances damage; render updates just follow the camera.
+		# Render updates follow the camera without advancing damage.
 		if delta <= 0.0 or not enemy.has_method("take_damage"):
 			continue
 		victim["damage_elapsed"] += delta
@@ -120,13 +119,13 @@ func release_all() -> void:
 
 
 func _exit_tree() -> void:
-	# Also release on direct queue_free(), scene changes or removal from the tree.
+	# Restore enemies if the projectile is removed without an impact.
 	release_all()
 
 
 func _get_world_bounds(enemy: Node2D) -> Rect2:
 	var bounds := Rect2(enemy.global_position, Vector2.ZERO)
-	# Use actual body and sprite bounds, excluding nested detection-radius areas.
+	# Exclude nested detection areas from the body bounds.
 	for child in enemy.get_children():
 		var local_rect: Rect2
 		if child is Sprite2D and child.is_visible_in_tree() and child.texture != null:

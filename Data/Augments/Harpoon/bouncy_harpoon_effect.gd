@@ -2,7 +2,7 @@ class_name BouncyHarpoonEffect
 extends AugmentEffect
 
 
-## Bank contacts the harpoon can survive before its next bank hit destroys it.
+## Bank bounces before the harpoon breaks.
 @export_range(0, 20, 1) var bounce_limit := 1
 
 

@@ -7,6 +7,7 @@ const ENEMY_LAYER := 2
 
 
 @export var data: GroundEffectData
+var follow_target: Node2D
 
 @onready var _sprite: Sprite2D = $Sprite2D
 @onready var _animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
@@ -31,6 +32,11 @@ func _ready() -> void:
 		return
 
 	_base_scale = scale
+	set_process(is_instance_valid(follow_target))
+	if is_instance_valid(follow_target):
+		process_priority = 100
+		process_physics_priority = 100
+		_follow_target()
 	_reapply_timer = data.reapply_interval
 	_configure_collision()
 	_configure_visual()
@@ -42,6 +48,7 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	_follow_target()
 	_elapsed = minf(_elapsed + delta, data.duration)
 	_apply_lifetime_opacity(_elapsed / data.duration)
 
@@ -58,6 +65,18 @@ func _physics_process(delta: float) -> void:
 
 	_apply_to_overlaps()
 	_reapply_timer = data.reapply_interval
+
+
+func _process(_delta: float) -> void:
+	_follow_target()
+
+
+func _follow_target() -> void:
+	if is_instance_valid(follow_target) and follow_target.is_inside_tree():
+		global_position = follow_target.global_position
+	elif follow_target != null:
+		follow_target = null
+		set_process(false)
 
 
 func _configure_collision() -> void:

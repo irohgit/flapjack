@@ -1,4 +1,4 @@
-class_name MolotovProjectile
+class_name LobbedProjectile
 extends Projectile
 
 var _launch_position := Vector2.ZERO
@@ -16,7 +16,7 @@ func configure_throw(origin: Vector2, landing: Vector2, duration: float, height:
 	_arc_height = maxf(height, 0.0)
 	_initial_rotation = origin.angle_to_point(landing)
 	_spin = TAU if landing.x >= origin.x else -TAU
-	# Disable the normal projectile expiry timer; landing owns destruction.
+	# Landing replaces timed expiry.
 	set_expire_position(landing)
 
 
@@ -29,7 +29,7 @@ func _ready() -> void:
 
 
 func _apply_allegiance() -> void:
-	# A lob passes over ships and banks. Only the fire patch deals damage.
+	# The ground effect deals damage; the lob passes over collisions.
 	collision_layer = 0
 	collision_mask = 0
 	monitoring = false
@@ -42,16 +42,20 @@ func _physics_process(delta: float) -> void:
 	age_time = minf(age_time + delta, _flight_duration)
 	var progress := age_time / _flight_duration
 	global_position = _launch_position.lerp(_landing_position, progress)
-	# The root follows the ground; only the bottle rises above its shadow.
+	# Lift the sprite above the ground path and shadow.
 	var elevation := -sin(progress * PI) * _arc_height / maxf(absf(global_scale.y), 0.001)
 	_sprite.position.y = elevation
 	_animated_sprite.position.y = elevation
 	_sprite.rotation = _initial_rotation + _spin * progress
 	_animated_sprite.rotation = _sprite.rotation
 	if progress >= 1.0:
-		Audio.play_sfx(data.impact_sound, -12.0, 0.1)
-		_spawn_glass_fragments()
-		destroy()
+		_land()
+
+
+func _land() -> void:
+	Audio.play_sfx(data.impact_sound, -12.0, 0.1)
+	_spawn_fragments()
+	destroy()
 
 
 func _draw() -> void:
@@ -59,7 +63,7 @@ func _draw() -> void:
 	draw_circle(Vector2.ZERO, 24.0, Color(0, 0, 0, 0.25))
 
 
-func _spawn_glass_fragments() -> void:
+func _spawn_fragments() -> void:
 	var fragments := CPUParticles2D.new()
 	fragments.emitting = false
 	fragments.amount = 10
@@ -83,6 +87,5 @@ func _spawn_glass_fragments() -> void:
 
 
 func _on_screen_exited() -> void:
-	# The raised bottle can briefly leave the screen during its arc. Complete
-	# the throw so it still breaks and creates exactly one fire patch on landing.
+	# Finish the throw even if the arcing sprite leaves the screen.
 	pass

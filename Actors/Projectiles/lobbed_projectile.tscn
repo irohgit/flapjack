@@ -1,9 +1,9 @@
 [gd_scene format=3]
 
 [ext_resource type="PackedScene" path="res://Actors/Projectiles/projectile.tscn" id="1_base"]
-[ext_resource type="Script" path="res://Actors/Projectiles/molotov_projectile.gd" id="2_script"]
+[ext_resource type="Script" path="res://Actors/Projectiles/lobbed_projectile.gd" id="2_script"]
 
-[node name="MolotovProjectile" instance=ExtResource("1_base")]
+[node name="LobbedProjectile" instance=ExtResource("1_base")]
 collision_layer = 0
 collision_mask = 0
 monitoring = false

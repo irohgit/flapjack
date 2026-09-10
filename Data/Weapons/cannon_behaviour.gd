@@ -1,7 +1,6 @@
 class_name CannonBehaviour
 extends WeaponBehaviour
 
-
 func update_continuous_fire(
 	shooter: Player, weapon: WeaponState, delta: float,
 	firing: bool, fire_rate_multiplier: float
@@ -23,8 +22,7 @@ func update_continuous_fire(
 		beam = CannonLaser.new()
 		beam.name = "CannonLaser"
 		beam.configure(weapon)
-		# Player ownership handles death and scene changes; world coordinates keep
-		# the beam independent of hull scaling and rotation.
+		# Keep the beam attached for cleanup; CannonLaser uses world coordinates.
 		shooter.add_child(beam)
 		weapon.continuous_effect = beam
 	beam.update_beam(shooter.global_position + Vector2(0, -40), delta, fire_rate_multiplier)
@@ -37,11 +35,10 @@ func fire(shooter: Node2D, weapon: WeaponState) -> void:
 	if shot == null:
 		push_error("Cannon projectile scene is not a Projectile")
 		return
-		
+
 	_configure_projectile(shot, weapon)
 	shot.direction = Vector2.UP
 
 	shooter.get_parent().add_child(shot)
 	shot.global_position = shooter.global_position + Vector2(0, -40)
-	#SFX
 	_play_fire_sound_random(weapon)

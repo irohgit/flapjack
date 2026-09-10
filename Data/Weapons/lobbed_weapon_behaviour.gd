@@ -1,6 +1,5 @@
-class_name MolotovBehaviour
+class_name LobbedWeaponBehaviour
 extends WeaponBehaviour
-
 
 @export_range(1.0, 1000.0, 1.0, "or_greater") var throw_range := 300.0
 @export_range(0.05, 5.0, 0.05) var flight_duration := 1.0
@@ -8,17 +7,15 @@ extends WeaponBehaviour
 
 
 func fire(shooter: Node2D, weapon: WeaponState) -> void:
-	var shot := projectile_scene.instantiate() as MolotovProjectile
+	var shot := projectile_scene.instantiate() as LobbedProjectile
 	if shot == null:
-		push_error("Molotov projectile scene must inherit from MolotovProjectile")
+		push_error("Lobbed weapon projectile scene must inherit from LobbedProjectile")
 		return
 	_configure_projectile(shot, weapon)
-	# Configure the shot's own ground-effect data before its augments run.
 	if shot.data.death_ground_effect != null:
-		# The fire pool is an external resource; duplicate it explicitly so its
-		# burn settings are never shared between throws or changed on the template.
-		shot.data.death_ground_effect = shot.data.death_ground_effect.duplicate(true) as GroundEffectData
-		for effect in shot.data.death_ground_effect.status_effects:
+		var ground_effect := shot.data.death_ground_effect.duplicate(true) as GroundEffectData
+		shot.data.death_ground_effect = ground_effect
+		for effect in ground_effect.status_effects:
 			for action in effect.tick_actions:
 				if action is DamageEffectAction:
 					action.amount = maxi(weapon.data.damage, 0)
