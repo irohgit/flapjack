@@ -1,12 +1,11 @@
 class_name PickupData
 extends Resource
 
-# Keep existing values stable because Godot serializes enum selections as
-# integers in .tres and .tscn files. New pickup types belong at the end.
-enum PickupType {AUGMENT, WEAPON, COIN, HEALTH, SHIELD, GIN, POTION}
+# Enum values are saved in resources. Append new types; do not reorder.
+enum PickupType { AUGMENT, WEAPON, COIN, HEALTH, SHIELD, GIN, POTION }
 
 @export_group("Identity")
-## Stable ID used by enemy loot JSON, for example "flapjack:gold_coin".
+## Item ID used in loot tables.
 @export var item_id: StringName
 
 @export_group("Pickup")
@@ -29,19 +28,18 @@ enum PickupType {AUGMENT, WEAPON, COIN, HEALTH, SHIELD, GIN, POTION}
 @export_range(0, 100000, 1, "or_greater") var shop_price := 0
 @export_enum("COMMON", "UNCOMMON", "RARE", "EPIC") var shop_rarity: String = "COMMON"
 
-#SFX
-# --- Audio ---
-# Per-variant so a gold coin can sound different from a bronze one. 
+# Audio
 @export var pickup_sfx: AudioStream
 @export var pickup_volume_db := -6.0
 @export_range(0.0, 0.5, 0.01) var pickup_pitch_spread := 0.04
 @export_range(0.3, 2.0, 0.01) var pickup_pitch := 1.0
 
-#VFX
+# Visuals
 @export var highlight_material: ShaderMaterial
 
+
 func can_pickup(player: Player) -> bool:
-	if player == null or not is_implemented():
+	if player == null:
 		return false
 
 	match pickup_type:
@@ -112,30 +110,8 @@ func get_shop_id() -> StringName:
 	return shop_id
 
 
-func is_implemented() -> bool:
-	if get_meta("implementation_status", "") == "scaffold":
-		return false
-	var content: Resource
-	match pickup_type:
-		PickupType.WEAPON:
-			if weapon == null or weapon.weaponBehaviour == null:
-				return false
-			content = weapon
-		PickupType.AUGMENT:
-			if augment == null or augment.augmentEffect == null:
-				return false
-			if augment.targetWeapon != null and augment.targetWeapon.get_meta("implementation_status", "") == "scaffold":
-				return false
-			content = augment
-		PickupType.HEALTH, PickupType.SHIELD, PickupType.POTION:
-			if potion == null:
-				return false
-			content = potion
-	return content == null or content.get_meta("implementation_status", "") != "scaffold"
-
-
 func is_sellable() -> bool:
-	if not is_implemented() or shop_id.is_empty() or shop_price <= 0 or get_shop_icon() == null:
+	if shop_id.is_empty() or shop_price <= 0 or get_shop_icon() == null:
 		return false
 
 	match pickup_type:

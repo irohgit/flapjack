@@ -44,18 +44,18 @@ func _find_first_enemy(from: Vector2, to: Vector2) -> Dictionary:
 	var query := PhysicsRayQueryParameters2D.create(from, to, 2)
 	query.collide_with_areas = true
 	query.hit_from_inside = true
+	var space := get_world_2d().direct_space_state
 	var excluded: Array[RID] = []
-	while true:
-		query.exclude = excluded
-		var hit := get_world_2d().direct_space_state.intersect_ray(query)
-		if hit.is_empty():
-			return {}
+	var hit := space.intersect_ray(query)
+	while not hit.is_empty():
 		var enemy := hit["collider"] as Node2D
 		if enemy != null and enemy.is_in_group("enemy") and not enemy.is_queued_for_deletion():
 			var health := enemy.get_node_or_null("HealthComponent") as HealthComponent
 			if health != null and health.get_current_health() > 0:
 				return hit
 		excluded.append(hit["rid"])
+		query.exclude = excluded
+		hit = space.intersect_ray(query)
 	return {}
 
 

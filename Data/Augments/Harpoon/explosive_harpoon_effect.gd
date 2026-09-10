@@ -1,7 +1,6 @@
 class_name ExplosiveHarpoonEffect
 extends AugmentEffect
 
-
 @export_range(1.0, 1000.0, 1.0, "or_greater") var explosion_radius := 120.0
 @export_range(1, 100, 1, "or_greater") var explosion_damage := 3
 @export var explosion_sound: AudioStream = preload("res://Audio/SFX/ship_destroyed.mp3")
@@ -21,7 +20,7 @@ func _detonate(projectile: Projectile) -> void:
 	blast.sound = explosion_sound
 	if projectile.skewer != null:
 		blast.carried_targets = projectile.skewer.get_carried_enemies()
-	# The blast outlives the projectile and uses world-space size and position.
+	# Spawn beside the projectile so the blast survives its removal.
 	blast.top_level = true
 	blast.position = projectile.global_position
 	projectile.get_parent().add_child(blast)

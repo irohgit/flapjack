@@ -97,7 +97,7 @@ func load_offers(player: Player, offers: Array[PickupData]) -> void:
 	_set_player(player)
 	_offers.clear()
 	for pickup in offers:
-		if pickup == null or not pickup.is_sellable():
+		if pickup == null:
 			continue
 		_offers.append(pickup)
 		if _offers.size() == OFFER_SLOT_COUNT:

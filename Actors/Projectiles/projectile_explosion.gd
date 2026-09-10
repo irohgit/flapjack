@@ -32,7 +32,7 @@ func _apply_damage() -> void:
 	var space := get_world_2d().direct_space_state
 	var excluded: Array[RID] = []
 	var targets: Dictionary = {}
-	# Batch the query so dense groups aren't limited to the first few hits.
+	# Query all overlaps, even when they exceed one batch.
 	while true:
 		var hits := space.intersect_shape(query, QUERY_BATCH_SIZE)
 		for hit: Dictionary in hits:
@@ -43,8 +43,7 @@ func _apply_damage() -> void:
 		if hits.size() < QUERY_BATCH_SIZE:
 			break
 		query.exclude = excluded
-	# Carried bodies can have just moved, or been clamped away from the tip at
-	# a bank. Include the catch explicitly and deduplicate against query hits.
+	# Include carried enemies that moved outside the blast query at a bank.
 	for target in carried_targets:
 		if is_instance_valid(target):
 			targets[target.get_instance_id()] = target

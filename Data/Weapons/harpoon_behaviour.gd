@@ -7,7 +7,7 @@ func fire(shooter: Node2D, weapon: WeaponState) -> void:
 	if shot == null:
 		push_error("Harpoon projectile scene is not a Projectile")
 		return
-		
+
 	_configure_projectile(shot, weapon)
 	shooter.get_parent().add_child(shot)
 	shot.global_position = shooter.global_position + Vector2(0, -40)
@@ -18,10 +18,6 @@ func fire(shooter: Node2D, weapon: WeaponState) -> void:
 		shot.queue_free()
 		return
 
+	shot.direction = shot.global_position.direction_to(target.global_position)
 
-	shot.direction = shot.global_position.direction_to(
-		target.global_position
-	)
-
-	#SFX
 	_play_fire_sound(weapon)

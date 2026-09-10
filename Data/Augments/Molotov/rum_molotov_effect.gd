@@ -1,7 +1,6 @@
 class_name RumMolotovEffect
 extends AugmentEffect
 
-
 @export_range(1.0, 10.0, 0.1, "or_greater") var burn_duration_multiplier := 2.0
 
 

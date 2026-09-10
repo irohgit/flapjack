@@ -1,8 +1,7 @@
 class_name ProjectileData
 extends Resource
 
-# Who fired this. Decides collision layers, so the shot's identity travels with
-# its data rather than being applied by whoever spawned it.
+# Allegiance selects collision layers.
 enum Allegiance { PLAYER, ENEMY }
 
 @export var allegiance: Allegiance = Allegiance.PLAYER
@@ -16,8 +15,8 @@ enum Allegiance { PLAYER, ENEMY }
 @export var trail_colour := Color.WHITE
 @export var trail_length := 12
 @export var status_effects: Array[StatusEffectData] = []
-## Optional area spawned when this projectile ends by impact, endpoint, or expiry.
+## Area spawned on impact, landing or expiry.
 @export var death_ground_effect: GroundEffectData
 @export var impact_sound: AudioStream
-## Fallback lifetime in seconds. Zero disables it; a fixed endpoint takes priority.
+## Lifetime in seconds; 0 disables it. Fixed endpoints take priority.
 @export var expire_time := 5.0

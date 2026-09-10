@@ -1,7 +1,6 @@
 class_name LobbedWeaponBehaviour
 extends WeaponBehaviour
 
-
 @export_range(1.0, 1000.0, 1.0, "or_greater") var throw_range := 300.0
 @export_range(0.05, 5.0, 0.05) var flight_duration := 1.0
 @export_range(0.0, 300.0, 1.0) var arc_height := 80.0
@@ -14,8 +13,9 @@ func fire(shooter: Node2D, weapon: WeaponState) -> void:
 		return
 	_configure_projectile(shot, weapon)
 	if shot.data.death_ground_effect != null:
-		shot.data.death_ground_effect = shot.data.death_ground_effect.duplicate(true) as GroundEffectData
-		for effect in shot.data.death_ground_effect.status_effects:
+		var ground_effect := shot.data.death_ground_effect.duplicate(true) as GroundEffectData
+		shot.data.death_ground_effect = ground_effect
+		for effect in ground_effect.status_effects:
 			for action in effect.tick_actions:
 				if action is DamageEffectAction:
 					action.amount = maxi(weapon.data.damage, 0)

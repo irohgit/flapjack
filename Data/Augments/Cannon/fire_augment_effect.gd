@@ -7,12 +7,13 @@ extends AugmentEffect
 @export var fireball_frames: SpriteFrames
 @export var fireball_animation := &"burn"
 
-func apply_to_projectile(_projectile: Projectile) -> void:
-	_projectile.fire = true
-	_projectile.sprite_frames_override = fireball_frames
-	_projectile.animation_name_override = fireball_animation
+
+func apply_to_projectile(projectile: Projectile) -> void:
+	projectile.fire = true
+	projectile.sprite_frames_override = fireball_frames
+	projectile.animation_name_override = fireball_animation
 	for effect in get_status_effects():
-		_projectile.add_status_effect(effect)
+		projectile.add_status_effect(effect)
 
 
 func get_status_effects() -> Array[StatusEffectData]:
