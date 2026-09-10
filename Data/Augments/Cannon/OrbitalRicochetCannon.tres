@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://lwfav2amh5h7" path="res://Data/Augments/Cannon/orbital_ricochet.gd" id="1_s2ine"]
 [ext_resource type="Script" uid="uid://cpp3oou337x" path="res://Data/Augments/augment_data.gd" id="1_sjybk"]
 [ext_resource type="Resource" uid="uid://b7nwwwfmfkswx" path="res://Data/Weapons/Cannon.tres" id="3_4rels"]
-[ext_resource type="Texture2D" path="res://Assets/Pickups/OrbitalRicochetPickup.png" id="4_qulrg"]
+[ext_resource type="Texture2D" uid="uid://cr4w2iejh4ajm" path="res://Assets/Pickups/OrbitalRicochetPickup.png" id="4_qulrg"]
 
 [sub_resource type="Resource" id="Resource_sjybk"]
 script = ExtResource("1_s2ine")

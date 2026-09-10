@@ -6,6 +6,7 @@ extends CanvasLayer
 @onready var active_effects_container: HBoxContainer = $ActiveEffects
 @onready var potion_slots_container: HBoxContainer = $PotionSlots
 @onready var boss_health_display: Control = $BossHealth
+@onready var boss_name_label: Label = $BossHealth/Panel/Margin/Content/BossName
 @onready var boss_health_bar: ProgressBar = $BossHealth/Panel/Margin/Content/BarLayer/Bar
 @onready var boss_health_text: Label = $BossHealth/Panel/Margin/Content/BarLayer/HealthText
 
@@ -33,6 +34,7 @@ var _active_effect_entries: Dictionary = {}
 func _ready() -> void:
 	boss_health_display.hide()
 	GameEvents.boss_health_changed.connect(_on_boss_health_changed)
+	GameEvents.boss_name_changed.connect(_on_boss_name_changed)
 	GameEvents.boss_defeated.connect(_on_boss_defeated)
 	GameEvents.player_died.connect(_on_player_died)
 
@@ -122,6 +124,10 @@ func _on_boss_health_changed(current: int, maximum: int) -> void:
 	boss_health_bar.value = clampi(current, 0, maximum)
 	boss_health_text.text = "%d / %d" % [current, maximum]
 	boss_health_display.show()
+
+
+func _on_boss_name_changed(boss_name: String) -> void:
+	boss_name_label.text = boss_name
 
 
 func _on_boss_defeated(_world_position: Vector2) -> void:
