@@ -1,11 +1,36 @@
 [gd_resource type="Resource" script_class="GroundEffectData" format=3]
 
 [ext_resource type="Script" path="res://Data/GroundEffects/ground_effect_data.gd" id="1_ground"]
+[ext_resource type="Script" path="res://Systems/Combat/effect_action.gd" id="2_action"]
+[ext_resource type="Script" path="res://Systems/Combat/damage_effect_action.gd" id="3_damage"]
+[ext_resource type="Script" path="res://Systems/Combat/status_effect_data.gd" id="4_status"]
+[ext_resource type="Texture2D" path="res://Assets/GroundEffects/gas_cloud.png" id="5_texture"]
+
+[sub_resource type="Resource" id="Damage_tick"]
+script = ExtResource("3_damage")
+amount = 1
+
+[sub_resource type="Resource" id="Status_gas"]
+script = ExtResource("4_status")
+effect_id = &"sulfur_gas"
+display_name = "Sulfur Gas"
+description = "Takes poison damage over time."
+icon = ExtResource("5_texture")
+show_in_hud = true
+duration = 0.75
+reapply_policy = 0
+preserve_tick_on_refresh = true
+tick_interval = 0.5
+tick_actions = Array[ExtResource("2_action")]([SubResource("Damage_tick")])
 
 [resource]
 script = ExtResource("1_ground")
+target = 1
+status_effects = Array[ExtResource("4_status")]([SubResource("Status_gas")])
+reapply_interval = 0.25
 hitbox_radius = 80.0
 duration = 3.0
-tint = Color(0.65, 0.8, 0.25, 1)
-metadata/implementation_notes = "TODO: Configure gas damage/status and lingering duration. Optional fire ignition needs ground-effect interaction logic."
-metadata/implementation_status = "scaffold"
+pulse_amount = 0.1
+pulse_period = 1.2
+texture = ExtResource("5_texture")
+visual_scale = 5.0
