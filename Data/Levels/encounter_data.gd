@@ -6,9 +6,9 @@ enum Type {
 	NORMAL,
 	SPECIAL,
 	CUTSCENE,
-	MERCHANT
+	MERCHANT,
+	MIDBOSS,
 }
-
 
 @export_group("Encounter")
 ## NORMAL entries use their enemy and formation pools. SPECIAL entries choose a
@@ -16,8 +16,7 @@ enum Type {
 @export var type: Type = Type.NORMAL
 ## Zero never runs, while one always runs. The roll happens when the stage loads.
 @export_range(0.0, 1.0, 0.01) var chance_to_run: float = 1.0
-## Distance along the stage from the previous encounter that actually ran.
-## The first encounter that runs uses LevelData.spawn_ahead_distance instead.
+## Distance along the stage from the previous encounter that actually ran. The first encounter that runs uses LevelData.spawn_ahead_distance instead.
 @export_range(0.0, 10000.0, 1.0, "or_greater") var distance_after_previous: float = 500.0
 
 
@@ -36,3 +35,8 @@ enum Type {
 
 @export_group("Merchant")
 @export var merchant_scene: PackedScene
+
+@export_group("Mid-boss") ## Halts the stage, plays the intro, spawns this, waits for it to die, plays  the outro, then resumes. Intro and outro are optional.
+@export var midboss_scene: PackedScene #required
+@export var midboss_intro: PackedScene #optional
+@export var midboss_outro: PackedScene #optional

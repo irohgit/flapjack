@@ -5,7 +5,8 @@ enum Type {
 	NORMAL,
 	SPECIAL,
 	CUTSCENE,
-	MERCHANT
+	MERCHANT,
+	MIDBOSS,
 }
 
 var type: Type
@@ -18,3 +19,6 @@ var special_scene: PackedScene
 var gin_barrels: Array[DestructibleData] = []
 var cutscene_scene: PackedScene
 var merchant_scene: PackedScene
+var midboss_scene: PackedScene #required for midboss
+var midboss_intro: PackedScene #optional for midboss
+var midboss_outro: PackedScene #optional for midboss

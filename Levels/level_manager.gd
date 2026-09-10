@@ -21,6 +21,11 @@ signal sequence_completed
 
 var _plan_cancelled := false #Stops the level manager from running as a coroutine
 
+@export_group("Mid-boss")
+## How far above the top of the view the boss appears before sailing in.
+## Must stay below the boss's own activation_margin, or it spawns outside its
+## movement gate and never arrives.
+@export var midboss_entry_lead := 200.0
 
 func run_generated_stage() -> bool:
 	Audio.play_music(stage_music, stage_music_db, music_fade_in)
@@ -80,6 +85,8 @@ func run_encounter(encounter: GeneratedEncounter) -> void:
 			await run_cutscene_encounter(encounter)
 		GeneratedEncounter.Type.MERCHANT:
 			run_merchant_encounter(encounter)
+		GeneratedEncounter.Type.MIDBOSS:
+			await run_midboss_encounter(encounter) #Await allows us to finish the encounter before the next one 
 
 func run_normal_encounter(encounter: GeneratedEncounter) -> void:
 	enemy_controller.spawn_pack(
@@ -158,8 +165,6 @@ func run_cutscene_encounter(encounter: GeneratedEncounter) -> void:
 	CutsceneManager.play(encounter.cutscene_scene)
 	await CutsceneManager.cutscene_finished	
 
-
-
 func run_merchant_encounter(encounter: GeneratedEncounter) -> void:
 	## Anchors a merchant boat in world space against one bank, above the view. The scroll rig brings it down into frame. It never moves under its own power, and it does not block the sequence, because visiting it is the player's choice.
 	if encounter.merchant_scene == null:
@@ -188,6 +193,103 @@ func run_merchant_encounter(encounter: GeneratedEncounter) -> void:
 	boat.global_position = Vector2(bank_x, encounter.spawn_position.y)
 
 	print("[MERCHANT] anchored at ", boat.global_position, " right = ", encounter.spawn_from_right)
+#func run_midboss_encounter(encounter: GeneratedEncounter) -> void: ## A mid-boss halts the stage. Dialogue first, then the ship arrives as the payoff, then the fight happens in one place before the stage resumes. This is the only encounter type that blocks the plan on purpose.
+	#if encounter.midboss_scene == null:
+		#push_warning("Mid-boss encounter has no scene")
+		#return
+	#if _world == null:
+		#push_error("Stage has no World node, cannot place a mid-boss")
+		#return
+#
+	#scroll_director.hold() #Holds the world so we can fight. 
+#
+	#if encounter.midboss_intro != null: #Play the intro cutscene
+		#CutsceneManager.play(encounter.midboss_intro)
+		#await CutsceneManager.cutscene_finished
+		#
+	#if _plan_cancelled: #If we exit or stop run early.
+		#return
+#
+	#var boss := encounter.midboss_scene.instantiate() as Node2D #Setup Boss
+	#
+	#if boss == null:
+		#push_error("Mid-boss scene must inherit from Node2D")
+		#scroll_director.resume()
+		#return
+	#_world.add_child(boss) #Add boss to world
+	#boss.global_position = encounter.spawn_position #Set its position to encounter spawn_position
+#
+	#
+	#while is_instance_valid(boss) and not _plan_cancelled:  # The fight. Ends when the boss dies, or when the run does.
+		#await get_tree().process_frame
+	#if _plan_cancelled:
+		#return
+#
+	#if encounter.midboss_outro != null: #Play the outtro cutscene
+		#CutsceneManager.play(encounter.midboss_outro)
+		#await CutsceneManager.cutscene_finished
+	#if _plan_cancelled:
+		#return
+#
+	#scroll_director.resume() #Resume the scroll-director
+func run_midboss_encounter(encounter: GeneratedEncounter) -> void:
+	print("[MIDBOSS] start. scene=", encounter.midboss_scene, " intro=", encounter.midboss_intro, " outro=", encounter.midboss_outro)
+	if encounter.midboss_scene == null:
+		push_warning("Mid-boss encounter has no scene")
+		return
+	if _world == null:
+		push_error("Stage has no World node, cannot place a mid-boss")
+		return
+
+	scroll_director.hold()
+	print("[MIDBOSS] held")
+
+	if encounter.midboss_intro != null:
+		print("[MIDBOSS] playing intro")
+		CutsceneManager.play(encounter.midboss_intro)
+		await CutsceneManager.cutscene_finished
+		print("[MIDBOSS] intro finished")
+	else:
+		print("[MIDBOSS] no intro assigned")
+	if _plan_cancelled:
+		return
+
+	var boss := encounter.midboss_scene.instantiate() as Node2D
+	if boss == null:
+		push_error("Mid-boss scene must inherit from Node2D")
+		scroll_director.resume()
+		return
+	_world.add_child(boss)
+	var rect:= Playarea.get_visible_world_rect()
+	boss.global_position = Vector2(encounter.spawn_position.x, rect.position.y - midboss_entry_lead) #place boss at the encounter's spawn position offset by lead
+	
+	#announce boss (show the health bar) once the boss is in view of the screen
+	var view := Playarea.get_visible_world_rect()
+	while is_instance_valid(boss) and not _plan_cancelled and not view.has_point(boss.global_position):
+		await get_tree().process_frame
+		view = Playarea.get_visible_world_rect()
+	if _plan_cancelled:
+		return
+	if boss is Enemy:
+		(boss as Enemy).announce_boss()
+	
+	
+	print("[MIDBOSS] boss spawned at ", boss.global_position, " visible rect = ", Playarea.get_visible_world_rect())
+
+	while is_instance_valid(boss) and not _plan_cancelled:
+		await get_tree().process_frame
+	print("[MIDBOSS] fight over. cancelled = ", _plan_cancelled)
+	if _plan_cancelled:
+		return
+
+	if encounter.midboss_outro != null:
+		CutsceneManager.play(encounter.midboss_outro)
+		await CutsceneManager.cutscene_finished
+	if _plan_cancelled:
+		return
+
+	scroll_director.resume()
+	print("[MIDBOSS] resumed")
 
 func play_entry() -> void:
 	if not entry_enabled:
