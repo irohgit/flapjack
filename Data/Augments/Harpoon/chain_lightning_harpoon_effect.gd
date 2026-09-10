@@ -8,5 +8,5 @@ extends AugmentEffect
 
 
 func apply_to_projectile(_projectile: Projectile) -> void:
-	# TODO: Retarget an unhit enemy after impact, stop chaining after three targets, then use bounce behaviour. Define whether bounce is built in or needs Bouncy Harpoon, hit budgets, one-generation splits, and Skewer precedence.
+	# TODO: Retarget an unhit enemy after impact, stop chaining after three targets, then use bounce behaviour. Define whether bounce is built in or needs Bouncy Harpoon, hit budgets, and Skewer precedence.
 	pass

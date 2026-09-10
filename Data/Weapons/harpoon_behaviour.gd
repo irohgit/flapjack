@@ -19,13 +19,9 @@ func fire(shooter: Node2D, weapon: WeaponState) -> void:
 		return
 
 
-	var desired_direction := shot.global_position.direction_to(
+	shot.direction = shot.global_position.direction_to(
 		target.global_position
 	)
-		
-	var angle_to_target := shot.direction.angle_to(desired_direction)
-		
-	shot.direction = shot.direction.rotated(angle_to_target).normalized()
 
 	#SFX
 	_play_fire_sound(weapon)
