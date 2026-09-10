@@ -297,6 +297,35 @@ text = "OFF"
 layout_mode = 2
 theme_override_constants/separation = 8
 
+[node name="DevMode" parent="Panel/Content/DebugControls" instance=ExtResource("7_navbutton")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(520, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+enforce_sizing = false
+texture_normal = ExtResource("4_button")
+texture_pressed = ExtResource("4_button")
+texture_hover = ExtResource("4_button")
+texture_focused = ExtResource("4_button")
+label_text = "DEV MODE: OFF"
+label_size = 28
+label_font = ExtResource("6_font")
+label_color = Color(1, 0.93, 0.76, 1)
+label_outline_color = Color(0.03, 0.01, 0, 1)
+label_outline_size = 3
+focus_tint = Color(1.22, 1.08, 0.78, 1)
+focus_sound = ExtResource("8_hover")
+press_sound = ExtResource("9_click")
+
+[node name="DevHint" type="Label" parent="Panel/Content/DebugControls"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.93, 0.76, 1)
+theme_override_font_sizes/font_size = 24
+text = "Scroll speed: − / = or D-pad ↓ / ↑"
+horizontal_alignment = 1
+
 [node name="DebugScreen" parent="Panel/Content/DebugControls" instance=ExtResource("7_navbutton")]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(520, 64)
