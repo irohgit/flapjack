@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://btdaigjltsc2m" path="res://UI/DeathScreen/death_screen.tscn" id="2_hqqrp"]
 [ext_resource type="Script" uid="uid://brbwnisqfxs8e" path="res://UI/game_ui.gd" id="3_game_ui"]
 [ext_resource type="PackedScene" uid="uid://dpbyqdwsufn2f" path="res://UI/Shop/shop_menu.tscn" id="4_shop"]
+[ext_resource type="PackedScene" uid="uid://e1sy5jsvu7uu" path="res://UI/stage_title_card.tscn" id="5_7csst"]
 
 [node name="GameUI" type="CanvasLayer" unique_id=1532914546]
 script = ExtResource("3_game_ui")
@@ -17,3 +18,6 @@ visible = false
 visible = false
 pauses_tree = true
 frees_on_close = false
+
+[node name="StageTitleCard" parent="." unique_id=42426168 instance=ExtResource("5_7csst")]
+visible = false

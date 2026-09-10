@@ -30,7 +30,9 @@ func run_generated_stage() -> bool:
 	assert(enemy_controller != null, "%s needs an EnemyController" % name)
 	assert(level_generator != null, "%s needs a LevelGenerator" % name)
 	assert(level_generator.level_data != null, "LevelGenerator needs LevelData")
-	await play_entry()
+	
+	await play_entry() #transition into the level smoothly 
+	_show_stage_title() # Run Title after player has sceen the transition into the level
 	
 	var plan: Array[GeneratedEncounter] = level_generator.generate_plan()
 	scroll_director.move_to(level_generator.level_data.end_position)
@@ -208,3 +210,15 @@ func play_entry() -> void:
 	await tween.finished
 
 	player.end_scripted_move()
+
+
+## Shows the chapter card, if this stage has a title. Deliberately not awaited: the card fades over the opening scroll rather than delaying it.
+func _show_stage_title() -> void:
+	var data: LevelData = level_generator.level_data
+	if data == null or data.stage_title.is_empty():
+		return
+	var card := get_tree().get_first_node_in_group(Groups.STAGE_TITLE) as StageTitleCard
+	if card == null:
+		push_warning("No StageTitleCard in the scene, skipping the chapter card")
+		return
+	card.show_title(data.stage_title, data.stage_subtitle, data.title_hold)
