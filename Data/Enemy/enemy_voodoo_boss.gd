@@ -42,6 +42,7 @@ var _is_dying := false
 
 
 func _ready() -> void:
+	add_to_group("boss")
 	super()
 	assert(poison_data != null, "Voodoo boss needs poison projectile data")
 	assert(bird_scene != null, "Voodoo boss needs a bird scene")

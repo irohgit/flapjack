@@ -15,6 +15,9 @@ collision_mask = 4
 script = ExtResource("1_prcy0")
 hit_sfx = ExtResource("2_2n1w6")
 explosion_sfx = ExtResource("2_2n1w6")
+hit_sfx_volume_db = 5.0
+death_sfx_volume_db = 5.0
+damage_flash_colour = Color(1, 0.4, 0.4, 1)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1069660223]
 sprite_frames = ExtResource("2_uqecc")

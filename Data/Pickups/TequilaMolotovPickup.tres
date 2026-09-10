@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="PickupData" format=3]
 
 [ext_resource type="Script" path="res://Data/Pickups/pickup_data.gd" id="1_pickup"]
-[ext_resource type="Resource" path="res://Data/Augments/TequilaMolotov.tres" id="2_content"]
+[ext_resource type="Resource" path="res://Data/Augments/Molotov/TequilaMolotov.tres" id="2_content"]
 [ext_resource type="Texture2D" path="res://Assets/UI/Shop/Items/Augments/Molotov/tequila.png" id="3_icon"]
 
 [resource]
@@ -12,6 +12,6 @@ augment = ExtResource("2_content")
 notification_name = "Tequila"
 shop_id = &"tequila_molotov"
 shop_price = 0
+shop_description = "Molotov burns twice as hot but burns out in half the time. Doubles burn damage and halves fire-patch and lingering-burn durations."
 texture = ExtResource("3_icon")
 shop_icon = ExtResource("3_icon")
-metadata/implementation_status = "scaffold"

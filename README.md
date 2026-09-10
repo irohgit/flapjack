@@ -43,6 +43,59 @@ components. For example, the Player node runs `Actors/Player/player.gd`, while
 its child `HealthComponent` and `ShieldComponent` nodes manage their individual
 pieces of combat state.
 
+## Cannon augment combinations
+
+Chain lightning and laser are emergent behaviours from existing upgrades;
+they have no separate augment resources, pickups, or shop items.
+
+- Piercing + Orbital Ricochet + Plasma produces chain lightning behaviour.
+  The interaction is implemented in `Actors/Projectiles/Projectile.gd`.
+- Plasma + an active Rapid Fire potion replaces Cannon shots with a laser while
+  Shoot is held. A `RayCast2D` stops at the first enemy, barrel, or obstacle;
+  banks and the visible screen edge also limit its length. The blue sprite sheet
+  supplies animated muzzle/tip caps and repeated body segments at 12 fps.
+  Contact damage is checked every 0.1 seconds at Cannon damage divided by its
+  shot interval, multiplied by the player's current fire-rate modifier.
+  Fractional damage accumulates on the current target. Plasma slow, Fire burn,
+  and projectile status data also apply; refreshing burn preserves its tick
+  timer. Releasing Shoot or losing the combo stops the beam. Homing, Piercing,
+  and Ricochet retain their projectile behaviour and do not redirect or extend
+  this first-hit beam.
+
+Grape Cannon has been dropped from the planned augments.
+
+## Molotov
+
+Molotov is a passive weapon: every five seconds it lobs a bottle in a random
+direction, up to 300 world units away. A throw takes one second, with a spinning
+bottle above a ground shadow. Landing positions are clamped inside the visible
+screen. The bottle flies over actors and banks, then breaks into fragments and
+spawns one pulsing fire patch at the landing point.
+
+The patch copies the confusion pool's settings: five-second lifetime, 64-unit
+base radius, 0.75-second reapplication interval, 0.15 pulse amount, 0.9-second
+pulse period, 4x visual scale, and the same default opacity fade and spawn scale.
+It uses the original confusion blob with a red/orange/yellow palette shader,
+preserving its exact pixels and transparency. It targets enemies and applies
+Burn instead of Confusion. Burn uses confusion's three-second debuff duration
+and KEEP_LONGEST reapplication policy, with the Molotov's damage per 0.5-second
+tick. Throw rate uses the player's usual fire-rate modifiers. Range, flight
+time, and arc height are editable on the weapon behaviour.
+
+Molotov augments modify each throw's own fire-effect data:
+
+- Tequila doubles burn damage and halves both patch and lingering-burn duration.
+- Rum doubles both patch and lingering-burn duration.
+- Liqueur adds sticky fire: burning enemies move at half speed until Burn ends,
+  including the lingering burn after leaving the patch. It does not boost damage.
+
+These defaults combine: all three give 2x burn damage and a 50% slow with the
+original five-second patch and three-second debuff durations. Rum extends the
+slow along with Burn; Tequila shortens both. Reapplying the same burn does not
+compound the slow. The 0.5-second tick interval stays the same. Multipliers are
+editable on each augment effect;
+damage is rounded to whole health units when applying each damage multiplier.
+
 ## Creating a ground effect
 
 Ground areas use the same `StatusEffectData` resources as projectiles and

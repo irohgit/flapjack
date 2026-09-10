@@ -1,7 +1,6 @@
 class_name StatusEffectModifier
 extends Resource
 
-
 enum Operation {
 	ADD,
 	MULTIPLY,

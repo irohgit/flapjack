@@ -1,5 +1,5 @@
 class_name PatternButcherBirdData
-extends EnemyDropSourceData
+extends EnemyData
 
 enum MovementPattern {
 	SINE,
@@ -9,7 +9,6 @@ enum MovementPattern {
 
 @export_group("Visuals")
 
-@export var sprite_frames: SpriteFrames
 @export var warning_texture: Texture2D
 
 @export_group("Movement")
@@ -18,6 +17,12 @@ enum MovementPattern {
 @export var amplitude: float = 80.0
 @export var frequency: float = 2.0
 
-@export_group("Combat")
-@export var health: int = 1
-@export var contact_damage: int = 1
+
+func _init() -> void:
+	health = 1
+	animation_name = &"fly"
+
+
+func get_movement_speed() -> float:
+	# Preserve the speed field used by existing bird resources.
+	return speed

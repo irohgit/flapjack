@@ -14,6 +14,9 @@ var _is_collected := false
 
 func _ready() -> void:
 	assert(data != null, "WorldPickup has no PickupData")
+	if data.pickup_type == PickupData.PickupType.COIN:
+		_sprite.scale *= 2.0
+		_animated_sprite.scale *= 2.0
 
 	if data.sprite_frames != null:
 		_sprite.visible = false
