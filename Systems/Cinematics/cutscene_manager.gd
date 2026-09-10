@@ -92,12 +92,13 @@ func _on_finished() -> void:
 		_current.queue_free()
 		_current = null
 	hide_skip_hint()
-
+	_letterbox.open_bars()
 	_frozen = false
+	
 	get_tree().paused = false
 	Audio.set_world_paused(false)
 	await _fade_buses(0.0)
-	await _letterbox.open_bars()
+	
 
 	Engine.time_scale = 1.0
 	_busy = false
