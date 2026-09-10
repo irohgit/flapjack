@@ -8,6 +8,9 @@ const FLAPJACK_STAUNCH := preload("res://Assets/Cinematics/FLAPJACK_STAUNCH_512x
 const FLAPJACK_OMAEWA := preload("res://Assets/Cinematics/FLAPJACK_OMAE_512x640.png")
 const DUO_DRUNK := preload("res://Assets/Cinematics/DUO_DRUNK_512x640.png")
 const DUO_SHEEPISH := preload("res://Assets/Cinematics/DUO_SHEEPISH_512x640.png")
+const JACK_CONCERNED := preload("res://Assets/Cinematics/JACK_CONCERNED_512x640.png")
+const FLAPJACK_WINK := preload("res://Assets/Cinematics/flapjack_wink_512x640.png")
+const FLAPJACK_IDLE := preload("res://Assets/Cinematics/flapjack_idle_512x640.png")
 
 @export var force_tutorial := false
 
@@ -75,7 +78,13 @@ func _ready() -> void:
 # --- 1. Opening --------------------------------------------------------------
 func _beat_opening() -> void:
 	await _show_stage_title()
-	await _tutorial_ui.say("Jack", "Right,It's just you and me, Flapjack. And our mission to save Princess Ana.",0.0,JACK_DETERMINED)
+	await _tutorial_ui.say_auto("Jack", "Right,It's just you and me, Flapjack.",JACK_DETERMINED)
+	_tutorial_ui.set_objective_for_input("Press SPACE to continue", "Press A to continue")
+	_tutorial_ui.play_input_animation("tutorialadvance")
+	await _tutorial_ui.say("Flapjack", "When I stop talking, press %s. That's how you usually skip boring dialogue right?" % _advance_key(),0.0,FLAPJACK_IDLE)
+	_tutorial_ui.clear_objective()
+	await _tutorial_ui.say("Flapjack", "Great work! I'm looking forward to rescuing the princess with you...and Jack.", 0.0, FLAPJACK_WINK)
+	await _tutorial_ui.say("Jack", "Who are you talking to?",0.0,JACK_CONCERNED)
 	_tutorial_ui.hide_portrait()
 # --- 2. Movement and debris --------------------------------------------------
 func _beat_movement() -> void:
@@ -444,3 +453,6 @@ func _wait_until_below_ratio(target: Node2D, ratio: float) -> void:
 		if target.global_position.y >= rect.position.y + rect.size.y * ratio:
 			return
 		await get_tree().process_frame
+
+func _advance_key() -> String:
+	return "A" if InputDevice.is_gamepad() else "SPACE"

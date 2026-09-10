@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://qbdxb76e824i"]
+
+[ext_resource type="Script" uid="uid://dbfb2mfdwitbs" path="res://UI/skip_hint.gd" id="1_8uari"]
+[ext_resource type="SpriteFrames" uid="uid://b0uotj0bt75cr" path="res://Assets/UI/input_glyphs.tres" id="1_raygm"]
+
+[node name="SkipHint" type="HBoxContainer" unique_id=973388287]
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -100.0
+offset_bottom = -30.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+theme_override_constants/separation = 12
+alignment = 1
+script = ExtResource("1_8uari")
+
+[node name="Text" type="Label" parent="." unique_id=2003359345]
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_colors/font_color = Color(1, 1, 1, 0.5882353)
+theme_override_font_sizes/font_size = 32
+text = "skip"
+
+[node name="GlyphSlot" type="Control" parent="." unique_id=1661176906]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Glyph" type="AnimatedSprite2D" parent="GlyphSlot" unique_id=1114073292]
+texture_filter = 1
+position = Vector2(24, 24)
+scale = Vector2(0.7, 0.7)
+sprite_frames = ExtResource("1_raygm")
+animation = &"skip_gamepad"

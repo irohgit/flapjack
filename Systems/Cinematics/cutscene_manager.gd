@@ -6,6 +6,10 @@ const FADE_TIME := 0.25
 const DUCKED_DB := -60.0
 const FADED_BUSES: Array[String] = ["Music", "SFX"]
 
+const SKIP_HINT_SCENE := preload("res://UI/skip_hint.tscn")
+
+var _skip_hint: SkipHint = null
+
 var _current: Node = null
 var _busy := false
 var _frozen := false
@@ -15,6 +19,12 @@ var _saved_db: Dictionary = {}
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	layer = 100
+	
+	#SETUP Skip_Hint
+	_skip_hint = SKIP_HINT_SCENE.instantiate()
+	add_child(_skip_hint)
+	
+	#CONNECT To Death? 
 	GameEvents.player_died.connect(_on_player_died)
 
 # Deadline guard. Re-asserts the freeze if any other system unpauses the tree
@@ -56,7 +66,7 @@ func play(scene: PackedScene) -> void:
 	_current = scene.instantiate()
 	_current.process_mode = Node.PROCESS_MODE_ALWAYS
 	add_child(_current)
-
+	move_child(_skip_hint, get_child_count() - 1)
 	if _current.has_signal("finished"):
 		_current.finished.connect(_on_finished, CONNECT_ONE_SHOT)
 	else:
@@ -68,13 +78,15 @@ func _on_finished() -> void:
 	if _current != null:
 		_current.queue_free()
 		_current = null
-
+	hide_skip_hint()
+	
 	_frozen = false
 	get_tree().paused = false
 	Audio.set_world_paused(false)
 	await _fade_buses(0.0)
 
 	_busy = false
+	
 	cutscene_finished.emit()
 
 
@@ -126,9 +138,9 @@ func _dump_players(node: Node) -> void:
 ## Tears down a cutscene that was interrupted, usually by death or a scene
 ## change. Restores the tree, the audio buses and the busy flag.
 func cancel() -> void:
-	print("[CUTSCENE] cancel called, busy was ", _busy, " current = ", _current)
 	if not _busy:
 		return
+	hide_skip_hint()	
 	if _current != null:
 		_current.queue_free()
 		_current = null
@@ -138,3 +150,11 @@ func cancel() -> void:
 	await _fade_buses(0.0)
 	_busy = false
 	cutscene_finished.emit()
+
+func show_skip_hint() -> void:
+	_skip_hint.show_hint()
+
+
+func hide_skip_hint() -> void:
+	_skip_hint.hide_hint()
+	

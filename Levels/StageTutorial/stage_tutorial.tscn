@@ -72,7 +72,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("9_v5awh")
-auto_line_time = 2.0
+auto_line_time = 3.0
 
 [node name="SayBox" type="Control" parent="HUD/TutorialLayer/TutorialUI" unique_id=1978375811]
 layout_mode = 1
@@ -222,7 +222,7 @@ layout_mode = 2
 [node name="input_animation" type="AnimatedSprite2D" parent="HUD/TutorialLayer/TutorialUI/Objective/VBox/HBoxContainer/AnimSlot" unique_id=389338439]
 position = Vector2(80, 55)
 sprite_frames = ExtResource("21_o86e7")
-animation = &"switch_gamepad"
+animation = &"tutorialadvance_keyboard"
 
 [node name="Label" type="Label" parent="HUD/TutorialLayer/TutorialUI/Objective/VBox" unique_id=916627385]
 layout_mode = 2
