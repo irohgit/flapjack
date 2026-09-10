@@ -49,9 +49,13 @@ func _physics_process(delta: float) -> void:
 	_sprite.rotation = _initial_rotation + _spin * progress
 	_animated_sprite.rotation = _sprite.rotation
 	if progress >= 1.0:
-		Audio.play_sfx(data.impact_sound, -12.0, 0.1)
-		_spawn_fragments()
-		destroy()
+		_land()
+
+
+func _land() -> void:
+	Audio.play_sfx(data.impact_sound, -12.0, 0.1)
+	_spawn_fragments()
+	destroy()
 
 
 func _draw() -> void:

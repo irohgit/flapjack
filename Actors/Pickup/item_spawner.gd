@@ -161,7 +161,7 @@ func _run_chance_row(
 	if rolls < 1:
 		return
 	var spawn_data := _read_spawn_data(row, loot_file, row_index, false)
-	if spawn_data.has("invalid"):
+	if spawn_data.has("invalid") or spawn_data.has("unavailable"):
 		return
 	if (spawn_data["quantity"] as int) * rolls > MAX_SPAWNS_PER_RULE:
 		_warn_row(
@@ -213,6 +213,8 @@ func _run_weighted_pool(
 		var spawn_data := _read_spawn_data(row, loot_file, row_index, true)
 		if spawn_data.has("invalid"):
 			return
+		if spawn_data.has("unavailable"):
+			continue
 		candidates.append({"weight": weight, "spawn": spawn_data, "index": row_index})
 		total_weight += weight
 
@@ -279,7 +281,10 @@ func _read_spawn_data(
 		_warn_row(loot_file, row_index, "references unknown item '%s'" % item_id)
 		return {"invalid": true}
 
-	return {"pickup": _pickups_by_id[lookup_id] as PickupData, "quantity": quantity}
+	var pickup := _pickups_by_id[lookup_id] as PickupData
+	if not pickup.is_implemented():
+		return {"unavailable": true}
+	return {"pickup": pickup, "quantity": quantity}
 
 
 func _read_number(
@@ -339,6 +344,8 @@ func _warn_row(loot_file: String, row_index: int, message: String) -> void:
 
 
 func _spawn_drop(drop: PickupData, position: Vector2) -> void:
+	if not drop.is_implemented():
+		return
 	var pickup := pickup_scene.instantiate() as WorldPickup
 	if pickup == null:
 		push_error("ItemSpawner pickup_scene must inherit from WorldPickup")

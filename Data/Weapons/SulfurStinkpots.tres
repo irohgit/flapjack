@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Data/Weapons/weapon_data.gd" id="1_weapon"]
 [ext_resource type="Script" path="res://Data/Weapons/lobbed_weapon_behaviour.gd" id="2_behaviour"]
-[ext_resource type="PackedScene" path="res://Actors/Projectiles/lobbed_projectile.tscn" id="3_scene"]
+[ext_resource type="PackedScene" path="res://Actors/Projectiles/stinkpot_projectile.tscn" id="3_scene"]
 [ext_resource type="Resource" path="res://Data/Projectiles/sulfur_stinkpots.tres" id="4_projectile"]
 [ext_resource type="Texture2D" path="res://Assets/UI/Shop/Items/Weapons/sulfur_stinkpot.png" id="5_icon"]
 
