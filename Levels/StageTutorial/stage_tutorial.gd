@@ -134,14 +134,14 @@ func _beat_firing() -> void:
 	# Goal, not a control, so no per-device text and no glyph.
 	_tutorial_ui.play_input_animation("")
 	_tutorial_ui.set_objective("Sink the bulwark")
+		
 	if is_instance_valid(_raider):
-		_raider.set_deferred("monitorable", true)
-	# Track it while it lives, so the potion can drop where it died.
-	#Show boss health bar now 
-	var boss: Enemy = _raider as Enemy
-	if boss != null:
-		boss.announce_boss()
-	while is_instance_valid(_raider):
+		_raider.set_deferred("monitorable", true) #set the ship to be engagable with
+		_raider.announce_boss() #show the health and name on screen 
+	
+	
+
+	while is_instance_valid(_raider): # Track it while it lives, so the potion can drop where it died.
 		_last_raider_position = (_raider as Node2D).global_position
 		await get_tree().process_frame
 

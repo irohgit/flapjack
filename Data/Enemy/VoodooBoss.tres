@@ -11,7 +11,7 @@
 
 [resource]
 script = ExtResource("1_enemy")
-enemy_name = "Voodoom"
+enemy_name = "VooDoom"
 is_boss = true
 health = 50
 move_speed = 100.0
