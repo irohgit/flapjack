@@ -55,7 +55,7 @@ func generate_plan() -> Array[GeneratedEncounter]:
 		var trigger_y: float = anchor_y - travel_direction * spawn_ahead_distance
 		encounter.trigger_position = Vector2(centre_x, trigger_y)
 		generated_plan.append(encounter)
-
+		
 		previous_anchor_y = anchor_y
 		has_previous_encounter = true
 	
@@ -75,6 +75,8 @@ func generate_plan() -> Array[GeneratedEncounter]:
 	print("GIN PLAN: %d gin in %d barrels across %d normal encounters (%d total)" % [
 		planned_gin, total_barrels, normal_count, generated_plan.size()
 	])
+	for e: GeneratedEncounter in generated_plan:
+		print("[PLAN] type = ", e.type, " trigger = ", e.trigger_position, " scene = ", e.merchant_scene)
 	return generated_plan
 
 func choose_finale_encounter() -> PackedScene:
@@ -115,15 +117,12 @@ func _is_configured(encounter_data: EncounterData, index: int) -> bool:
 			if encounter_data.min_pack_size < 1 or encounter_data.min_pack_size > encounter_data.max_pack_size:
 				push_error("Encounter %d has an invalid pack size range" % (index + 1))
 				return false
-
 			if not _has_valid_enemies(encounter_data.enemy_pool):
 				push_error("Encounter %d has no valid enemies" % (index + 1))
 				return false
-
 			if not _has_valid_formations(encounter_data.formation_pool):
 				push_error("Encounter %d has no valid formations" % (index + 1))
 				return false
-
 		EncounterData.Type.SPECIAL:
 			if not _has_valid_special_encounters(encounter_data.special_encounter_pool):
 				push_error("Encounter %d has no valid special encounter scenes" % (index + 1))
@@ -131,6 +130,14 @@ func _is_configured(encounter_data: EncounterData, index: int) -> bool:
 		EncounterData.Type.CUTSCENE:
 			if encounter_data.cutscene_scene == null:
 				push_error("Encounter %d is a cutscene with no scene assigned" % (index + 1))
+				return false
+		EncounterData.Type.MERCHANT:
+			if encounter_data.merchant_scene == null:
+				push_error("Encounter %d is a Merchant with no scene assigned" % (index + 1))
+				return false
+		EncounterData.Type.MIDBOSS:
+			if encounter_data.midboss_scene == null:
+				push_error("Encounter %d is a mid-boss with no scene assigned" % (index + 1))
 				return false
 		_:
 			push_error("Encounter %d has an unknown type" % (index + 1))
@@ -162,16 +169,34 @@ func _generate_encounter(
 			encounter.type = GeneratedEncounter.Type.SPECIAL
 			encounter.special_scene = _choose_special_encounter(encounter_data.special_encounter_pool)
 			encounter.spawn_from_right = rng.randi_range(0, 1) == 1
-			
+
 		EncounterData.Type.CUTSCENE:
 			encounter.type = GeneratedEncounter.Type.CUTSCENE
 			encounter.spawn_position = Vector2(centre_x, anchor_y)
 			encounter.cutscene_scene = encounter_data.cutscene_scene
+
+		EncounterData.Type.MERCHANT:
+			encounter.type = GeneratedEncounter.Type.MERCHANT
+			encounter.spawn_position = Vector2(centre_x, anchor_y)
+			encounter.merchant_scene = encounter_data.merchant_scene
+			encounter.spawn_from_right = rng.randi_range(0, 1) == 1
+
+		EncounterData.Type.MIDBOSS:
+			encounter.type = GeneratedEncounter.Type.MIDBOSS
+			encounter.spawn_position = Vector2(centre_x, anchor_y)
+			encounter.midboss_scene = encounter_data.midboss_scene
+			encounter.midboss_intro = encounter_data.midboss_intro
+			encounter.midboss_outro = encounter_data.midboss_outro
+			encounter.midboss_reward_scene = encounter_data.midboss_reward_scene
+			encounter.midboss_reward_potion = encounter_data.midboss_reward_potion
+
 		_:
 			return null
 
+	print("[ENCOUNTER] generated type = ", encounter.type)
 	return encounter
-
+	
+	
 func _has_valid_enemies(pool: Array[WeightedEnemyData]) -> bool:
 	for entry: WeightedEnemyData in pool:
 		if entry != null and entry.enemy != null and entry.weight > 0.0:

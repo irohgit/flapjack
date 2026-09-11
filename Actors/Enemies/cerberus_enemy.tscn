@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://bhmi8mtmsl4qy"]
+
+[ext_resource type="Script" uid="uid://cyuqokwo3jxwp" path="res://Actors/Enemies/cerberus_enemy.gd" id="1_afc17"]
+[ext_resource type="Texture2D" uid="uid://b81o3k3xhfu20" path="res://Assets/Enemies/Cerberus_Pirates/cerberus_80x160.png" id="4_jyyim"]
+[ext_resource type="Script" uid="uid://cv0v6ynhg51ei" path="res://Systems/Combat/HealthComponent.gd" id="5_hp0sd"]
+[ext_resource type="Script" uid="uid://dttjdne32amn0" path="res://Systems/Combat/status_effect_component.gd" id="6_bbe1u"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_odipc"]
+radius = 31.0
+height = 130.0
+
+[node name="CerberusEnemy" type="Area2D" unique_id=1035340143 groups=["enemy", "hazard"]]
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("1_afc17")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=435719709]
+texture_filter = 1
+texture = ExtResource("4_jyyim")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1631142024]
+position = Vector2(2, 3)
+shape = SubResource("CapsuleShape2D_odipc")
+debug_color = Color(0.85882354, 0, 0.8784314, 0.19607843)
+
+[node name="HealthComponent" type="Node" parent="." unique_id=347688055]
+script = ExtResource("5_hp0sd")
+max_health = 5
+metadata/_custom_type_script = "uid://cv0v6ynhg51ei"
+
+[node name="StatusEffectComponent" type="Node" parent="." unique_id=1674272058]
+script = ExtResource("6_bbe1u")
+
+[node name="HeadCentre" type="Marker2D" parent="." unique_id=337523901]
+position = Vector2(1, 57)
+
+[node name="HeadRight" type="Marker2D" parent="." unique_id=968990186]
+position = Vector2(25, 50)
+
+[node name="HeadLeft" type="Marker2D" parent="." unique_id=1156200728]
+position = Vector2(-26, 50)

@@ -158,3 +158,7 @@ func play_cinematic(stream: AudioStream, volume_db := 0.0) -> void:
 	free_voice.pitch_scale = 1.0
 	free_voice.play()
 	
+func stop_cinematic() -> void:
+	for p: AudioStreamPlayer in _sfx_pool:
+		if p.bus == "Cinematic":
+			p.stop()

@@ -1,0 +1,73 @@
+[gd_scene format=3 uid="uid://bnfmxfiachnm7"]
+
+[ext_resource type="Texture2D" uid="uid://dr02vp1qd1dm2" path="res://Assets/CombatEffects/death_explosion_spritesheet_400x50.png" id="1_cc186"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_etdm7"]
+atlas = ExtResource("1_cc186")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ur47b"]
+atlas = ExtResource("1_cc186")
+region = Rect2(50, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uo2v2"]
+atlas = ExtResource("1_cc186")
+region = Rect2(100, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v08ex"]
+atlas = ExtResource("1_cc186")
+region = Rect2(150, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vs3gx"]
+atlas = ExtResource("1_cc186")
+region = Rect2(200, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_frp50"]
+atlas = ExtResource("1_cc186")
+region = Rect2(250, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_trohg"]
+atlas = ExtResource("1_cc186")
+region = Rect2(300, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r6yd8"]
+atlas = ExtResource("1_cc186")
+region = Rect2(350, 0, 50, 50)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5yy73"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_etdm7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ur47b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uo2v2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v08ex")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vs3gx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_frp50")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_trohg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r6yd8")
+}],
+"loop": 0,
+"name": &"death_explosion",
+"speed": 5.0
+}]
+
+[node name="death_explosion" type="AnimatedSprite2D" unique_id=1420392653]
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_5yy73")
+animation = &"death_explosion"
+autoplay = "death_explosion"

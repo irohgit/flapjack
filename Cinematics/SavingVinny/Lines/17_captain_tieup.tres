@@ -6,3 +6,5 @@
 script = ExtResource("1_x14sl")
 speaker = "Captain"
 text = "Tie him up. Let's do what we do best. Pirating."
+layout = 2
+stage_animation = &"scene09"

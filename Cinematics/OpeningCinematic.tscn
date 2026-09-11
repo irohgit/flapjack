@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cbwqh8cwq0yhh"]
 
 [ext_resource type="Script" uid="uid://cl0ckeyoy7l1p" path="res://Cinematics/OpeningCinematic.gd" id="1_spo4w"]
+[ext_resource type="PackedScene" uid="uid://dfgiunphxmxmr" path="res://UI/main_menu.tscn" id="2_4n84t"]
 [ext_resource type="Texture2D" uid="uid://cu450e8rm8ej3" path="res://Assets/Cinematics/Cinematic_BG_169.png" id="2_gfuhc"]
 [ext_resource type="FontFile" uid="uid://bu8hjs3v2sok3" path="res://Assets/Fonts/TreasureMap/Treasuremapj.ttf" id="5_pes2o"]
 [ext_resource type="Texture2D" uid="uid://dsfm27q55ofy2" path="res://Assets/Cinematics/Cinematic_Boat_Blackbeard_512.png" id="5_spo4w"]
@@ -87,6 +88,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_spo4w")
+next_scene = ExtResource("2_4n84t")
 metadata/_edit_vertical_guides_ = [-109.0, 960.0]
 metadata/_edit_horizontal_guides_ = [-112.0, 540.0, 620.0]
 

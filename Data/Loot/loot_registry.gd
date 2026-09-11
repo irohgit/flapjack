@@ -4,7 +4,6 @@ extends RefCounted
 
 const PICKUP_DIRECTORY := "res://Data/Pickups"
 
-
 static func build() -> Dictionary:
 	var pickups_by_id: Dictionary = {}
 	var duplicate_ids: Dictionary = {}

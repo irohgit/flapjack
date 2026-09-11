@@ -15,6 +15,8 @@ var trust := 0   # lifetime total spend, never decreases
 var boat_tier: BoatTier = BoatTier.SKIFF
 var upgrade_levels: Dictionary = {}   # node_id -> current level
 var pending_retry_scene_path := ""
+var tutorial_seen := false
+var encountered_ginny := false
 
 const HULL_NODES: Array[UpgradeNodeData] = [
 	preload("res://Data/Upgrades/hull_1.tres"),

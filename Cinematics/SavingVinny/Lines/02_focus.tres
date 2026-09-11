@@ -1,11 +1,9 @@
 [gd_resource type="Resource" script_class="CutsceneLine" format=3 uid="uid://c5m2x2elholgv"]
 
 [ext_resource type="Script" uid="uid://3ke20rwguryo" path="res://Cinematics/cutscene_line.gd" id="1_fruy4"]
-[ext_resource type="Texture2D" uid="uid://cyt3l3y34xqlp" path="res://Assets/Cinematics/JACK_SHOCKED_512x640.png" id="1_puwcq"]
 
 [resource]
 script = ExtResource("1_fruy4")
-left_portrait = ExtResource("1_puwcq")
 hold_time = 2.0
 use_blur = true
 blur_from = 45.0

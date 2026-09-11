@@ -6,3 +6,5 @@
 script = ExtResource("1_v6sp0")
 speaker = "Crow's Nest"
 text = "CAPTAIN! ONE NAVY VESSEL AHEAD. IT DOESN'T LOOK LIKE A GALLEON SHIP."
+layout = 2
+stage_animation = &"scene08"

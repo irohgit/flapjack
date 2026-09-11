@@ -3,34 +3,21 @@
 [ext_resource type="Script" uid="uid://ciwxhkukxu13t" path="res://Actors/NPC/merchant_boat.gd" id="1_boat"]
 [ext_resource type="Texture2D" uid="uid://dp3fypigtehww" path="res://Assets/Boat/merchant.png" id="2_7csum"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_interact"]
-size = Vector2(220, 512)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ht8rm"]
+radius = 194.34
+height = 573.6
 
 [node name="MerchantBoat" type="Node2D" unique_id=157885422]
 script = ExtResource("1_boat")
-
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=756168994]
-scale = Vector2(0.2, 0.2)
-texture = ExtResource("2_7csum")
 
 [node name="InteractArea" type="Area2D" parent="." unique_id=1913480460]
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea" unique_id=2106329828]
 position = Vector2(0, 10)
-shape = SubResource("RectangleShape2D_interact")
-debug_color = Color(0.2, 0.9, 1, 0.25)
+shape = SubResource("CapsuleShape2D_ht8rm")
+debug_color = Color(0.8357962, 0.81014025, 0.69107234, 0.2509804)
 
-[node name="Prompt" type="Label" parent="." unique_id=1157403705]
-visible = false
-offset_left = -100.0
-offset_top = -180.0
-offset_right = 100.0
-offset_bottom = -145.0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 6
-theme_override_font_sizes/font_size = 26
-text = "PRESS F / A TO SHOP"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=756168994]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_7csum")
