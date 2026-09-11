@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="PickupData" format=3 uid="uid://cesmcj6ctad"]
 
-[ext_resource type="Resource" uid="uid://dm66rxqo2vo6" path="res://Data/Augments/Shared/MagnetAugment.tres" id="1_magnet"]
+[ext_resource type="Resource" uid="uid://dm66rxqo2vo6" path="res://Data/Augments/MagnetAugment.tres" id="1_magnet"]
 [ext_resource type="AudioStream" uid="uid://bhp3mqd4ya5te" path="res://Audio/SFX/plasma_pickup.mp3" id="2_465hc"]
 [ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="3_r08qc"]
 [ext_resource type="Texture2D" uid="uid://csupy5wgl5bup" path="res://Assets/Pickups/MagnetPickup.png" id="4_ms5j3"]
