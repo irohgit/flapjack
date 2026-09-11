@@ -60,7 +60,6 @@ var _has_exited_play_area := false
 var _purchase_in_progress := false
 var _scripted := false
 var _can_fire := true
-var _can_switch_potion := true
 var _can_drink_potion := true
 
 #SFX
@@ -404,6 +403,7 @@ func try_purchase(pickup: PickupData) -> PurchaseResult:
 		return result
 
 	var price := pickup.get_shop_price()
+	# This handles both the purchase and the purchase guard within the same function
 	_purchase_in_progress = true
 	if pickup.apply_to(self):
 		coin_count -= price
@@ -482,10 +482,6 @@ func _emit_run_state_changed() -> void:
 	potion_inventory_changed.emit()
 	potion_selection_changed.emit(_selected_potion_slot)
 
-func set_can_switch_potion(value: bool) -> void:
-	_can_switch_potion = value
-
-
 func set_can_drink_potion(value: bool) -> void:
 	_can_drink_potion = value
 func can_add_potion(potion: PotionData) -> bool:
@@ -510,8 +506,6 @@ func add_potion(potion: PotionData) -> bool:
 
 
 func select_potion_slot(index: int) -> void:
-	if not _can_switch_potion: #Only allow player to switch potion if bCanDrinkPotion is true - useful for skill/potion break enemies
-		return
 	if _potion_slots.is_empty():
 		return
 	var wrapped_index := posmod(index, _potion_slots.size())
@@ -707,9 +701,9 @@ func _update_wake() -> void:
 			_wake.hide()
 		return
 	var anim := "wake_forward" #set animation to wake forward
-	if _move_intent.x < -0.4: #if our inpu is less than -0.1 means we are moving left
+	if _move_intent.x < -0.4: # Input below -0.4 means we are moving left.
 		anim = "wake_strafe_left"
-	elif _move_intent.x > 0.4: #if our x input above 0.1 that means we are moving right
+	elif _move_intent.x > 0.4: # Input above 0.4 means we are moving right.
 		anim = "wake_strafe_right"
 	if not _wake.visible:
 		_wake.show()

@@ -58,6 +58,7 @@ func register_enemy(enemy: Node) -> void:
 	if enemy == null or enemy.tree_exited.is_connected(_on_enemy_exited):
 		return
 
+	# Count an enemy as cleared when it leaves the tree, including off-screen despawns. A death signal alone would leave escaped enemies in the active count.
 	_active_enemies += 1
 	enemy.tree_exited.connect(_on_enemy_exited, CONNECT_ONE_SHOT)
 

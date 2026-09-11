@@ -17,6 +17,7 @@ func update_continuous_fire(
 
 
 func _configure_projectile(projectile: Projectile, weapon: WeaponState) -> void:
+	# Give each shot its own copy of the projectile data, then apply its defaults before augments so the defaults don’t overwrite augment effects.
 	var projectile_data := weapon.data.weaponProjectile.duplicate(true) as ProjectileData
 	projectile_data.damage = weapon.data.damage
 	projectile.data = projectile_data

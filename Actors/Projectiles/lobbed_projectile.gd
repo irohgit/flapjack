@@ -1,11 +1,16 @@
 class_name LobbedProjectile
 extends Projectile
-
+## The position it is fired from globally
 var _launch_position := Vector2.ZERO
+## It's target position
 var _landing_position := Vector2.ZERO
+## Speed
 var _flight_duration := 1.0
+## How high the lob should be
 var _arc_height := 80.0
+## Start rotation
 var _initial_rotation := 0.0
+## Spins 360 degrees
 var _spin := TAU
 
 

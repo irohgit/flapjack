@@ -27,6 +27,7 @@ func _process(delta: float) -> void:
 		if active == null:
 			continue
 
+		# This processes ticks while the effect is active, including any tick due exactly when the effect expires.
 		var active_delta := minf(delta, active.remaining)
 		_tick_effect(active, active_delta)
 		active.remaining -= delta
@@ -51,6 +52,7 @@ func apply_effect(effect: StatusEffectData) -> bool:
 		StatusEffectData.ReapplyPolicy.REFRESH:
 			active.data = copied_effect
 			active.remaining = copied_effect.duration
+			# Keep the current tick timer when refreshing continuously applied effects, so repeated applications don’t prevent them from ticking.
 			if not copied_effect.preserve_tick_on_refresh:
 				active.tick_timer = copied_effect.tick_interval
 
@@ -102,6 +104,7 @@ func get_modified_value(stat_id: StringName, base_value: float) -> float:
 				StatusEffectModifier.Operation.MULTIPLY:
 					multiplier *= modifier.value
 
+	# Add bonuses first, then apply the product of all multipliers, so effect application order does not change the stat formula.
 	return (base_value + additive) * multiplier
 
 

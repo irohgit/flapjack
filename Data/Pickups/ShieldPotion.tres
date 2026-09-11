@@ -17,7 +17,7 @@ shader_parameter/pulse_max = 1.5
 [resource]
 script = ExtResource("1_bfddi")
 item_id = &"flapjack:shield_potion"
-pickup_type = 4
+pickup_type = 6
 potion = ExtResource("3_potion")
 shop_id = &"shield_potion"
 shop_price = 50
