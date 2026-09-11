@@ -1,15 +1,7 @@
 class_name EnemySwampMonster
 extends Enemy
 
-## Stage2 finale miniboss. Sits where it's placed and never moves (no
-## move_speed set on its EnemyData, and it has no projectile_scene/ammo so
-## the base class's firing never triggers either). Every SUMMON_INTERVAL
-## seconds it calls in SUMMON_COUNT snakes to back it up. Unlike the Kraken,
-## this boss has a normal, directly-damageable health pool - the HUD boss
-## bar's current/maximum numbers are its health counter. Plays a Death
-## animation before actually despawning.
-
-const SUMMON_INTERVAL := 15.0
+const SUMMON_INTERVAL := 10.0
 const SUMMON_COUNT := 2
 
 @export var snake_scene: PackedScene
@@ -18,15 +10,16 @@ const SUMMON_COUNT := 2
 
 var _summon_timer := 0.0
 var _is_dying := false
+var _hud_shown := false
 
 
 func _ready() -> void:
 	super()
 	assert(snake_scene != null, "Swamp monster needs a snake_scene to summon")
 
-	GameEvents.boss_name_changed.emit("SWAMP MONSTER")
+	# The boss name/health bar don't appear yet - see _reveal_hud_if_visible(),
+	# which only announces them once the boss has actually scrolled on screen.
 	_health.health_changed.connect(_on_health_changed)
-	_on_health_changed(_health.current_health, _health.max_health)
 
 	# sprite_frames may be baked directly onto the AnimatedSprite2D node
 	# (like the Kraken) rather than coming from data.sprite_frames - only
@@ -40,6 +33,9 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	super(delta)
 
+	if not _hud_shown:
+		_reveal_hud_if_visible()
+
 	if _is_dying:
 		return
 
@@ -49,21 +45,20 @@ func _physics_process(delta: float) -> void:
 		_reset_summon_timer()
 
 
+func _reveal_hud_if_visible() -> void:
+	if not Playarea.is_near_screen(global_position):
+		return
+
+	_hud_shown = true
+	GameEvents.boss_name_changed.emit("SWAMP MONSTER")
+	_on_health_changed(_health.current_health, _health.max_health)
+
+
 func _reset_summon_timer() -> void:
 	_summon_timer = SUMMON_INTERVAL
 
 
 func _summon_snakes() -> void:
-	for i in range(SUMMON_COUNT):
-		var snake := snake_scene.instantiate() as Node2D
-		if snake == null:
-			push_error("Swamp monster snake_scene must inherit from Node2D")
-			continue
-
-		var side := -1.0 if i % 2 == 0 else 1.0
-		get_parent().add_child(snake)
-		snake.global_position = global_position + Vector2(side * summon_spread, 0.0)
-
 	if (
 		_animated_sprite != null
 		and _animated_sprite.sprite_frames != null
@@ -71,14 +66,44 @@ func _summon_snakes() -> void:
 	):
 		_animated_sprite.play(&"Summon")
 		await _animated_sprite.animation_finished
-		# Death interrupts this animation (see _on_died), so only return to
-		# Idle if that didn't happen while we were waiting.
-		if not _is_dying:
-			_animated_sprite.play(&"Idle")
+
+		# Death interrupts this animation (see _on_died) - if that happened
+		# while we were waiting, don't spawn snakes or reset back to Idle.
+		if _is_dying:
+			return
+		_animated_sprite.play(&"Idle")
+
+	for i in range(SUMMON_COUNT):
+		var snake := snake_scene.instantiate() as EnemySnake
+		if snake == null:
+			push_error("Swamp monster snake_scene must inherit from EnemySnake")
+			continue
+
+		var side := -1.0 if i % 2 == 0 else 1.0
+		var target_position := global_position + Vector2(side * summon_spread, 500.0)
+
+		get_parent().add_child(snake)
+		snake.global_position = global_position
+		snake.arrive_at(target_position)
+
+
+## Fire in direction of player at time of fire
+func _fire() -> Projectile:
+	var shot := super()
+	if shot == null:
+		return null
+
+	var player := get_tree().get_first_node_in_group("player") as Node2D
+	if player != null:
+		var aim_direction := shot.global_position.direction_to(player.global_position)
+		if not aim_direction.is_zero_approx():
+			shot.direction = aim_direction
+
+	return shot
 
 
 func _on_health_changed(current: int, maximum: int) -> void:
-	if maximum <= 0:
+	if not _hud_shown or maximum <= 0:
 		return
 	GameEvents.boss_health_changed.emit(current, maximum)
 

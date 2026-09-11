@@ -26,6 +26,9 @@ var _lunging := false
 
 var _patrol_direction := 1.0
 
+var _is_arriving := false
+var _arrival_target := Vector2.ZERO
+
 
 func _ready() -> void:
 	super()
@@ -40,6 +43,15 @@ func _ready() -> void:
 	area_entered.connect(_on_player_contact)
 
 	_animated_sprite.play(&"Idle")
+
+
+## Called right after being spawned somewhere other than its intended spot
+## (e.g. summoned at a boss's position). Slides there first - facing and
+## moving like it would mid-patrol - before patrol/idle pacing begins, with
+## that arrival point becoming the patrol center instead of the spawn point.
+func arrive_at(target_position: Vector2) -> void:
+	_is_arriving = true
+	_arrival_target = target_position
 
 
 func _on_detection_area_entered(area: Area2D) -> void:
@@ -113,6 +125,19 @@ func _move(delta: float, speed: float) -> void:
 		# forth like patrol - it just waits at the water's edge.
 		if not _is_on_bank(chase_next):
 			global_position = chase_next
+		return
+
+	if _is_arriving:
+		var to_arrival := _arrival_target - global_position
+		if not to_arrival.is_zero_approx():
+			_face_direction(to_arrival.normalized())
+		global_position = global_position.move_toward(_arrival_target, speed * delta)
+
+		if global_position.is_equal_approx(_arrival_target):
+			_is_arriving = false
+			# This becomes the patrol center instead of wherever it spawned.
+			_spawn_position = _arrival_target
+			_has_spawn_position = true
 		return
 
 	# Patrol left and right around the spawn point until the chase triggers.

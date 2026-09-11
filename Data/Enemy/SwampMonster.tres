@@ -1,13 +1,21 @@
-[gd_resource type="Resource" script_class="EnemyData" format=3]
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://y2kr23v0k777"]
 
 [ext_resource type="Script" uid="uid://bo6li876odoia" path="res://Data/Enemy/enemy_data.gd" id="1_swamp"]
 [ext_resource type="AudioStream" uid="uid://cbplby7nfcsyw" path="res://Audio/SFX/ship_hit.mp3" id="2_hit"]
 [ext_resource type="AudioStream" uid="uid://bcf81qxqc8nxo" path="res://Audio/SFX/ship_destroyed.mp3" id="3_death"]
+[ext_resource type="PackedScene" uid="uid://bl12qi0n68b6i" path="res://Actors/Projectiles/projectile.tscn" id="4_proj"]
+[ext_resource type="Resource" uid="uid://dk3d73cdpoumi" path="res://Data/Projectiles/enemy_cannonball.tres" id="5_ammo"]
+[ext_resource type="AudioStream" uid="uid://41by6wg6cvxx" path="res://Audio/SFX/enemy_cannon_shot_1.mp3" id="6_fire"]
 
 [resource]
 script = ExtResource("1_swamp")
 health = 60
-contact_damage = 1
+projectile_fire_rate = 3
+projectile_scene = ExtResource("4_proj")
+ammo = ExtResource("5_ammo")
 hit_sfx = ExtResource("2_hit")
 death_sfx = ExtResource("3_death")
+fire_sfx = ExtResource("6_fire")
+fire_pitch = 0.6
+fire_sfx_volume_db = -8.0
 metadata/_custom_type_script = "uid://bo6li876odoia"

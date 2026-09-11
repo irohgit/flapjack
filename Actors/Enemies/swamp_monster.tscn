@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://y7h8e0w3bkbk" path="res://Data/Enemy/enemy_swamp_monster.gd" id="1_swamp"]
 [ext_resource type="Script" uid="uid://cv0v6ynhg51ei" path="res://Systems/Combat/HealthComponent.gd" id="2_health"]
 [ext_resource type="Script" uid="uid://dttjdne32amn0" path="res://Systems/Combat/status_effect_component.gd" id="3_status"]
-[ext_resource type="Resource" path="res://Data/Enemy/SwampMonster.tres" id="4_data"]
+[ext_resource type="Resource" uid="uid://y2kr23v0k777" path="res://Data/Enemy/SwampMonster.tres" id="4_data"]
 [ext_resource type="Texture2D" uid="uid://0yp8ylpx8or1" path="res://Assets/Enemies/SwampMonster/swamp_monster_death.png" id="4_s5qlb"]
 [ext_resource type="Texture2D" uid="uid://c3g3cp8f5phrx" path="res://Assets/Enemies/SwampMonster/swamp_monster.png" id="5_d4rip"]
 [ext_resource type="PackedScene" uid="uid://du1b0f1hfk7hv" path="res://Actors/Enemies/snake_enemy.tscn" id="5_snake"]
@@ -165,7 +165,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_1wpju")
 }],
-"loop": 2,
+"loop": 0,
 "name": &"Death",
 "speed": 5.0
 }, {
@@ -232,7 +232,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_vjv7t")
 }],
-"loop": 2,
+"loop": 0,
 "name": &"Summon",
 "speed": 5.0
 }]
@@ -249,7 +249,7 @@ data = ExtResource("4_data")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1641104646]
 sprite_frames = SubResource("SpriteFrames_7asyh")
-animation = &"Death"
+animation = &"Idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1809601367]
 shape = SubResource("CircleShape2D_body")
