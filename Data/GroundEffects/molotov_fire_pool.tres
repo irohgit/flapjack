@@ -1,19 +1,22 @@
-[gd_resource type="Resource" script_class="GroundEffectData" format=3]
+[gd_resource type="Resource" script_class="GroundEffectData" format=3 uid="uid://cll8khse654rh"]
 
-[ext_resource type="Script" path="res://Data/GroundEffects/ground_effect_data.gd" id="1_ground"]
-[ext_resource type="Script" path="res://Systems/Combat/effect_action.gd" id="2_action"]
-[ext_resource type="Script" path="res://Systems/Combat/damage_effect_action.gd" id="3_damage"]
-[ext_resource type="Script" path="res://Systems/Combat/status_effect_data.gd" id="4_status"]
-[ext_resource type="Texture2D" path="res://Assets/GroundEffects/confusion_blob.png" id="5_texture"]
-[ext_resource type="Shader" path="res://Assets/GroundEffects/fire_pool_palette.gdshader" id="6_palette"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Icons/Stats/burning.png" id="7_icon"]
+[ext_resource type="Script" uid="uid://d0cqw0ka110x7" path="res://Data/GroundEffects/ground_effect_data.gd" id="1_ground"]
+[ext_resource type="Script" uid="uid://bb2hxg3ieta4h" path="res://Systems/Combat/effect_action.gd" id="2_action"]
+[ext_resource type="Script" uid="uid://bd52qvtdf37em" path="res://Systems/Combat/damage_effect_action.gd" id="3_damage"]
+[ext_resource type="Script" uid="uid://djyh13b16xtos" path="res://Systems/Combat/status_effect_data.gd" id="4_status"]
+[ext_resource type="Texture2D" uid="uid://du6k8yuqswg4o" path="res://Assets/GroundEffects/confusion_blob.png" id="5_texture"]
+[ext_resource type="Script" uid="uid://bd7w82irghj51" path="res://Systems/Combat/status_effect_modifier.gd" id="6_c2dpf"]
+[ext_resource type="Shader" uid="uid://dwmpqkdjx0efo" path="res://Assets/GroundEffects/fire_pool_palette.gdshader" id="6_palette"]
+[ext_resource type="Texture2D" uid="uid://4hd6tjngg43l" path="res://Assets/UI/Shop/Icons/Stats/burning.png" id="7_icon"]
 
 [sub_resource type="ShaderMaterial" id="Fire_palette"]
 shader = ExtResource("6_palette")
+shader_parameter/inner_colour = Color(0.72, 0.12, 0.015, 1)
+shader_parameter/middle_colour = Color(1, 0.36, 0.025, 1)
+shader_parameter/rim_colour = Color(1, 0.76, 0.08, 1)
 
 [sub_resource type="Resource" id="Damage_tick"]
 script = ExtResource("3_damage")
-amount = 1
 
 [sub_resource type="Resource" id="Status_burn"]
 script = ExtResource("4_status")

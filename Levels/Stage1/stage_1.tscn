@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://ldk65a2c6xgp" path="res://Levels/Stage1/stage_1.gd" id="1_thckm"]
 [ext_resource type="Script" uid="uid://tsoi3lwff5mf" path="res://Actors/Camera/shake_camera.gd" id="1_utqb5"]
 [ext_resource type="PackedScene" uid="uid://des8tka4uw8kx" path="res://Actors/UI/potion_flourish.tscn" id="2_2g2db"]
+[ext_resource type="PackedScene" uid="uid://cf35phba8iyuc" path="res://Levels/Stage1/blackbeard_firstrun_encounter.tscn" id="2_gjikx"]
 [ext_resource type="AudioStream" uid="uid://b86afwbiwoubu" path="res://Audio/BGM/hesapirate.mp3" id="2_yvgdk"]
 [ext_resource type="PackedScene" uid="uid://dsf0q5lcpr0mh" path="res://Actors/Camera/ScrollDirector.tscn" id="3_o28ls"]
 [ext_resource type="PackedScene" uid="uid://cpy76lvb1x4cb" path="res://UI/GameUI.tscn" id="3_p2t5c"]
@@ -65,6 +66,7 @@ metadata/_custom_type_script = "uid://8sxccskaloo3"
 
 [node name="Stage1" type="Node2D" unique_id=1126219472 node_paths=PackedStringArray("scroll_director", "enemy_controller", "level_generator", "screen_encounter_parent")]
 script = ExtResource("1_thckm")
+blackbeard_firstrun_scene = ExtResource("2_gjikx")
 scroll_director = NodePath("ScrollDirector")
 enemy_controller = NodePath("EnemyController")
 level_generator = NodePath("LevelGenerator")

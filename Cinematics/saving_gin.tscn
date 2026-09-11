@@ -14,34 +14,106 @@
 [ext_resource type="Resource" uid="uid://cw8f0udrh8hno" path="res://Assets/Cinematics/Segments/SavingGin/gin5.tres" id="8_4k4tp"]
 [ext_resource type="Resource" uid="uid://b474g76c5hmku" path="res://Assets/Cinematics/Segments/SavingGin/gin6.tres" id="9_lem5g"]
 
+[sub_resource type="Resource" id="Resource_lem5g"]
+script = ExtResource("3_ts5l8")
+speaker = "Jack"
+text = "..."
+metadata/_custom_type_script = "uid://1rcqoqlqlw40"
+
 [sub_resource type="Resource" id="Resource_6doxh"]
 script = ExtResource("2_t735w")
 segment = ExtResource("4_w8v35")
+lines = Array[ExtResource("3_ts5l8")]([SubResource("Resource_lem5g")])
 metadata/_custom_type_script = "uid://btf32ve6f77pb"
+
+[sub_resource type="Resource" id="Resource_nljmp"]
+script = ExtResource("3_ts5l8")
+speaker = "Ginny (Whistling)"
+text = "Row, row, row your boat, gonna get some Gin."
+metadata/_custom_type_script = "uid://1rcqoqlqlw40"
+
+[sub_resource type="Resource" id="Resource_66uxb"]
+script = ExtResource("3_ts5l8")
+speaker = "Vinny (In the barrel)"
+text = "Ah, Jack! I hear a familiar whistling, I believe that is my sister Ginny Tanqueray. Blonde with a red bandana?"
+metadata/_custom_type_script = "uid://1rcqoqlqlw40"
 
 [sub_resource type="Resource" id="Resource_ts5l8"]
 script = ExtResource("2_t735w")
 segment = ExtResource("5_oqhi8")
+lines = Array[ExtResource("3_ts5l8")]([SubResource("Resource_nljmp"), SubResource("Resource_66uxb")])
 metadata/_custom_type_script = "uid://btf32ve6f77pb"
+
+[sub_resource type="Resource" id="Resource_bqd3e"]
+script = ExtResource("3_ts5l8")
+speaker = "Ginny Tanqueray"
+text = "hi handsome"
+metadata/_custom_type_script = "uid://1rcqoqlqlw40"
 
 [sub_resource type="Resource" id="Resource_oqhi8"]
 script = ExtResource("2_t735w")
 segment = ExtResource("6_vv0ji")
+lines = Array[ExtResource("3_ts5l8")]([SubResource("Resource_bqd3e")])
 metadata/_custom_type_script = "uid://btf32ve6f77pb"
+
+[sub_resource type="Resource" id="Resource_3m2gw"]
+script = ExtResource("3_ts5l8")
+speaker = "Ginny Tanqueray"
+text = "sorry honey, the boat can only fit one person... or one person and a barrel of gin."
+metadata/_custom_type_script = "uid://1rcqoqlqlw40"
+
+[sub_resource type="Resource" id="Resource_qu3pm"]
+script = ExtResource("3_ts5l8")
+speaker = "Jack"
+text = "...wai...t....ss..inn...baaarree...vinnnyy"
+metadata/_custom_type_script = "uid://1rcqoqlqlw40"
 
 [sub_resource type="Resource" id="Resource_vv0ji"]
 script = ExtResource("2_t735w")
 segment = ExtResource("7_otege")
+lines = Array[ExtResource("3_ts5l8")]([SubResource("Resource_3m2gw"), SubResource("Resource_qu3pm")])
 metadata/_custom_type_script = "uid://btf32ve6f77pb"
+
+[sub_resource type="Resource" id="Resource_o67h8"]
+script = ExtResource("3_ts5l8")
+speaker = "Jack (frantically swimming)"
+text = "Wait! Come back! "
+metadata/_custom_type_script = "uid://1rcqoqlqlw40"
 
 [sub_resource type="Resource" id="Resource_otege"]
 script = ExtResource("2_t735w")
 segment = ExtResource("8_4k4tp")
+lines = Array[ExtResource("3_ts5l8")]([SubResource("Resource_o67h8")])
 metadata/_custom_type_script = "uid://btf32ve6f77pb"
+
+[sub_resource type="Resource" id="Resource_p370g"]
+script = ExtResource("3_ts5l8")
+speaker = "Ginny Tanqueray"
+text = "Vinny's told me Blackbeard obliterated your ship."
+metadata/_custom_type_script = "uid://1rcqoqlqlw40"
+
+[sub_resource type="Resource" id="Resource_nwdaa"]
+script = ExtResource("3_ts5l8")
+speaker = "Ginny Tanqueray"
+text = "I know I left you out for dead in the ocean. But we should let bygones be bygones. How about we make a deal, you give me gin and i'll make you a bigger and better boat."
+metadata/_custom_type_script = "uid://1rcqoqlqlw40"
+
+[sub_resource type="Resource" id="Resource_who55"]
+script = ExtResource("3_ts5l8")
+speaker = "Ginny Tanqueray"
+text = "Come visit me at the dock okay handsome?"
+metadata/_custom_type_script = "uid://1rcqoqlqlw40"
+
+[sub_resource type="Resource" id="Resource_eq6id"]
+script = ExtResource("3_ts5l8")
+speaker = "Jack (exhausted)"
+text = "..........ughhhh"
+metadata/_custom_type_script = "uid://1rcqoqlqlw40"
 
 [sub_resource type="Resource" id="Resource_4k4tp"]
 script = ExtResource("2_t735w")
 segment = ExtResource("9_lem5g")
+lines = Array[ExtResource("3_ts5l8")]([SubResource("Resource_p370g"), SubResource("Resource_nwdaa"), SubResource("Resource_who55"), SubResource("Resource_eq6id")])
 metadata/_custom_type_script = "uid://btf32ve6f77pb"
 
 [node name="SavingGin" type="Control" unique_id=529416479]
