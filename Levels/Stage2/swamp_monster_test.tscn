@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://eyw3r8q6hjon"]
+
+[ext_resource type="PackedScene" uid="uid://cpy76lvb1x4cb" path="res://UI/GameUI.tscn" id="1_game_ui"]
+[ext_resource type="PackedScene" uid="uid://t7alddeyjrep" path="res://Levels/hud.tscn" id="2_hud"]
+[ext_resource type="PackedScene" uid="uid://c1hug03muahmo" path="res://Actors/Camera/water_background.tscn" id="3_water"]
+[ext_resource type="Script" uid="uid://tsoi3lwff5mf" path="res://Actors/Camera/shake_camera.gd" id="4_shake_cam"]
+[ext_resource type="PackedScene" uid="uid://cclwwsegfn8rr" path="res://Actors/Player/player.tscn" id="5_player"]
+[ext_resource type="PackedScene" uid="uid://g5m616ujcawl" path="res://Actors/Enemies/swamp_monster.tscn" id="6_swamp"]
+
+[node name="SwampMonsterTest" type="Node2D" unique_id=1387362179]
+
+[node name="GameUI" parent="." unique_id=1543766778 instance=ExtResource("1_game_ui")]
+
+[node name="HUD" parent="." unique_id=838964157 instance=ExtResource("2_hud")]
+
+[node name="WaterLayer" type="CanvasLayer" parent="." unique_id=1005693764]
+layer = -100
+
+[node name="WaterBack" parent="WaterLayer" unique_id=126140477 node_paths=PackedStringArray("camera") instance=ExtResource("3_water")]
+camera = NodePath("../../ShakeCamera")
+
+[node name="ShakeCamera" type="Camera2D" parent="." unique_id=687209780 groups=["shake_camera"]]
+position = Vector2(960, 540)
+script = ExtResource("4_shake_cam")
+
+[node name="Player" parent="." unique_id=152788898 node_paths=PackedStringArray("camera") instance=ExtResource("5_player")]
+position = Vector2(960, 880)
+camera = NodePath("../ShakeCamera")
+
+[node name="SwampMonster" parent="." unique_id=632420941 instance=ExtResource("6_swamp")]
+position = Vector2(954, 178)

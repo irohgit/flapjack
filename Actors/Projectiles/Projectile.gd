@@ -173,7 +173,10 @@ func _resolve_bank_hits(previous_position: Vector2) -> void:
 
 		bank_bounces_remaining -= 1
 		direction = (incoming - 2.0 * incoming.dot(normal) * normal).normalized()
-		_update_rotation()
+		# A one-off re-orientation, not a per-frame tick - 0 delta means a
+		# spinning projectile's current rotation is left as-is here rather
+		# than snapping, while a direction-facing one still re-aligns.
+		_update_rotation(0.0)
 		var remaining_distance := global_position.distance_to(destination)
 		var endpoint_distance := global_position.distance_to(_expire_position)
 		# Step into the water to avoid hitting the same edge again.
@@ -201,7 +204,7 @@ func _move(delta: float) -> void:
 	if orbital_ricochet and not has_done_ricochet and age_time >= 0.5:
 		_orbital_ricochet()
 
-	_update_rotation()
+	_update_rotation(delta)
 
 	var movement := direction * data.speed * final_speed_boost * delta
 	if skewer != null:
@@ -215,7 +218,12 @@ func _move(delta: float) -> void:
 	position += movement
 
 
-func _update_rotation() -> void:
+func _update_rotation(delta: float) -> void:
+	if data.spin_speed != 0.0:
+		_sprite.rotation += data.spin_speed * delta
+		_animated_sprite.rotation += data.spin_speed * delta
+		return
+
 	var direction_angle := direction.angle()
 	_sprite.rotation = direction_angle + PI / 2.0
 	_animated_sprite.rotation = direction_angle

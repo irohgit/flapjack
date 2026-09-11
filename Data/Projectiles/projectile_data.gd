@@ -14,6 +14,10 @@ enum Allegiance { PLAYER, ENEMY }
 @export var hitbox_radius := 8.0
 @export var trail_colour := Color.WHITE
 @export var trail_length := 12
+## Radians/sec of continuous rotation, independent of travel direction (a
+## tumbling rock rather than an arrow that faces where it's going). 0
+## disables spin and keeps the normal face-travel-direction behaviour.
+@export var spin_speed := 0.0
 @export var status_effects: Array[StatusEffectData] = []
 ## Area spawned on impact, landing or expiry.
 @export var death_ground_effect: GroundEffectData

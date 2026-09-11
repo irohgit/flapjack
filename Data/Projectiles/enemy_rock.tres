@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ProjectileData" format=3 uid="uid://d178fn6mvj77k"]
+
+[ext_resource type="Script" uid="uid://cre7gs48pepsi" path="res://Data/Projectiles/projectile_data.gd" id="1_rock"]
+[ext_resource type="Script" uid="uid://djyh13b16xtos" path="res://Systems/Combat/status_effect_data.gd" id="2_ux8ey"]
+[ext_resource type="Texture2D" uid="uid://cqun5hebdr0fx" path="res://Assets/Projectiles/Rocks.png" id="3_ywj3x"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eh7uy"]
+atlas = ExtResource("3_ywj3x")
+region = Rect2(48, 1, 15, 15)
+
+[resource]
+script = ExtResource("1_rock")
+allegiance = 1
+texture = SubResource("AtlasTexture_eh7uy")
+scale = 6.0
+trail_colour = Color(0.44, 0.38, 0.32, 0.32156864)
+trail_length = 20
+metadata/_custom_type_script = "uid://cre7gs48pepsi"
