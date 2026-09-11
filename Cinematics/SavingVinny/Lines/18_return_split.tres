@@ -1,12 +1,18 @@
 [gd_resource type="Resource" script_class="CutsceneLine" format=3 uid="uid://bt8xf44k808ca"]
 
-[ext_resource type="Texture2D" uid="uid://18crttdglxj5" path="res://Cinematics/Placeholders/JACK_WARY.png" id="1_aa28l"]
+[ext_resource type="Script" uid="uid://bo3674uxklgt8" path="res://Cinematics/cutscene_motion.gd" id="1_aa28l"]
 [ext_resource type="Script" uid="uid://3ke20rwguryo" path="res://Cinematics/cutscene_line.gd" id="2_0o2d7"]
-[ext_resource type="Texture2D" uid="uid://hgi65q8oph0y" path="res://Cinematics/Placeholders/STAGE_SHIP_TURNING.png" id="3_e8y5t"]
+[ext_resource type="Texture2D" uid="uid://6aeaxa80m7vb" path="res://Assets/Cinematics/JACK_CONCERNED_512x640.png" id="2_e8y5t"]
+
+[sub_resource type="Resource" id="Resource_s5877"]
+script = ExtResource("1_aa28l")
+offset_to = Vector2(1000, 0)
+scale_to = 3.0
+metadata/_custom_type_script = "uid://bo3674uxklgt8"
 
 [resource]
 script = ExtResource("2_0o2d7")
-layout = 1
-left_portrait = ExtResource("1_aa28l")
-stage_image = ExtResource("3_e8y5t")
-hold_time = 1.0
+layout = 2
+left_portrait = ExtResource("2_e8y5t")
+stage_animation = &"scene10"
+left_motion = SubResource("Resource_s5877")

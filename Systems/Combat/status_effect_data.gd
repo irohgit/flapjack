@@ -39,3 +39,6 @@ const STAT_FIRE_RATE := &"fire_rate"
 @export var start_actions: Array[EffectAction] = []
 @export var tick_actions: Array[EffectAction] = []
 @export var end_actions: Array[EffectAction] = []
+
+@export_group("VFX")
+@export var cue: FeedbackCue

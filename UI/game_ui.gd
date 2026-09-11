@@ -18,6 +18,7 @@ func open_shop(
 	level_data: LevelData,
 	rng: RandomNumberGenerator = null
 ) -> void:
+	print("[SHOP] shop_menu valid = ", is_instance_valid(shop_menu), " pause_menu valid = ", is_instance_valid(pause_menu))
 	if shop_menu.visible:
 		return
 

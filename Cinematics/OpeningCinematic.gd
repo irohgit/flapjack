@@ -12,6 +12,8 @@ signal finished
 @onready var _boat:= $Boat
 @onready var _title: RichTextLabel = $GameTitle
 @onready var _fade: ColorRect = $Background
+## Where this cinematic hands off when it finishes or is skipped.
+@export var next_scene: PackedScene
 var _finished := false
 
 
@@ -33,7 +35,10 @@ func _finish() -> void:
 		return
 	_finished = true
 	finished.emit()
-
+	if next_scene == null:
+		push_error("%s has no next_scene assigned" % name)
+		return
+	Transition.change_scene(next_scene.resource_path)	
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_pressed():

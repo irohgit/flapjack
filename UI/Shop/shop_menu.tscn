@@ -1,11 +1,11 @@
-[gd_scene load_steps=19 format=3 uid="uid://dpbyqdwsufn2f"]
+[gd_scene format=3 uid="uid://dpbyqdwsufn2f"]
 
 [ext_resource type="Script" uid="uid://mibkq2861k2d" path="res://UI/Shop/shop_menu.gd" id="1_script"]
 [ext_resource type="FontFile" uid="uid://1qarew2on3k7" path="res://Assets/Fonts/PixelOperator.ttf" id="2_font"]
 [ext_resource type="FontFile" uid="uid://cvo681c1hvgca" path="res://Assets/Fonts/Montserrat/static/Montserrat-Black.ttf" id="3_title_font"]
-[ext_resource type="Texture2D" path="res://Assets/UI/WoodMenu/wood_settings_panel.png" id="4_panel"]
-[ext_resource type="Texture2D" path="res://Assets/UI/WoodMenu/wood_button.png" id="5_button"]
-[ext_resource type="Texture2D" path="res://Assets/UI/WoodMenu/octopus_crest.png" id="6_octopus"]
+[ext_resource type="Texture2D" uid="uid://vdcjhgb07r4x" path="res://Assets/UI/WoodMenu/wood_settings_panel.png" id="4_panel"]
+[ext_resource type="Texture2D" uid="uid://cjjelj1l1pyip" path="res://Assets/UI/WoodMenu/wood_button.png" id="5_button"]
+[ext_resource type="Texture2D" uid="uid://kxxrj3v5jv4l" path="res://Assets/UI/WoodMenu/octopus_crest.png" id="6_octopus"]
 [ext_resource type="Texture2D" uid="uid://rgu14womy8pw" path="res://Assets/Characters/vinny_drink_288x48.png" id="7_vinny"]
 [ext_resource type="Texture2D" uid="uid://8d7deqyu8e26" path="res://Assets/UI/Shop/Icons/Status/coin.png" id="8_coin"]
 [ext_resource type="PackedScene" uid="uid://das28foe55u6f" path="res://UI/navbutton.tscn" id="9_nav"]
@@ -62,12 +62,12 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("Atlas_vinny_5")
 }],
-"loop": true,
+"loop": 1,
 "name": &"drink",
 "speed": 5.0
 }]
 
-[node name="ShopMenu" type="Control" node_paths=PackedStringArray("first_focus")]
+[node name="ShopMenu" type="Control" unique_id=992627864 node_paths=PackedStringArray("first_focus")]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
@@ -80,7 +80,7 @@ script = ExtResource("1_script")
 first_focus = NodePath("SidePanel/OfferCards/OfferCard1")
 frees_on_close = true
 
-[node name="Backdrop" type="ColorRect" parent="."]
+[node name="Backdrop" type="ColorRect" parent="." unique_id=1670078445]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -89,7 +89,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.003, 0.01, 0.014, 0.84)
 
-[node name="MerchantPanel" type="TextureRect" parent="."]
+[node name="MerchantPanel" type="TextureRect" parent="." unique_id=201658736]
 texture_filter = 1
 layout_mode = 0
 offset_left = 32.0
@@ -100,7 +100,7 @@ mouse_filter = 2
 texture = ExtResource("4_panel")
 expand_mode = 1
 
-[node name="Octopus" type="TextureRect" parent="MerchantPanel"]
+[node name="Octopus" type="TextureRect" parent="MerchantPanel" unique_id=1125725358]
 texture_filter = 1
 layout_mode = 0
 offset_left = 415.0
@@ -112,7 +112,7 @@ texture = ExtResource("6_octopus")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Title" type="Label" parent="MerchantPanel"]
+[node name="Title" type="Label" parent="MerchantPanel" unique_id=1807733667]
 layout_mode = 0
 offset_left = 100.0
 offset_top = 166.0
@@ -127,7 +127,7 @@ text = "VINNY'S MARKET"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Subtitle" type="Label" parent="MerchantPanel"]
+[node name="Subtitle" type="Label" parent="MerchantPanel" unique_id=2032853552]
 layout_mode = 0
 offset_left = 100.0
 offset_top = 229.0
@@ -141,17 +141,17 @@ text = "POTIONS, AUGMENTS & QUESTIONABLE ADVICE"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Vinny" type="Node2D" parent="."]
+[node name="Vinny" type="Node2D" parent="." unique_id=887767598]
 position = Vector2(530, 422)
 scale = Vector2(5.5, 5.5)
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Vinny"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Vinny" unique_id=823351195]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_vinny")
 animation = &"drink"
 autoplay = "drink"
 
-[node name="DialoguePlaque" type="TextureRect" parent="."]
+[node name="DialoguePlaque" type="TextureRect" parent="." unique_id=2142187876]
 texture_filter = 1
 layout_mode = 0
 offset_left = 112.0
@@ -162,7 +162,7 @@ mouse_filter = 2
 texture = ExtResource("5_button")
 expand_mode = 1
 
-[node name="MerchantDialogue" type="Label" parent="DialoguePlaque"]
+[node name="MerchantDialogue" type="Label" parent="DialoguePlaque" unique_id=736434606]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 62.0
@@ -178,7 +178,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="SelectionPlaque" type="TextureRect" parent="."]
+[node name="SelectionPlaque" type="TextureRect" parent="." unique_id=475545915]
 texture_filter = 1
 layout_mode = 0
 offset_left = 112.0
@@ -189,7 +189,7 @@ mouse_filter = 2
 texture = ExtResource("5_button")
 expand_mode = 1
 
-[node name="SelectionInfo" type="Label" parent="SelectionPlaque"]
+[node name="SelectionInfo" type="Label" parent="SelectionPlaque" unique_id=458613720]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 62.0
@@ -205,13 +205,12 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="SidePanel" type="NinePatchRect" parent="."]
+[node name="SidePanel" type="NinePatchRect" parent="." unique_id=1802263819]
 unique_name_in_owner = true
 texture_filter = 1
 layout_mode = 1
-anchors_preset = 6
+anchors_preset = 11
 anchor_left = 1.0
-anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -844.0
@@ -226,7 +225,7 @@ patch_margin_top = 96
 patch_margin_right = 96
 patch_margin_bottom = 96
 
-[node name="Title" type="Label" parent="SidePanel"]
+[node name="Title" type="Label" parent="SidePanel" unique_id=1591690037]
 layout_mode = 0
 offset_left = 54.0
 offset_top = 58.0
@@ -240,7 +239,7 @@ theme_override_font_sizes/font_size = 34
 text = "TODAY'S CARGO"
 vertical_alignment = 1
 
-[node name="CoinPanel" type="NinePatchRect" parent="SidePanel"]
+[node name="CoinPanel" type="NinePatchRect" parent="SidePanel" unique_id=1023711883]
 texture_filter = 1
 layout_mode = 0
 offset_left = 492.0
@@ -253,7 +252,7 @@ patch_margin_top = 20
 patch_margin_right = 40
 patch_margin_bottom = 20
 
-[node name="CoinIcon" type="TextureRect" parent="SidePanel/CoinPanel"]
+[node name="CoinIcon" type="TextureRect" parent="SidePanel/CoinPanel" unique_id=2045525022]
 texture_filter = 1
 layout_mode = 0
 offset_left = 18.0
@@ -265,7 +264,7 @@ texture = ExtResource("8_coin")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="CoinCaption" type="Label" parent="SidePanel/CoinPanel"]
+[node name="CoinCaption" type="Label" parent="SidePanel/CoinPanel" unique_id=1392938413]
 layout_mode = 0
 offset_left = 80.0
 offset_top = 8.0
@@ -278,7 +277,7 @@ theme_override_font_sizes/font_size = 15
 text = "COINS"
 horizontal_alignment = 1
 
-[node name="CoinAmount" type="Label" parent="SidePanel/CoinPanel"]
+[node name="CoinAmount" type="Label" parent="SidePanel/CoinPanel" unique_id=380905262]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 80.0
@@ -293,7 +292,7 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HeaderDivider" type="ColorRect" parent="SidePanel"]
+[node name="HeaderDivider" type="ColorRect" parent="SidePanel" unique_id=2027196324]
 layout_mode = 0
 offset_left = 48.0
 offset_top = 146.0
@@ -302,7 +301,7 @@ offset_bottom = 149.0
 mouse_filter = 2
 color = Color(0.08, 0.68, 0.61, 0.85)
 
-[node name="OfferCards" type="VBoxContainer" parent="SidePanel"]
+[node name="OfferCards" type="VBoxContainer" parent="SidePanel" unique_id=913573481]
 layout_mode = 0
 offset_left = 48.0
 offset_top = 174.0
@@ -310,22 +309,22 @@ offset_right = 772.0
 offset_bottom = 704.0
 theme_override_constants/separation = 10
 
-[node name="OfferCard1" parent="SidePanel/OfferCards" instance=ExtResource("10_offer")]
+[node name="OfferCard1" parent="SidePanel/OfferCards" unique_id=2053583163 instance=ExtResource("10_offer")]
 unique_name_in_owner = true
 layout_mode = 2
 enforce_sizing = false
 
-[node name="OfferCard2" parent="SidePanel/OfferCards" instance=ExtResource("10_offer")]
+[node name="OfferCard2" parent="SidePanel/OfferCards" unique_id=1413255014 instance=ExtResource("10_offer")]
 unique_name_in_owner = true
 layout_mode = 2
 enforce_sizing = false
 
-[node name="OfferCard3" parent="SidePanel/OfferCards" instance=ExtResource("10_offer")]
+[node name="OfferCard3" parent="SidePanel/OfferCards" unique_id=131641165 instance=ExtResource("10_offer")]
 unique_name_in_owner = true
 layout_mode = 2
 enforce_sizing = false
 
-[node name="PurchaseHint" type="Label" parent="SidePanel"]
+[node name="PurchaseHint" type="Label" parent="SidePanel" unique_id=1994185773]
 layout_mode = 0
 offset_left = 48.0
 offset_top = 720.0
@@ -339,7 +338,7 @@ text = "SPACE / A TO PURCHASE"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ExitButton" parent="SidePanel" instance=ExtResource("9_nav")]
+[node name="ExitButton" parent="SidePanel" unique_id=1486455157 instance=ExtResource("9_nav")]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 160.0
@@ -352,7 +351,6 @@ texture_hover = ExtResource("5_button")
 texture_focused = ExtResource("5_button")
 act = 6
 label_text = "RETURN TO DOCK"
-label_size = 32
 label_font = ExtResource("2_font")
 label_color = Color(1, 0.93, 0.76, 1)
 label_outline_color = Color(0.02, 0.004, 0, 1)

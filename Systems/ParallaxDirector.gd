@@ -88,9 +88,9 @@ func _spawn_tick() -> void:
 	_spawn_band(far_objects, far_scroll_range, far_parent)
 	_spawn_band(near_objects, near_scroll_range, near_parent)
 	_spawn_band(overlay_objects, overlay_scroll_range, overlay_parent)
-	DebugHud.watch("overlay", str(overlay_parent.get_child_count()))
-	DebugHud.watch("near", str(near_parent.get_child_count()))
-	DebugHud.watch("far", str(far_parent.get_child_count()))
+	#DebugHud.watch("overlay", str(overlay_parent.get_child_count()))
+	#DebugHud.watch("near", str(near_parent.get_child_count()))
+	#DebugHud.watch("far", str(far_parent.get_child_count()))
 
 func _spawn_band(pool: Array[PackedScene], scroll_range: Vector2, parent: Node2D) -> void:
 	if pool.is_empty() or parent == null:

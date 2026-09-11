@@ -6,3 +6,5 @@
 script = ExtResource("1_131ob")
 speaker = "Vinny"
 text = "I may not look intimidating. But I warn you against ever crossing a deal with a Tanqueray."
+layout = 2
+stage_animation = &"scene03"

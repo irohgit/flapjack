@@ -131,6 +131,7 @@ func _on_boss_name_changed(boss_name: String) -> void:
 
 
 func _on_boss_defeated(_world_position: Vector2) -> void:
+	boss_name_label.text = ""
 	boss_health_display.hide()
 
 

@@ -54,7 +54,7 @@ shadow_color = Color(0, 0, 0, 0.68)
 shadow_size = 9
 shadow_offset = Vector2(0, 5)
 
-[node name="UpgradeScreen" type="Control" unique_id=1627904368 node_paths=PackedStringArray("first_focus")]
+[node name="UpgradeScreen" type="Control" unique_id=676238142 node_paths=PackedStringArray("first_focus")]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15

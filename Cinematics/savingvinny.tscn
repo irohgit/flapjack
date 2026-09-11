@@ -2,111 +2,28 @@
 
 [ext_resource type="Script" uid="uid://ku32goopacxa" path="res://Systems/Cinematics/cutscene_player.gd" id="1_s7cop"]
 [ext_resource type="Script" uid="uid://3ke20rwguryo" path="res://Cinematics/cutscene_line.gd" id="2_0mvit"]
+[ext_resource type="SpriteFrames" uid="uid://bfpmsi10fv0m1" path="res://Assets/Cinematics/SpriteFrames/savingvinny.tres" id="2_1mr00"]
 [ext_resource type="Resource" uid="uid://drjormnd6a1en" path="res://Cinematics/SavingVinny/Lines/01_open.tres" id="3_8vlyk"]
-[ext_resource type="Resource" uid="uid://c5m2x2elholgv" path="res://Cinematics/SavingVinny/Lines/02_focus.tres" id="4_sy76b"]
-[ext_resource type="Resource" uid="uid://p440f7kengud" path="res://Cinematics/SavingVinny/Lines/03_jack_shocked.tres" id="5_kdtkl"]
-[ext_resource type="Resource" uid="uid://bc61o8uc7o0bi" path="res://Cinematics/SavingVinny/Lines/04_wide.tres" id="6_oml3x"]
+[ext_resource type="Resource" uid="uid://bc61o8uc7o0bi" path="res://Cinematics/SavingVinny/Lines/04_wide.tres" id="4_1mr00"]
 [ext_resource type="Resource" uid="uid://dgmrpltptt5f" path="res://Cinematics/SavingVinny/Lines/05_vinny_payment.tres" id="7_b6fj0"]
 [ext_resource type="Resource" uid="uid://dxbp8gdldhc7r" path="res://Cinematics/SavingVinny/Lines/06_captain_no.tres" id="8_qmnhl"]
 [ext_resource type="Resource" uid="uid://c3lo5ecvx2w13" path="res://Cinematics/SavingVinny/Lines/07_vinny_tanqueray.tres" id="9_hqnsc"]
 [ext_resource type="Resource" uid="uid://7hu26g14woac" path="res://Cinematics/SavingVinny/Lines/08_captain_blackbeard.tres" id="10_7yfy7"]
-[ext_resource type="Resource" uid="uid://8enmi4hdeo6s" path="res://Cinematics/SavingVinny/Lines/09_captain_plank.tres" id="11_0c511"]
-[ext_resource type="Resource" uid="uid://dv0cctmd66k5d" path="res://Cinematics/SavingVinny/Lines/10_vinny_asked.tres" id="12_ay7lf"]
 [ext_resource type="Resource" uid="uid://bf5shno13gdde" path="res://Cinematics/SavingVinny/Lines/11_drink.tres" id="13_mrwvf"]
 [ext_resource type="Resource" uid="uid://cfnwa132qalxn" path="res://Cinematics/SavingVinny/Lines/12_glow.tres" id="14_8j3bx"]
 [ext_resource type="Resource" uid="uid://cfiv5mpn7dtuj" path="res://Cinematics/SavingVinny/Lines/13_fart.tres" id="15_lt6up"]
 [ext_resource type="Resource" uid="uid://bm5cjh6vsml88" path="res://Cinematics/SavingVinny/Lines/14_vinny_degas.tres" id="16_4gymu"]
-[ext_resource type="Resource" uid="uid://74m4xrmk8kae" path="res://Cinematics/SavingVinny/Lines/15_laugh.tres" id="17_s3s48"]
 [ext_resource type="Resource" uid="uid://dkehav4kvkb6m" path="res://Cinematics/SavingVinny/Lines/16_crowsnest.tres" id="18_mjv2e"]
 [ext_resource type="Resource" uid="uid://b3dvl4vqc7ns8" path="res://Cinematics/SavingVinny/Lines/17_captain_tieup.tres" id="19_f4ini"]
+[ext_resource type="PackedScene" uid="uid://u3pvu00n4bsx" path="res://Actors/UI/advance_icon.tscn" id="20_1mr00"]
 [ext_resource type="Resource" uid="uid://bt8xf44k808ca" path="res://Cinematics/SavingVinny/Lines/18_return_split.tres" id="20_puyer"]
-[ext_resource type="Resource" uid="uid://baxpu1gb85u0v" path="res://Cinematics/SavingVinny/Lines/19_jack_sailing.tres" id="21_uc7be"]
+[ext_resource type="Script" uid="uid://droccctwb042w" path="res://UI/advance_icon.gd" id="21_ikaef"]
 [ext_resource type="Shader" uid="uid://gicvlvlbijni" path="res://Cinematics/blur.gdshader" id="22_sy76b"]
 [ext_resource type="FontFile" uid="uid://cb51p8cvaifq3" path="res://Assets/Fonts/Montserrat/static/Montserrat-ExtraBold.ttf" id="24_sy76b"]
 [ext_resource type="FontFile" uid="uid://bocifqpdtmlvt" path="res://Assets/Fonts/MontagnaLTD.ttf" id="25_kdtkl"]
 
 [sub_resource type="Animation" id="Animation_0mvit"]
 length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Letterbox/TopBar:offset_bottom")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Letterbox/BottomBar:offset_top")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-
-[sub_resource type="Animation" id="Animation_g30i8"]
-resource_name = "letterbox_in"
-length = 0.6
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Letterbox/TopBar:offset_bottom")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.6),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 90.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Letterbox/BottomBar:offset_top")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.6),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, -90.0]
-}
-
-[sub_resource type="Animation" id="Animation_dppea"]
-resource_name = "letterbox_out"
-length = 0.6
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Letterbox/TopBar:offset_bottom")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.6),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [90.0, 0.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Letterbox/BottomBar:offset_top")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.6),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [-90.0, 0.0]
-}
 
 [sub_resource type="Animation" id="Animation_mryr7"]
 resource_name = "savingvinny"
@@ -114,8 +31,6 @@ resource_name = "savingvinny"
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_s7cop"]
 _data = {
 &"RESET": SubResource("Animation_0mvit"),
-&"letterbox_in": SubResource("Animation_g30i8"),
-&"letterbox_out": SubResource("Animation_dppea"),
 &"savingvinny": SubResource("Animation_mryr7")
 }
 
@@ -123,6 +38,11 @@ _data = {
 shader = ExtResource("22_sy76b")
 shader_parameter/blur_amount = 0.0
 shader_parameter/max_radius = 10.0
+shader_parameter/tint = Color(1, 1, 1, 1)
+shader_parameter/mask_radius = 2.0
+shader_parameter/mask_softness = 0.04
+shader_parameter/mask_centre = Vector2(0.5, 0.5)
+shader_parameter/mask_colour = Color(0, 0, 0, 1)
 
 [node name="Savingvinny" type="Control" unique_id=202502745]
 layout_mode = 3
@@ -132,7 +52,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_s7cop")
-lines = Array[ExtResource("2_0mvit")]([ExtResource("3_8vlyk"), ExtResource("4_sy76b"), ExtResource("5_kdtkl"), ExtResource("6_oml3x"), ExtResource("7_b6fj0"), ExtResource("8_qmnhl"), ExtResource("9_hqnsc"), ExtResource("10_7yfy7"), ExtResource("11_0c511"), ExtResource("12_ay7lf"), ExtResource("13_mrwvf"), ExtResource("14_8j3bx"), ExtResource("15_lt6up"), ExtResource("16_4gymu"), ExtResource("17_s3s48"), ExtResource("18_mjv2e"), ExtResource("19_f4ini"), ExtResource("20_puyer"), ExtResource("21_uc7be")])
+stage_frames = ExtResource("2_1mr00")
+lines = Array[ExtResource("2_0mvit")]([ExtResource("3_8vlyk"), ExtResource("4_1mr00"), ExtResource("7_b6fj0"), ExtResource("8_qmnhl"), ExtResource("9_hqnsc"), ExtResource("10_7yfy7"), ExtResource("13_mrwvf"), ExtResource("14_8j3bx"), ExtResource("15_lt6up"), ExtResource("16_4gymu"), ExtResource("18_mjv2e"), ExtResource("19_f4ini"), ExtResource("20_puyer")])
+fade_in_time = 1.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=44340129]
 libraries/ = SubResource("AnimationLibrary_s7cop")
@@ -172,34 +94,15 @@ offset_bottom = 40.0
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Letterbox" type="Control" parent="." unique_id=1209601599]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="TopBar" type="ColorRect" parent="Letterbox" unique_id=420977678]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-grow_horizontal = 2
-color = Color(0, 0, 0, 1)
-
-[node name="BottomBar" type="ColorRect" parent="Letterbox" unique_id=948243650]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 0
-color = Color(0, 0, 0, 1)
+[node name="Flash" type="ColorRect" parent="." unique_id=2067427494]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="DialogueBox" type="Control" parent="." unique_id=416722764]
+visible = false
 layout_mode = 1
+anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -245,3 +148,16 @@ theme_override_fonts/normal_font = ExtResource("25_kdtkl")
 theme_override_font_sizes/normal_font_size = 36
 bbcode_enabled = true
 fit_content = true
+
+[node name="AdvanceIcon" parent="DialogueBox" unique_id=711909256 instance=ExtResource("20_1mr00")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -88.0
+offset_top = -24.0
+offset_right = -40.0
+offset_bottom = 24.0
+script = ExtResource("21_ikaef")

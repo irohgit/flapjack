@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://u3pvu00n4bsx"]
+
+[ext_resource type="SpriteFrames" uid="uid://b0uotj0bt75cr" path="res://Assets/UI/input_glyphs.tres" id="1_d6fbc"]
+
+[node name="AdvanceIcon" type="Control" unique_id=711909256]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="GlyphSlot" type="Control" parent="." unique_id=774550410]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 1
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[node name="Glyph" type="AnimatedSprite2D" parent="GlyphSlot" unique_id=1110774455]
+texture_filter = 1
+position = Vector2(32, 32)
+sprite_frames = ExtResource("1_d6fbc")
+animation = &"skip_keyboard"

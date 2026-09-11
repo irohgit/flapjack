@@ -27,7 +27,9 @@ func _ready() -> void:
 
 func take_damage(amount: int) -> void:
 	_health.take_damage(amount)
-
+func get_health_component() -> HealthComponent:
+	return _health
+	
 func _on_damaged() -> void:
 	if _sprite.animation != destruct_anim:
 		_play(hit_anim)

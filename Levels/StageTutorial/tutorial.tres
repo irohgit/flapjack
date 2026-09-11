@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://cyghdcm1pbq0p"]
+
+[ext_resource type="Script" uid="uid://cytvv5o32ru6e" path="res://Data/Levels/encounter_data.gd" id="1_7c4pl"]
+[ext_resource type="Script" uid="uid://bhsc86o70es47" path="res://Data/Levels/weighted_end_event_data.gd" id="2_f1jp2"]
+[ext_resource type="Script" uid="uid://p4ssfrvfj0uw" path="res://Data/Levels/level_data.gd" id="3_bount"]
+[ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="4_dvyc1"]
+
+[resource]
+script = ExtResource("3_bount")
+end_position = Vector2(0, 1)
+stage_title = "Maiden Voyage"
+stage_subtitle = "Tutorial"
+metadata/_custom_type_script = "uid://p4ssfrvfj0uw"

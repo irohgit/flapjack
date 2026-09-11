@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://des8tka4uw8kx"]
+
+[ext_resource type="Script" uid="uid://cj2dyiyol01y3" path="res://Actors/UI/potion_flourish.gd" id="1_0rnuv"]
+[ext_resource type="AudioStream" uid="uid://dshox3m1impsv" path="res://Audio/SFX/soft_hover.mp3" id="2_6nf4r"]
+[ext_resource type="AudioStream" uid="uid://b7l0u6b2qcgiv" path="res://Audio/SFX/potiondrink_1.mp3" id="3_npocs"]
+
+[node name="PotionFlourish" type="CanvasLayer" unique_id=1520030408]
+layer = 90
+script = ExtResource("1_0rnuv")
+appear_sfx = ExtResource("2_6nf4r")
+pop_sfx = ExtResource("3_npocs")
+
+[node name="Icon" type="TextureRect" parent="." unique_id=1325298876]
+custom_minimum_size = Vector2(300, 300)
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -150.0
+offset_right = 150.0
+offset_bottom = 150.0
+pivot_offset = Vector2(150, 150)

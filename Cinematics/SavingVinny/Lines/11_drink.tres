@@ -4,4 +4,7 @@
 
 [resource]
 script = ExtResource("1_xnij8")
-hold_time = 1.0
+speaker = "Vinny"
+text = "Don’t say I didn’t warn you."
+layout = 2
+stage_animation = &"scene04"

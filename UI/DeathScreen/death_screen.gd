@@ -27,13 +27,13 @@ func _ready() -> void:
 	visible = false
 	GameEvents.player_died.connect(_on_player_died)
 
-	if upgrade_button:
-		upgrade_button.act = NavButton.Act.CHANGE_SCENE
-		upgrade_button.scene_to_load = UPGRADE_SCREEN_SCENE
-
-	if main_menu_button:
-		main_menu_button.act = NavButton.Act.CHANGE_SCENE
-		main_menu_button.scene_to_load = MAIN_MENU_SCENE
+	#if upgrade_button:
+		#upgrade_button.act = NavButton.Act.CHANGE_SCENE
+		#upgrade_button.scene_to_load = UPGRADE_SCREEN_SCENE
+#
+	#if main_menu_button:
+		#main_menu_button.act = NavButton.Act.CHANGE_SCENE
+		#main_menu_button.scene_to_load = MAIN_MENU_SCENE
 
 
 func is_open() -> bool:
@@ -41,6 +41,7 @@ func is_open() -> bool:
 
 
 func _on_player_died(retry_scene_path: String) -> void:
+	print("[DEATH] incoming = '", retry_scene_path, "' resolved = '", _retry_scene_path, "'")
 	if visible:
 		return
 

@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://e1sy5jsvu7uu"]
+
+[ext_resource type="Script" uid="uid://toduyg7p77n4" path="res://UI/stage_title_card.gd" id="1_s8lf7"]
+[ext_resource type="FontFile" uid="uid://ddo21s40yrfbh" path="res://Assets/Fonts/Montserrat/static/Montserrat-Bold.ttf" id="1_t482p"]
+[ext_resource type="FontFile" uid="uid://bocifqpdtmlvt" path="res://Assets/Fonts/MontagnaLTD.ttf" id="2_mk3q5"]
+
+[node name="StageTitleCard" type="Control" unique_id=42426168]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_s8lf7")
+
+[node name="Box" type="VBoxContainer" parent="." unique_id=240873175]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Subtitle" type="Label" parent="Box" unique_id=1118505952]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_t482p")
+theme_override_font_sizes/font_size = 28
+text = "STAGE ONE"
+horizontal_alignment = 1
+
+[node name="Title" type="RichTextLabel" parent="Box" unique_id=620743673]
+layout_mode = 2
+theme_override_colors/default_color = Color(0.90403473, 0.7688425, 1.540184e-06, 1)
+theme_override_fonts/normal_font = ExtResource("2_mk3q5")
+theme_override_font_sizes/normal_font_size = 84
+bbcode_enabled = true
+text = "AZURE SEAS"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+horizontal_alignment = 1
