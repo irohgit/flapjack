@@ -1,9 +1,9 @@
-[gd_resource type="Resource" script_class="AugmentData" format=3]
+[gd_resource type="Resource" script_class="AugmentData" format=3 uid="uid://74juyowpkux"]
 
-[ext_resource type="Script" path="res://Data/Augments/augment_data.gd" id="1_augment"]
-[ext_resource type="Script" path="res://Data/Augments/SulfurStinkpots/cracked_pots_effect.gd" id="2_effect"]
-[ext_resource type="Resource" path="res://Data/Weapons/SulfurStinkpots.tres" id="3_weapon"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Items/Weapons/sulfur_stinkpot.png" id="4_icon"]
+[ext_resource type="Script" uid="uid://cpp3oou337x" path="res://Data/Augments/augment_data.gd" id="1_augment"]
+[ext_resource type="Script" uid="uid://b0ft16hjc7aos" path="res://Data/Augments/SulfurStinkpots/cracked_pots_effect.gd" id="2_effect"]
+[ext_resource type="Resource" uid="uid://cpgc24h2uja6w" path="res://Data/Weapons/SulfurStinkpots.tres" id="3_weapon"]
+[ext_resource type="Texture2D" uid="uid://bc6c1edqy1j7f" path="res://Assets/UI/Shop/Items/Weapons/sulfur_stinkpot.png" id="4_icon"]
 
 [sub_resource type="Resource" id="Effect"]
 script = ExtResource("2_effect")
@@ -12,5 +12,5 @@ script = ExtResource("2_effect")
 script = ExtResource("1_augment")
 name = "Cracked Pots"
 targetWeapon = ExtResource("3_weapon")
-augmentEffect = SubResource("Effect")
 texture = ExtResource("4_icon")
+augmentEffect = SubResource("Effect")
