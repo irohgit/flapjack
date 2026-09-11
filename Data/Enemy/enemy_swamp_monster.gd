@@ -81,6 +81,7 @@ func _summon_snakes() -> void:
 
 		get_parent().add_child(snake)
 		snake.global_position = global_position
+		
 		snake.arrive_at(target_position)
 
 
