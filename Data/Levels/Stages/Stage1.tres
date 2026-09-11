@@ -10,6 +10,8 @@
 [ext_resource type="Script" uid="uid://bgt6cqxd8jifw" path="res://Data/Levels/weighted_encounter_data.gd" id="5_special"]
 [ext_resource type="PackedScene" uid="uid://cajwvel1mia7c" path="res://Actors/Enemies/voodoo_boss.tscn" id="5_stage_clear"]
 [ext_resource type="Script" uid="uid://cytvv5o32ru6e" path="res://Data/Levels/encounter_data.gd" id="6_encounter"]
+[ext_resource type="Resource" path="res://Data/Pickups/ClingfilmPickup.tres" id="7_clingfilm"]
+[ext_resource type="Resource" path="res://Data/Pickups/CrackedPotsPickup.tres" id="7_cracked_pots"]
 [ext_resource type="Resource" uid="uid://cpynird4edptk" path="res://Data/Pickups/FireballAugmentPickup.tres" id="7_fire"]
 [ext_resource type="Resource" uid="uid://bnh66tw3h3xk8" path="res://Data/Pickups/HarpoonPickup.tres" id="7_harpoon"]
 [ext_resource type="Resource" uid="uid://bkqumwc6jcphy" path="res://Data/Pickups/HealthPotion.tres" id="7_health"]
@@ -21,14 +23,11 @@
 [ext_resource type="Resource" uid="uid://p1kltsl8ervk" path="res://Data/Pickups/RapidFirePotion.tres" id="7_rapid"]
 [ext_resource type="Resource" uid="uid://e8bbiwbkus1o" path="res://Data/Pickups/OrbitalRicochetPickup.tres" id="7_ricochet"]
 [ext_resource type="Resource" uid="uid://bcj4lyhuitxi2" path="res://Data/Pickups/ShieldPotion.tres" id="7_shield"]
-[ext_resource type="Resource" path="res://Data/Pickups/SkewerHarpoonPickup.tres" id="7_skewer"]
+[ext_resource type="Resource" uid="uid://cmqc1v21s0l1b" path="res://Data/Pickups/SkewerHarpoonPickup.tres" id="7_skewer"]
 [ext_resource type="Resource" uid="uid://do5a365f2ffty" path="res://Data/Pickups/SpeedPotion.tres" id="7_speed"]
+[ext_resource type="Resource" path="res://Data/Pickups/SulfurStinkpotsPickup.tres" id="7_stinkpots"]
 [ext_resource type="PackedScene" uid="uid://3gxxy4myod8b" path="res://Actors/Enemies/PatternEnemyWaveSpawner.tscn" id="8_birds"]
 [ext_resource type="Resource" uid="uid://qygik8ixvyxj" path="res://Data/Pickups/GinGoldBarrel.tres" id="30_36n2v"]
-
-[ext_resource type="Resource" path="res://Data/Pickups/SulfurStinkpotsPickup.tres" id="7_stinkpots"]
-[ext_resource type="Resource" path="res://Data/Pickups/ClingfilmPickup.tres" id="7_clingfilm"]
-[ext_resource type="Resource" path="res://Data/Pickups/CrackedPotsPickup.tres" id="7_cracked_pots"]
 
 [sub_resource type="Resource" id="Enemy_bulwark"]
 script = ExtResource("1_enemy")

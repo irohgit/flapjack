@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="PickupData" format=3 uid="uid://e8bbiwbkus1o"]
 
-[ext_resource type="Resource" uid="uid://cqs5vl1fvswhy" path="res://Data/Augments/OrbitalRicochetCannon.tres" id="1_4u47b"]
+[ext_resource type="Resource" uid="uid://cqs5vl1fvswhy" path="res://Data/Augments/Cannon/OrbitalRicochetCannon.tres" id="1_4u47b"]
 [ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="1_7p4su"]
 [ext_resource type="AudioStream" uid="uid://d2sr3t6n13ye4" path="res://Audio/SFX/soft_pickup.mp3" id="2_0qk4m"]
 [ext_resource type="Texture2D" uid="uid://cr4w2iejh4ajm" path="res://Assets/Pickups/OrbitalRicochetPickup.png" id="2_c8inv"]
