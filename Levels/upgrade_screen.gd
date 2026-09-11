@@ -134,7 +134,7 @@ func _update_component_status() -> void:
 	var tier_index := int(MetaProgress.boat_tier)
 	for index in _component_rows.size():
 		var node: UpgradeNodeData = component_sets[index][tier_index]
-		var level := MetaProgress.get_level(node.id)
+		var level: int = MetaProgress.get_level(node.id)
 		_component_icons[index].texture = node.icon
 		_component_progress_labels[index].text = "%d / %d" % [level, node.max_level]
 		if level >= node.max_level:
