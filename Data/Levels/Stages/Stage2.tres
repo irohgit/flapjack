@@ -9,16 +9,15 @@
 [ext_resource type="Script" uid="uid://bgt6cqxd8jifw" path="res://Data/Levels/weighted_encounter_data.gd" id="5_d14ko"]
 [ext_resource type="PackedScene" uid="uid://b0uqnqks41txj" path="res://Levels/iroh_sandbox.tscn" id="5_t13e2"]
 [ext_resource type="Script" uid="uid://cytvv5o32ru6e" path="res://Data/Levels/encounter_data.gd" id="6_encounter"]
+[ext_resource type="Resource" path="res://Data/Pickups/ClingfilmPickup.tres" id="7_clingfilm"]
+[ext_resource type="Resource" path="res://Data/Pickups/CrackedPotsPickup.tres" id="7_cracked_pots"]
 [ext_resource type="Resource" uid="uid://cpynird4edptk" path="res://Data/Pickups/FireballAugmentPickup.tres" id="7_fire"]
 [ext_resource type="Resource" uid="uid://c8prjyekwi7hm" path="res://Data/Pickups/HomingCannonPickup.tres" id="7_homing"]
 [ext_resource type="Resource" uid="uid://cesmcj6ctad" path="res://Data/Pickups/MagnetAugmentPickup.tres" id="7_magnet"]
 [ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="7_pickup_data"]
 [ext_resource type="Resource" uid="uid://5vagi0atsu3m" path="res://Data/Pickups/PlasmaAugmentPickup.tres" id="7_plasma"]
-[ext_resource type="PackedScene" uid="uid://3gxxy4myod8b" path="res://Actors/Enemies/PatternEnemyWaveSpawner.tscn" id="8_ygboy"]
-
 [ext_resource type="Resource" path="res://Data/Pickups/SulfurStinkpotsPickup.tres" id="7_stinkpots"]
-[ext_resource type="Resource" path="res://Data/Pickups/ClingfilmPickup.tres" id="7_clingfilm"]
-[ext_resource type="Resource" path="res://Data/Pickups/CrackedPotsPickup.tres" id="7_cracked_pots"]
+[ext_resource type="PackedScene" uid="uid://3gxxy4myod8b" path="res://Actors/Enemies/PatternEnemyWaveSpawner.tscn" id="8_ygboy"]
 
 [sub_resource type="Resource" id="WeightedEnemy_bulwark"]
 script = ExtResource("1_nj72p")

@@ -9,7 +9,7 @@ extends Node2D
 @onready var _interact_area: Area2D = $InteractArea
 
 @export_group("Prompt")
-@export var prompt_keyboard := "Press Spacebar to trade"
+@export var prompt_keyboard := "Press F to trade"
 @export var prompt_gamepad := "Press A to trade"
 @export var prompt_glyph := "interact"
 @export var prompt_icon: Texture2D
