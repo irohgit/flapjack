@@ -8,6 +8,8 @@ const SUMMON_COUNT := 2
 ## World-space offset each summoned snake spawns from, left/right of center.
 @export var summon_spread := 220.0
 
+@export var rock_textures: Array[Texture2D] = []
+
 var _summon_timer := 0.0
 var _is_dying := false
 var _hud_shown := false
@@ -17,13 +19,8 @@ func _ready() -> void:
 	super()
 	assert(snake_scene != null, "Swamp monster needs a snake_scene to summon")
 
-	# The boss name/health bar don't appear yet - see _reveal_hud_if_visible(),
-	# which only announces them once the boss has actually scrolled on screen.
 	_health.health_changed.connect(_on_health_changed)
 
-	# sprite_frames may be baked directly onto the AnimatedSprite2D node
-	# (like the Kraken) rather than coming from data.sprite_frames - only
-	# try to play once frames actually exist.
 	if _animated_sprite != null and _animated_sprite.sprite_frames != null:
 		_animated_sprite.play(&"Idle")
 
@@ -87,7 +84,6 @@ func _summon_snakes() -> void:
 		snake.arrive_at(target_position)
 
 
-## Fire in direction of player at time of fire
 func _fire() -> Projectile:
 	var shot := super()
 	if shot == null:
@@ -98,6 +94,10 @@ func _fire() -> Projectile:
 		var aim_direction := shot.global_position.direction_to(player.global_position)
 		if not aim_direction.is_zero_approx():
 			shot.direction = aim_direction
+
+	if not rock_textures.is_empty():
+		shot.texture_override = rock_textures[randi() % rock_textures.size()]
+		shot._apply_visuals()
 
 	return shot
 
@@ -128,6 +128,4 @@ func _on_died() -> void:
 		_animated_sprite.play(&"Death")
 		await _animated_sprite.animation_finished
 
-	# super() plays the death sfx, emits enemy_died, shakes the camera, and
-	# queue_frees - same as every other enemy, just delayed until here.
 	super()
