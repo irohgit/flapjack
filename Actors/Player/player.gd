@@ -267,7 +267,7 @@ func _check_for_forward_exit() -> void:
 	if not _can_exit_forward or _has_exited_play_area:
 		return
 
-	var visible_rect := Playarea.get_visible_world_rect()
+	var visible_rect: Rect2 = Playarea.get_visible_world_rect()
 	if global_position.y >= visible_rect.position.y - half_width:
 		return
 

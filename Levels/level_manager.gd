@@ -23,11 +23,62 @@ signal sequence_completed
 
 var _plan_cancelled := false #Stops the level manager from running as a coroutine
 
+# Read-only HUD progress. Travel occupies 90%; the actual finale owns the rest.
+# Listening to that instance's health avoids counting a mid-boss as a stage clear.
+const PROGRESS_TRAVEL_SHARE: float = 0.9
+var _progress_started: bool = false
+var _progress_start_y: float = 0.0
+var _progress_finale_started: bool = false
+var _progress_finale_health: HealthComponent
+var _progress_complete: bool = false
+
 @export_group("Mid-boss")
 ## How far above the top of the view the boss appears before sailing in.
 ## Must stay below the boss's own activation_margin, or it spawns outside its
 ## movement gate and never arrives.
 @export var midboss_entry_lead := 100.0
+
+
+func get_stage_progress() -> float:
+	if _progress_complete:
+		return 1.0
+	if not _progress_started or scroll_director == null or scroll_director.scroll_rig == null:
+		return 0.0
+	if _progress_finale_started:
+		var defeated_fraction: float = 0.0
+		if is_instance_valid(_progress_finale_health) and _progress_finale_health.max_health > 0:
+			defeated_fraction = clampf(
+				1.0 - float(_progress_finale_health.current_health) / _progress_finale_health.max_health,
+				0.0, 1.0
+			)
+		return minf(0.99, PROGRESS_TRAVEL_SHARE + (1.0 - PROGRESS_TRAVEL_SHARE) * defeated_fraction)
+	var finish_y: float = level_generator.level_data.finale_trigger_position.y
+	var distance: float = finish_y - _progress_start_y
+	if is_zero_approx(distance):
+		return 0.0
+	var travelled: float = (scroll_director.scroll_rig.global_position.y - _progress_start_y) / distance
+	return clampf(travelled, 0.0, 1.0) * PROGRESS_TRAVEL_SHARE
+
+
+func get_stage_progress_phase() -> StringName:
+	if _progress_complete:
+		return &"cleared"
+	if _progress_finale_started:
+		return &"finale"
+	if scroll_director != null and scroll_director.is_held():
+		return &"held"
+	return &"sailing"
+
+
+func _track_finale_progress(finale: Node) -> void:
+	_progress_finale_started = true
+	_progress_finale_health = finale.get_node_or_null("HealthComponent") as HealthComponent
+	if _progress_finale_health != null:
+		_progress_finale_health.died.connect(_on_progress_finale_defeated, CONNECT_ONE_SHOT)
+
+
+func _on_progress_finale_defeated() -> void:
+	_progress_complete = true
 
 func run_generated_stage() -> bool:
 	Audio.play_music(stage_music, stage_music_db, music_fade_in)
@@ -37,6 +88,11 @@ func run_generated_stage() -> bool:
 	assert(enemy_controller != null, "%s needs an EnemyController" % name)
 	assert(level_generator != null, "%s needs a LevelGenerator" % name)
 	assert(level_generator.level_data != null, "LevelGenerator needs LevelData")
+	_progress_start_y = scroll_director.scroll_rig.global_position.y
+	_progress_started = true
+	_progress_finale_started = false
+	_progress_finale_health = null
+	_progress_complete = false
 	
 	await play_entry() #transition into the level smoothly 
 	_show_stage_title() # Run Title after player has sceen the transition into the level
@@ -147,6 +203,7 @@ func run_finale() -> bool:
 		(instance as Node2D).position = level_generator.level_data.finale_spawn_position
 
 	add_child(instance)
+	_track_finale_progress(instance)
 	return true
 
 # Pause the level script until an ordinary boolean expression becomes true.
