@@ -404,6 +404,7 @@ func try_purchase(pickup: PickupData) -> PurchaseResult:
 		return result
 
 	var price := pickup.get_shop_price()
+	# This handles both the purchase and the purchase guard within the same function
 	_purchase_in_progress = true
 	if pickup.apply_to(self):
 		coin_count -= price
@@ -510,7 +511,7 @@ func add_potion(potion: PotionData) -> bool:
 
 
 func select_potion_slot(index: int) -> void:
-	if not _can_switch_potion: #Only allow player to switch potion if bCanDrinkPotion is true - useful for skill/potion break enemies
+	if not _can_switch_potion: # Delete this
 		return
 	if _potion_slots.is_empty():
 		return
@@ -707,7 +708,7 @@ func _update_wake() -> void:
 			_wake.hide()
 		return
 	var anim := "wake_forward" #set animation to wake forward
-	if _move_intent.x < -0.4: #if our inpu is less than -0.1 means we are moving left
+	if _move_intent.x < -0.4: # Spelling mistake
 		anim = "wake_strafe_left"
 	elif _move_intent.x > 0.4: #if our x input above 0.1 that means we are moving right
 		anim = "wake_strafe_right"

@@ -70,6 +70,7 @@ func apply_to(player: Player) -> bool:
 		PickupType.GIN:
 			player._add_gin(gin_amount)
 			return true
+		# Look at this, health and shield should just collapse into the potion type
 		PickupType.HEALTH, PickupType.SHIELD, PickupType.POTION:
 			return player.add_potion(potion)
 	return false
