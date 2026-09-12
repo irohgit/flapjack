@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://cf35phba8iyuc"]
+
+[ext_resource type="Script" uid="uid://8sbj5ocfyold" path="res://Levels/Stage1/blackbeard_firstrun_encounter.gd" id="1_br8r1"]
+[ext_resource type="PackedScene" uid="uid://cotqsqrw6m446" path="res://Actors/Enemies/blackbeard_firstrun.tscn" id="2_b21r0"]
+[ext_resource type="PackedScene" uid="uid://ca7mtgoq7spjm" path="res://Cinematics/saving_gin.tscn" id="3_47e5c"]
+[ext_resource type="Texture2D" uid="uid://csr8gl21i8k6k" path="res://Assets/Projectiles/enemy_cannonball.png" id="4_cekb4"]
+[ext_resource type="PackedScene" uid="uid://bnfmxfiachnm7" path="res://Actors/CombatEffects/death_explosion.tscn" id="5_cekb4"]
+[ext_resource type="AudioStream" uid="uid://bayxunlnnb5dx" path="res://Audio/SFX/cannon_shot_1.mp3" id="6_a2uyf"]
+[ext_resource type="AudioStream" uid="uid://cbplby7nfcsyw" path="res://Audio/SFX/ship_hit.mp3" id="7_b21r0"]
+
+[node name="BlackbeardFirstRunEncounter" type="Node2D" unique_id=1563596647]
+script = ExtResource("1_br8r1")
+boss_scene = ExtResource("2_b21r0")
+cutscene = ExtResource("3_47e5c")
+cannonball_texture = ExtResource("4_cekb4")
+explosion_scene = ExtResource("5_cekb4")
+cannonball_speed = 300.0
+fire_sfx = ExtResource("6_a2uyf")
+impact_sfx = ExtResource("7_b21r0")

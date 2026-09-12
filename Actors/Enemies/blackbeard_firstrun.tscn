@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://cotqsqrw6m446"]
+
+[ext_resource type="Script" uid="uid://ddlef7ds5knlv" path="res://Data/Enemy/sail_in_boss.gd" id="1_f2aco"]
+[ext_resource type="PackedScene" uid="uid://bnfmxfiachnm7" path="res://Actors/CombatEffects/death_explosion.tscn" id="2_i6nro"]
+[ext_resource type="Resource" uid="uid://cbusqf6oaihmh" path="res://Data/Enemy/BlackbeardStage1.tres" id="3_njfqo"]
+[ext_resource type="Texture2D" uid="uid://l8ixf8em7ivg" path="res://Assets/Enemies/Blackbeard_Pirates/Blackbeard_80x160.png" id="4_ry1ub"]
+[ext_resource type="Script" uid="uid://cv0v6ynhg51ei" path="res://Systems/Combat/HealthComponent.gd" id="5_xqblp"]
+[ext_resource type="Script" uid="uid://dttjdne32amn0" path="res://Systems/Combat/status_effect_component.gd" id="6_xqblp"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5yy73"]
+
+[node name="BlackbeardFirstrun" type="Area2D" unique_id=2089420002]
+scale = Vector2(9, 9)
+script = ExtResource("1_f2aco")
+explosion_scene = ExtResource("2_i6nro")
+data = ExtResource("3_njfqo")
+damage_flash_colour = Color(1, 0, 0.15594886, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=456829705]
+shape = SubResource("CircleShape2D_5yy73")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1560175904]
+texture_filter = 1
+texture = ExtResource("4_ry1ub")
+
+[node name="HealthComponent" type="Node" parent="." unique_id=1148272344]
+script = ExtResource("5_xqblp")
+max_health = 5
+metadata/_custom_type_script = "uid://cv0v6ynhg51ei"
+
+[node name="StatusEffectComponent" type="Node" parent="." unique_id=569104951]
+script = ExtResource("6_xqblp")
