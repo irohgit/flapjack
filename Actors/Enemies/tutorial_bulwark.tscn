@@ -15,6 +15,7 @@ height = 130.0
 collision_layer = 2
 collision_mask = 4
 script = ExtResource("1_bsnxi")
+announce_on_arrival = false
 explosion_scene = ExtResource("2_fpk82")
 data = ExtResource("2_3w85e")
 

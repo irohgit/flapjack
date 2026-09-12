@@ -27,7 +27,7 @@ signal finished
 @export_group("Cannonball")
 @export var cannonball_texture: Texture2D
 @export var explosion_scene: PackedScene
-@export var cannonball_speed := 600.0
+@export var cannonball_speed := 300.0
 @export var cannonball_spin := 4.0
 ## How close to the player counts as a hit.
 @export var cannonball_hit_radius := 32.0

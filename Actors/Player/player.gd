@@ -23,8 +23,24 @@ var _developermode:= false
 var _weapon_states: Array[WeaponState] = []
 var _player_augments: Array[AugmentData] = []
 
-@export var coin_count:= 0
-@export var gin_count:= 0
+# Balances belong to the autoload, so replacing a player cannot reset them.
+var coin_count: int:
+	get:
+		return MetaProgress.coin_count
+	set(value):
+		MetaProgress.coin_count = value
+		MetaProgress.save()
+var gin_count: int:
+	get:
+		return MetaProgress.gin
+	set(value):
+		MetaProgress.add_gin(value - MetaProgress.gin)
+var score_count: int:
+	get:
+		return MetaProgress.score_count
+	set(value):
+		MetaProgress.score_count = value
+		MetaProgress.save()
 @export_range(1, 5, 1) var potion_slot_count := 3
 
 
@@ -41,6 +57,7 @@ var _player_augments: Array[AugmentData] = []
 
 signal coin_changed(amount: int)
 signal gin_changed(amount: int)
+signal score_changed(amount: int)
 signal augment_added(augment: AugmentData)
 signal pickup_collected(pickup: PickupData)
 signal potion_inventory_changed
@@ -306,6 +323,10 @@ func _add_coins(amount: int):
 func _add_gin(amount: int):
 	gin_count += amount
 	gin_changed.emit(gin_count)
+	
+func _add_score(amount: int):
+	score_count += amount
+	score_changed.emit(score_count)
 
 
 func can_add_weapon(weapon: WeaponData) -> bool:
@@ -443,7 +464,6 @@ func _has_augment(augment: AugmentData) -> bool:
 
 func export_checkpoint() -> RunCheckpoint:
 	var checkpoint := RunCheckpoint.new()
-	checkpoint.coin_count = coin_count
 	for state in _weapon_states:
 		checkpoint.weapon_states.append(state.clone_for_checkpoint())
 	checkpoint.player_augments.assign(_player_augments)
@@ -456,7 +476,6 @@ func import_checkpoint(checkpoint: RunCheckpoint) -> bool:
 	if checkpoint == null:
 		return false
 
-	coin_count = checkpoint.coin_count
 	for state in _weapon_states:
 		state.stop_continuous_fire()
 	_weapon_states.clear()
@@ -616,7 +635,6 @@ func _on_died() -> void:
 	if _is_dead:
 		return
 	_is_dead = true
-	MetaProgress.add_gin(gin_count)
 	set_process(false)
 	set_physics_process(false)
 	set_deferred("monitoring", false)

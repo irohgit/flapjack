@@ -3,11 +3,14 @@
 [ext_resource type="Script" uid="uid://bo6li876odoia" path="res://Data/Enemy/enemy_data.gd" id="1_snake"]
 [ext_resource type="AudioStream" uid="uid://cbplby7nfcsyw" path="res://Audio/SFX/ship_hit.mp3" id="2_hit"]
 [ext_resource type="AudioStream" uid="uid://bcf81qxqc8nxo" path="res://Audio/SFX/ship_destroyed.mp3" id="3_death"]
+[ext_resource type="JSON" path="res://Data/Loot/Enemies/snake.json" id="4_loot"]
 
 [resource]
 script = ExtResource("1_snake")
+score_value = 25
 move_speed = 160.0
 visual_scale = 0.2
 hit_sfx = ExtResource("2_hit")
 death_sfx = ExtResource("3_death")
+loot = ExtResource("4_loot")
 metadata/_custom_type_script = "uid://bo6li876odoia"

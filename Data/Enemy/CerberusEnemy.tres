@@ -4,7 +4,7 @@
 [ext_resource type="AudioStream" uid="uid://bcf81qxqc8nxo" path="res://Audio/SFX/ship_destroyed.mp3" id="2_fvdxm"]
 [ext_resource type="AudioStream" uid="uid://41by6wg6cvxx" path="res://Audio/SFX/enemy_cannon_shot_1.mp3" id="3_31xeu"]
 [ext_resource type="AudioStream" uid="uid://cbplby7nfcsyw" path="res://Audio/SFX/ship_hit.mp3" id="4_60t74"]
-[ext_resource type="JSON" path="res://Data/Loot/Enemies/bulwark.json" id="5_arm61"]
+[ext_resource type="JSON" path="res://Data/Loot/Enemies/cerberus.json" id="5_arm61"]
 [ext_resource type="PackedScene" uid="uid://bl12qi0n68b6i" path="res://Actors/Projectiles/projectile.tscn" id="6_ktkqi"]
 [ext_resource type="PackedScene" uid="uid://bhmi8mtmsl4qy" path="res://Actors/Enemies/cerberus_enemy.tscn" id="7_fvdxm"]
 [ext_resource type="Script" uid="uid://bo6li876odoia" path="res://Data/Enemy/enemy_data.gd" id="7_vo2pb"]
@@ -14,6 +14,7 @@
 script = ExtResource("7_vo2pb")
 scene = ExtResource("7_fvdxm")
 enemy_name = "Cerberus"
+score_value = 15
 projectile_speed = 0.7
 texture = ExtResource("8_jelc7")
 projectile_scene = ExtResource("6_ktkqi")
