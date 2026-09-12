@@ -17,7 +17,7 @@ func update_continuous_fire(
 
 
 func _configure_projectile(projectile: Projectile, weapon: WeaponState) -> void:
-	# Give each shot its own copy of the projectile data, then apply its defaults before augments so the defaults don’t overwrite augment effects.
+	# This gives each shot its own copy of the projectile data and copies the weapon’s augments. The defaults are applied before the augments in Projectile._ready() when the shot is added to the node tree
 	var projectile_data := weapon.data.weaponProjectile.duplicate(true) as ProjectileData
 	projectile_data.damage = weapon.data.damage
 	projectile.data = projectile_data

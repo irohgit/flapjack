@@ -26,6 +26,7 @@ func _physics_process(delta: float) -> void:
 		return
 	var progress := minf((age_time + delta) / _flight_duration, 1.0)
 	var next_position := _launch_position.lerp(_landing_position, progress)
+	# Checks for enemies along the pot’s movement this frame. On a hit, the pot breaks and its cloud follows that enemy.
 	if clings_to_enemies:
 		var hit := _find_first_enemy(global_position, next_position)
 		if not hit.is_empty():

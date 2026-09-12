@@ -112,6 +112,7 @@ func _fire_poison() -> void:
 	var expire_position := Vector2.ZERO
 	var has_expire_position := false
 	var player := get_tree().get_first_node_in_group("player") as Node2D
+	# This finds the players position and uses it as the target. It does not actively follow the player, as it’s destination is essentially a const once set
 	if player != null:
 		expire_position = player.global_position
 		has_expire_position = true
@@ -178,6 +179,7 @@ func _on_health_changed(current: int, maximum: int) -> void:
 		return
 
 	var health_ratio := float(current) / float(maximum)
+	# Checks if the state/phase should be beserk but isn’t, then swaps into that behaviour
 	if health_ratio <= BERSERK_HEALTH_THRESHOLD and _phase != Phase.BERSERK:
 		var was_poison_phase := _phase == Phase.POISON
 		_phase = Phase.BERSERK

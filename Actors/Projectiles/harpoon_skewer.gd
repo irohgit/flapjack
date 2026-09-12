@@ -164,6 +164,7 @@ func _clamp_to_play_area(enemy: Node2D) -> void:
 				screen.position[axis] - bounds.position[axis],
 				screen.end[axis] - bounds.end[axis]
 			)
+	# Converts the screen correction into a world-space movement offset, removing camera translation, then adds that offset to the enemy’s position.
 	var screen_to_world := viewport.get_canvas_transform().affine_inverse()
 	var world_correction := screen_to_world * correction - screen_to_world.origin
 	enemy.global_position += world_correction

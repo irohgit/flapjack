@@ -77,6 +77,7 @@ func _formation_offset(index: int, count: int, formation: Formation) -> Vector2:
 			var row := floori(float(index) / float(columns))
 			var rows := ceili(float(count) / float(columns))
 			var row_start := row * columns
+			# Centre each row using its actual enemy count so a partially filled final row stays centred under the formation.
 			var enemies_in_row := mini(columns, count - row_start)
 			var column := index - row_start
 			return Vector2(

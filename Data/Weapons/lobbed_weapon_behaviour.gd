@@ -12,6 +12,7 @@ func fire(shooter: Node2D, weapon: WeaponState) -> void:
 		push_error("Lobbed weapon projectile scene must inherit from LobbedProjectile")
 		return
 	_configure_projectile(shot, weapon)
+	# This sets the damage amount for the ground effect before the projectile is added to the node tree
 	if shot.data.death_ground_effect != null:
 		var ground_effect := shot.data.death_ground_effect.duplicate(true) as GroundEffectData
 		shot.data.death_ground_effect = ground_effect

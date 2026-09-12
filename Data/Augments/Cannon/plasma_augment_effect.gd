@@ -19,6 +19,7 @@ func get_status_effects() -> Array[StatusEffectData]:
 	stun.duration = stun_duration
 	stun.reapply_policy = StatusEffectData.ReapplyPolicy.KEEP_LONGEST
 
+	# Stun reduces speed to 25% of unstunned speed
 	var speed_modifier := StatusEffectModifier.new()
 	speed_modifier.stat_id = StatusEffectData.STAT_MOVEMENT_SPEED
 	speed_modifier.operation = StatusEffectModifier.Operation.MULTIPLY

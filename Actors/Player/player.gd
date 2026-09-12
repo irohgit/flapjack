@@ -223,6 +223,7 @@ func _physics_process(delta: float) -> void:
 		max_speed
 	)
 	var target := _move_intent * movement_speed
+	# Smoothly adjusts the player's velocity toward the intended movement speed and direction.
 	velocity = velocity.lerp(target, 1.0 - exp(-responsiveness * delta))
 		
 	#Before Processing Movement: Adjust for contact with banks
@@ -245,6 +246,7 @@ func _physics_process(delta: float) -> void:
 	
 	
 func _clamp_to_camera(pos: Vector2) -> Vector2:
+	# Defines the bounding box of the camera, accounting for position of camera and zoom, then clamps the players position within those boundaries
 	var camera_center_global: Vector2 = camera.get_screen_center_position()
 	var camera_center_local: Vector2 = get_parent().to_local(camera_center_global)
 
@@ -424,7 +426,7 @@ func try_purchase(pickup: PickupData) -> PurchaseResult:
 		return result
 
 	var price := pickup.get_shop_price()
-	# This handles both the purchase and the purchase guard within the same function
+	# Keep the guard active through item application and notifications so signal callbacks cannot start a nested purchase. Deduct coins only if the item was accepted.
 	_purchase_in_progress = true
 	if pickup.apply_to(self):
 		coin_count -= price
@@ -482,6 +484,7 @@ func import_checkpoint(checkpoint: RunCheckpoint) -> bool:
 	for state in checkpoint.weapon_states:
 		_weapon_states.append(state.clone_for_checkpoint())
 
+	# Reapply saved player augments because restoring ownership alone does not activate their effects. Suppress the new-augment notification.
 	_player_augments.clear()
 	for augment in checkpoint.player_augments:
 		_add_player_augment(augment, false)
@@ -571,6 +574,7 @@ func _update_weapons(delta: float) -> void:
 		StatusEffectData.STAT_FIRE_RATE,
 		1.0
 	)
+	# Scales how quickly cooldowns count down with the fire-rate modifier. Higher values make weapons fire sooner without changing their default shot intervals.
 	var cooldown_delta := delta * maxf(fire_rate, 0.0)
 	
 	for state in _weapon_states:
@@ -590,6 +594,7 @@ func _update_weapons(delta: float) -> void:
 		elif not should_fire and state.data.weaponType == WeaponData.WeaponType.ACTIVE and state.cooldown < 0.0:
 			state.cooldown = 0.0
 			
+		# Passive weapons fire whenever their cooldown expires, independently of the shoot button and the _can_fire flag.
 		if state.data.weaponType == WeaponData.WeaponType.PASSIVE && state.cooldown <= 0.0:
 			state.data.weaponBehaviour.fire($".", state)
 			state.cooldown += maxf(state.data.firerate, 0.001)

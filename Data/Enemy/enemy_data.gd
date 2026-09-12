@@ -9,6 +9,7 @@ extends EnemyDropSourceData
 @export var health := 3
 @export var contact_damage := 1 # Damage dealt to the player on contact.
 @export var projectile_damage := 1
+# Speed multiplies the projectile’s base speed; rate is the time between shots in seconds.
 @export var projectile_fire_rate := 2
 @export var projectile_speed := 1.0
 @export var move_speed := 0.0

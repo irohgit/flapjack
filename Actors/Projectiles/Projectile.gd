@@ -329,6 +329,7 @@ func _on_area_entered(area: Area2D) -> void:
 	if area.has_method("apply_status_effect"):
 		for effect: StatusEffectData in _status_effects:
 			area.call("apply_status_effect", effect)
+	# This behaviour acts like chain lightning, where it will ricochet towards an unhit enemy (an enemy the projectile hasn’t hit yet, not an enemy that has never been hit)
 	if orbital_ricochet and plasma and is_enemy and pierce != 0:
 		hit_list.append(area)
 		_chain_lightning()
@@ -339,6 +340,7 @@ func _on_area_entered(area: Area2D) -> void:
 		skewer.capture(area)
 	_on_impact()
 
+	# non-zero pierce pierces, zero pierce destroys the projectile
 	if pierce == 0:
 		destroy()
 	else:
@@ -356,6 +358,7 @@ func destroy(spawn_ground_effect := true) -> void:
 		return
 
 	_is_destroying = true
+	# This lets the explosion get the enemies held by the skewer before they are released and the list is cleared
 	expiring.emit()
 	if skewer != null:
 		skewer.release_all()

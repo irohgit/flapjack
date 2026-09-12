@@ -13,6 +13,7 @@ func update_continuous_fire(
 	var laser_active := has_plasma and shooter.get_status_effect_component().has_effect(
 		&"potion_rapid_fire"
 	)
+	# This stops the player from shooting normal cannon balls while the player can shoot the laser
 	if not laser_active or not firing or fire_rate_multiplier <= 0.0:
 		weapon.stop_continuous_fire()
 		return laser_active

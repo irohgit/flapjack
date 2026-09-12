@@ -8,6 +8,7 @@ func apply_to_projectile(projectile: Projectile) -> void:
 	var pool := projectile.data.death_ground_effect
 	if pool == null:
 		return
+	# Extends duration of the burn and lifetime of the ground effect
 	pool.duration = maxf(pool.duration * burn_duration_multiplier, 0.05)
 	for effect in pool.status_effects:
 		if effect != null and effect.effect_id == StatusEffectData.EFFECT_BURN:

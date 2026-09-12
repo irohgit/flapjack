@@ -31,6 +31,7 @@ func _apply_damage() -> void:
 	query.collide_with_bodies = true
 	var space := get_world_2d().direct_space_state
 	var excluded: Array[RID] = []
+	# This stores each target once to avoid duplicates, meaning the same enemy can not be hurt twice by one explosion. It also includes enemies held by the skewer that are outside the blast range
 	var targets: Dictionary = {}
 	# Query all overlaps, even when they exceed one batch.
 	while true:

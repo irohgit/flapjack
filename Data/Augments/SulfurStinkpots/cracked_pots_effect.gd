@@ -8,6 +8,7 @@ extends AugmentEffect
 func apply_to_projectile(projectile: Projectile) -> void:
 	var pot := projectile as StinkpotProjectile
 	if pot != null:
+		# The gap between cloud centres is the radius of the cloud so that they overlap
 		pot.leak_radius = trail_radius
 		pot.leak_spacing = trail_radius
 		pot.leak_duration = trail_duration

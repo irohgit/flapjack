@@ -7,6 +7,7 @@ extends AugmentEffect
 
 
 func apply_to_projectile(projectile: Projectile) -> void:
+	# Detonates the explosive when it expires/dies
 	var detonate := _detonate.bind(projectile)
 	if not projectile.expiring.is_connected(detonate):
 		projectile.expiring.connect(detonate, CONNECT_ONE_SHOT)

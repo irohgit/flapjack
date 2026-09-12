@@ -184,7 +184,7 @@
 	},
 	{
 		"item": "flapjack:fireball_augment",
-		"quantity": 1,
+		"quantity": 1.0,
 		"weight": 5.0,
 		"level": [
 			"stage_2",
@@ -193,7 +193,7 @@
 	},
 	{
 		"item": "flapjack:magnet_augment",
-		"quantity": 1,
+		"quantity": 1.0,
 		"weight": 5.0,
 		"level": [
 			"stage_2",
@@ -202,7 +202,7 @@
 	},
 	{
 		"item": "flapjack:piercing_cannon",
-		"quantity": 1,
+		"quantity": 1.0,
 		"weight": 5.0,
 		"level": [
 			"stage_2",
@@ -211,7 +211,7 @@
 	},
 	{
 		"item": "flapjack:plasma_augment",
-		"quantity": 1,
+		"quantity": 1.0,
 		"weight": 5.0,
 		"level": [
 			"stage_2",

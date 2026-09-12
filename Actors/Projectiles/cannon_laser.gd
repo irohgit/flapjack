@@ -108,6 +108,7 @@ func _add_effect(effect: StatusEffectData) -> void:
 	if effect == null:
 		return
 	var copy := effect.duplicate(true) as StatusEffectData
+	# This keeps the tick timer from resetting every time the laser refreshes the effect, so the damage can still tick
 	copy.preserve_tick_on_refresh = true
 	_effects.append(copy)
 
