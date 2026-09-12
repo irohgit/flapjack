@@ -31,6 +31,9 @@
 [ext_resource type="Shader" uid="uid://k162cg01yfji" path="res://Assets/Shaders/Water/water_night.gdshader" id="27_s31a6"]
 [ext_resource type="Texture2D" uid="uid://dpoc7aybydr5h" path="res://Assets/Shaders/Water/water_night_noise.tres" id="28_hcagf"]
 [ext_resource type="Shader" uid="uid://c32p1o3fdnxbo" path="res://Assets/Shaders/night_overlay.gdshader" id="29_bi33i"]
+[ext_resource type="Script" uid="uid://bwxb4phlkugiv" path="res://Levels/Stage3/night_overlay.gd" id="30_b5fnj"]
+[ext_resource type="Texture2D" uid="uid://drntat8hs5kj3" path="res://Assets/Environment/moon_spritesheet_1024x50.png" id="30_hcagf"]
+[ext_resource type="Texture2D" uid="uid://bqd042j3aplgp" path="res://Assets/Environment/moon_reverse_spritesheet_1024x50.png" id="31_oel0m"]
 [ext_resource type="Script" uid="uid://jol8kr46yyua" path="res://Levels/Stage3/moonlight_director.gd" id="33_oel0m"]
 
 [sub_resource type="Resource" id="Resource_54op2"]
@@ -68,53 +71,276 @@ scene = ExtResource("18_m30m6")
 weight = 0.9
 metadata/_custom_type_script = "uid://8sxccskaloo3"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_4ejeo"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hcagf"]
 shader = ExtResource("27_s31a6")
 shader_parameter/noise_texture = ExtResource("28_hcagf")
 shader_parameter/deep_water = Color(0.02, 0.05, 0.11, 1)
 shader_parameter/swell_water = Color(0.05, 0.11, 0.2, 1)
 shader_parameter/crest_colour = Color(0.28, 0.45, 0.68, 1)
-shader_parameter/glint_colour = Color(0.82, 0.9, 1, 1)
+shader_parameter/glint_colour = Color(0.85, 0.92, 1, 1)
 shader_parameter/design_size = Vector2(320, 180)
 shader_parameter/camera_offset = Vector2(0, 0)
 shader_parameter/water_pixel_size = 2.0
-shader_parameter/animation_speed = 1.0000000149012
-shader_parameter/swell_drift = -0.250000005588
+shader_parameter/animation_speed = 1.0
+shader_parameter/swell_drift = 0.0
 shader_parameter/churn_speed = 1.0
 shader_parameter/swell_scale = 90.0
 shader_parameter/swell_stretch = 3.2
 shader_parameter/warp_strength = 1.5
 shader_parameter/crest_threshold = 0.6
 shader_parameter/crest_softness = 0.07
-shader_parameter/crest_strength = 0.55000000819566
+shader_parameter/crest_strength = 0.65
 shader_parameter/star_cell_size = 16.0
 shader_parameter/star_density = 0.15999999642368
 shader_parameter/star_size = 0.05
 shader_parameter/star_spike_length = 4.0
-shader_parameter/star_twinkle_speed = 0.90000001341108
+shader_parameter/star_twinkle_speed = 1.6
 shader_parameter/star_follows_crests = 0.7
-shader_parameter/star_parallax = 0.20000000298024
+shader_parameter/star_parallax = 0.3
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_o3cjt"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oel0m"]
 shader = ExtResource("29_bi33i")
 shader_parameter/night_colour = Color(0.04, 0.07, 0.18, 1)
-shader_parameter/darkness = 0.72
-shader_parameter/star_colour = Color(0.9920555, 1, 0.8698086, 1)
-shader_parameter/star_grid = 40.0
-shader_parameter/star_density = 0.25
-shader_parameter/star_size = 0.05
-shader_parameter/twinkle_speed = 1.5
+shader_parameter/darkness = 0.55
 shader_parameter/vignette_strength = 0.3
+shader_parameter/beam_offset = 0.0
 shader_parameter/view_top_left = Vector2(0, 0)
 shader_parameter/view_size = Vector2(1920, 1080)
 shader_parameter/beam_top_y = 0.0
 shader_parameter/beam_span = 1.0
 shader_parameter/playfield_width = 1920.0
-shader_parameter/beam_half_width = 220.0
+shader_parameter/beam_half_width = 260.0
 shader_parameter/beam_softness = 90.0
 shader_parameter/beam_clear = 0.92
-shader_parameter/beam_tint = Color(0.6, 0.72, 0.95, 1)
-shader_parameter/beam_tint_strength = 0.18
+shader_parameter/beam_tint = Color(0.6196782, 0.74125385, 0.9607386, 0.5)
+shader_parameter/beam_glow = 0.22
+shader_parameter/shimmer_colour = Color(0.92168134, 0.9607386, 1, 0.2)
+shader_parameter/shimmer_scale = 55.0
+shader_parameter/shimmer_stretch = 3.0
+shader_parameter/shimmer_threshold = 0.62
+shader_parameter/shimmer_strength = 0.2000000095
+shader_parameter/shimmer_speed = 3.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oel0m"]
+atlas = ExtResource("30_hcagf")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b5fnj"]
+atlas = ExtResource("30_hcagf")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eiq86"]
+atlas = ExtResource("30_hcagf")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7bt0i"]
+atlas = ExtResource("30_hcagf")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j6i6q"]
+atlas = ExtResource("30_hcagf")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3e1qc"]
+atlas = ExtResource("30_hcagf")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kktxp"]
+atlas = ExtResource("30_hcagf")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iyko1"]
+atlas = ExtResource("30_hcagf")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m30m6"]
+atlas = ExtResource("30_hcagf")
+region = Rect2(512, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3ouhr"]
+atlas = ExtResource("30_hcagf")
+region = Rect2(576, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oo8k2"]
+atlas = ExtResource("30_hcagf")
+region = Rect2(640, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uf05j"]
+atlas = ExtResource("30_hcagf")
+region = Rect2(704, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1itoc"]
+atlas = ExtResource("30_hcagf")
+region = Rect2(768, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vbn7m"]
+atlas = ExtResource("30_hcagf")
+region = Rect2(832, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pnvl8"]
+atlas = ExtResource("30_hcagf")
+region = Rect2(896, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mipis"]
+atlas = ExtResource("30_hcagf")
+region = Rect2(960, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s86jj"]
+atlas = ExtResource("31_oel0m")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lobmd"]
+atlas = ExtResource("31_oel0m")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vvh5m"]
+atlas = ExtResource("31_oel0m")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hcdsg"]
+atlas = ExtResource("31_oel0m")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fs3ul"]
+atlas = ExtResource("31_oel0m")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bvsiy"]
+atlas = ExtResource("31_oel0m")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bxhqq"]
+atlas = ExtResource("31_oel0m")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p860h"]
+atlas = ExtResource("31_oel0m")
+region = Rect2(512, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ldgr5"]
+atlas = ExtResource("31_oel0m")
+region = Rect2(576, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pukhg"]
+atlas = ExtResource("31_oel0m")
+region = Rect2(640, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j4jbv"]
+atlas = ExtResource("31_oel0m")
+region = Rect2(704, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0bnqr"]
+atlas = ExtResource("31_oel0m")
+region = Rect2(768, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_34x2f"]
+atlas = ExtResource("31_oel0m")
+region = Rect2(832, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vqjpd"]
+atlas = ExtResource("31_oel0m")
+region = Rect2(896, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_s31a6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oel0m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b5fnj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eiq86")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7bt0i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j6i6q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3e1qc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kktxp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iyko1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m30m6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3ouhr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oo8k2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uf05j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1itoc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vbn7m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pnvl8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mipis")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s86jj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lobmd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vvh5m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hcdsg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fs3ul")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bvsiy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bxhqq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p860h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ldgr5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pukhg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j4jbv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0bnqr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_34x2f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vqjpd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oel0m")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="Stage3" type="Node2D" unique_id=1306879539 node_paths=PackedStringArray("scroll_director", "enemy_controller", "level_generator", "screen_encounter_parent")]
 script = ExtResource("1_e3b2g")
@@ -193,14 +419,32 @@ foam_wobble_px = 6.0
 foam_wavelength_px = 160.0
 pixel_size = 1
 
+[node name="MoonlightDirector" type="Node2D" parent="." unique_id=167948254 node_paths=PackedStringArray("moon", "banks", "night_rect", "camera")]
+script = ExtResource("33_oel0m")
+level_data = ExtResource("19_warin")
+min_swing_px = 300.0
+max_swing_px = 800.0
+straight_chance = 0.1
+same_direction_chance = 0.4
+turn_sharpness = 0.75
+wiggle_amplitude_px = 80.0
+wiggle_wavelength_px = 650.0
+first_full_moon_time = 20.0
+closing_time = 13.0
+dark_time = 6.0
+moon = NodePath("../ScrollRig/NightLayer/moon")
+banks = NodePath("../BankPainter")
+night_rect = NodePath("../ScrollRig/NightLayer/Darkness")
+camera = NodePath("../ScrollRig/ShakeCamera")
+
 [node name="ScrollRig" type="Node2D" parent="." unique_id=361170990]
 
-[node name="OceanFloor" type="CanvasLayer" parent="ScrollRig" unique_id=1413006179]
+[node name="OceanFloor" type="CanvasLayer" parent="ScrollRig" unique_id=1184239441]
 layer = -110
 
-[node name="WaterBack" parent="ScrollRig/OceanFloor" unique_id=364615905 node_paths=PackedStringArray("camera") instance=ExtResource("22_1itoc")]
+[node name="Water" parent="ScrollRig/OceanFloor" unique_id=364615905 node_paths=PackedStringArray("camera") instance=ExtResource("22_1itoc")]
 modulate = Color(1, 1, 1, 0.1764706)
-material = SubResource("ShaderMaterial_4ejeo")
+material = SubResource("ShaderMaterial_hcagf")
 camera = NodePath("../../ShakeCamera")
 deep_water_color = Color(0.004864846, 0.064170115, 0.069873326, 1)
 wave_water_color = Color(0.016202513, 0.1346806, 0.13913924, 1)
@@ -220,6 +464,21 @@ wave_water_color = Color(0.32156864, 0.85882354, 0.8784314, 0.5882353)
 rim_color = Color(0.61960787, 0.9490196, 0.9490196, 0.5882353)
 foam_color = Color(0.96862745, 1, 1, 0.5882353)
 metadata/_edit_use_anchors_ = true
+
+[node name="NightLayer" type="CanvasLayer" parent="ScrollRig" unique_id=1413006179]
+layer = 5
+
+[node name="Darkness" parent="ScrollRig/NightLayer" unique_id=1563969690 node_paths=PackedStringArray("scroll_director") instance=ExtResource("22_1itoc")]
+modulate = Color(1, 1, 1, 0.1764706)
+material = SubResource("ShaderMaterial_oel0m")
+script = ExtResource("30_b5fnj")
+scroll_director = NodePath("../../../ScrollDirector")
+parallax = 5.0
+metadata/_edit_use_anchors_ = true
+
+[node name="moon" type="AnimatedSprite2D" parent="ScrollRig/NightLayer" unique_id=41998584]
+scale = Vector2(1.5, 1.5)
+sprite_frames = SubResource("SpriteFrames_s31a6")
 
 [node name="WaterSurface" type="CanvasLayer" parent="ScrollRig" unique_id=1344448602]
 layer = -5
@@ -252,19 +511,3 @@ metadata/_custom_type_script = "uid://tsoi3lwff5mf"
 [node name="Player" parent="ScrollRig" unique_id=2109576054 node_paths=PackedStringArray("camera") instance=ExtResource("24_pnvl8")]
 position = Vector2(960, 853)
 camera = NodePath("../ShakeCamera")
-
-[node name="NightLayer" type="CanvasLayer" parent="." unique_id=135928928]
-layer = 5
-
-[node name="Darkness" type="ColorRect" parent="NightLayer" unique_id=1251666841]
-material = SubResource("ShaderMaterial_o3cjt")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="MoonlightDirector" type="Node2D" parent="." unique_id=167948254]
-script = ExtResource("33_oel0m")
-level_data = ExtResource("19_warin")

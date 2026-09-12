@@ -4,7 +4,7 @@ extends ColorRect
 
 @export var scroll_director: ScrollDirector
 ## Fraction of the rig's travel the reflection moves. Low reads as distant sky.
-@export_range(0.0, 1.0, 0.01) var parallax := 0.15
+@export_range(0.0, 5.0, 0.01) var parallax := 0.15
 
 
 func _process(_delta: float) -> void:

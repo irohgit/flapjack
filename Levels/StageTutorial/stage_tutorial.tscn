@@ -34,6 +34,7 @@
 [ext_resource type="PackedScene" uid="uid://cclwwsegfn8rr" path="res://Actors/Player/player.tscn" id="24_7smvb"]
 
 [node name="StageTutorial" type="Node2D" unique_id=958928528 node_paths=PackedStringArray("gin_spawner", "level_generator")]
+visible = false
 script = ExtResource("1_7fw6s")
 highlight_scale = 1.5
 highlight_period = 1.0
