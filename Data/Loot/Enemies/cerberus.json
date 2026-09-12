@@ -117,6 +117,42 @@
 		]
 	},
 	{
+		"item": "flapjack:fireball_augment",
+		"quantity": 1,
+		"weight": 6,
+		"level": [
+			"stage_2",
+			"stage_3"
+		]
+	},
+	{
+		"item": "flapjack:magnet_augment",
+		"quantity": 1,
+		"weight": 6,
+		"level": [
+			"stage_2",
+			"stage_3"
+		]
+	},
+	{
+		"item": "flapjack:piercing_cannon",
+		"quantity": 1,
+		"weight": 6,
+		"level": [
+			"stage_2",
+			"stage_3"
+		]
+	},
+	{
+		"item": "flapjack:plasma_augment",
+		"quantity": 1,
+		"weight": 6,
+		"level": [
+			"stage_2",
+			"stage_3"
+		]
+	},
+	{
 		"item": "flapjack:cannon",
 		"quantity": 1,
 		"weight": 1,
@@ -127,15 +163,6 @@
 	},
 	{
 		"item": "flapjack:harpoon",
-		"quantity": 1,
-		"weight": 1,
-		"level": [
-			"stage_2",
-			"stage_3"
-		]
-	},
-	{
-		"item": "flapjack:side_cannons",
 		"quantity": 1,
 		"weight": 1,
 		"level": [

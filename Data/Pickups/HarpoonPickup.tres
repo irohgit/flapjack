@@ -15,6 +15,6 @@ notification_name = "Harpoon"
 shop_id = &"harpoon"
 shop_description = "A naval harpoon that seeks the closest target and keeps travelling through the enemy line."
 shop_icon = ExtResource("4_shop")
-shop_price = 225
+shop_price = 28
 shop_rarity = "RARE"
 metadata/_custom_type_script = "uid://rau2jwiqd0pd"
