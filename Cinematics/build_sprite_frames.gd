@@ -13,7 +13,7 @@
 #
 # NOTES
 # Frame order is filename order, so scene folders must be zero padded (scene01, not scene1) once a cutscene has ten or more shots.
-# Only cutscenes played through CutscenePlayer belong here. Cutscenes played through frame_cutscene.gd use build_segments.gd instead.
+# Only cutscenes played through CutscenePlayer belong here. Use build_segments.gd to generate CutsceneSegment resources instead.
 @tool
 extends EditorScript
 const ONLY := ["savingvinny"] 

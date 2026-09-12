@@ -113,7 +113,7 @@ the projectile hits something, reaches a configured endpoint, or reaches its
 fallback expiry time. A reapply interval of zero means entry-only; positive
 intervals refresh overlapping targets using the configured status effect's
 reapply policy. See
-`Data/GroundEffects/confusion_pool.tres` and `fire_pool.tres` for complete
+`Data/GroundEffects/confusion_pool.tres` and `molotov_fire_pool.tres` for complete
 examples.
 
 ## Art fidelity and pixel rendering

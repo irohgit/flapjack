@@ -2,11 +2,17 @@ class_name Projectile
 extends Area2D
 
 signal bank_hit(world_position: Vector2)
-## Emitted before releasing enemies or spawning the ground effect.
+## This signal allows other things to be called on death of the projectile
+## For instance for the skewer harpoon, we use this to release enemies before
+## Delete the projectile
+## And we can spawn ground effects here too
 signal expiring
 
+## This stores the packed scene for ground effects
 const GROUND_EFFECT_SCENE := preload("res://Actors/GroundEffects/ground_effect.tscn")
 
+## This stores the projectile data, this is the main thing that gets loaded
+## For custom projectiles, it stores all of the properties and shares them with this script
 @export var data: ProjectileData
 
 var augments: Array[AugmentData] = []
@@ -177,6 +183,7 @@ func _resolve_bank_hits(previous_position: Vector2) -> void:
 		# spinning projectile's current rotation is left as-is here rather
 		# than snapping, while a direction-facing one still re-aligns.
 		_update_rotation(0.0)
+		# Here we use the dot product and bank normal to calculate the bounce direction. We keep the remaining movement for this physics update and the shot’s remaining range, then check whether the bounced movement hits another bank.
 		var remaining_distance := global_position.distance_to(destination)
 		var endpoint_distance := global_position.distance_to(_expire_position)
 		# Step into the water to avoid hitting the same edge again.

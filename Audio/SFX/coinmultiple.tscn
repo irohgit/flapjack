@@ -1,5 +1,0 @@
-[gd_scene format=3 uid="uid://bg6tfnviuu8x3"]
-
-[node name="Coinmultiple" type="AudioStreamPlayer2D" unique_id=2097320457]
-
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=290456427]

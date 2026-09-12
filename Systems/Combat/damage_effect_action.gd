@@ -16,6 +16,7 @@ func execute(target: Node, _delta := 0.0) -> bool:
 
 	var health := _get_health_component(target)
 	var previous_total := health.get_current_health() + health.get_shield_points()
+	# This attempts to apply the damage via the enemies take_damage function so if it has defined behaviour when damaged, then we will still follow it
 	if target.has_method("take_damage"):
 		target.call("take_damage", amount)
 	else:

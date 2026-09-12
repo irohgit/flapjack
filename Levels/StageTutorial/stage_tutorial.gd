@@ -66,10 +66,9 @@ func _ready() -> void:
 		_go_to_stage_1()
 		return
 
-	# Every verb stays locked until the beat that teaches it.
+	# Firing and drinking stay locked until the beat that teaches them.
 	_player.set_can_fire(false)
 	_player.set_can_drink_potion(false)
-	_player.set_can_switch_potion(false)
 	await _run_tutorial()
 	MetaProgress.tutorial_seen = true
 	#MetaProgress.save() TODO
@@ -169,8 +168,7 @@ func _beat_potion() -> void:
 
 	_clear_highlight()
 
-	# Drinking is taught first, so it unlocks first. Switching stays locked so
-	# the player cannot wander the inventory before it has been explained.
+	# Unlock drinking for the first potion lesson.
 	var potions_held := _count_potions()
 	_player.set_can_drink_potion(true)
 	_tutorial_ui.set_objective_for_input("Press R to drink", "Press A to drink")
@@ -183,7 +181,6 @@ func _beat_potion() -> void:
 		await get_tree().process_frame
 
 	var hp := _player.get_health_component()
-	_player.set_can_switch_potion(true)
 	_tutorial_ui.set_objective_for_input(
 		"Get to full health!\n Q / E to switch potion",
 		"Get to full health!\n L or R Bumper/Shoulder to switch potion"

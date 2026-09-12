@@ -146,8 +146,7 @@ func _fire() -> Projectile:
 
 
 # --- Fire patterns -----------------------------------------------------------
-# Primitives any subclass composes into a pattern. All angles are degrees from
-# straight down, so 0 is forward, 180 is behind, negative is to the left.
+# Fire-pattern angles are degrees from straight down: 0 points down, 180 points up, and negative angles turn toward screen-right.
 
 ## One shot per angle, all from the same point.
 func _fire_angles(from: Vector2, angles: PackedFloat32Array) -> void:

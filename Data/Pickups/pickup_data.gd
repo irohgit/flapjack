@@ -1,8 +1,9 @@
 class_name PickupData
 extends Resource
 
-# Enum values are saved in resources. Append new types; do not reorder.
-enum PickupType { AUGMENT, WEAPON, COIN, HEALTH, SHIELD, GIN, POTION }
+# Values are saved in resources; 3 and 4 were retired with HEALTH and SHIELD.
+# Keep these IDs stable when adding types.
+enum PickupType { AUGMENT = 0, WEAPON = 1, COIN = 2, GIN = 5, POTION = 6 }
 
 @export_group("Identity")
 ## Item ID used in loot tables.
@@ -47,7 +48,7 @@ func can_pickup(player: Player) -> bool:
 			return player.can_add_augment(augment)
 		PickupType.WEAPON:
 			return player.can_add_weapon(weapon)
-		PickupType.HEALTH, PickupType.SHIELD, PickupType.POTION:
+		PickupType.POTION:
 			return player.can_add_potion(potion)
 		PickupType.COIN, PickupType.GIN:
 			return true
@@ -70,13 +71,13 @@ func apply_to(player: Player) -> bool:
 		PickupType.GIN:
 			player._add_gin(gin_amount)
 			return true
-		PickupType.HEALTH, PickupType.SHIELD, PickupType.POTION:
+		PickupType.POTION:
 			return player.add_potion(potion)
 	return false
 
 
 func is_potion() -> bool:
-	return pickup_type in [PickupType.HEALTH, PickupType.SHIELD, PickupType.POTION]
+	return pickup_type == PickupType.POTION
 
 
 func get_texture() -> Texture2D:
@@ -98,7 +99,7 @@ func get_notification_text() -> String:
 			return "Coins +%d" % coin_amount
 		PickupType.GIN:
 			return "Gin +%d" % gin_amount
-		PickupType.HEALTH, PickupType.SHIELD, PickupType.POTION:
+		PickupType.POTION:
 			if potion != null and not potion.display_name.is_empty():
 				return potion.display_name
 			return "Potion"
@@ -119,7 +120,7 @@ func is_sellable() -> bool:
 			return weapon != null
 		PickupType.AUGMENT:
 			return augment != null and augment.augmentEffect != null
-		PickupType.HEALTH, PickupType.SHIELD, PickupType.POTION:
+		PickupType.POTION:
 			return potion != null
 
 	return false
@@ -133,7 +134,7 @@ func get_shop_name() -> String:
 		PickupType.AUGMENT:
 			if augment != null and not augment.name.is_empty():
 				return augment.name
-		PickupType.HEALTH, PickupType.SHIELD, PickupType.POTION:
+		PickupType.POTION:
 			if potion != null and not potion.display_name.is_empty():
 				return potion.display_name
 	return get_notification_text()
@@ -150,7 +151,7 @@ func get_shop_icon() -> Texture2D:
 		PickupType.AUGMENT:
 			if augment != null and augment.texture != null:
 				return augment.texture
-		PickupType.HEALTH, PickupType.SHIELD, PickupType.POTION:
+		PickupType.POTION:
 			if potion != null and potion.icon != null:
 				return potion.icon
 	return null
@@ -162,7 +163,7 @@ func get_shop_type() -> String:
 			return "Weapon"
 		PickupType.AUGMENT:
 			return "Augment"
-		PickupType.HEALTH, PickupType.SHIELD, PickupType.POTION:
+		PickupType.POTION:
 			return "Potion"
 		PickupType.COIN:
 			return "Coin"

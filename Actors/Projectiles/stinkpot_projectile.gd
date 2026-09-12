@@ -66,6 +66,7 @@ func _leak_between(from: Vector2, to: Vector2) -> void:
 	if distance <= 0.0:
 		return
 	var direction_to_end := from.direction_to(to)
+	# This spawns gas cloud leaks at even intervals by tracking the distance travelled since the last leak.
 	var next_leak := leak_spacing - _distance_since_leak
 	while next_leak <= distance:
 		_spawn_cloud(_leak_data, from + direction_to_end * next_leak)
