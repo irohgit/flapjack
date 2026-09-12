@@ -15,9 +15,6 @@ script = ExtResource("1_script")
 
 [node name="HUD" parent="." unique_id=106287085 instance=ExtResource("3_hud")]
 
-[node name="BossName" parent="HUD/BossHealth/Panel/Margin/Content" index="0"]
-text = "KRAKEN"
-
 [node name="WaterLayer" type="CanvasLayer" parent="." unique_id=1918949219]
 layer = -100
 

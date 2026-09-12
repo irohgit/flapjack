@@ -1,0 +1,68 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://c1hpixv8dtt2a"]
+
+[ext_resource type="Script" uid="uid://bo6li876odoia" path="res://Data/Enemy/enemy_data.gd" id="1_kraken"]
+[ext_resource type="AudioStream" uid="uid://bcf81qxqc8nxo" path="res://Audio/SFX/ship_destroyed.mp3" id="2_death"]
+[ext_resource type="AudioStream" uid="uid://41by6wg6cvxx" path="res://Audio/SFX/enemy_cannon_shot_1.mp3" id="3_fire"]
+[ext_resource type="Texture2D" uid="uid://c0p08xcpisoof" path="res://Assets/Enemies/Kraken/stage2_kraken_idle.png" id="4_hsfot"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ijli5"]
+atlas = ExtResource("4_hsfot")
+region = Rect2(14, 0, 622, 418)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_es75d"]
+atlas = ExtResource("4_hsfot")
+region = Rect2(636, 0, 622, 418)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lhhfp"]
+atlas = ExtResource("4_hsfot")
+region = Rect2(1258, 0, 622, 418)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t5xcp"]
+atlas = ExtResource("4_hsfot")
+region = Rect2(14, 418, 622, 418)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2pdds"]
+atlas = ExtResource("4_hsfot")
+region = Rect2(636, 418, 622, 418)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v06mq"]
+atlas = ExtResource("4_hsfot")
+region = Rect2(1258, 418, 622, 418)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_auwx8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ijli5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_es75d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lhhfp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t5xcp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2pdds")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v06mq")
+}],
+"loop": 1,
+"name": &"Idle",
+"speed": 5.0
+}]
+
+[resource]
+script = ExtResource("1_kraken")
+projectile_fire_rate = 3.0
+sprite_frames = SubResource("SpriteFrames_auwx8")
+animation_name = &"Idle"
+visual_scale = 0.3
+death_sfx = ExtResource("2_death")
+fire_sfx = ExtResource("3_fire")
+fire_pitch = 0.5
+fire_sfx_volume_db = -8.0
+metadata/_custom_type_script = "uid://bo6li876odoia"

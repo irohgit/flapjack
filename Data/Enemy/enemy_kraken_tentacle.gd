@@ -1,23 +1,12 @@
 class_name KrakenTentacle
 extends Area2D
 
-## One attack cycle of the Kraken boss fight. Waits hidden, casts a circular
-## "shadow" telegraph in the water for telegraph_time seconds, then smashes
-## down: anything within smash_radius of the impact point loses a life. The
-## tentacle then stays down - and only now can be damaged - for
-## smash_hold_time seconds before retracting and picking a new x position to
-## repeat the cycle. Destroyed on reaching zero health while down.
-## Spawned and driven entirely by EnemyKraken; never instanced standalone.
-
 signal tentacle_health_changed(current: int, maximum: int)
 signal tentacle_destroyed
 
 enum State { HIDDEN, TELEGRAPH, DOWN }
 
-@export var tentacle_health := 100
-## Damage dealt to the player if they're within smash_radius when the
-## tentacle lands. HealthComponent counts in half-heart units - 2 is one
-## full heart ("a life").
+@export var tentacle_health := 50
 @export var smash_damage := 2
 @export var smash_radius := 100.0
 @export var telegraph_time := 2.0
@@ -47,8 +36,6 @@ func _ready() -> void:
 	_collision.disabled = true
 
 
-## Called once by EnemyKraken right after spawning. spawn_x is the
-## world-space x the tentacle first strikes at.
 func start(spawn_x: float) -> void:
 	global_position = Vector2(spawn_x, _strike_y())
 	_state = State.HIDDEN
@@ -125,7 +112,6 @@ func _build_shadow_polygon() -> void:
 	_shadow.color = Color(0.0, 0.0, 0.0, 0.35)
 
 
-# Public entry point. Collision code finds methods on the Area2D, not children.
 func take_damage(amount: int) -> void:
 	_health.take_damage(amount)
 	tentacle_health_changed.emit(_health.current_health, _health.max_health)
@@ -141,6 +127,11 @@ func get_max_health() -> int:
 
 func get_contact_damage() -> int:
 	return 0
+
+
+## True from the moment the shadow telegraph appears through the end of the smash-down window. 
+func is_attacking() -> bool:
+	return _state != State.HIDDEN
 
 
 func _on_died() -> void:

@@ -1,9 +1,5 @@
 extends Node2D
 
-## Standalone boss-fight stage - its own level, not part of Stage2's flow.
-## No scrolling journey: the player starts in a fixed arena with the
-## Kraken already waiting. Ends the moment GameEvents.boss_defeated fires.
-
 const MAIN_MENU_SCENE := "res://UI/main_menu.tscn"
 
 @export var stage_music: AudioStream

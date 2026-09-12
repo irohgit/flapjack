@@ -1,25 +1,17 @@
 class_name EnemyKraken
 extends Enemy
 
-## KrakenFight boss. Stays put where it's placed in the scene - it never
-## moves or tracks the player. Does not fire and cannot be damaged directly -
-## the fight instead plays out through KrakenTentacle instances it spawns,
-## which telegraph, smash down, and are the only thing the player can
-## actually hit. Clearing every tentacle in a stage advances to the next
-## stage (more tentacles at once); clearing the final stage defeats the
-## Kraken.
-## Does not call super()._ready(): the base Enemy._ready() assumes a
-## Sprite2D and a working projectile setup, neither of which apply here
-## (AnimatedSprite2D instead, and the Kraken body never fires).
-
 @export_group("Tentacles")
 @export var tentacle_scene: PackedScene
 ## Tentacles pick a random strike x within this margin from each screen edge.
 @export_range(0.0, 500.0, 1.0, "or_greater") var playfield_margin := 220.0
-## Number of tentacles active at once, one entry per stage. Clearing every
-## tentacle spawned by an entry advances to the next; clearing the last
-## entry defeats the Kraken.
-@export var tentacles_per_stage: Array[int] = [1, 2]
+@export var tentacles_per_stage: Array[int] = [1, 3, 4]
+@export var stage_data: Array[EnemyData] = []
+
+@export_group("Projectiles")
+@export var projectile_scene: PackedScene
+@export var rock_ammo: ProjectileData
+@export var confusion_ammo: ProjectileData
 
 var _stage := 0
 var _active_tentacles: Array[KrakenTentacle] = []
@@ -27,31 +19,29 @@ var _is_defeated := false
 
 
 func _ready() -> void:
-	assert(data != null, "Enemy spawned with no EnemyData assigned")
 	assert(tentacle_scene != null, "Kraken needs a tentacle_scene to spawn its attacks")
-	assert(not tentacles_per_stage.is_empty(), "Kraken needs at least one stage configured")
+	assert(
+		stage_data.size() == tentacles_per_stage.size(),
+		"Kraken needs one stage_data entry per tentacles_per_stage entry"
+	)
 
-	# sprite_frames is baked directly onto the AnimatedSprite2D node in this
-	# scene (not data-driven) - just start it playing.
-	_animated_sprite.play(&"Idle")
-
-	# Base Enemy._physics_process() runs the fire-timer/_fire() loop, which
-	# assumes data.projectile_scene is set - the Kraken body never fires, so
-	# skip that processing entirely rather than leaving it to crash on a null.
-	set_physics_process(false)
-
-	# The scene tree is still being assembled during _ready(), so spawning
-	# tentacles (which add_child onto our parent) must wait until it's safe.
+	GameEvents.boss_name_changed.emit("KRAKEN")
 	call_deferred("_start_stage", 0)
 
 
 func _start_stage(stage_index: int) -> void:
 	_stage = stage_index
 	_active_tentacles.clear()
+	_apply_stage_visuals(stage_index)
 
 	var tentacle_count: int = tentacles_per_stage[_stage]
 	for i in range(tentacle_count):
 		_spawn_tentacle()
+
+func _apply_stage_visuals(stage_index: int) -> void:
+	data = stage_data[stage_index]
+	_configure_visuals()
+	_reset_initial_timer()
 
 
 func _spawn_tentacle() -> void:
@@ -104,6 +94,51 @@ func _recompute_boss_health() -> void:
 	if maximum <= 0:
 		return
 	GameEvents.boss_health_changed.emit(current, maximum)
+
+
+## Only fires while every current tentacle is hidden (i.e. not mid-attack).
+func _can_fire() -> bool:
+	if projectile_scene == null or (rock_ammo == null and confusion_ammo == null):
+		return false
+
+	for tentacle in _active_tentacles:
+		if is_instance_valid(tentacle) and tentacle.is_attacking():
+			return false
+
+	return true
+
+
+func _fire() -> Projectile:
+	var ammo := _pick_ammo()
+	if ammo == null:
+		return null
+
+	var shot := projectile_scene.instantiate() as Projectile
+	if shot == null:
+		push_error("Kraken projectile_scene must inherit from Projectile")
+		return null
+
+	shot.data = ammo.duplicate() as ProjectileData
+
+	var fire_position := _get_fire_position()
+	var aim_direction := Vector2.DOWN
+	var player := get_tree().get_first_node_in_group("player") as Node2D
+	if player != null:
+		var direction_to_player := fire_position.direction_to(player.global_position)
+		if not direction_to_player.is_zero_approx():
+			aim_direction = direction_to_player
+
+	shot.direction = aim_direction
+	get_parent().add_child(shot)
+	shot.global_position = fire_position
+	Audio.play_sfx(data.fire_sfx, data.fire_sfx_volume_db, 0.06, data.fire_pitch)
+	return shot
+
+
+func _pick_ammo() -> ProjectileData:
+	if rock_ammo != null and confusion_ammo != null:
+		return rock_ammo if randf() < 0.5 else confusion_ammo
+	return rock_ammo if rock_ammo != null else confusion_ammo
 
 
 func _defeat() -> void:

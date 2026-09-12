@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3]
+
+[ext_resource type="Script" uid="uid://bo6li876odoia" path="res://Data/Enemy/enemy_data.gd" id="1_kraken"]
+[ext_resource type="AudioStream" uid="uid://bcf81qxqc8nxo" path="res://Audio/SFX/ship_destroyed.mp3" id="2_death"]
+[ext_resource type="AudioStream" uid="uid://41by6wg6cvxx" path="res://Audio/SFX/enemy_cannon_shot_1.mp3" id="3_fire"]
+
+[resource]
+script = ExtResource("1_kraken")
+projectile_fire_rate = 3.5
+animation_name = &"Idle"
+visual_scale = 0.3
+death_sfx = ExtResource("2_death")
+fire_sfx = ExtResource("3_fire")
+fire_pitch = 0.5
+fire_sfx_volume_db = -8.0
+metadata/_custom_type_script = "uid://bo6li876odoia"

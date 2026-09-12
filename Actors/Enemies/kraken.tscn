@@ -1,12 +1,18 @@
 [gd_scene format=3 uid="uid://jnnuwbexs8mx"]
 
+[ext_resource type="Script" uid="uid://bo6li876odoia" path="res://Data/Enemy/enemy_data.gd" id="1_enemy_data"]
 [ext_resource type="Script" uid="uid://fhvn78b2d6om" path="res://Data/Enemy/enemy_kraken.gd" id="1_kraken"]
 [ext_resource type="Script" uid="uid://dttjdne32amn0" path="res://Systems/Combat/status_effect_component.gd" id="3_status"]
-[ext_resource type="Resource" uid="uid://c12ycljon06tg" path="res://Data/Enemy/Kraken.tres" id="4_data"]
 [ext_resource type="Texture2D" uid="uid://586tdym3ok1l" path="res://Assets/Enemies/Kraken/kraken_idle.png" id="4_fx7a1"]
+[ext_resource type="Resource" path="res://Data/Enemy/KrakenStage1.tres" id="4_stage1"]
+[ext_resource type="Resource" uid="uid://c1hpixv8dtt2a" path="res://Data/Enemy/KrakenStage2.tres" id="4_stage2"]
+[ext_resource type="Resource" uid="uid://8elyl23fp36x" path="res://Data/Enemy/KrakenStage3.tres" id="4_stage3"]
 [ext_resource type="Texture2D" uid="uid://blah1qd7g45n" path="res://Assets/Enemies/Kraken/kraken_swipe.png" id="5_eswaq"]
 [ext_resource type="PackedScene" path="res://Actors/Enemies/kraken_tentacle.tscn" id="5_tentacle"]
 [ext_resource type="Texture2D" uid="uid://c4nqn4mjjdu7u" path="res://Assets/Enemies/Kraken/kraken_wave.png" id="6_xfjaf"]
+[ext_resource type="PackedScene" uid="uid://bl12qi0n68b6i" path="res://Actors/Projectiles/projectile.tscn" id="7_proj"]
+[ext_resource type="Resource" uid="uid://d178fn6mvj77k" path="res://Data/Projectiles/enemy_rock.tres" id="8_rock"]
+[ext_resource type="Resource" uid="uid://c0e48rq103yt6" path="res://Data/Projectiles/voodoo_poison.tres" id="9_confusion"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_eswaq"]
 atlas = ExtResource("4_fx7a1")
@@ -133,7 +139,10 @@ collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_kraken")
 tentacle_scene = ExtResource("5_tentacle")
-data = ExtResource("4_data")
+stage_data = Array[ExtResource("1_enemy_data")]([ExtResource("4_stage1"), ExtResource("4_stage2"), ExtResource("4_stage3")])
+projectile_scene = ExtResource("7_proj")
+rock_ammo = ExtResource("8_rock")
+confusion_ammo = ExtResource("9_confusion")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1149912033]
 scale = Vector2(0.3, 0.3)

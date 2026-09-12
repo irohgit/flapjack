@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://c12ycljon06tg"]
-
-[ext_resource type="Script" uid="uid://bo6li876odoia" path="res://Data/Enemy/enemy_data.gd" id="1_kraken"]
-[ext_resource type="AudioStream" uid="uid://bcf81qxqc8nxo" path="res://Audio/SFX/ship_destroyed.mp3" id="7_death"]
-
-[resource]
-script = ExtResource("1_kraken")
-death_sfx = ExtResource("7_death")
-metadata/_custom_type_script = "uid://bo6li876odoia"
