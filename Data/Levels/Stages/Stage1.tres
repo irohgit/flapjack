@@ -26,7 +26,6 @@
 [ext_resource type="Resource" uid="uid://do5a365f2ffty" path="res://Data/Pickups/SpeedPotion.tres" id="7_speed"]
 [ext_resource type="PackedScene" uid="uid://3gxxy4myod8b" path="res://Actors/Enemies/PatternEnemyWaveSpawner.tscn" id="8_birds"]
 [ext_resource type="PackedScene" uid="uid://bg1vqnsif3eb6" path="res://Actors/Enemies/cerberus_boss.tscn" id="9_bv1kr"]
-[ext_resource type="Resource" uid="uid://cxjxw3kq4xtdv" path="res://Data/Enemy/CerberusEnemy.tres" id="11_8v40m"]
 [ext_resource type="Resource" uid="uid://bau7v7mpln58f" path="res://Data/Potions/ShieldPotion.tres" id="11_asv6p"]
 [ext_resource type="PackedScene" uid="uid://bktpdwvxtsh2g" path="res://Actors/NPC/vinny_drop.tscn" id="12_hjtma"]
 [ext_resource type="PackedScene" uid="uid://c3fbyu4hkkmk7" path="res://Cinematics/savingvinny.tscn" id="29_2rc1s"]
@@ -43,11 +42,6 @@ enemy = ExtResource("3_hunter")
 weight = 0.25
 metadata/_custom_type_script = "uid://brpre4byem6tx"
 
-[sub_resource type="Resource" id="Resource_ht8rm"]
-script = ExtResource("1_enemy")
-enemy = ExtResource("11_8v40m")
-metadata/_custom_type_script = "uid://brpre4byem6tx"
-
 [sub_resource type="Resource" id="Formation_line"]
 script = ExtResource("3_formation")
 metadata/_custom_type_script = "uid://dgn1ppeend4i1"
@@ -56,7 +50,7 @@ metadata/_custom_type_script = "uid://dgn1ppeend4i1"
 script = ExtResource("6_encounter")
 distance_after_previous = 250.0
 max_pack_size = 3
-enemy_pool = Array[ExtResource("1_enemy")]([SubResource("Enemy_bulwark"), SubResource("Enemy_hunter_early"), SubResource("Resource_ht8rm")])
+enemy_pool = Array[ExtResource("1_enemy")]([SubResource("Enemy_bulwark"), SubResource("Enemy_hunter_early")])
 formation_pool = Array[ExtResource("3_formation")]([SubResource("Formation_line")])
 metadata/_custom_type_script = "uid://cytvv5o32ru6e"
 
@@ -142,7 +136,7 @@ script = ExtResource("6_encounter")
 distance_after_previous = 750.0
 min_pack_size = 5
 max_pack_size = 6
-enemy_pool = Array[ExtResource("1_enemy")]([SubResource("Enemy_bulwark"), SubResource("Enemy_hunter_late"), SubResource("Resource_ht8rm")])
+enemy_pool = Array[ExtResource("1_enemy")]([SubResource("Enemy_bulwark"), SubResource("Enemy_hunter_late")])
 formation_pool = Array[ExtResource("3_formation")]([SubResource("Formation_line"), SubResource("Formation_v"), SubResource("Formation_grid"), SubResource("Formation_circle")])
 metadata/_custom_type_script = "uid://cytvv5o32ru6e"
 
