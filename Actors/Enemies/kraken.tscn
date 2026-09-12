@@ -3,26 +3,34 @@
 [ext_resource type="Script" uid="uid://fhvn78b2d6om" path="res://Data/Enemy/enemy_kraken.gd" id="1_kraken"]
 [ext_resource type="Script" uid="uid://dttjdne32amn0" path="res://Systems/Combat/status_effect_component.gd" id="3_status"]
 [ext_resource type="Resource" uid="uid://c12ycljon06tg" path="res://Data/Enemy/Kraken.tres" id="4_data"]
-[ext_resource type="Texture2D" uid="uid://c6m7wdawvyf61" path="res://Assets/Enemies/Kraken/kraken_punch.png" id="4_fx7a1"]
+[ext_resource type="Texture2D" uid="uid://586tdym3ok1l" path="res://Assets/Enemies/Kraken/kraken_idle.png" id="4_fx7a1"]
 [ext_resource type="Texture2D" uid="uid://blah1qd7g45n" path="res://Assets/Enemies/Kraken/kraken_swipe.png" id="5_eswaq"]
 [ext_resource type="PackedScene" path="res://Actors/Enemies/kraken_tentacle.tscn" id="5_tentacle"]
 [ext_resource type="Texture2D" uid="uid://c4nqn4mjjdu7u" path="res://Assets/Enemies/Kraken/kraken_wave.png" id="6_xfjaf"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_eswaq"]
+atlas = ExtResource("4_fx7a1")
+region = Rect2(14, 0, 622, 418)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xfjaf"]
+atlas = ExtResource("4_fx7a1")
+region = Rect2(636, 0, 622, 418)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_5xhqd"]
 atlas = ExtResource("4_fx7a1")
-region = Rect2(0, 0, 768, 512)
+region = Rect2(1258, 0, 622, 418)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1duyv"]
 atlas = ExtResource("4_fx7a1")
-region = Rect2(768, 0, 768, 512)
+region = Rect2(14, 418, 622, 418)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g4wus"]
 atlas = ExtResource("4_fx7a1")
-region = Rect2(0, 512, 768, 512)
+region = Rect2(636, 418, 622, 418)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jhsys"]
 atlas = ExtResource("4_fx7a1")
-region = Rect2(768, 512, 768, 512)
+region = Rect2(1258, 418, 622, 418)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_auwx8"]
 atlas = ExtResource("5_eswaq")
@@ -59,6 +67,12 @@ region = Rect2(1800, 1200, 1800, 1200)
 [sub_resource type="SpriteFrames" id="SpriteFrames_t2cet"]
 animations = [{
 "frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eswaq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xfjaf")
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5xhqd")
 }, {
@@ -127,7 +141,7 @@ sprite_frames = SubResource("SpriteFrames_t2cet")
 animation = &"Idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1098306222]
-position = Vector2(0.16666794, -21.166668)
+position = Vector2(4.5, -6.166666)
 shape = SubResource("RectangleShape2D_s4bsw")
 
 [node name="StatusEffectComponent" type="Node" parent="." unique_id=1641484347]

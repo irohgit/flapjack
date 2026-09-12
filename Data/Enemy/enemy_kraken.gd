@@ -21,8 +21,6 @@ extends Enemy
 ## entry defeats the Kraken.
 @export var tentacles_per_stage: Array[int] = [1, 2]
 
-@onready var _animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
-
 var _stage := 0
 var _active_tentacles: Array[KrakenTentacle] = []
 var _is_defeated := false

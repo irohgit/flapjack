@@ -4,7 +4,7 @@
 [ext_resource type="AudioStream" uid="uid://cbplby7nfcsyw" path="res://Audio/SFX/ship_hit.mp3" id="2_hit"]
 [ext_resource type="AudioStream" uid="uid://bcf81qxqc8nxo" path="res://Audio/SFX/ship_destroyed.mp3" id="3_death"]
 [ext_resource type="PackedScene" uid="uid://bl12qi0n68b6i" path="res://Actors/Projectiles/projectile.tscn" id="4_proj"]
-[ext_resource type="Resource" path="res://Data/Projectiles/enemy_rock.tres" id="5_ammo"]
+[ext_resource type="Resource" uid="uid://d178fn6mvj77k" path="res://Data/Projectiles/enemy_rock.tres" id="5_ammo"]
 [ext_resource type="AudioStream" uid="uid://41by6wg6cvxx" path="res://Audio/SFX/enemy_cannon_shot_1.mp3" id="6_fire"]
 
 [resource]
