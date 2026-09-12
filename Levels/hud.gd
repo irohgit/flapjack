@@ -2,6 +2,7 @@ extends CanvasLayer
 
 @onready var coin_label: Label = $Coin/Amount
 @onready var gin_label: Label = $Gin/Amount
+@onready var score_label: Label = $Score/Amount
 @onready var health_shield_icons: HBoxContainer = $"health and shield icon/HealthRow"
 @onready var active_effects_container: HBoxContainer = $ActiveEffects
 @onready var potion_slots_container: HBoxContainer = $PotionSlots
@@ -62,6 +63,7 @@ func _ready() -> void:
 
 	_player.coin_changed.connect(_on_coin_changed)
 	_player.gin_changed.connect(_on_gin_changed)
+	_player.score_changed.connect(_on_score_changed)
 	MetaProgress.gin_changed.connect(_on_gin_changed)
 
 	call_deferred("_init_display_values")
@@ -177,6 +179,9 @@ func _on_coin_changed(amount: int) -> void:
 
 func _on_gin_changed(_amount: int) -> void:
 	_refresh_gin_display()
+
+func _on_score_changed(amount: int) -> void:
+	score_label.text = str(amount)
 
 func _refresh_gin_display() -> void:
 	gin_label.text = str(MetaProgress.gin + _player.gin_count)

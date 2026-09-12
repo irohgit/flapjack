@@ -17,16 +17,30 @@ extends Node
 ## How long the rig takes to ease to a stop, or back up to full pace.
 @export var hold_ease_time := 0.6
 
+var distance_travelled := 0.0
+
 var _held := false
 var _speed_scale := 1.0
 var _hold_tween: Tween = null
+var player = null
+@export var goal_to_score := 100
+var current_goal := 0
+
+func _ready() -> void:
+	player = get_tree().get_first_node_in_group("player") as Player
+	current_goal = goal_to_score
 
 
 func _physics_process(delta: float) -> void:
+	distance_travelled = start_point.distance_to(scroll_rig.global_position)
 	if moving():
 		scroll_rig.global_position = scroll_rig.global_position.move_toward(
 			end_point, delta * scroll_speed * _speed_scale
 		)
+		if int(distance_travelled) >= current_goal:
+			if player != null:
+				player._add_score(5)
+			current_goal += goal_to_score
 
 
 func _unhandled_input(event: InputEvent) -> void:
