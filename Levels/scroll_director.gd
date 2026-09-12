@@ -32,6 +32,9 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if not is_instance_valid(scroll_rig):
+		return
+
 	distance_travelled = start_point.distance_to(scroll_rig.global_position)
 	if moving():
 		scroll_rig.global_position = scroll_rig.global_position.move_toward(
