@@ -5,11 +5,13 @@ var cooldown := 0.0
 var augments: Array[AugmentData] = []
 var continuous_effect: Node2D
 
+
 func _init(weapon_data: WeaponData) -> void:
 	data = weapon_data
 
 
 func clone_for_checkpoint() -> WeaponState:
+	# Copy the weapon and its augments for the checkpoint, but reset the cooldown and leave out any active beam.
 	var clone := WeaponState.new(data)
 	clone.augments.assign(augments)
 	return clone

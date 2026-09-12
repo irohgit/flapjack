@@ -4,7 +4,6 @@ extends RefCounted
 
 const PICKUP_DIRECTORY := "res://Data/Pickups"
 
-
 static func build() -> Dictionary:
 	var pickups_by_id: Dictionary = {}
 	var duplicate_ids: Dictionary = {}
@@ -35,6 +34,7 @@ static func _scan_directory(
 		if pickup.item_id.is_empty():
 			push_error("Pickup is missing item_id: %s" % resource_path)
 			continue
+		# Will report and stop duplicate IDs
 		if duplicate_ids.has(pickup.item_id):
 			push_error("Pickup item_id remains duplicated: %s" % pickup.item_id)
 			continue

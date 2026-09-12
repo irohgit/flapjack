@@ -4,4 +4,7 @@
 
 [resource]
 script = ExtResource("1_c5leh")
-hold_time = 1.4
+speaker = "Vinny"
+text = "HAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+layout = 2
+stage_animation = &"scene05"

@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://bg1vqnsif3eb6"]
+
+[ext_resource type="Script" uid="uid://cwi75sqsptpgw" path="res://Actors/Enemies/cerberus_boss.gd" id="1_8d5xr"]
+[ext_resource type="PackedScene" uid="uid://bnfmxfiachnm7" path="res://Actors/CombatEffects/death_explosion.tscn" id="2_p7xk7"]
+[ext_resource type="Resource" uid="uid://cwf75u6cag2e8" path="res://Data/Enemy/CerberusBoss.tres" id="3_8d5xr"]
+[ext_resource type="Texture2D" uid="uid://b81o3k3xhfu20" path="res://Assets/Enemies/Cerberus_Pirates/cerberus_80x160.png" id="4_8d5xr"]
+[ext_resource type="Script" uid="uid://cv0v6ynhg51ei" path="res://Systems/Combat/HealthComponent.gd" id="5_smfio"]
+[ext_resource type="Script" uid="uid://dttjdne32amn0" path="res://Systems/Combat/status_effect_component.gd" id="6_u8hg6"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_odipc"]
+radius = 31.0
+height = 130.0
+
+[node name="CerberusBoss" type="Area2D" unique_id=1035340143 groups=["enemy", "hazard"]]
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("1_8d5xr")
+explosion_scene = ExtResource("2_p7xk7")
+data = ExtResource("3_8d5xr")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=435719709]
+texture_filter = 1
+texture = ExtResource("4_8d5xr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1631142024]
+position = Vector2(2, 3)
+shape = SubResource("CapsuleShape2D_odipc")
+debug_color = Color(0.85882354, 0, 0.8784314, 0.19607843)
+
+[node name="HealthComponent" type="Node" parent="." unique_id=347688055]
+script = ExtResource("5_smfio")
+max_health = 5
+metadata/_custom_type_script = "uid://cv0v6ynhg51ei"
+
+[node name="StatusEffectComponent" type="Node" parent="." unique_id=1674272058]
+script = ExtResource("6_u8hg6")
+
+[node name="HeadCentre" type="Marker2D" parent="." unique_id=337523901]
+position = Vector2(1, 57)
+
+[node name="HeadRight" type="Marker2D" parent="." unique_id=968990186]
+position = Vector2(25, 50)
+
+[node name="HeadLeft" type="Marker2D" parent="." unique_id=1156200728]
+position = Vector2(-26, 50)

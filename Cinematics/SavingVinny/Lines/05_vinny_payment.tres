@@ -5,4 +5,11 @@
 [resource]
 script = ExtResource("1_3i0mg")
 speaker = "Vinny"
-text = "That is not what we agreed. I want proper payment."
+text = "33… 34… 35. That’s not what we agreed. I want proper payment."
+layout = 2
+sound_volume_db = -10.0
+sound_repeats = 3
+sound_interval = 1.0
+flash_enabled = true
+flash_colour = Color(0, 0, 0, 1)
+flash_hold = 0.05

@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://t7alddeyjrep" path="res://Levels/hud.tscn" id="1_s0w88"]
 [ext_resource type="Script" uid="uid://ldk65a2c6xgp" path="res://Levels/Stage1/stage_1.gd" id="1_thckm"]
 [ext_resource type="Script" uid="uid://tsoi3lwff5mf" path="res://Actors/Camera/shake_camera.gd" id="1_utqb5"]
+[ext_resource type="PackedScene" uid="uid://des8tka4uw8kx" path="res://Actors/UI/potion_flourish.tscn" id="2_2g2db"]
 [ext_resource type="AudioStream" uid="uid://b86afwbiwoubu" path="res://Audio/BGM/hesapirate.mp3" id="2_yvgdk"]
 [ext_resource type="PackedScene" uid="uid://dsf0q5lcpr0mh" path="res://Actors/Camera/ScrollDirector.tscn" id="3_o28ls"]
 [ext_resource type="PackedScene" uid="uid://cpy76lvb1x4cb" path="res://UI/GameUI.tscn" id="3_p2t5c"]
@@ -68,8 +69,11 @@ scroll_director = NodePath("ScrollDirector")
 enemy_controller = NodePath("EnemyController")
 level_generator = NodePath("LevelGenerator")
 screen_encounter_parent = NodePath("ScrollRig/ScreenEncounters")
+potion_flourish_scene = ExtResource("2_2g2db")
 stage_music = ExtResource("2_yvgdk")
 stage_music_db = -30.0
+entry_distance = 600.0
+entry_time = 1.5
 metadata/_edit_vertical_guides_ = [960.0]
 
 [node name="GameUI" parent="." unique_id=1532914546 instance=ExtResource("3_p2t5c")]
@@ -191,8 +195,7 @@ metadata/_custom_type_script = "uid://tsoi3lwff5mf"
 
 [node name="ScreenEncounters" type="Node2D" parent="ScrollRig" unique_id=1299489232]
 
-[node name="Player" parent="ScrollRig" unique_id=2109576054 node_paths=PackedStringArray("camera", "banks", "scrollDirector") instance=ExtResource("4_nx2dg")]
+[node name="Player" parent="ScrollRig" unique_id=2109576054 node_paths=PackedStringArray("camera", "banks") instance=ExtResource("4_nx2dg")]
 position = Vector2(960, 853)
 camera = NodePath("../ShakeCamera")
 banks = NodePath("../../BankPainter")
-scrollDirector = NodePath("../../ScrollDirector")

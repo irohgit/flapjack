@@ -1,5 +1,5 @@
 class_name PiercingEffect
 extends AugmentEffect
 
-func apply_to_projectile(_projectile: Projectile) -> void:
-	_projectile.pierce += 1
+func apply_to_projectile(projectile: Projectile) -> void:
+	projectile.pierce += 1

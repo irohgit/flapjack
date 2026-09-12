@@ -28,7 +28,7 @@ func _ready() -> void:
 	top_level = true
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	_banks = get_tree().get_first_node_in_group("banks") as BankPainter
-	_ray.enabled = false # Updated explicitly after the player moves each physics frame.
+	_ray.enabled = false # Updated after player movement.
 	_ray.collide_with_areas = true
 	_ray.collide_with_bodies = true
 	_ray.hit_from_inside = true
@@ -76,7 +76,7 @@ func update_beam(origin: Vector2, delta: float, fire_rate_multiplier: float) -> 
 	queue_redraw()
 
 
-## Intersect the upward world ray with the viewport, including camera zoom/rotation.
+## Stop at the viewport edge, accounting for camera zoom and rotation.
 func _screen_endpoint(origin: Vector2) -> Vector2:
 	var canvas := get_viewport().get_canvas_transform()
 	var screen_origin := canvas * origin
@@ -120,8 +120,7 @@ func _update_damage(target: Node2D, delta: float, fire_rate_multiplier: float) -
 	if not is_instance_valid(_target) or not _target.has_method("take_damage"):
 		return
 
-	# firerate is seconds between shots, not shots per second. Preserve fractional
-	# damage between ticks on this target; never transfer it to another target.
+	# Accumulate fractional damage on the current target.
 	var dps := maxf(_weapon.data.damage, 0.0) * maxf(fire_rate_multiplier, 0.0)
 	dps /= maxf(_weapon.data.firerate, 0.001)
 	_pending_damage += dps * delta
@@ -129,8 +128,7 @@ func _update_damage(target: Node2D, delta: float, fire_rate_multiplier: float) -
 	if _contact_time < DAMAGE_INTERVAL:
 		return
 	_contact_time = fmod(_contact_time, DAMAGE_INTERVAL)
-	# Match projectile contact feedback even when this tick is still accumulating
-	# fractional damage. The target keeps its own health-damage sound/flash.
+	# Play contact feedback even when less than one damage has accumulated.
 	Audio.play_sfx(_weapon.data.weaponProjectile.impact_sound, -8.0)
 	if _target.has_method("apply_status_effect"):
 		for effect in _effects:
@@ -144,21 +142,19 @@ func _update_damage(target: Node2D, delta: float, fire_rate_multiplier: float) -
 func _draw() -> void:
 	if _length <= 0.001:
 		return
-	# Four animation columns in 48px cells. The opaque art is 16px wide;
-	# crop the padding and repeat the body without stretching its pixels.
+	# Four 48px frames, with 16px-wide art. Repeat the body without stretching.
 	var frame := int(_animation_time * ANIMATION_FPS) % 4
 	var length := _length / ART_SCALE
 	var cap_length := minf(16.0, length * 0.5)
-	# The sheet points right: rounded emitter, body, then the flared impact.
-	# Rotate that direction upward; widen only across the beam's axis.
+	# Rotate the horizontal art upward; scale width separately from length.
 	draw_set_transform(Vector2.ZERO, -PI * 0.5, Vector2(ART_SCALE, THICKNESS_SCALE))
-	_draw_segment(0, frame, 0.0, cap_length) # Rounded emitter at the muzzle.
+	_draw_segment(0, frame, 0.0, cap_length) # Emitter
 	var cursor := cap_length
 	while cursor < length - cap_length - 0.001:
 		var segment_length := minf(16.0, length - cap_length - cursor)
 		_draw_segment(2, frame, cursor, segment_length, true)
 		cursor += segment_length
-	_draw_segment(4, frame, length - cap_length, cap_length) # Flared impact at the hit point.
+	_draw_segment(4, frame, length - cap_length, cap_length) # Impact
 
 
 func _draw_segment(row: int, frame: int, x: float, length: float, crop := false) -> void:

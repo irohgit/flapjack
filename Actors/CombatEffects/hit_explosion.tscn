@@ -1,0 +1,74 @@
+[gd_scene format=3 uid="uid://dqfrgwh5s05ei"]
+
+[ext_resource type="Texture2D" uid="uid://dt8888x00ir07" path="res://Assets/CombatEffects/hit_explosion_spritesheet_400x50.png" id="1_o8a0y"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3iq7j"]
+atlas = ExtResource("1_o8a0y")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_62es7"]
+atlas = ExtResource("1_o8a0y")
+region = Rect2(50, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c78vx"]
+atlas = ExtResource("1_o8a0y")
+region = Rect2(100, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o3ypq"]
+atlas = ExtResource("1_o8a0y")
+region = Rect2(150, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n2l32"]
+atlas = ExtResource("1_o8a0y")
+region = Rect2(200, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i7gei"]
+atlas = ExtResource("1_o8a0y")
+region = Rect2(250, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e4xjy"]
+atlas = ExtResource("1_o8a0y")
+region = Rect2(300, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pd3g1"]
+atlas = ExtResource("1_o8a0y")
+region = Rect2(350, 0, 50, 50)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5yy73"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3iq7j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_62es7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c78vx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o3ypq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n2l32")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i7gei")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e4xjy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pd3g1")
+}],
+"loop": 0,
+"name": &"hit_explosion",
+"speed": 5.0
+}]
+
+[node name="HitExplosion" type="Node2D" unique_id=1358986946]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1420392653]
+sprite_frames = SubResource("SpriteFrames_5yy73")
+animation = &"hit_explosion"
+autoplay = "hit_explosion"

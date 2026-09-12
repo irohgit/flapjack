@@ -2,6 +2,8 @@ class_name EnemyData
 extends EnemyDropSourceData
 
 @export var scene: PackedScene
+@export var enemy_name := ""
+@export var is_boss := false
 @export var health := 3
 @export var contact_damage := 1 # Damage dealt to the player on contact.
 @export var projectile_damage := 1
@@ -15,6 +17,7 @@ extends EnemyDropSourceData
 @export var visual_scale := 1.0 # Sprite scale, so one texture can serve small and large variants.
 @export var projectile_scene: PackedScene
 @export var ammo: ProjectileData
+
 
 
 # --- Audio ---

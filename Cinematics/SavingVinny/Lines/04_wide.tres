@@ -5,4 +5,16 @@
 [resource]
 script = ExtResource("1_gta45")
 layout = 2
-hold_time = 0.8
+stage_animation = &"scene02"
+hold_time = 3.0
+use_blur = true
+blur_time = 3.0
+use_mask = true
+mask_from = 0.35
+mask_to = 1.0
+mask_softness = 0.5
+mask_time = 3.0
+flash_enabled = true
+flash_colour = Color(0, 0, 0, 1)
+flash_hold = 0.05
+flash_fade = 0.5

@@ -35,6 +35,12 @@ extends Resource
 @export_range(0.0, 1.0) var gold_share := 0.5   # fraction of the total delivered as gold
 @export var max_barrels_per_encounter := 4
 
+@export_group("Presentation")
+## Shown as the chapter card when the stage begins. Empty shows no card.
+@export var stage_title := ""
+@export var stage_subtitle := ""
+@export_range(0.5, 6.0, 0.1) var title_hold := 2.0
+
 func get_playfield_center() -> Vector2:
 	return playfield_size * 0.5
 

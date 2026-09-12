@@ -2,10 +2,32 @@
 
 [ext_resource type="Script" uid="uid://3ke20rwguryo" path="res://Cinematics/cutscene_line.gd" id="1_mqvhc"]
 [ext_resource type="Texture2D" uid="uid://6aeaxa80m7vb" path="res://Assets/Cinematics/JACK_CONCERNED_512x640.png" id="1_psny4"]
+[ext_resource type="Texture2D" uid="uid://ca4a34bdi6l5n" path="res://Assets/Cinematics/VINNY_9_1080p.jpg" id="3_2wybv"]
+[ext_resource type="Script" uid="uid://bo3674uxklgt8" path="res://Cinematics/cutscene_motion.gd" id="4_hj364"]
+
+[sub_resource type="Resource" id="Resource_s5877"]
+script = ExtResource("4_hj364")
+enabled = true
+duration = 15.0
+offset_to = Vector2(1000, 0)
+metadata/_custom_type_script = "uid://bo3674uxklgt8"
+
+[sub_resource type="Resource" id="Resource_5vby5"]
+script = ExtResource("4_hj364")
+enabled = true
+duration = 10.0
+scale_to = 2.0
+tint_to = Color(0, 0, 0, 1)
+metadata/_custom_type_script = "uid://bo3674uxklgt8"
 
 [resource]
 script = ExtResource("1_mqvhc")
 speaker = "Jack"
 text = "Uh. I think they're sailing towards us now."
-layout = 2
-stage_image = ExtResource("1_psny4")
+layout = 3
+left_portrait = ExtResource("1_psny4")
+stage_image = ExtResource("3_2wybv")
+blur_from = 0.0
+blur_to = 100.0
+left_motion = SubResource("Resource_s5877")
+stage_motion = SubResource("Resource_5vby5")

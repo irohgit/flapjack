@@ -10,7 +10,7 @@ func _ready() -> void:
 	var finale_spawned: bool = await run_generated_stage()
 	if not finale_spawned:
 		return
-
+	
 	await GameEvents.boss_defeated
 	# Let the boss finish its death signal chain and deferred cleanup before the
 	# modal shop pauses the scene tree.

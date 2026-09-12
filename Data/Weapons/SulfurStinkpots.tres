@@ -1,10 +1,10 @@
-[gd_resource type="Resource" script_class="WeaponData" format=3]
+[gd_resource type="Resource" script_class="WeaponData" format=3 uid="uid://cpgc24h2uja6w"]
 
-[ext_resource type="Script" path="res://Data/Weapons/weapon_data.gd" id="1_weapon"]
-[ext_resource type="Script" path="res://Data/Weapons/sulfur_stinkpots_behaviour.gd" id="2_behaviour"]
-[ext_resource type="PackedScene" path="res://Actors/Projectiles/projectile.tscn" id="3_scene"]
+[ext_resource type="Script" uid="uid://dfww4fxipct38" path="res://Data/Weapons/weapon_data.gd" id="1_weapon"]
+[ext_resource type="Script" uid="uid://cv6um4mw0qupw" path="res://Data/Weapons/lobbed_weapon_behaviour.gd" id="2_behaviour"]
+[ext_resource type="PackedScene" path="res://Actors/Projectiles/stinkpot_projectile.tscn" id="3_scene"]
 [ext_resource type="Resource" path="res://Data/Projectiles/sulfur_stinkpots.tres" id="4_projectile"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Items/Weapons/sulfur_stinkpot.png" id="5_icon"]
+[ext_resource type="Texture2D" uid="uid://bc6c1edqy1j7f" path="res://Assets/UI/Shop/Items/Weapons/sulfur_stinkpot.png" id="5_icon"]
 
 [sub_resource type="Resource" id="Behaviour"]
 script = ExtResource("2_behaviour")
@@ -19,4 +19,3 @@ texture = ExtResource("5_icon")
 weaponType = 1
 weaponProjectile = ExtResource("4_projectile")
 weaponBehaviour = SubResource("Behaviour")
-metadata/implementation_status = "scaffold"

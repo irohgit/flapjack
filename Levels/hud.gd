@@ -6,8 +6,24 @@ extends CanvasLayer
 @onready var active_effects_container: HBoxContainer = $ActiveEffects
 @onready var potion_slots_container: HBoxContainer = $PotionSlots
 @onready var boss_health_display: Control = $BossHealth
+@onready var boss_name_label: Label = $BossHealth/Panel/Margin/Content/BossName
 @onready var boss_health_bar: ProgressBar = $BossHealth/Panel/Margin/Content/BarLayer/Bar
 @onready var boss_health_text: Label = $BossHealth/Panel/Margin/Content/BarLayer/HealthText
+@onready var voyage_panel: Control = $VoyageProgress
+@onready var voyage_title: Label = $VoyageProgress/StageTitle
+@onready var voyage_status: Label = $VoyageProgress/Status
+@onready var voyage_bar: ProgressBar = $VoyageProgress/Route/Bar
+@onready var voyage_ship: TextureRect = $VoyageProgress/Route/Ship
+@onready var run_progress_bar: ProgressBar = $VoyageProgress/RunBar
+@onready var run_progress_label: Label = $VoyageProgress/RunLabel
+@onready var run_progress_percent: Label = $VoyageProgress/RunPercent
+
+## Ordered gameplay stages in the current run. The scripted tutorial has no distance bar.
+@export var run_stage_ids: Array[StringName] = [&"stage_1", &"stage_2"]
+var _progress_stage: LevelManager
+var _progress_stage_index: int = -1
+var _displayed_stage_progress: float = 0.0
+var _progress_menus: Array[Control] = []
 
 var _player: Player
 var _status_effects: StatusEffectComponent
@@ -32,7 +48,9 @@ var _active_effect_entries: Dictionary = {}
 
 func _ready() -> void:
 	boss_health_display.hide()
+	_bind_voyage_progress()
 	GameEvents.boss_health_changed.connect(_on_boss_health_changed)
+	GameEvents.boss_name_changed.connect(_on_boss_name_changed)
 	GameEvents.boss_defeated.connect(_on_boss_defeated)
 	GameEvents.player_died.connect(_on_player_died)
 
@@ -84,7 +102,8 @@ func _init_display_values() -> void:
 	_update_potion_slots()
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
+	_update_voyage_progress(delta)
 	if _status_effects == null:
 		return
 
@@ -92,6 +111,70 @@ func _process(_delta: float) -> void:
 		var entry: Dictionary = _active_effect_entries[effect_id]
 		var countdown := entry["countdown"] as Label
 		countdown.text = str(maxi(0, ceili(_status_effects.get_remaining(effect_id))))
+
+
+func _bind_voyage_progress() -> void:
+	voyage_panel.hide()
+	# Keep the original boss placement in tutorial and isolated boss test scenes.
+	boss_health_display.offset_top = 22.0
+	boss_health_display.offset_bottom = 124.0
+	var ancestor: Node = get_parent()
+	while ancestor != null and not (ancestor is LevelManager):
+		ancestor = ancestor.get_parent()
+	_progress_stage = ancestor as LevelManager
+	if _progress_stage == null or _progress_stage.level_generator == null:
+		return
+	var data: LevelData = _progress_stage.level_generator.level_data
+	if data == null:
+		return
+	_progress_stage_index = run_stage_ids.find(data.get_level_id())
+	if _progress_stage_index < 0:
+		return
+	boss_health_display.offset_top = 158.0
+	boss_health_display.offset_bottom = 260.0
+	voyage_title.text = "STAGE %d" % (_progress_stage_index + 1)
+	if not data.stage_title.is_empty():
+		voyage_title.text += "  /  " + data.stage_title.to_upper()
+	run_progress_label.text = "RUN  %d / %d" % [_progress_stage_index + 1, run_stage_ids.size()]
+	for path: String in ["GameUI/PauseMenu", "GameUI/ShopMenu", "GameUI/DeathScreen"]:
+		var menu: Control = _progress_stage.get_node_or_null(path) as Control
+		if menu != null:
+			_progress_menus.append(menu)
+			menu.visibility_changed.connect(_sync_voyage_visibility)
+	_sync_voyage_visibility()
+	_update_voyage_progress(0.0)
+
+
+func _sync_voyage_visibility() -> void:
+	var show_progress: bool = _progress_stage_index >= 0
+	for menu: Control in _progress_menus:
+		if is_instance_valid(menu) and menu.is_visible_in_tree():
+			show_progress = false
+	voyage_panel.visible = show_progress
+
+
+func _update_voyage_progress(delta: float) -> void:
+	if _progress_stage_index < 0 or not is_instance_valid(_progress_stage):
+		return
+	var progress: float = _progress_stage.get_stage_progress()
+	_displayed_stage_progress = move_toward(_displayed_stage_progress, progress, delta * 0.8)
+	voyage_bar.value = _displayed_stage_progress
+	# The ship's centre follows the fill endpoint, with room at both ends for its hull.
+	var centre_x: float = voyage_bar.position.x + voyage_bar.size.x * _displayed_stage_progress
+	voyage_ship.position.x = centre_x - voyage_ship.size.x * 0.5
+	var whole_run: float = (float(_progress_stage_index) + _displayed_stage_progress) / run_stage_ids.size()
+	run_progress_bar.value = whole_run
+	run_progress_percent.text = "%d%%" % floori(whole_run * 100.0 + 0.0001)
+	var phase: StringName = _progress_stage.get_stage_progress_phase()
+	match phase:
+		&"cleared":
+			voyage_status.text = "STAGE CLEAR"
+		&"finale":
+			voyage_status.text = "FINAL BOSS"
+		&"held":
+			voyage_status.text = "ENCOUNTER"
+		_:
+			voyage_status.text = "%d%% LEFT" % ceili((1.0 - progress) * 100.0)
 
 
 func _on_coin_changed(amount: int) -> void:
@@ -124,7 +207,12 @@ func _on_boss_health_changed(current: int, maximum: int) -> void:
 	boss_health_display.show()
 
 
+func _on_boss_name_changed(boss_name: String) -> void:
+	boss_name_label.text = boss_name
+
+
 func _on_boss_defeated(_world_position: Vector2) -> void:
+	boss_name_label.text = ""
 	boss_health_display.hide()
 
 

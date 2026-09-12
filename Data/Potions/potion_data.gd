@@ -11,7 +11,10 @@ extends Resource
 @export var instant_actions: Array[EffectAction] = []
 @export var timed_effects: Array[StatusEffectData] = []
 
-#SFX
+@export_group("VFX")
+@export var cue: FeedbackCue
+
+@export_group("SFX")
 @export var drink_sfx: AudioStream
 @export var drink_volume_db := -6.0
 @export_range(0.0, 0.5, 0.01) var drink_pitch_spread := 0.04
@@ -52,5 +55,6 @@ func use_on(player: Player) -> bool:
 		potion_effect.icon = icon
 		var effect_applied := player.apply_status_effect(potion_effect)
 		applied_any = effect_applied or applied_any
-	Audio.play_sfx(drink_sfx, 0.0)
+	if applied_any: #guard
+		Audio.play_sfx(drink_sfx, 0.0)
 	return applied_any

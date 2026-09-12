@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="FeedbackCue" format=3 uid="uid://6cv6kn3pktnq"]
+
+[ext_resource type="Script" uid="uid://dfb4hesgfm5ll" path="res://Actors/Feedback/feedback_cue.gd" id="1_0dg7d"]
+[ext_resource type="Texture2D" uid="uid://jih4aoq7p2gu" path="res://Assets/Pickups/FireBall/FB004.png" id="2_0dg7d"]
+
+[resource]
+script = ExtResource("1_0dg7d")
+texture = ExtResource("2_0dg7d")
+colour = Color(0.96862745, 0.4627451, 0.13333334, 1)
+amount = 7
+lifetime = 1.3
+spread_radius = 46.0
+flash_colour = Color(0.99607843, 0.68235296, 0.20392157, 1)
+flash_time = 0.6
+punch_enabled = true
+punch_scale = 1.25
+punch_time = 0.2
+metadata/_custom_type_script = "uid://dfb4hesgfm5ll"

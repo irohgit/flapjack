@@ -38,7 +38,7 @@ func _show_failure() -> void:
 	shake_tween.tween_property(self, "position", start_pos, 0.05)
 
 func _refresh() -> void:
-	var level := MetaProgress.get_level(node_data.id)
+	var level: int = MetaProgress.get_level(node_data.id)
 	_progress_bar.max_value = node_data.max_level
 	_progress_bar.value = level
 	_level_label.text = "%d / %d" % [level, node_data.max_level]
@@ -52,8 +52,8 @@ func _refresh() -> void:
 		
 	modulate = Color.WHITE
 	
-	var cost := MetaProgress.get_next_cost(node_data)
-	var is_maxed := cost < 0
+	var cost: int = MetaProgress.get_next_cost(node_data)
+	var is_maxed: bool = cost < 0
 
 	if is_maxed:
 		_cost_label.text = "MAX"

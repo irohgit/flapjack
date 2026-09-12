@@ -11,26 +11,26 @@ const DOCK_SCENE := "res://Levels/dock.tscn"
 
 @onready var _gin_label: Label = $Gin/Amount
 @onready var _trust_label: Label = $Trust/Amount
-@onready var _boat_sprite: TextureRect = $BoatPreview
+@onready var _boat_sprite: TextureRect = $LeftPanel/BoatDeck/BoatPreview
 @onready var _boat_deck: TextureRect = $LeftPanel/BoatDeck
 @onready var _boat_tier_label: Label = %BoatTier
 @onready var _refit_progress: Label = %RefitProgress
 @onready var _return_button: NavButton = $ReturnButton
 @onready var _tier_columns: Array[Control] = [%TierIColumn, %TierIIColumn, %TierIIIColumn]
 @onready var _component_rows: Array[Control] = [
-	$ComponentStatus/Rigging,
-	$ComponentStatus/Armament,
-	$ComponentStatus/Hull,
+	$LeftPanel/BoatDeck/ComponentStatus/Rigging,
+	$LeftPanel/BoatDeck/ComponentStatus/Armament,
+	$LeftPanel/BoatDeck/ComponentStatus/Hull,
 ]
 @onready var _component_icons: Array[TextureRect] = [
-	$ComponentStatus/Rigging/Icon,
-	$ComponentStatus/Armament/Icon,
-	$ComponentStatus/Hull/Icon,
+	$LeftPanel/BoatDeck/ComponentStatus/Rigging/Icon,
+	$LeftPanel/BoatDeck/ComponentStatus/Armament/Icon,
+	$LeftPanel/BoatDeck/ComponentStatus/Hull/Icon,
 ]
 @onready var _component_progress_labels: Array[Label] = [
-	$ComponentStatus/Rigging/Progress,
-	$ComponentStatus/Armament/Progress,
-	$ComponentStatus/Hull/Progress,
+	$LeftPanel/BoatDeck/ComponentStatus/Rigging/Progress,
+	$LeftPanel/BoatDeck/ComponentStatus/Armament/Progress,
+	$LeftPanel/BoatDeck/ComponentStatus/Hull/Progress,
 ]
 
 @export var skiff_texture: Texture2D
@@ -82,10 +82,12 @@ func _update_boat_preview() -> void:
 		MetaProgress.BoatTier.SKIFF:
 			_boat_sprite.texture = skiff_texture
 			_boat_tier_label.text = "TIER I  -  SKIFF"
+			_boat_tier_label.add_theme_font_size_override("font_size", 23)
 			active_nodes = tier1_nodes
 		MetaProgress.BoatTier.SCHOONER:
 			_boat_sprite.texture = schooner_texture
 			_boat_tier_label.text = "TIER II  -  SCHOONER"
+			_boat_tier_label.add_theme_font_size_override("font_size", 23)
 			active_nodes = tier2_nodes
 		MetaProgress.BoatTier.GALLEON:
 			active_nodes.assign([
@@ -96,9 +98,11 @@ func _update_boat_preview() -> void:
 			if _is_masterwork_complete():
 				_boat_sprite.texture = masterwork_texture
 				_boat_tier_label.text = "TIER III  -  MASTERWORK GALLEON"
+				_boat_tier_label.add_theme_font_size_override("font_size", 18)
 			else:
 				_boat_sprite.texture = galleon_texture
 				_boat_tier_label.text = "TIER III  -  GALLEON"
+				_boat_tier_label.add_theme_font_size_override("font_size", 23)
 
 	_update_component_status()
 	_update_refit_progress(active_nodes)
@@ -130,7 +134,7 @@ func _update_component_status() -> void:
 	var tier_index := int(MetaProgress.boat_tier)
 	for index in _component_rows.size():
 		var node: UpgradeNodeData = component_sets[index][tier_index]
-		var level := MetaProgress.get_level(node.id)
+		var level: int = MetaProgress.get_level(node.id)
 		_component_icons[index].texture = node.icon
 		_component_progress_labels[index].text = "%d / %d" % [level, node.max_level]
 		if level >= node.max_level:

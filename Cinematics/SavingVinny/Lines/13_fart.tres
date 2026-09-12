@@ -4,4 +4,7 @@
 
 [resource]
 script = ExtResource("1_o2c34")
-hold_time = 1.0
+speaker = "Vinny's Butt"
+text = "...poot"
+layout = 2
+stage_animation = &"scene06"

@@ -1,12 +1,12 @@
 class_name PickupData
 extends Resource
 
-# Keep existing values stable because Godot serializes enum selections as
-# integers in .tres and .tscn files. New pickup types belong at the end.
-enum PickupType {AUGMENT, WEAPON, COIN, HEALTH, SHIELD, GIN, POTION}
+# Values are saved in resources; 3 and 4 were retired with HEALTH and SHIELD.
+# Keep these IDs stable when adding types.
+enum PickupType { AUGMENT = 0, WEAPON = 1, COIN = 2, GIN = 5, POTION = 6 }
 
 @export_group("Identity")
-## Stable ID used by enemy loot JSON, for example "flapjack:gold_coin".
+## Item ID used in loot tables.
 @export var item_id: StringName
 
 @export_group("Pickup")
@@ -29,16 +29,15 @@ enum PickupType {AUGMENT, WEAPON, COIN, HEALTH, SHIELD, GIN, POTION}
 @export_range(0, 100000, 1, "or_greater") var shop_price := 0
 @export_enum("COMMON", "UNCOMMON", "RARE", "EPIC") var shop_rarity: String = "COMMON"
 
-#SFX
-# --- Audio ---
-# Per-variant so a gold coin can sound different from a bronze one. 
+# Audio
 @export var pickup_sfx: AudioStream
 @export var pickup_volume_db := -6.0
 @export_range(0.0, 0.5, 0.01) var pickup_pitch_spread := 0.04
 @export_range(0.3, 2.0, 0.01) var pickup_pitch := 1.0
 
-#VFX
+# Visuals
 @export var highlight_material: ShaderMaterial
+
 
 func can_pickup(player: Player) -> bool:
 	if player == null:
@@ -49,7 +48,7 @@ func can_pickup(player: Player) -> bool:
 			return player.can_add_augment(augment)
 		PickupType.WEAPON:
 			return player.can_add_weapon(weapon)
-		PickupType.HEALTH, PickupType.SHIELD, PickupType.POTION:
+		PickupType.POTION:
 			return player.can_add_potion(potion)
 		PickupType.COIN, PickupType.GIN:
 			return true
@@ -72,13 +71,13 @@ func apply_to(player: Player) -> bool:
 		PickupType.GIN:
 			player._add_gin(gin_amount)
 			return true
-		PickupType.HEALTH, PickupType.SHIELD, PickupType.POTION:
+		PickupType.POTION:
 			return player.add_potion(potion)
 	return false
 
 
 func is_potion() -> bool:
-	return pickup_type in [PickupType.HEALTH, PickupType.SHIELD, PickupType.POTION]
+	return pickup_type == PickupType.POTION
 
 
 func get_texture() -> Texture2D:
@@ -100,7 +99,7 @@ func get_notification_text() -> String:
 			return "Coins +%d" % coin_amount
 		PickupType.GIN:
 			return "Gin +%d" % gin_amount
-		PickupType.HEALTH, PickupType.SHIELD, PickupType.POTION:
+		PickupType.POTION:
 			if potion != null and not potion.display_name.is_empty():
 				return potion.display_name
 			return "Potion"
@@ -121,7 +120,7 @@ func is_sellable() -> bool:
 			return weapon != null
 		PickupType.AUGMENT:
 			return augment != null and augment.augmentEffect != null
-		PickupType.HEALTH, PickupType.SHIELD, PickupType.POTION:
+		PickupType.POTION:
 			return potion != null
 
 	return false
@@ -135,7 +134,7 @@ func get_shop_name() -> String:
 		PickupType.AUGMENT:
 			if augment != null and not augment.name.is_empty():
 				return augment.name
-		PickupType.HEALTH, PickupType.SHIELD, PickupType.POTION:
+		PickupType.POTION:
 			if potion != null and not potion.display_name.is_empty():
 				return potion.display_name
 	return get_notification_text()
@@ -152,7 +151,7 @@ func get_shop_icon() -> Texture2D:
 		PickupType.AUGMENT:
 			if augment != null and augment.texture != null:
 				return augment.texture
-		PickupType.HEALTH, PickupType.SHIELD, PickupType.POTION:
+		PickupType.POTION:
 			if potion != null and potion.icon != null:
 				return potion.icon
 	return null
@@ -164,7 +163,7 @@ func get_shop_type() -> String:
 			return "Weapon"
 		PickupType.AUGMENT:
 			return "Augment"
-		PickupType.HEALTH, PickupType.SHIELD, PickupType.POTION:
+		PickupType.POTION:
 			return "Potion"
 		PickupType.COIN:
 			return "Coin"

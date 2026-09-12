@@ -4,11 +4,12 @@ extends AugmentEffect
 @export var stun_duration := 1.0
 @export var projectile_texture: Texture2D = preload("res://Assets/Projectiles/PlasmaProjectile.png")
 
-func apply_to_projectile(_projectile: Projectile) -> void:
-	_projectile.plasma = true
-	_projectile.texture_override = projectile_texture
+
+func apply_to_projectile(projectile: Projectile) -> void:
+	projectile.plasma = true
+	projectile.texture_override = projectile_texture
 	for effect in get_status_effects():
-		_projectile.add_status_effect(effect)
+		projectile.add_status_effect(effect)
 
 
 func get_status_effects() -> Array[StatusEffectData]:

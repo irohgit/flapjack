@@ -28,7 +28,8 @@ func _ready() -> void:
 	_rng.randomize()
 	_pickups_by_id = LootRegistry.build()
 	GameEvents.enemy_died.connect(_on_enemy_died)
-
+	print("[LOOT] registry size = ", _pickups_by_id.size())
+	print("[LOOT] active level id = '", active_level.get_level_id(), "'")
 
 func _on_enemy_died(position: Vector2, enemy_data: Resource) -> void:
 	if active_level == null or pickup_scene == null:
@@ -190,6 +191,7 @@ func _run_weighted_pool(
 	for wrapped_row: Dictionary in wrapped_rows:
 		var row := wrapped_row["row"] as Dictionary
 		var row_index := wrapped_row["index"] as int
+		# The rolls is how many times it picks from a pool of drops, not how many times it drops a specific drop.
 		if row.has("rolls"):
 			var rolls := _read_positive_int(row, "rolls", 1, MAX_ROLLS, loot_file, row_index)
 			if rolls < 1:
@@ -230,6 +232,7 @@ func _run_weighted_pool(
 			)
 			return
 
+	# None is our empty candidate, meaning it's how we can drop nothing in a weighted pool, and give that nothing a weight. We also roll with replacement, meaning an item from a pool can be picked on more than one roll
 	for unused_roll: int in pool_rolls:
 		var roll := _rng.randf() * total_weight
 		var selected_spawn := candidates.back()["spawn"] as Dictionary
