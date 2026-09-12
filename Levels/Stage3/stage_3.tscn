@@ -373,7 +373,7 @@ active_level = ExtResource("19_warin")
 script = ExtResource("10_oel0m")
 level_data = ExtResource("19_warin")
 
-[node name="ParallaxDirector" type="Node2D" parent="." unique_id=273969699 node_paths=PackedStringArray("far_parent", "near_parent", "overlay_parent", "scroll_director")]
+[node name="ParallaxDirector" type="Node2D" parent="." unique_id=273969699 node_paths=PackedStringArray("far_parent", "near_parent", "overlay_parent", "scroll_director", "banks")]
 position = Vector2(0, -3)
 script = ExtResource("11_b5fnj")
 far_objects = Array[ExtResource("12_eiq86")]([SubResource("Resource_54op2"), SubResource("Resource_jrq28"), SubResource("Resource_7wjkh"), SubResource("Resource_fffbn")])
@@ -392,6 +392,7 @@ max_per_band = 6
 spawn_lead = 100.0
 scroll_director = NodePath("../ScrollDirector")
 level_data = ExtResource("19_warin")
+banks = NodePath("../BankPainter")
 
 [node name="GinSpawner" type="Node2D" parent="." unique_id=2047613358 node_paths=PackedStringArray("spawn_parent")]
 position = Vector2(655, 540)
@@ -429,6 +430,7 @@ same_direction_chance = 0.4
 turn_sharpness = 0.75
 wiggle_amplitude_px = 80.0
 wiggle_wavelength_px = 650.0
+beam_half_width_px = 285.0
 first_full_moon_time = 20.0
 closing_time = 13.0
 dark_time = 6.0

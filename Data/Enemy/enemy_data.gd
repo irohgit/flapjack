@@ -30,5 +30,13 @@ extends EnemyDropSourceData
 @export_range(-40.0, 6.0) var fire_sfx_volume_db := 0.0
 
 
+@export_group("Moonlight")
+## Ticked: This enemy phases out in moonlight and can only be harmed in the dark. Untick for ordinary ships that behave the same everywhere.
+@export var goes_ethereal := false
+## Worn while phased. Leaving this null means the player cannot see why their shots are passing through, which reads as a bug rather than a rule.
+@export var ghost_material: ShaderMaterial
+@export var ghost_texture: Texture2D
+@export var ghost_sprite_frames: SpriteFrames
+
 func get_movement_speed() -> float:
 	return move_speed

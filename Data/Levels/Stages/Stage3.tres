@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://cytvv5o32ru6e" path="res://Data/Levels/encounter_data.gd" id="1_cpi3s"]
 [ext_resource type="Script" uid="uid://brpre4byem6tx" path="res://Data/Levels/weighted_enemy_data.gd" id="2_af0b6"]
-[ext_resource type="Resource" uid="uid://bsk4oh4u6bnhe" path="res://Data/Enemy/BulwarkEnemy.tres" id="3_mii17"]
-[ext_resource type="Resource" uid="uid://cnxtqo5woe8ja" path="res://Data/Enemy/HunterEnemy.tres" id="4_wddnc"]
+[ext_resource type="Resource" uid="uid://d1y5q1bsmrb6u" path="res://Data/Enemy/GhostBulwarkEnemy.tres" id="3_y8qs1"]
+[ext_resource type="Resource" uid="uid://dcv11k8jd8ccc" path="res://Data/Enemy/GhostHunterEnemy.tres" id="4_3ihbp"]
 [ext_resource type="Script" uid="uid://dgn1ppeend4i1" path="res://Data/Levels/weighted_formation_data.gd" id="5_f8naw"]
 [ext_resource type="Script" uid="uid://bgt6cqxd8jifw" path="res://Data/Levels/weighted_encounter_data.gd" id="6_yhyoi"]
 [ext_resource type="Script" uid="uid://bhsc86o70es47" path="res://Data/Levels/weighted_end_event_data.gd" id="8_3ko58"]
@@ -20,12 +20,17 @@
 
 [sub_resource type="Resource" id="WeightedEnemy_bulwark"]
 script = ExtResource("2_af0b6")
-enemy = ExtResource("3_mii17")
+enemy = ExtResource("3_y8qs1")
 metadata/_custom_type_script = "uid://brpre4byem6tx"
 
-[sub_resource type="Resource" id="WeightedEnemy_hunter"]
+[sub_resource type="Resource" id="Resource_eiq86"]
 script = ExtResource("2_af0b6")
-enemy = ExtResource("4_wddnc")
+enemy = ExtResource("3_y8qs1")
+metadata/_custom_type_script = "uid://brpre4byem6tx"
+
+[sub_resource type="Resource" id="Resource_7bt0i"]
+script = ExtResource("2_af0b6")
+enemy = ExtResource("4_3ihbp")
 metadata/_custom_type_script = "uid://brpre4byem6tx"
 
 [sub_resource type="Resource" id="WeightedFormation_line"]
@@ -44,21 +49,37 @@ metadata/_custom_type_script = "uid://dgn1ppeend4i1"
 
 [sub_resource type="Resource" id="Encounter_01_normal"]
 script = ExtResource("1_cpi3s")
-distance_after_previous = 1050.0
-enemy_pool = Array[ExtResource("2_af0b6")]([SubResource("WeightedEnemy_bulwark"), SubResource("WeightedEnemy_hunter")])
+distance_after_previous = 650.0
+enemy_pool = Array[ExtResource("2_af0b6")]([SubResource("WeightedEnemy_bulwark"), SubResource("Resource_eiq86"), SubResource("Resource_7bt0i")])
 formation_pool = Array[ExtResource("5_f8naw")]([SubResource("WeightedFormation_line"), SubResource("WeightedFormation_v"), SubResource("WeightedFormation_circle")])
 
-[sub_resource type="Resource" id="Encounter_11_normal"]
+[sub_resource type="Resource" id="Resource_cpi3s"]
 script = ExtResource("1_cpi3s")
-distance_after_previous = 1050.0
-enemy_pool = Array[ExtResource("2_af0b6")]([SubResource("WeightedEnemy_bulwark"), SubResource("WeightedEnemy_hunter")])
+distance_after_previous = 650.0
+enemy_pool = Array[ExtResource("2_af0b6")]([SubResource("WeightedEnemy_bulwark"), SubResource("Resource_eiq86"), SubResource("Resource_7bt0i")])
 formation_pool = Array[ExtResource("5_f8naw")]([SubResource("WeightedFormation_line"), SubResource("WeightedFormation_v"), SubResource("WeightedFormation_circle")])
+metadata/_custom_type_script = "uid://cytvv5o32ru6e"
 
-[sub_resource type="Resource" id="Encounter_12_normal"]
+[sub_resource type="Resource" id="Resource_af0b6"]
 script = ExtResource("1_cpi3s")
-distance_after_previous = 1050.0
-enemy_pool = Array[ExtResource("2_af0b6")]([SubResource("WeightedEnemy_bulwark"), SubResource("WeightedEnemy_hunter")])
+distance_after_previous = 650.0
+enemy_pool = Array[ExtResource("2_af0b6")]([SubResource("WeightedEnemy_bulwark"), SubResource("Resource_eiq86"), SubResource("Resource_7bt0i")])
 formation_pool = Array[ExtResource("5_f8naw")]([SubResource("WeightedFormation_line"), SubResource("WeightedFormation_v"), SubResource("WeightedFormation_circle")])
+metadata/_custom_type_script = "uid://cytvv5o32ru6e"
+
+[sub_resource type="Resource" id="Resource_mii17"]
+script = ExtResource("1_cpi3s")
+distance_after_previous = 650.0
+enemy_pool = Array[ExtResource("2_af0b6")]([SubResource("WeightedEnemy_bulwark"), SubResource("Resource_eiq86"), SubResource("Resource_7bt0i")])
+formation_pool = Array[ExtResource("5_f8naw")]([SubResource("WeightedFormation_line"), SubResource("WeightedFormation_v"), SubResource("WeightedFormation_circle")])
+metadata/_custom_type_script = "uid://cytvv5o32ru6e"
+
+[sub_resource type="Resource" id="Resource_wddnc"]
+script = ExtResource("1_cpi3s")
+distance_after_previous = 650.0
+enemy_pool = Array[ExtResource("2_af0b6")]([SubResource("WeightedEnemy_bulwark"), SubResource("Resource_eiq86"), SubResource("Resource_7bt0i")])
+formation_pool = Array[ExtResource("5_f8naw")]([SubResource("WeightedFormation_line"), SubResource("WeightedFormation_v"), SubResource("WeightedFormation_circle")])
+metadata/_custom_type_script = "uid://cytvv5o32ru6e"
 
 [sub_resource type="Resource" id="Finale_boss"]
 script = ExtResource("8_3ko58")
@@ -71,7 +92,7 @@ script = ExtResource("10_jyine")
 level_id = &"stage_3"
 level_name = "Stage3"
 shop_items = Array[ExtResource("11_omuis")]([ExtResource("12_t8jwx"), ExtResource("13_e4wjl"), ExtResource("14_bygr1"), ExtResource("15_23xsl"), ExtResource("16_ycjx4"), ExtResource("17_e4r4v"), ExtResource("18_bw2bx")])
-encounter_sequence = Array[ExtResource("1_cpi3s")]([SubResource("Encounter_01_normal"), SubResource("Encounter_11_normal"), SubResource("Encounter_12_normal")])
+encounter_sequence = Array[ExtResource("1_cpi3s")]([SubResource("Encounter_01_normal"), SubResource("Resource_cpi3s"), SubResource("Resource_af0b6"), SubResource("Resource_mii17"), SubResource("Resource_wddnc")])
 finale_trigger_position = Vector2(0, -10000)
 finale_spawn_position = Vector2(960, -9940)
 finale_pool = Array[ExtResource("8_3ko58")]([SubResource("Finale_boss")])

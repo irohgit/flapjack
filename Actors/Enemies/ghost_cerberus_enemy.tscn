@@ -9,7 +9,7 @@
 radius = 31.0
 height = 130.0
 
-[node name="CerberusEnemy" type="Area2D" unique_id=1035340143 groups=["enemy", "hazard"]]
+[node name="GhostCerberusEnemy" type="Area2D" unique_id=1035340143 groups=["enemy", "hazard"]]
 collision_layer = 2
 collision_mask = 4
 script = ExtResource("1_kepho")
@@ -39,3 +39,5 @@ position = Vector2(25, 50)
 
 [node name="HeadLeft" type="Marker2D" parent="." unique_id=1156200728]
 position = Vector2(-26, 50)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1367754497]
