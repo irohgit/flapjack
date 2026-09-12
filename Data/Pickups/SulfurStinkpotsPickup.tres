@@ -12,6 +12,6 @@ weapon = ExtResource("2_content")
 notification_name = "Sulfur Stinkpots"
 shop_id = &"sulfur_stinkpots"
 shop_description = "Throws pots that release a poisonous cloud, damaging enemies over time."
-shop_price = 225
+shop_price = 28
 texture = ExtResource("3_icon")
 shop_icon = ExtResource("3_icon")

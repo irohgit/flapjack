@@ -181,5 +181,41 @@
 			"stage_2",
 			"stage_3"
 		]
+	},
+	{
+		"item": "flapjack:fireball_augment",
+		"quantity": 1,
+		"weight": 5.0,
+		"level": [
+			"stage_2",
+			"stage_3"
+		]
+	},
+	{
+		"item": "flapjack:magnet_augment",
+		"quantity": 1,
+		"weight": 5.0,
+		"level": [
+			"stage_2",
+			"stage_3"
+		]
+	},
+	{
+		"item": "flapjack:piercing_cannon",
+		"quantity": 1,
+		"weight": 5.0,
+		"level": [
+			"stage_2",
+			"stage_3"
+		]
+	},
+	{
+		"item": "flapjack:plasma_augment",
+		"quantity": 1,
+		"weight": 5.0,
+		"level": [
+			"stage_2",
+			"stage_3"
+		]
 	}
 ]
