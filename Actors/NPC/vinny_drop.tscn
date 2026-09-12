@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bktpdwvxtsh2g"]
 
 [ext_resource type="Script" uid="uid://dnoae11v6gbnn" path="res://Actors/NPC/vinny_drop.gd" id="1_62k4b"]
+[ext_resource type="PackedScene" uid="uid://c24sperbpvj6h" path="res://Actors/VFX/watersplash.tscn" id="2_8cb5o"]
 [ext_resource type="AudioStream" uid="uid://d1t77v38kul38" path="res://Audio/SFX/pop_pickup_cute.mp3" id="2_73ihm"]
 [ext_resource type="Texture2D" uid="uid://jytdtauush42" path="res://Assets/Characters/vinny_float_spritesheet_512x64.png" id="2_epjhp"]
 [ext_resource type="AudioStream" uid="uid://fl1kgbns3te0" path="res://Audio/SFX/water_splash.mp3" id="2_gq728"]
@@ -135,11 +136,13 @@ radius = 150.0
 
 [node name="VinnyDrop" type="Node2D" unique_id=1209766955]
 script = ExtResource("1_62k4b")
+arc_time = 1.8
+splash_scene = ExtResource("2_8cb5o")
 bob_distance = 50.0
 bob_time = 10.0
 launch_sfx = ExtResource("2_ujbp6")
 splash_sfx = ExtResource("2_gq728")
-settle_time = 1.1
+settle_time = 1.5
 ready_sfx = ExtResource("2_73ihm")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1545448359]

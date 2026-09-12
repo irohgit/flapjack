@@ -15,7 +15,7 @@
 [sub_resource type="Resource" id="Resource_r00uc"]
 script = ExtResource("2_lyw8r")
 speaker = "Vinny Tanqueray"
-text = "Vinny Tanqueray at your service. I am grateful for the assistance. A Tanqueray never forgets his debts. Except for Uncle Johnny Tanqueray. Don’t ever let him borrow money from you."
+text = "Vinny Tanqueray at your service.  I am grateful for the assistance. A Tanqueray never forgets his debts. Except for Uncle Johnny Tanqueray. Don’t ever let him borrow money from you."
 portrait = ExtResource("3_t5hk1")
 side = 1
 metadata/_custom_type_script = "uid://1rcqoqlqlw40"
@@ -29,6 +29,7 @@ metadata/_custom_type_script = "uid://1rcqoqlqlw40"
 
 [sub_resource type="Resource" id="Resource_4s0x6"]
 script = ExtResource("2_lyw8r")
+speaker = "Vinny"
 text = "hold on I think it’s in here... AH yes here we go and here you go.  It’ll help protect your ship from those pesky pirate cannons. "
 portrait = ExtResource("5_w6fx2")
 side = 1
@@ -37,14 +38,14 @@ metadata/_custom_type_script = "uid://1rcqoqlqlw40"
 [sub_resource type="Resource" id="Resource_5q10e"]
 script = ExtResource("2_lyw8r")
 speaker = "Jack"
-text = "Much obliged, Vinny. Welcome aboard."
+text = "Much obliged, Vinny. Welcome aboard. And what do you do?"
 portrait = ExtResource("6_euksj")
 metadata/_custom_type_script = "uid://1rcqoqlqlw40"
 
 [sub_resource type="Resource" id="Resource_fxiy3"]
 script = ExtResource("2_lyw8r")
 speaker = "Vinny"
-text = "Splendid! Now, pray tell, what adventure are we off to, shipmate?"
+text = "Splendid! I am an Alchemist extraordinaire. Now, pray tell, what adventure are we off to, shipmate?"
 portrait = ExtResource("3_t5hk1")
 side = 1
 metadata/_custom_type_script = "uid://1rcqoqlqlw40"
