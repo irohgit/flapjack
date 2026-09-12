@@ -45,28 +45,5 @@
 		"item": "none",
 		"weight": 55.4545452,
 		"level": "stage_1"
-	},
-	{
-		"item": "flapjack:gold_coin",
-		"quantity": 1.0,
-		"weight": 3.0,
-		"level": "stage_2"
-	},
-	{
-		"item": "flapjack:silver_coin",
-		"quantity": 1.0,
-		"weight": 9.0,
-		"level": "stage_2"
-	},
-	{
-		"item": "flapjack:bronze_coin",
-		"quantity": 1.0,
-		"weight": 18.0,
-		"level": "stage_2"
-	},
-	{
-		"item": "none",
-		"weight": 80.0,
-		"level": "stage_2"
 	}
 ]
