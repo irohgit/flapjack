@@ -32,7 +32,7 @@ const FLAPJACK_IDLE := preload("res://Assets/Cinematics/flapjack_idle_512x640.pn
 @export_group("Scripted cannonball")  ### --- SCRIPTED CANNONBALL EXPORT GROUP -----------------------------------------------------
 @export var cannonball_texture: Texture2D
 @export var explosion_scene: PackedScene ## An AnimatedSprite2D scene that plays once and frees itself.
-@export var cannonball_speed := 750.0
+@export var cannonball_speed := 375.0
 @export var cannonball_spin := 6.0
 @export var cannonball_hit_radius := 28.0 ## How far from the player counts as a hit.
 @export var cannon_fire_sfx : AudioStreamMP3
