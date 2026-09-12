@@ -115,9 +115,6 @@ func _process(delta: float) -> void:
 
 func _bind_voyage_progress() -> void:
 	voyage_panel.hide()
-	# Keep the original boss placement in tutorial and isolated boss test scenes.
-	boss_health_display.offset_top = 22.0
-	boss_health_display.offset_bottom = 124.0
 	var ancestor: Node = get_parent()
 	while ancestor != null and not (ancestor is LevelManager):
 		ancestor = ancestor.get_parent()
@@ -130,8 +127,6 @@ func _bind_voyage_progress() -> void:
 	_progress_stage_index = run_stage_ids.find(data.get_level_id())
 	if _progress_stage_index < 0:
 		return
-	boss_health_display.offset_top = 158.0
-	boss_health_display.offset_bottom = 260.0
 	voyage_title.text = "STAGE %d" % (_progress_stage_index + 1)
 	if not data.stage_title.is_empty():
 		voyage_title.text += "  /  " + data.stage_title.to_upper()

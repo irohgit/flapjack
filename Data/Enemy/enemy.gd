@@ -33,16 +33,8 @@ func _ready() -> void:
 		_health.damaged.connect(_on_damaged)
 		_health.died.connect(_on_died)
 
-	# Some spawners configure enemies immediately after adding them to the tree.
-	# This must run before the boss bar connection below, because set_max_health
-	# emits health_changed, which would otherwise reveal the bar at spawn.
 	if data != null:
 		_apply_data()
-
-	# Boss bar reporting only. The reveal itself comes from announce_boss(),
-	# called when the ship is actually on screen.
-	if _health != null and data != null and data.is_boss:
-		_health.health_changed.connect(_on_boss_health_changed)
 
 	_reset_initial_timer()
 
@@ -84,6 +76,11 @@ func configure(new_data: EnemyData) -> void:
 func announce_boss() -> void:
 	if data == null or not data.is_boss or _health == null:
 		return
+	if _health.current_health <= 0 or is_queued_for_deletion():
+		return
+	# Health changes must not reveal the bar before the boss's arrival cue.
+	if not _health.health_changed.is_connected(_on_boss_health_changed):
+		_health.health_changed.connect(_on_boss_health_changed)
 	GameEvents.boss_name_changed.emit(data.enemy_name)
 	_on_boss_health_changed(_health.current_health, _health.max_health)
 
