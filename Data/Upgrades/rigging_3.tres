@@ -10,6 +10,6 @@ display_name = "Rigging III"
 display_description = "+ Ship Speed"
 tier = 3
 icon = ExtResource("1_ku8v4")
-level_costs = Array[int]([50, 75, 100])
+level_costs = Array[int]([20, 20, 20])
 bonus_per_level = 20.0
 metadata/_custom_type_script = "uid://syfvycgndo0d"

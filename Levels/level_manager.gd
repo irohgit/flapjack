@@ -302,10 +302,17 @@ func run_midboss_encounter(encounter: GeneratedEncounter) -> void:
 	if _world == null:
 		push_error("Stage has no World node, cannot place a mid-boss")
 		return
+	
+		# An encounter with no story id always plays its cutscenes. One with an id
+	# plays them only until that beat has been seen.
+	var first_time := (
+		encounter.story_id == &""
+		or not MetaProgress.has_seen_story(encounter.story_id)
+	)
 
 	scroll_director.hold()
 
-	if encounter.midboss_intro != null:
+	if first_time and encounter.midboss_intro != null:
 		CutsceneManager.play(encounter.midboss_intro)
 		await CutsceneManager.cutscene_finished
 	if _plan_cancelled:
@@ -336,7 +343,7 @@ func run_midboss_encounter(encounter: GeneratedEncounter) -> void:
 		return
 
 	# The reward owns its own beat and frees itself once collected.
-	if encounter.midboss_reward_scene != null:
+	if first_time and encounter.midboss_reward_scene != null:
 		var reward := encounter.midboss_reward_scene.instantiate() as Node2D
 		if reward != null:
 			_world.add_child(reward)
@@ -346,7 +353,7 @@ func run_midboss_encounter(encounter: GeneratedEncounter) -> void:
 	if _plan_cancelled:
 		return
 
-	if encounter.midboss_outro != null:
+	if first_time and encounter.midboss_outro != null:
 		CutsceneManager.play(encounter.midboss_outro)
 		await CutsceneManager.cutscene_finished
 	if _plan_cancelled:
@@ -362,7 +369,7 @@ func run_midboss_encounter(encounter: GeneratedEncounter) -> void:
 				await flourish.finished
 				flourish.queue_free()
 			encounter.midboss_reward_potion.use_on(player)
-
+	MetaProgress.mark_story_seen(encounter.story_id)
 	scroll_director.resume()
 func play_entry() -> void:
 	if not entry_enabled:

@@ -85,6 +85,7 @@ midboss_intro = ExtResource("29_2rc1s")
 midboss_outro = ExtResource("6_upv3c")
 midboss_reward_scene = ExtResource("12_hjtma")
 midboss_reward_potion = ExtResource("11_asv6p")
+story_id = &"vinny_rescue"
 metadata/_custom_type_script = "uid://cytvv5o32ru6e"
 
 [sub_resource type="Resource" id="Special_birds"]

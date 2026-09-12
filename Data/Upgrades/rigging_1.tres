@@ -9,5 +9,6 @@ id = &"3"
 display_name = "Rigging I"
 display_description = "+ Ship Speed"
 icon = ExtResource("1_82x5g")
+level_costs = Array[int]([5, 5, 5])
 bonus_per_level = 20.0
 metadata/_custom_type_script = "uid://syfvycgndo0d"

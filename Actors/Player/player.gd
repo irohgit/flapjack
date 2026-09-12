@@ -43,17 +43,12 @@ var score_count: int:
 		MetaProgress.save()
 @export_range(1, 5, 1) var potion_slot_count := 3
 
-
-
-#@export var boatTextures: Array[Texture2D]
-
 @onready var _health: HealthComponent = $HealthComponent
 @onready var _sprite: Sprite2D = $Sprite2D
 @onready var _pickup_range: Area2D = $PickupRange
 @onready var _pickup_range_shape: CollisionShape2D = $PickupRange/CollisionShape2D
 @onready var _hitbox_shape: CollisionShape2D = $CollisionShape2D
 @onready var _status_effects: StatusEffectComponent = $StatusEffectComponent
-
 
 signal coin_changed(amount: int)
 signal gin_changed(amount: int)
@@ -122,6 +117,14 @@ var _normal_weapon_data: Array[WeaponData] = []
 
 #Developer Tools
 func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo:
+		print("[DEV] key=", event.keycode,
+			" debug=", OS.is_debug_build(),
+			" paused=", get_tree().paused,
+			" devmode=", _developermode)
+
+	if not OS.is_debug_build():
+		return
 	if not OS.is_debug_build():
 		return
 
@@ -156,30 +159,47 @@ func _unhandled_input(event: InputEvent) -> void:
 					_weapon_states[index].data = _normal_weapon_data[index]
 			_normal_weapon_data.clear()
 		DebugHud.flash("GOD MODE %s" % ("ON" if _god_mode else "OFF"))
+	#4. Reset the story so the tutorial and one-time beats replay
+	if _developermode and event.is_action_pressed("reset_story"):
+		MetaProgress.tutorial_seen = false
+		MetaProgress.encountered_ginny = false
+		MetaProgress.seen_story.clear()
+		MetaProgress.save()
+		DebugHud.flash("STORY FLAGS RESET")
+	#5. Full wipe, as if the game had never been played
+	if _developermode and event.is_action_pressed("reset_all"):
+		MetaProgress.reset_all()
+		DebugHud.flash("FULL RESET")
 		
 func _ready() -> void:
+	#1. Initialise player state: meta upgrades and inventory size
 	_apply_meta_upgrades()
 	_potion_slots.resize(potion_slot_count)
+	
+	#2. Connect to signals, before anything that could emit one
 	area_entered.connect(_on_area_entered)
+	MetaProgress.boat_tier_changed.connect(_on_boat_tier_changed) #subscribe to our boat tier changing 
 	_pickup_range.area_entered.connect(_on_pickup_range_entered)
 	_pickup_range.area_exited.connect(_on_pickup_range_exited)
 	_health.health_changed.connect(_on_health_changed)
-	_apply_tier()
-	_update_hull(_health.current_health, _health.max_health)
 	_health.damaged.connect(_on_damaged)
-	#_health.health_changed.connect(func(c, m): DebugHud.watch("health", "%d/%d" % [c, m]))
 	_health.died.connect(_on_died)
 	if not _status_effects.effect_started.is_connected(_on_effect_started):
 		_status_effects.effect_started.connect(_on_effect_started)
+		
+	#3. Refresh tier visuals: hull texture, wake fit, masts
+	_refresh_tier_visuals()
+	
+	#4. Restore a run in progress, or arm a fresh one
 	var restored_from_checkpoint := GlobalPlayer.restore_checkpoint(self)
 	if not restored_from_checkpoint:
 		for weapon in starting_weapons:
 			add_weapon(weapon)
 		_emit_run_state_changed()
-
+	
+	#5. Announce starting values so the HUD is correct on the first frame
 	gin_changed.emit(gin_count)
-	_fit_wake_to_hull()
-
+	
 func _on_effect_started(effect_id: StringName) -> void:
 	var data := _status_effects.get_effect_data(effect_id)
 	if data != null:
@@ -615,10 +635,8 @@ func heal(amount: int) -> void:
 func get_health_component() -> HealthComponent:
 	return _health
 
-
 func apply_status_effect(effect: StatusEffectData) -> bool:
 	return _status_effects.apply_effect(effect)
-
 
 func get_status_effect_component() -> StatusEffectComponent:
 	return _status_effects
@@ -677,27 +695,9 @@ func _apply_tier() -> void:
 		return
 	#1. Apply Tier
 	var tier := ship_tiers[clampi(ship_tier - 1, 0, ship_tiers.size() - 1)]
-	#2. Apply Tier Texture
-	#$Sprite2D.texture = tier.boat_texture   # art decides hull size, no scaling
-	#3. Call function to fit animated wake to hull texture
+
 	_fit_wake_to_hull()
 	
-	
-	
-	#SET SCALING
-	#_sprite.scale = Vector2.ONE * tier.display_scale
-	
-	#IROH COMMENTED THIS OUT -- 30/8/2026 : Uncomment and fix this if necessary note...
-	#SET HIT BOX CAPSULE RADIUS FOR TIER	
-	#var hit := CapsuleShape2D.new()
-	#hit.radius = tier.hitbox_radius
-	#_hitbox_shape.shape = hit
-	
-	#SET PICKUP CRICLE RADIUS FOR TIER	
-	#var pick := CircleShape2D.new()
-	#pick.radius = tier.pickup_radius
-	#_pickup_range_shape.shape = pick
-#ship vfx 
 func _fit_wake_to_hull() -> void:
 	if ship_tiers.is_empty():
 		return
@@ -727,9 +727,7 @@ func _update_wake() -> void:
 		_wake.show()
 	if _wake.animation != anim or not _wake.is_playing():
 		_wake.play(anim)
-	## else it stays "wake_forward" for up, down, and idle
-	#if $Wake.animation != anim:
-		#$Wake.play(anim)
+
 func _update_masts() -> void:
 	if ship_tiers.is_empty():
 		return
@@ -743,3 +741,17 @@ func _update_masts() -> void:
 		var mast := child as Mast
 		mast.set_moving(is_moving)
 		mast.rotation_degrees = lean
+		
+func _on_boat_tier_changed(_new_tier: int) -> void:
+	match MetaProgress.boat_tier:
+		MetaProgress.BoatTier.SKIFF:    ship_tier = 1
+		MetaProgress.BoatTier.SCHOONER: ship_tier = 2
+		MetaProgress.BoatTier.GALLEON:  ship_tier = 3
+	_refresh_tier_visuals()
+
+## Re-reads the current tier onto the boat: hull texture, wake fit, masts.
+## Safe to call any number of times, it only assigns values.
+func _refresh_tier_visuals() -> void:
+	_apply_tier()
+	_update_hull(_health.current_health, _health.max_health)
+	_fit_wake_to_hull()

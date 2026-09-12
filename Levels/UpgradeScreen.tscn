@@ -14,7 +14,7 @@
 [ext_resource type="Script" uid="uid://syfvycgndo0d" path="res://Data/Upgrades/upgrade_node_data.gd" id="12_data"]
 [ext_resource type="Texture2D" uid="uid://vdcjhgb07r4x" path="res://Assets/UI/WoodMenu/wood_settings_panel.png" id="13_panel"]
 [ext_resource type="Texture2D" uid="uid://cjjelj1l1pyip" path="res://Assets/UI/WoodMenu/wood_button.png" id="14_button"]
-[ext_resource type="Texture2D" uid="uid://kxxrj3v5jv4l" path="res://Assets/UI/WoodMenu/octopus_crest.png" id="15_octopus"]
+[ext_resource type="Texture2D" uid="uid://b45l65es1qjaq" path="res://Assets/Cinematics/flapjack_idle_512x640.png" id="15_o8ke0"]
 [ext_resource type="Texture2D" uid="uid://b6vlcs7mjr1q4" path="res://Assets/Characters/Ginny_Idle_spritesheet_96x96.png" id="16_ginny"]
 [ext_resource type="Texture2D" uid="uid://dypxhdmtkar1y" path="res://Assets/Pickups/cocktail_2.png" id="17_gin"]
 [ext_resource type="Texture2D" uid="uid://vaqefn8atoul" path="res://Assets/Boat/skiff_1_40x80.png" id="18_skiff"]
@@ -102,7 +102,7 @@ offset_top = 22.0
 offset_right = 299.0
 offset_bottom = 146.0
 mouse_filter = 2
-texture = ExtResource("15_octopus")
+texture = ExtResource("15_o8ke0")
 expand_mode = 1
 stretch_mode = 5
 

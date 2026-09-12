@@ -10,5 +10,6 @@ display_name = "Hull I"
 display_description = "+ Max Health"
 stat_type = 2
 icon = ExtResource("1_q5jym")
+level_costs = Array[int]([5, 5, 5])
 bonus_per_level = 1.0
 metadata/_custom_type_script = "uid://syfvycgndo0d"

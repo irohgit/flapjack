@@ -11,10 +11,10 @@ enum BoatTier { SKIFF, SCHOONER, GALLEON }
 const SAVE_PATH := "user://progress.cfg"
 const SAVED_FIELDS := [
 	"gin", "coin_count", "score_count", "trust", "boat_tier",
-	"upgrade_levels", "tutorial_seen", "encountered_ginny",
+	"upgrade_levels", "tutorial_seen", "encountered_ginny", "seen_story",
 ]
 
-var gin := 0
+var gin := 315 #Don't change this value. 315 is the total cost for gin for "demo/publishing build"
 var coin_count := 0
 var score_count := 0
 var trust := 0   # lifetime total spend, never decreases
@@ -23,6 +23,7 @@ var upgrade_levels: Dictionary = {}   # node_id -> current level
 var pending_retry_scene_path := ""
 var tutorial_seen := false
 var encountered_ginny := false
+var seen_story: Dictionary = {}
 
 const HULL_NODES: Array[UpgradeNodeData] = [
 	preload("res://Data/Upgrades/hull_1.tres"),
@@ -115,12 +116,43 @@ func check_tier_transition(tier1_nodes: Array[UpgradeNodeData], tier2_nodes: Arr
 	if boat_tier == BoatTier.SKIFF and _all_maxed(tier1_nodes):
 		boat_tier = BoatTier.SCHOONER
 		boat_tier_changed.emit(boat_tier)
+		save()
 	elif boat_tier == BoatTier.SCHOONER and _all_maxed(tier2_nodes):
 		boat_tier = BoatTier.GALLEON
 		boat_tier_changed.emit(boat_tier)
-
+		save()
 func _all_maxed(nodes: Array[UpgradeNodeData]) -> bool:
 	for node in nodes:
 		if get_level(node.id) < node.max_level:
 			return false
 	return true
+
+func reset_all() -> void:
+	gin = 315
+	coin_count = 0
+	score_count = 0
+	trust = 0
+	boat_tier = BoatTier.SKIFF
+	upgrade_levels = {}
+	tutorial_seen = false
+	encountered_ginny = false
+	seen_story = {}
+	pending_retry_scene_path = ""
+	save()
+
+	gin_changed.emit(gin)
+	trust_changed.emit(trust)
+	boat_tier_changed.emit(boat_tier)
+
+func has_seen_story(id: StringName) -> bool:
+	return seen_story.get(String(id), false)
+
+
+func mark_story_seen(id: StringName) -> void:
+	if id == &"":
+		return
+	var key := String(id)
+	if seen_story.has(key):
+		return
+	seen_story[key] = true
+	save()

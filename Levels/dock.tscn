@@ -29,6 +29,7 @@
 [ext_resource type="Script" uid="uid://chptb5oh375uo" path="res://Levels/launchgate.gd" id="27_rftcx"]
 [ext_resource type="Script" uid="uid://c5ywokn5mfnvt" path="res://Systems/prompt_style.gd" id="28_ili6q"]
 [ext_resource type="Texture2D" uid="uid://bih4j810dbm77" path="res://Assets/UI/Health/heart.png" id="29_wi8h3"]
+[ext_resource type="PackedScene" uid="uid://cpy76lvb1x4cb" path="res://UI/GameUI.tscn" id="30_csqlc"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pxqul"]
 radius = 11.751648
@@ -570,3 +571,5 @@ shape = SubResource("RectangleShape2D_5yy73")
 position = Vector2(1034, 977)
 texture = ExtResource("29_wi8h3")
 process_material = SubResource("ParticleProcessMaterial_5st54")
+
+[node name="GameUI" parent="." unique_id=1532914546 instance=ExtResource("30_csqlc")]
