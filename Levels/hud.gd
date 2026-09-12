@@ -2,6 +2,7 @@ extends CanvasLayer
 
 @onready var coin_label: Label = $Coin/Amount
 @onready var gin_label: Label = $Gin/Amount
+@onready var score_label: Label = $Score/Amount
 @onready var health_shield_icons: HBoxContainer = $"health and shield icon/HealthRow"
 @onready var active_effects_container: HBoxContainer = $ActiveEffects
 @onready var potion_slots_container: HBoxContainer = $PotionSlots
@@ -62,6 +63,7 @@ func _ready() -> void:
 
 	_player.coin_changed.connect(_on_coin_changed)
 	_player.gin_changed.connect(_on_gin_changed)
+	_player.score_changed.connect(_on_score_changed)
 	MetaProgress.gin_changed.connect(_on_gin_changed)
 
 	call_deferred("_init_display_values")
@@ -115,9 +117,6 @@ func _process(delta: float) -> void:
 
 func _bind_voyage_progress() -> void:
 	voyage_panel.hide()
-	# Keep the original boss placement in tutorial and isolated boss test scenes.
-	boss_health_display.offset_top = 22.0
-	boss_health_display.offset_bottom = 124.0
 	var ancestor: Node = get_parent()
 	while ancestor != null and not (ancestor is LevelManager):
 		ancestor = ancestor.get_parent()
@@ -130,8 +129,6 @@ func _bind_voyage_progress() -> void:
 	_progress_stage_index = run_stage_ids.find(data.get_level_id())
 	if _progress_stage_index < 0:
 		return
-	boss_health_display.offset_top = 158.0
-	boss_health_display.offset_bottom = 260.0
 	voyage_title.text = "STAGE %d" % (_progress_stage_index + 1)
 	if not data.stage_title.is_empty():
 		voyage_title.text += "  /  " + data.stage_title.to_upper()
@@ -182,6 +179,9 @@ func _on_coin_changed(amount: int) -> void:
 
 func _on_gin_changed(_amount: int) -> void:
 	_refresh_gin_display()
+
+func _on_score_changed(amount: int) -> void:
+	score_label.text = str(amount)
 
 func _refresh_gin_display() -> void:
 	gin_label.text = str(MetaProgress.gin + _player.gin_count)

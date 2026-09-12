@@ -25,6 +25,7 @@ var _player_augments: Array[AugmentData] = []
 
 @export var coin_count:= 0
 @export var gin_count:= 0
+@export var score_count:= 0
 @export_range(1, 5, 1) var potion_slot_count := 3
 
 
@@ -41,6 +42,7 @@ var _player_augments: Array[AugmentData] = []
 
 signal coin_changed(amount: int)
 signal gin_changed(amount: int)
+signal score_changed(amount: int)
 signal augment_added(augment: AugmentData)
 signal pickup_collected(pickup: PickupData)
 signal potion_inventory_changed
@@ -306,6 +308,10 @@ func _add_coins(amount: int):
 func _add_gin(amount: int):
 	gin_count += amount
 	gin_changed.emit(gin_count)
+	
+func _add_score(amount: int):
+	score_count += amount
+	score_changed.emit(score_count)
 
 
 func can_add_weapon(weapon: WeaponData) -> bool:
