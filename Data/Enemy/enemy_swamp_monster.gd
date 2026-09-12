@@ -19,8 +19,6 @@ func _ready() -> void:
 	super()
 	assert(snake_scene != null, "Swamp monster needs a snake_scene to summon")
 
-	_health.health_changed.connect(_on_health_changed)
-
 	if _animated_sprite != null and _animated_sprite.sprite_frames != null:
 		_animated_sprite.play(&"Idle")
 
@@ -30,11 +28,11 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	super(delta)
 
+	if _is_dying or is_queued_for_deletion():
+		return
+
 	if not _hud_shown:
 		_reveal_hud_if_visible()
-
-	if _is_dying:
-		return
 
 	_summon_timer -= delta
 	if _summon_timer <= 0.0:
@@ -47,8 +45,7 @@ func _reveal_hud_if_visible() -> void:
 		return
 
 	_hud_shown = true
-	GameEvents.boss_name_changed.emit("SWAMP MONSTER")
-	_on_health_changed(_health.current_health, _health.max_health)
+	announce_boss()
 
 
 func _reset_summon_timer() -> void:
@@ -100,12 +97,6 @@ func _fire() -> Projectile:
 		shot._apply_visuals()
 
 	return shot
-
-
-func _on_health_changed(current: int, maximum: int) -> void:
-	if not _hud_shown or maximum <= 0:
-		return
-	GameEvents.boss_health_changed.emit(current, maximum)
 
 
 func _on_died() -> void:

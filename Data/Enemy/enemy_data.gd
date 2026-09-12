@@ -4,6 +4,8 @@ extends EnemyDropSourceData
 @export var scene: PackedScene
 @export var enemy_name := ""
 @export var is_boss := false
+## Points awarded to the player when this enemy dies.
+@export_range(0, 10000, 1, "or_greater") var score_value := 5
 @export var health := 3
 @export var contact_damage := 1 # Damage dealt to the player on contact.
 @export var projectile_damage := 1

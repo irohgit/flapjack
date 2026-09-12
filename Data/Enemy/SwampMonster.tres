@@ -10,6 +10,9 @@
 
 [resource]
 script = ExtResource("1_swamp")
+enemy_name = "SWAMP MONSTER"
+is_boss = true
+score_value = 200
 health = 60
 projectile_fire_rate = 3
 projectile_scene = ExtResource("4_proj")

@@ -326,17 +326,7 @@ func run_midboss_encounter(encounter: GeneratedEncounter) -> void:
 		rect.position.y - midboss_entry_lead
 	)
 
-	# The bar is part of the reveal, so it waits until the ship is actually
-	# inside the view rather than announcing from above the top edge.
-	var view := Playarea.get_visible_world_rect()
-	while is_instance_valid(boss) and not _plan_cancelled and not view.has_point(boss.global_position):
-		await get_tree().process_frame
-		view = Playarea.get_visible_world_rect()
-	if _plan_cancelled:
-		return
-	if boss is Enemy:
-		(boss as Enemy).announce_boss()
-
+	# The boss announces its own arrival; entering the viewport is too early.
 	# The fight. Track its position so the reward can launch from the wreck.
 	var death_position := boss.global_position
 	while is_instance_valid(boss) and not _plan_cancelled:

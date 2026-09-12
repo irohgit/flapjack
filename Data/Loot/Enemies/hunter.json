@@ -67,8 +67,8 @@
 	},
 	{
 		"item": "flapjack:gold_coin",
-		"quantity": 2,
-		"weight": 6,
+		"quantity": 2.0,
+		"weight": 6.0,
 		"level": [
 			"stage_2",
 			"stage_3"
@@ -76,8 +76,8 @@
 	},
 	{
 		"item": "flapjack:silver_coin",
-		"quantity": 2,
-		"weight": 18,
+		"quantity": 2.0,
+		"weight": 18.0,
 		"level": [
 			"stage_2",
 			"stage_3"
@@ -85,8 +85,8 @@
 	},
 	{
 		"item": "flapjack:bronze_coin",
-		"quantity": 2,
-		"weight": 36,
+		"quantity": 2.0,
+		"weight": 36.0,
 		"level": [
 			"stage_2",
 			"stage_3"
@@ -94,8 +94,8 @@
 	},
 	{
 		"item": "flapjack:homing_cannon",
-		"quantity": 1,
-		"weight": 5,
+		"quantity": 1.0,
+		"weight": 5.0,
 		"level": [
 			"stage_2",
 			"stage_3"
@@ -103,8 +103,8 @@
 	},
 	{
 		"item": "flapjack:orbital_ricochet",
-		"quantity": 1,
-		"weight": 5,
+		"quantity": 1.0,
+		"weight": 5.0,
 		"level": [
 			"stage_2",
 			"stage_3"
@@ -112,8 +112,8 @@
 	},
 	{
 		"item": "flapjack:bouncy_harpoon",
-		"quantity": 1,
-		"weight": 5,
+		"quantity": 1.0,
+		"weight": 5.0,
 		"level": [
 			"stage_2",
 			"stage_3"
@@ -121,8 +121,8 @@
 	},
 	{
 		"item": "flapjack:explosive_harpoon",
-		"quantity": 1,
-		"weight": 5,
+		"quantity": 1.0,
+		"weight": 5.0,
 		"level": [
 			"stage_2",
 			"stage_3"
@@ -130,8 +130,8 @@
 	},
 	{
 		"item": "flapjack:skewer_harpoon",
-		"quantity": 1,
-		"weight": 5,
+		"quantity": 1.0,
+		"weight": 5.0,
 		"level": [
 			"stage_2",
 			"stage_3"
@@ -139,8 +139,8 @@
 	},
 	{
 		"item": "flapjack:rum_molotov",
-		"quantity": 1,
-		"weight": 5,
+		"quantity": 1.0,
+		"weight": 5.0,
 		"level": [
 			"stage_2",
 			"stage_3"
@@ -148,8 +148,8 @@
 	},
 	{
 		"item": "flapjack:tequila_molotov",
-		"quantity": 1,
-		"weight": 5,
+		"quantity": 1.0,
+		"weight": 5.0,
 		"level": [
 			"stage_2",
 			"stage_3"
@@ -157,8 +157,8 @@
 	},
 	{
 		"item": "flapjack:liqueur_molotov",
-		"quantity": 1,
-		"weight": 5,
+		"quantity": 1.0,
+		"weight": 5.0,
 		"level": [
 			"stage_2",
 			"stage_3"
@@ -166,8 +166,8 @@
 	},
 	{
 		"item": "flapjack:clingfilm",
-		"quantity": 1,
-		"weight": 5,
+		"quantity": 1.0,
+		"weight": 5.0,
 		"level": [
 			"stage_2",
 			"stage_3"
@@ -175,8 +175,8 @@
 	},
 	{
 		"item": "flapjack:cracked_pots",
-		"quantity": 1,
-		"weight": 5,
+		"quantity": 1.0,
+		"weight": 5.0,
 		"level": [
 			"stage_2",
 			"stage_3"

@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://udt7wxnxtvsx" path="res://Assets/Pickups/Gin.png" id="11_1wnoe"]
 [ext_resource type="PackedScene" uid="uid://bs3yk1cg3vc6b" path="res://Actors/HUD/augment_entry.tscn" id="11_sn1ph"]
 [ext_resource type="Texture2D" uid="uid://y2oh1hgogp4e" path="res://Assets/UI/Potions/potion_slot.png" id="12_potion_slot"]
+[ext_resource type="Texture2D" uid="uid://cabc8jd5fxv1q" path="res://Assets/Pickups/2.png" id="12_uu2l2"]
 [ext_resource type="Texture2D" uid="uid://c2io1a0l25kwq" path="res://Assets/UI/Potions/potion_slot_selector.png" id="13_potion_selector"]
 [ext_resource type="Texture2D" uid="uid://cjjelj1l1pyip" path="res://Assets/UI/WoodMenu/wood_button.png" id="14_wood_counter"]
 [ext_resource type="Texture2D" uid="uid://wghkafmmef08" path="res://Assets/Cinematics/NarrativeIntro/Ships/player_ship.png" id="15_progress_ship"]
@@ -101,6 +102,7 @@ corner_radius_bottom_left = 3
 
 [node name="HUD" type="CanvasLayer" unique_id=228684140]
 script = ExtResource("1_otg58")
+run_stage_ids = Array[StringName]([&"stage_1", &"stage_2", &"stage_3"])
 full_heart_icon = ExtResource("4_sn1ph")
 half_heart_icon = ExtResource("5_half_heart")
 empty_heart_icon = ExtResource("5_empty_heart")
@@ -313,6 +315,72 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Amount" type="Label" parent="Gin" unique_id=493406975]
+layout_mode = 0
+offset_left = 73.0
+offset_top = 25.0
+offset_right = 218.0
+offset_bottom = 63.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.0196078, 0.00392157, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("8_uu2l2")
+theme_override_font_sizes/font_size = 30
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Score" type="Control" parent="." unique_id=1413957060]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -260.0
+offset_top = 185.0
+offset_right = -24.0
+offset_bottom = 257.0
+grow_horizontal = 0
+mouse_filter = 2
+
+[node name="Frame" type="TextureRect" parent="Score" unique_id=1608501580]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("14_wood_counter")
+expand_mode = 1
+
+[node name="ScoreIcon" type="TextureRect" parent="Score" unique_id=286105933]
+texture_filter = 1
+layout_mode = 0
+offset_left = 14.0
+offset_top = 7.0
+offset_right = 66.0
+offset_bottom = 65.0
+mouse_filter = 2
+texture = ExtResource("12_uu2l2")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Caption" type="Label" parent="Score" unique_id=606023563]
+layout_mode = 0
+offset_left = 73.0
+offset_top = 7.0
+offset_right = 218.0
+offset_bottom = 29.0
+theme_override_colors/font_color = Color(0.458824, 0.929412, 0.835294, 1)
+theme_override_colors/font_outline_color = Color(0.0196078, 0.00392157, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("8_uu2l2")
+theme_override_font_sizes/font_size = 16
+text = "SCORE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Amount" type="Label" parent="Score" unique_id=1136099171]
 layout_mode = 0
 offset_left = 73.0
 offset_top = 25.0

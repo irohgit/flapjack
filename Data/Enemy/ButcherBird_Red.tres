@@ -7,6 +7,7 @@
 
 [resource]
 script = ExtResource("1_dbaf8")
+score_value = 1
 sprite_frames = ExtResource("2_pnrgs")
 warning_texture = ExtResource("3_b6bvp")
 speed = 120.0
