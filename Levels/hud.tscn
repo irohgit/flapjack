@@ -13,53 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://y2oh1hgogp4e" path="res://Assets/UI/Potions/potion_slot.png" id="12_potion_slot"]
 [ext_resource type="Texture2D" uid="uid://c2io1a0l25kwq" path="res://Assets/UI/Potions/potion_slot_selector.png" id="13_potion_selector"]
 [ext_resource type="Texture2D" uid="uid://cjjelj1l1pyip" path="res://Assets/UI/WoodMenu/wood_button.png" id="14_wood_counter"]
-[ext_resource type="Texture2D" path="res://Assets/Cinematics/NarrativeIntro/Ships/player_ship.png" id="15_progress_ship"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_voyage_wood"]
-atlas = ExtResource("14_wood_counter")
-region = Rect2(38, 140, 1908, 507)
-
-[sub_resource type="Theme" id="Theme_voyage"]
-default_font = ExtResource("8_uu2l2")
-default_font_size = 24
-Label/colors/font_color = Color(1, 0.93, 0.76, 1)
-Label/colors/font_outline_color = Color(0.025, 0.013, 0.007, 1)
-Label/constants/outline_size = 4
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_voyage_track"]
-bg_color = Color(0.018, 0.055, 0.065, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.63, 0.41, 0.16, 1)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_left = 5
-corner_radius_bottom_right = 5
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_voyage_fill"]
-bg_color = Color(0.055, 0.60, 0.56, 1)
-border_width_top = 2
-border_color = Color(0.47, 0.94, 0.84, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_left = 4
-corner_radius_bottom_right = 4
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_run_track"]
-bg_color = Color(0.025, 0.04, 0.05, 1)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_left = 3
-corner_radius_bottom_right = 3
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_run_fill"]
-bg_color = Color(0.91, 0.65, 0.25, 1)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_left = 3
-corner_radius_bottom_right = 3
+[ext_resource type="Texture2D" uid="uid://wghkafmmef08" path="res://Assets/Cinematics/NarrativeIntro/Ships/player_ship.png" id="15_progress_ship"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_boss_panel"]
 bg_color = Color(0.105882354, 0.03529412, 0.011764706, 0.46666667)
@@ -99,6 +53,52 @@ corner_radius_bottom_left = 3
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_augments"]
 
+[sub_resource type="Theme" id="Theme_voyage"]
+default_font = ExtResource("8_uu2l2")
+default_font_size = 24
+Label/colors/font_color = Color(1, 0.93, 0.76, 1)
+Label/colors/font_outline_color = Color(0.025, 0.013, 0.007, 1)
+Label/constants/outline_size = 4
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_voyage_wood"]
+atlas = ExtResource("14_wood_counter")
+region = Rect2(38, 140, 1908, 507)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_voyage_track"]
+bg_color = Color(0.018, 0.055, 0.065, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.63, 0.41, 0.16, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_voyage_fill"]
+bg_color = Color(0.055, 0.6, 0.56, 1)
+border_width_top = 2
+border_color = Color(0.47, 0.94, 0.84, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_run_track"]
+bg_color = Color(0.025, 0.04, 0.05, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_run_fill"]
+bg_color = Color(0.91, 0.65, 0.25, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
 [node name="HUD" type="CanvasLayer" unique_id=228684140]
 script = ExtResource("1_otg58")
 full_heart_icon = ExtResource("4_sn1ph")
@@ -114,9 +114,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -420.0
-offset_top = 158.0
+offset_top = 35.0
 offset_right = 420.0
-offset_bottom = 260.0
+offset_bottom = 137.0
 grow_horizontal = 2
 mouse_filter = 2
 
@@ -384,20 +384,20 @@ vertical_alignment = 2
 [node name="AugmentList" type="VBoxContainer" parent="AugmentsPanel/MarginContainer/AugmentList" unique_id=2044023818]
 layout_mode = 2
 
-[node name="VoyageProgress" type="Control" parent="."]
+[node name="VoyageProgress" type="Control" parent="." unique_id=557135515]
 layout_mode = 3
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -340.0
-offset_top = 18.0
-offset_right = 340.0
-offset_bottom = 150.0
+offset_left = -940.0
+offset_top = 936.0
+offset_right = -260.0
+offset_bottom = 1068.0
 grow_horizontal = 2
 mouse_filter = 2
 theme = SubResource("Theme_voyage")
 
-[node name="Frame" type="TextureRect" parent="VoyageProgress"]
+[node name="Frame" type="TextureRect" parent="VoyageProgress" unique_id=2047270735]
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 15
@@ -409,39 +409,37 @@ mouse_filter = 2
 texture = SubResource("AtlasTexture_voyage_wood")
 expand_mode = 1
 
-[node name="StageTitle" type="Label" parent="VoyageProgress"]
+[node name="StageTitle" type="Label" parent="VoyageProgress" unique_id=1488297134]
 layout_mode = 0
 offset_left = 64.0
 offset_top = 10.0
 offset_right = 466.0
 offset_bottom = 36.0
-mouse_filter = 2
 theme_override_font_sizes/font_size = 26
 text = "STAGE 1  /  AZURE SEAS"
 vertical_alignment = 1
 text_overrun_behavior = 3
 
-[node name="Status" type="Label" parent="VoyageProgress"]
+[node name="Status" type="Label" parent="VoyageProgress" unique_id=567678661]
 layout_mode = 0
 offset_left = 478.0
 offset_top = 10.0
 offset_right = 616.0
 offset_bottom = 36.0
-mouse_filter = 2
 theme_override_colors/font_color = Color(0.47, 0.94, 0.84, 1)
 text = "100% LEFT"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Route" type="Control" parent="VoyageProgress"]
-layout_mode = 0
+[node name="Route" type="Control" parent="VoyageProgress" unique_id=280219569]
+anchors_preset = 0
 offset_left = 28.0
 offset_top = 35.0
 offset_right = 652.0
 offset_bottom = 90.0
 mouse_filter = 2
 
-[node name="Bar" type="ProgressBar" parent="VoyageProgress/Route"]
+[node name="Bar" type="ProgressBar" parent="VoyageProgress/Route" unique_id=1835961375]
 layout_mode = 0
 offset_left = 28.0
 offset_top = 39.0
@@ -454,16 +452,16 @@ max_value = 1.0
 step = 0.0
 show_percentage = false
 
-[node name="FinishPole" type="Line2D" parent="VoyageProgress/Route"]
+[node name="FinishPole" type="Line2D" parent="VoyageProgress/Route" unique_id=255993396]
 points = PackedVector2Array(611, 16, 611, 43)
 width = 2.0
 default_color = Color(1, 0.87, 0.55, 1)
 
-[node name="FinishFlag" type="Polygon2D" parent="VoyageProgress/Route"]
-polygon = PackedVector2Array(611, 16, 625, 16, 621, 22, 625, 28, 611, 28)
+[node name="FinishFlag" type="Polygon2D" parent="VoyageProgress/Route" unique_id=1190027844]
 color = Color(0.95, 0.69, 0.26, 1)
+polygon = PackedVector2Array(611, 16, 625, 16, 621, 22, 625, 28, 611, 28)
 
-[node name="Ship" type="TextureRect" parent="VoyageProgress/Route"]
+[node name="Ship" type="TextureRect" parent="VoyageProgress/Route" unique_id=500587289]
 modulate = Color(1.2, 1.2, 1.2, 1)
 texture_filter = 1
 layout_mode = 0
@@ -475,18 +473,17 @@ texture = ExtResource("15_progress_ship")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="RunLabel" type="Label" parent="VoyageProgress"]
+[node name="RunLabel" type="Label" parent="VoyageProgress" unique_id=1125934756]
 layout_mode = 0
 offset_left = 64.0
 offset_top = 92.0
 offset_right = 182.0
 offset_bottom = 118.0
-mouse_filter = 2
 theme_override_font_sizes/font_size = 22
 text = "RUN  1 / 2"
 vertical_alignment = 1
 
-[node name="RunBar" type="ProgressBar" parent="VoyageProgress"]
+[node name="RunBar" type="ProgressBar" parent="VoyageProgress" unique_id=1685713411]
 layout_mode = 0
 offset_left = 194.0
 offset_top = 101.0
@@ -499,13 +496,12 @@ max_value = 1.0
 step = 0.0
 show_percentage = false
 
-[node name="RunPercent" type="Label" parent="VoyageProgress"]
+[node name="RunPercent" type="Label" parent="VoyageProgress" unique_id=1849370028]
 layout_mode = 0
 offset_left = 556.0
 offset_top = 92.0
 offset_right = 616.0
 offset_bottom = 118.0
-mouse_filter = 2
 theme_override_colors/font_color = Color(1, 0.82, 0.43, 1)
 theme_override_font_sizes/font_size = 22
 text = "0%"

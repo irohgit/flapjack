@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bl12qi0n68b6i" path="res://Actors/Projectiles/projectile.tscn" id="4_proj"]
 [ext_resource type="Resource" path="res://Data/Projectiles/enemy_rock.tres" id="5_ammo"]
 [ext_resource type="AudioStream" uid="uid://41by6wg6cvxx" path="res://Audio/SFX/enemy_cannon_shot_1.mp3" id="6_fire"]
+[ext_resource type="JSON" path="res://Data/Loot/Enemies/voodoo_boss.json" id="7_loot"]
 
 [resource]
 script = ExtResource("1_swamp")
@@ -18,4 +19,5 @@ death_sfx = ExtResource("3_death")
 fire_sfx = ExtResource("6_fire")
 fire_pitch = 0.6
 fire_sfx_volume_db = -8.0
+loot = ExtResource("7_loot")
 metadata/_custom_type_script = "uid://bo6li876odoia"
