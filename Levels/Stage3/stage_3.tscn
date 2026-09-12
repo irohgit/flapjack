@@ -31,7 +31,7 @@
 [ext_resource type="Shader" uid="uid://k162cg01yfji" path="res://Assets/Shaders/Water/water_night.gdshader" id="27_s31a6"]
 [ext_resource type="Texture2D" uid="uid://dpoc7aybydr5h" path="res://Assets/Shaders/Water/water_night_noise.tres" id="28_hcagf"]
 [ext_resource type="Shader" uid="uid://c32p1o3fdnxbo" path="res://Assets/Shaders/night_overlay.gdshader" id="29_bi33i"]
-[ext_resource type="Script" uid="uid://bwxb4phlkugiv" path="res://Levels/Stage3/night_overlay.gd" id="30_4ejeo"]
+[ext_resource type="Script" uid="uid://jol8kr46yyua" path="res://Levels/Stage3/moonlight_director.gd" id="33_oel0m"]
 
 [sub_resource type="Resource" id="Resource_54op2"]
 script = ExtResource("12_eiq86")
@@ -104,8 +104,17 @@ shader_parameter/star_grid = 40.0
 shader_parameter/star_density = 0.25
 shader_parameter/star_size = 0.05
 shader_parameter/twinkle_speed = 1.5
-shader_parameter/scroll_offset = 0.0
 shader_parameter/vignette_strength = 0.3
+shader_parameter/view_top_left = Vector2(0, 0)
+shader_parameter/view_size = Vector2(1920, 1080)
+shader_parameter/beam_top_y = 0.0
+shader_parameter/beam_span = 1.0
+shader_parameter/playfield_width = 1920.0
+shader_parameter/beam_half_width = 220.0
+shader_parameter/beam_softness = 90.0
+shader_parameter/beam_clear = 0.92
+shader_parameter/beam_tint = Color(0.6, 0.72, 0.95, 1)
+shader_parameter/beam_tint_strength = 0.18
 
 [node name="Stage3" type="Node2D" unique_id=1306879539 node_paths=PackedStringArray("scroll_director", "enemy_controller", "level_generator", "screen_encounter_parent")]
 script = ExtResource("1_e3b2g")
@@ -246,7 +255,6 @@ camera = NodePath("../ShakeCamera")
 
 [node name="NightLayer" type="CanvasLayer" parent="." unique_id=135928928]
 layer = 5
-visible = false
 
 [node name="Darkness" type="ColorRect" parent="NightLayer" unique_id=1251666841]
 material = SubResource("ShaderMaterial_o3cjt")
@@ -256,4 +264,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-script = ExtResource("30_4ejeo")
+
+[node name="MoonlightDirector" type="Node2D" parent="." unique_id=167948254]
+script = ExtResource("33_oel0m")
+level_data = ExtResource("19_warin")
