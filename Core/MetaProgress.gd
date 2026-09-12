@@ -8,9 +8,15 @@ signal boat_tier_changed(new_tier: int)
 
 enum BoatTier { SKIFF, SCHOONER, GALLEON }
 
-## Generous debug balance for testing the shipwright upgrade flow.
-## Exported/release builds still begin with the intended empty balance.
-var gin := 0 if OS.is_debug_build() else 0
+const SAVE_PATH := "user://progress.cfg"
+const SAVED_FIELDS := [
+	"gin", "coin_count", "score_count", "trust", "boat_tier",
+	"upgrade_levels", "tutorial_seen", "encountered_ginny",
+]
+
+var gin := 0
+var coin_count := 0
+var score_count := 0
 var trust := 0   # lifetime total spend, never decreases
 var boat_tier: BoatTier = BoatTier.SKIFF
 var upgrade_levels: Dictionary = {}   # node_id -> current level
@@ -34,8 +40,29 @@ const ARMAMENT_NODES: Array[UpgradeNodeData] = [
 	preload("res://Data/Upgrades/armament_3.tres"),
 ]
 
+func _ready() -> void:
+	var config := ConfigFile.new()
+	var error := config.load(SAVE_PATH)
+	if error != OK:
+		if error != ERR_FILE_NOT_FOUND:
+			push_warning("Could not load progress: %s" % error_string(error))
+		return
+	for field: String in SAVED_FIELDS:
+		set(field, config.get_value("progress", field, get(field)))
+
+
+func save() -> void:
+	var config := ConfigFile.new()
+	for field: String in SAVED_FIELDS:
+		config.set_value("progress", field, get(field))
+	var error := config.save(SAVE_PATH)
+	if error != OK:
+		push_warning("Could not save progress: %s" % error_string(error))
+
+
 func add_gin(amount: int) -> void:
 	gin += amount
+	save()
 	gin_changed.emit(gin)
 
 func get_level(node_id: StringName) -> int:
@@ -65,6 +92,7 @@ func purchase(node: UpgradeNodeData) -> bool:
 	gin_changed.emit(gin)
 	trust_changed.emit(trust)
 	upgrade_purchased.emit(node.id, new_level)
+	save()
 	return true
 
 func get_total_bonus(stat_type: UpgradeNodeData.StatType, all_nodes: Array[UpgradeNodeData]) -> float:

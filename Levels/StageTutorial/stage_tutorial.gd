@@ -71,7 +71,7 @@ func _ready() -> void:
 	_player.set_can_drink_potion(false)
 	await _run_tutorial()
 	MetaProgress.tutorial_seen = true
-	#MetaProgress.save() TODO
+	MetaProgress.save()
 	_go_to_stage_1()
 
 #Tutorial Beats

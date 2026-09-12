@@ -76,5 +76,5 @@ func _play_blackbeard_firstrun(player: Player) -> void:
 	# Set after the beat, not before. A player who quits mid-cutscene gets it
 	# again next run rather than losing it forever.
 	MetaProgress.encountered_ginny = true
-	#MetaProgress.save()
+	MetaProgress.save()
 	Transition.change_scene(DOCK_SCENE)
