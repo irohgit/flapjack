@@ -93,7 +93,11 @@ func _ready() -> void:
 
 
 # --- Shape ---
-
+## The widest a bank can ever be, in world pixels. Spawners use it to stay in
+## open water without querying the coastline row by row.
+func get_max_bank_width() -> float:
+	return minf(float(max_width_px), float(bank_max_px))
+	
 func _build_profile(rows: int, stream: RandomNumberGenerator) -> PackedFloat32Array:
 	var profile := PackedFloat32Array()
 	profile.resize(rows)
@@ -200,7 +204,11 @@ func _make_sprite(tex: ImageTexture, pos: Vector2) -> void:
 
 func _row_for_local(local_y: float) -> int:
 	return clampi(int((local_y - _top_y) / float(pixel_size)), 0, maxi(_img_h - 1, 0))
-
+	
+## Width of the playable strip in world pixels. Spawners need it to work out
+## how far the sand extends beyond the coastline.
+func get_playfield_width() -> float:
+	return float(_play_w)
 
 func is_on_bank(world_pos: Vector2) -> bool:
 	if _left.is_empty():

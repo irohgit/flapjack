@@ -71,6 +71,7 @@ schooner_texture = ExtResource("19_schooner")
 galleon_texture = ExtResource("20_galleon")
 masterwork_texture = ExtResource("26_masterwork")
 first_focus = NodePath("ReturnButton")
+frees_on_close = true
 
 [node name="Backdrop" type="ColorRect" parent="." unique_id=2006283921]
 layout_mode = 1
@@ -523,7 +524,7 @@ offset_left = 80.0
 offset_top = 892.0
 offset_right = 440.0
 offset_bottom = 1005.0
-pivot_offset = Vector2(991.5, 396.5)
+pivot_offset = Vector2(180, 56.5)
 texture_normal = ExtResource("14_button")
 texture_pressed = ExtResource("14_button")
 texture_hover = ExtResource("14_button")

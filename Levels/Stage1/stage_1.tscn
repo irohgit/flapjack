@@ -99,7 +99,7 @@ active_level = ExtResource("18_6vwij")
 script = ExtResource("16_cvtwx")
 level_data = ExtResource("18_6vwij")
 
-[node name="ParallaxDirector" type="Node2D" parent="." unique_id=1266982156 node_paths=PackedStringArray("far_parent", "near_parent", "overlay_parent", "scroll_director")]
+[node name="ParallaxDirector" type="Node2D" parent="." unique_id=1266982156 node_paths=PackedStringArray("far_parent", "near_parent", "overlay_parent", "scroll_director", "banks")]
 position = Vector2(0, -3)
 script = ExtResource("22_0rlpp")
 far_objects = Array[ExtResource("25_jrq28")]([SubResource("Resource_54op2"), SubResource("Resource_jrq28"), SubResource("Resource_7wjkh"), SubResource("Resource_fffbn")])
@@ -118,6 +118,7 @@ max_per_band = 6
 spawn_lead = 100.0
 scroll_director = NodePath("../ScrollDirector")
 level_data = ExtResource("18_6vwij")
+banks = NodePath("../BankPainter")
 
 [node name="GinSpawner" type="Node2D" parent="." unique_id=1760309351 node_paths=PackedStringArray("spawn_parent", "camera")]
 position = Vector2(655, 540)
