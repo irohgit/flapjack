@@ -26,7 +26,6 @@ var _fire_timer := 0.0
 var _spawn_position := Vector2.ZERO
 var _has_spawn_position := false
 var _spawn_position_is_local := false
-var score_value := 5
 
 
 func _ready() -> void:
@@ -247,11 +246,9 @@ func _on_died() -> void:
 	Audio.play_sfx(sound, death_sfx_volume_db)
 	GameEvents.enemy_died.emit(global_position, data)
 	
-	# Search for the player and then, if it returns a result
-	# add the score value of the enemy to the players score
 	var player := get_tree().get_first_node_in_group("player") as Player
-	if player != null:
-		player._add_score(score_value)
+	if player != null and data != null:
+		player._add_score(data.score_value)
 
 	for cam in get_tree().get_nodes_in_group("shake_camera"):
 		if cam is ShakeCamera:

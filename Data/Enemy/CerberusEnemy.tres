@@ -14,6 +14,7 @@
 script = ExtResource("7_vo2pb")
 scene = ExtResource("7_fvdxm")
 enemy_name = "Cerberus"
+score_value = 15
 projectile_speed = 0.7
 texture = ExtResource("8_jelc7")
 projectile_scene = ExtResource("6_ktkqi")
