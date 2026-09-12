@@ -12,6 +12,6 @@ augment = ExtResource("2_content")
 notification_name = "Clingfilm"
 shop_id = &"clingfilm"
 shop_description = "Pots stick to the first enemy they hit, making it carry the gas cloud."
-shop_price = 95
+shop_price = 24
 texture = ExtResource("3_icon")
 shop_icon = ExtResource("3_icon")

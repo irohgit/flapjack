@@ -92,6 +92,7 @@ func _init_display_values() -> void:
 			_show_active_effect(effect_id)
 
 	_on_coin_changed(_player.coin_count)
+	_on_score_changed(_player.score_count)
 	_refresh_gin_display()
 
 	_on_health_changed(
@@ -184,7 +185,7 @@ func _on_score_changed(amount: int) -> void:
 	score_label.text = str(amount)
 
 func _refresh_gin_display() -> void:
-	gin_label.text = str(MetaProgress.gin + _player.gin_count)
+	gin_label.text = str(MetaProgress.gin)
 
 func _on_health_changed(current: int, maximum: int) -> void:
 	_current_health = current

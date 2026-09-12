@@ -13,6 +13,7 @@ script = ExtResource("1_rock")
 allegiance = 1
 texture = SubResource("AtlasTexture_eh7uy")
 scale = 6.0
+speed = 550.0
 trail_colour = Color(0.44, 0.38, 0.32, 0.32156864)
 trail_length = 20
 spin_speed = 8.0

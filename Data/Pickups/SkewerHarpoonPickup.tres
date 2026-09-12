@@ -13,4 +13,4 @@ notification_name = "Skewer Harpoon"
 shop_id = &"skewer_harpoon"
 shop_description = "Impale non-boss enemies, stopping their movement and attacks. Harpoons slow while carrying their catch and deal damage over time. Works with Bouncy Harpoon."
 shop_icon = ExtResource("3_icon")
-shop_price = 95
+shop_price = 24

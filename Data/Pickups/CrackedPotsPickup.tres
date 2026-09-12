@@ -12,6 +12,6 @@ augment = ExtResource("2_content")
 notification_name = "Cracked Pots"
 shop_id = &"cracked_pots"
 shop_description = "Pots leak a narrow poison trail during flight before releasing their gas cloud."
-shop_price = 95
+shop_price = 24
 texture = ExtResource("3_icon")
 shop_icon = ExtResource("3_icon")
