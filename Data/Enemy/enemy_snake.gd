@@ -1,20 +1,12 @@
 class_name EnemySnake
 extends Enemy
 
-## Melee chaser. Idles until the player enters its detection radius, then
-## beelines for them.
+## Melee chaser. Idles until the player enters its detection radius, then beelines for them.
 
 const ATTACK_STUN_TIME := 1
-## "Jump forward" on spotting the player: a brief burst of extra speed
-## toward them, not an actual jump - just move_toward() at a higher speed
-## for as long as the Attack animation plays, with the animation itself
-## selling the lunge.
 const LUNGE_SPEED_MULTIPLIER := 2
 
 @export var patrol_distance := 150.0
-## Optional. When set, the snake can never move onto a bank - patrol
-## reverses early at the shoreline instead of stepping onto it, and chase
-## simply stops advancing at the water's edge if the player is on the bank.
 @export var bank_painter: BankPainter
 
 @onready var _detection_area: Area2D = $DetectionRadius
@@ -36,9 +28,6 @@ func _ready() -> void:
 	_detection_area.area_entered.connect(_on_detection_area_entered)
 	_detection_area.area_exited.connect(_on_detection_area_exited)
 
-	# The base contact-damage mask only looks for enemy_bullet (layer 3).
-	# Add the player layer so this body's own area_entered fires on contact,
-	# which is what triggers the attack animation and stun below.
 	set_collision_mask_value(1, true)
 	area_entered.connect(_on_player_contact)
 
@@ -46,9 +35,6 @@ func _ready() -> void:
 
 
 ## Called right after being spawned somewhere other than its intended spot
-## (e.g. summoned at a boss's position). Slides there first - facing and
-## moving like it would mid-patrol - before patrol/idle pacing begins, with
-## that arrival point becoming the patrol center instead of the spawn point.
 func arrive_at(target_position: Vector2) -> void:
 	_is_arriving = true
 	_arrival_target = target_position
@@ -65,8 +51,6 @@ func _on_detection_area_entered(area: Area2D) -> void:
 func _start_lunge() -> void:
 	_lunging = true
 	_animated_sprite.play(&"Attack")
-	# Tied to the animation's own length rather than a fixed timer, so the
-	# lunge never cuts the Attack animation short or outlasts it.
 	await _animated_sprite.animation_finished
 	_on_lunge_ended()
 
@@ -99,10 +83,6 @@ func _on_player_contact(area: Area2D) -> void:
 
 func _on_attack_stun_ended() -> void:
 	_stunned = false
-	# _target already goes null the moment the player leaves DetectionRadius
-	# (see _on_detection_area_exited), so if it's still set here they never
-	# left during the stun - keep chasing instead of dropping to patrol just
-	# because the attack finished.
 	if _target == null or not is_instance_valid(_target):
 		_stop_chasing()
 	_animated_sprite.play(&"Idle")
@@ -120,9 +100,6 @@ func _move(delta: float, speed: float) -> void:
 			_face_direction(to_target.normalized())
 		var chase_speed := speed * LUNGE_SPEED_MULTIPLIER if _lunging else speed
 		var chase_next := global_position.move_toward(_target.global_position, chase_speed * delta)
-		# Blocked by the shoreline: hold position rather than following the
-		# player onto dry land. No reversal needed, chase isn't a back-and-
-		# forth like patrol - it just waits at the water's edge.
 		if not _is_on_bank(chase_next):
 			global_position = chase_next
 		return
@@ -161,9 +138,5 @@ func _is_on_bank(pos: Vector2) -> bool:
 	return bank_painter != null and bank_painter.is_on_bank(pos)
 
 
-# The art is drawn facing up (north) by default, same convention as
-# Projectile.gd, so aligning it to a direction needs the same +90 degree
-# correction: rotation 0 already points up, and Vector2.RIGHT.angle() is 0,
-# so facing right needs a quarter turn added.
 func _face_direction(direction: Vector2) -> void:
 	_animated_sprite.rotation = direction.angle() + PI / 2.0

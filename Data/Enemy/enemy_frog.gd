@@ -19,9 +19,6 @@ func _ready() -> void:
 	_attack_zone.area_entered.connect(_on_attack_zone_entered)
 	_attack_zone.area_exited.connect(_on_attack_zone_exited)
 
-	# The base contact-damage mask only looks for enemy_bullet (layer 3).
-	# Add the player layer so this body's own get_overlapping_areas() can
-	# tell whether the player is actually within the tongue's reach.
 	set_collision_mask_value(1, true)
 
 	_animated_sprite.play(&"Idle")
@@ -43,8 +40,6 @@ func _on_attack_zone_exited(area: Area2D) -> void:
 	if area != _target:
 		return
 	_target = null
-	# Attack loops on its own once started; without this it would keep
-	# looping forever even after the player has left.
 	_animated_sprite.play(&"Idle")
 
 func _has_target() -> bool:
@@ -65,9 +60,6 @@ func _attack() -> void:
 	_animated_sprite.play(&"Attack")
 	get_tree().create_timer(TONGUE_CONTACT_DELAY).timeout.connect(_on_tongue_extended)
 
-# AttackZone only decided when to start attacking. Whether the tongue
-# actually lands is a separate, tighter check: is the player inside this
-# body's own CollisionShape2D (sized to the tongue's full reach) right now.
 func _on_tongue_extended() -> void:
 	if not _has_target():
 		return
