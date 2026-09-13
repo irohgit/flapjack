@@ -20,13 +20,43 @@ The project has no separate package or dependency installation step.
 3. Allow Godot to finish importing the assets.
 4. Press **F6** to run the open scene or **F5** to start from the main menu.
 
+## Core Gameplay Loop
+
+Hi Gulsah and Fabio,
+Please open the project in Godot 4.7 and press **F5** to run. The game starts on the Splash Cinematic, plays the Opening Cinematic, and lands on the Main Menu. Both cinematics can be skipped with **X** on keyboard or **B** on a controller.
+
+### Intended playthrough
+1. Splash Cinematic → Opening Cinematic → Main Menu
+2. Stage Tutorial → Stage 1 → The Dock → Stage 2 → Stage 3 → Kraken Boss
+3. Ending Cutscene → Credits
+
+### The Dock
+At the end of your first run through Stage 1 you are defeated by Blackbeard in a scripted, unwinnable encounter, and washed up at the Dock. This is intentional and is the game's first story beat.
+At the Dock:
+- Sail to **Ginny** on the left pier and press **Space** to open the Shipworks. Please upgrade the ship to the maximum tier so the later stages play as intended.
+- Sail to **Vinny** on the right pier to buy potions.
+- Sail south through the harbour mouth to launch the next run.
+
+### Notes
+- Progress is saved to `user://progress.cfg`, so ship upgrades and story flags persist between sessions.
+- Full controls are listed in the Controls section below.
+- Gameplay is suited to a controller but keyboard works fine.
+
+
 ## Controls
 
-| Action     | Keyboard   | Controller    |
-| ---------- | ---------- | ------------- |
-| Move       | W, A, S, D | Left stick    |
-| Shoot      | Space      | Right trigger |
-| Pause/back | Escape     | —             |
+| Action | Keyboard | Controller |
+| --- | --- | --- |
+| Move | W, A, S, D | Left stick |
+| Shoot | Space | Right trigger |
+| Boost | Shift | LB |
+| Previous potion | Q | D-pad Left, LB |
+| Next potion | E | D-pad Right, RB |
+| Drink potion | R | A |
+| Interact | Space, Enter | A |
+| Skip cutscene | X | B |
+| Pause | Escape | Start |
+| Back / close menu | Escape | B |
 
 ## Project layout
 
