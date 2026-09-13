@@ -1,32 +1,10 @@
 [gd_scene format=3 uid="uid://bc2g5sxmhx1p2"]
 
-[ext_resource type="Shader" uid="uid://cpw4drxcyuq52" path="res://Assets/Shaders/foam.gdshader" id="1_b1rs4"]
 [ext_resource type="Script" uid="uid://bmpjei5mq0i3u" path="res://Actors/Environment/ParallaxObjects/variantprop.gd" id="1_qd6vc"]
 [ext_resource type="Texture2D" uid="uid://b3k48vxms43yg" path="res://Assets/Environment/dock_tileset_1.png" id="2_qd6vc"]
-[ext_resource type="Shader" uid="uid://b2g6d0upsk6cx" path="res://Assets/Shaders/pickup.gdshader" id="3_jq1tq"]
 [ext_resource type="Texture2D" uid="uid://dt37uu1kearuf" path="res://Assets/Environment/B8.png" id="3_qd6vc"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_08pg4"]
-shader = ExtResource("1_b1rs4")
-shader_parameter/foam_pixel_size = 2.0
-shader_parameter/foam_density = 0.12
-shader_parameter/foam_speed = 1.2
-shader_parameter/foam_color = Color(1, 1, 1, 1)
-shader_parameter/foam_wave_color = Color(0.75, 0.9, 1, 1)
-shader_parameter/foam_coverage = 1.0
-shader_parameter/respect_alpha = true
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_b1rs4"]
-shader = ExtResource("3_jq1tq")
-shader_parameter/outline_color = Color(0.28601658, 0.7896219, 0.9962743, 1)
-shader_parameter/outline_width = 6.0
-shader_parameter/outline_opacity = 0.350000016625
-shader_parameter/pulse_speed = 3.0
-shader_parameter/pulse_min = 0.35
-shader_parameter/pulse_max = 1.0
-
 [node name="NearWood" type="Node2D" unique_id=2042900424]
-material = SubResource("ShaderMaterial_08pg4")
 script = ExtResource("1_qd6vc")
 min_scale = 0.3
 max_scale = 0.7
@@ -42,28 +20,24 @@ metadata/_custom_type_script = "uid://d06qlr4jj1y3a"
 
 [node name="NearWood_1" type="Sprite2D" parent="." unique_id=1060330307]
 modulate = Color(0.76517767, 0.8268501, 1, 1)
-material = SubResource("ShaderMaterial_b1rs4")
 texture = ExtResource("2_qd6vc")
 region_enabled = true
 region_rect = Rect2(483, 3, 89, 91)
 
 [node name="NearWood_2" type="Sprite2D" parent="." unique_id=789169853]
 modulate = Color(0.76517767, 0.8268501, 1, 1)
-material = SubResource("ShaderMaterial_b1rs4")
 texture = ExtResource("3_qd6vc")
 region_enabled = true
 region_rect = Rect2(96, 624, 96, 48)
 
 [node name="NearWood_3" type="Sprite2D" parent="." unique_id=955217774]
 modulate = Color(0.76517767, 0.8268501, 1, 1)
-material = SubResource("ShaderMaterial_b1rs4")
 texture = ExtResource("3_qd6vc")
 region_enabled = true
 region_rect = Rect2(96, 576, 96, 48)
 
 [node name="NearWood_4" type="Sprite2D" parent="." unique_id=394393638]
 modulate = Color(0.76517767, 0.8268501, 1, 1)
-material = SubResource("ShaderMaterial_b1rs4")
 texture = ExtResource("3_qd6vc")
 region_enabled = true
 region_rect = Rect2(288, 576, 96, 48)

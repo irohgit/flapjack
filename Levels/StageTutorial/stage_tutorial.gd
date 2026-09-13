@@ -25,7 +25,7 @@ const FLAPJACK_IDLE := preload("res://Assets/Cinematics/flapjack_idle_512x640.pn
 @export var highlight_period := 0.6
 #@onready var _world: Node2D = $World
 @onready var _tutorial_ui: TutorialUI = $HUD/TutorialLayer/TutorialUI
-@onready var game_ui: GameUI = $GameUI
+#@onready var game_ui: GameUI = $GameUI
 
 
 
@@ -98,6 +98,7 @@ func _beat_movement() -> void:
 	_tutorial_ui.set_objective("floating debris won't hurt you")
 	await _tutorial_ui.say("Flapjack", "It's just driftwood, Jack. It's not going to hurt us.")
 	_tutorial_ui.clear_objective(1.5)
+	
 # --- 3. The ambush -----------------------------------------------------------
 func _beat_ambush() -> void:
 	_raider = _spawn_raider()

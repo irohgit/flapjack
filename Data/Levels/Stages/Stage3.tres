@@ -127,4 +127,6 @@ encounter_sequence = Array[ExtResource("1_cpi3s")]([SubResource("Encounter_01_no
 finale_trigger_position = Vector2(0, -4000)
 finale_spawn_position = Vector2(960, -3940)
 finale_pool = Array[ExtResource("8_3ko58")]([SubResource("Finale_boss")])
+stage_title = "Dead Sea"
+stage_subtitle = "Stage Three"
 metadata/_custom_type_script = "uid://p4ssfrvfj0uw"

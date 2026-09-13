@@ -16,8 +16,8 @@
 [ext_resource type="Texture2D" uid="uid://cjjelj1l1pyip" path="res://Assets/UI/WoodMenu/wood_button.png" id="14_button"]
 [ext_resource type="Texture2D" uid="uid://b45l65es1qjaq" path="res://Assets/Cinematics/flapjack_idle_512x640.png" id="15_o8ke0"]
 [ext_resource type="Texture2D" uid="uid://b6vlcs7mjr1q4" path="res://Assets/Characters/Ginny_Idle_spritesheet_96x96.png" id="16_ginny"]
-[ext_resource type="Texture2D" uid="uid://dypxhdmtkar1y" path="res://Assets/Pickups/cocktail_2.png" id="17_gin"]
 [ext_resource type="Texture2D" uid="uid://vaqefn8atoul" path="res://Assets/Boat/skiff_1_40x80.png" id="18_skiff"]
+[ext_resource type="Texture2D" uid="uid://udt7wxnxtvsx" path="res://Assets/Pickups/Gin.png" id="19_o8ke0"]
 [ext_resource type="Texture2D" uid="uid://d0qx2e44n5cf7" path="res://Assets/Boat/schooner_1_80x120.png" id="19_schooner"]
 [ext_resource type="Texture2D" uid="uid://c8s78souw2gh3" path="res://Assets/Boat/Galleon_1_100x140.png" id="20_galleon"]
 [ext_resource type="PackedScene" uid="uid://das28foe55u6f" path="res://UI/navbutton.tscn" id="21_nav"]
@@ -35,9 +35,16 @@ default_font_size = 20
 atlas = ExtResource("16_ginny")
 region = Rect2(0, 0, 48, 48)
 
-[sub_resource type="AtlasTexture" id="Atlas_boat_deck"]
-atlas = ExtResource("14_button")
-region = Rect2(0, 110, 1983, 570)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ili6q"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0, 0, 0, 0.5)
+border_color = Color(0.65882355, 0.41960785, 0.12156863, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
 
 [sub_resource type="StyleBoxFlat" id="Style_column"]
 bg_color = Color(0.025, 0.05, 0.055, 0.94)
@@ -162,44 +169,41 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="BoatDeck" type="TextureRect" parent="LeftPanel" unique_id=1387152040]
+[node name="BoatDeck" type="PanelContainer" parent="LeftPanel" unique_id=1474351243]
 texture_filter = 1
-layout_mode = 0
-offset_left = 58.0
-offset_top = 463.0
-offset_right = 416.0
-offset_bottom = 698.0
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 52.0
+offset_top = -77.0
+offset_right = 410.0
+offset_bottom = 203.0
+grow_vertical = 2
 mouse_filter = 2
-texture = SubResource("Atlas_boat_deck")
-expand_mode = 1
 
 [node name="BoatPreview" type="TextureRect" parent="LeftPanel/BoatDeck" unique_id=1410272311]
 texture_filter = 1
-layout_mode = 0
-offset_left = 12.0
-offset_top = 35.0
-offset_right = 152.0
-offset_bottom = 185.0
+layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("20_galleon")
 expand_mode = 1
-stretch_mode = 5
+stretch_mode = 4
 
 [node name="ComponentStatus" type="Control" parent="LeftPanel/BoatDeck" unique_id=1355296194]
-anchors_preset = 0
-offset_left = 150.0
-offset_top = 35.0
-offset_right = 332.0
-offset_bottom = 195.0
+layout_mode = 2
 mouse_filter = 2
 
 [node name="Rigging" type="Control" parent="LeftPanel/BoatDeck/ComponentStatus" unique_id=83118661]
 anchors_preset = 0
-offset_right = 182.0
-offset_bottom = 50.0
+offset_left = 179.0
+offset_top = 51.0
+offset_right = 361.0
+offset_bottom = 101.0
 mouse_filter = 2
 
 [node name="Frame" type="TextureRect" parent="LeftPanel/BoatDeck/ComponentStatus/Rigging" unique_id=1164718729]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -231,7 +235,7 @@ offset_bottom = 24.0
 theme_override_colors/font_color = Color(0.48, 0.92, 0.85, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 15
+theme_override_font_sizes/font_size = 26
 text = "RIGGING"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -245,19 +249,21 @@ offset_bottom = 47.0
 theme_override_colors/font_color = Color(1, 0.93, 0.76, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 26
 text = "0 / 3"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Armament" type="Control" parent="LeftPanel/BoatDeck/ComponentStatus" unique_id=1216081300]
 anchors_preset = 0
-offset_top = 55.0
-offset_right = 182.0
-offset_bottom = 105.0
+offset_left = 179.0
+offset_top = 106.0
+offset_right = 361.0
+offset_bottom = 156.0
 mouse_filter = 2
 
 [node name="Frame" type="TextureRect" parent="LeftPanel/BoatDeck/ComponentStatus/Armament" unique_id=334288952]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -289,7 +295,7 @@ offset_bottom = 24.0
 theme_override_colors/font_color = Color(0.48, 0.92, 0.85, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 26
 text = "ARMAMENT"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -303,19 +309,21 @@ offset_bottom = 47.0
 theme_override_colors/font_color = Color(1, 0.93, 0.76, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 26
 text = "0 / 3"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Hull" type="Control" parent="LeftPanel/BoatDeck/ComponentStatus" unique_id=1295486347]
 anchors_preset = 0
-offset_top = 110.0
-offset_right = 182.0
-offset_bottom = 160.0
+offset_left = 179.0
+offset_top = 161.0
+offset_right = 361.0
+offset_bottom = 211.0
 mouse_filter = 2
 
 [node name="Frame" type="TextureRect" parent="LeftPanel/BoatDeck/ComponentStatus/Hull" unique_id=1345990345]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -347,7 +355,7 @@ offset_bottom = 24.0
 theme_override_colors/font_color = Color(0.48, 0.92, 0.85, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 15
+theme_override_font_sizes/font_size = 26
 text = "HULL"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -361,7 +369,7 @@ offset_bottom = 47.0
 theme_override_colors/font_color = Color(1, 0.93, 0.76, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 26
 text = "0 / 3"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -369,10 +377,10 @@ vertical_alignment = 1
 [node name="BoatTier" type="Label" parent="." unique_id=1847284873]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 87.0
-offset_top = 678.0
-offset_right = 433.0
-offset_bottom = 714.0
+offset_left = 84.0
+offset_top = 741.0
+offset_right = 430.0
+offset_bottom = 777.0
 theme_override_colors/font_color = Color(1, 0.85, 0.47, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
@@ -384,10 +392,10 @@ vertical_alignment = 1
 [node name="RefitProgress" type="Label" parent="." unique_id=2107017943]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 87.0
-offset_top = 714.0
-offset_right = 433.0
-offset_bottom = 746.0
+offset_left = 84.0
+offset_top = 777.0
+offset_right = 430.0
+offset_bottom = 809.0
 theme_override_colors/font_color = Color(0.48, 0.92, 0.85, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
@@ -398,10 +406,10 @@ vertical_alignment = 1
 
 [node name="Gin" type="Control" parent="." unique_id=1334703463]
 anchors_preset = 0
-offset_left = 68.0
-offset_top = 760.0
-offset_right = 256.0
-offset_bottom = 838.0
+offset_left = 71.0
+offset_top = 821.0
+offset_right = 259.0
+offset_bottom = 899.0
 mouse_filter = 2
 
 [node name="Frame" type="TextureRect" parent="Gin" unique_id=513016664]
@@ -410,6 +418,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = -15.0
+offset_right = -4.0
+offset_bottom = 7.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -419,12 +431,12 @@ expand_mode = 1
 [node name="Icon" type="TextureRect" parent="Gin" unique_id=468480698]
 texture_filter = 1
 layout_mode = 0
-offset_left = 14.0
-offset_top = 17.0
-offset_right = 58.0
-offset_bottom = 61.0
+offset_left = 46.0
+offset_top = 13.0
+offset_right = 90.0
+offset_bottom = 57.0
 mouse_filter = 2
-texture = ExtResource("17_gin")
+texture = ExtResource("19_o8ke0")
 expand_mode = 1
 stretch_mode = 5
 
@@ -443,10 +455,10 @@ horizontal_alignment = 1
 
 [node name="Amount" type="Label" parent="Gin" unique_id=214420051]
 layout_mode = 0
-offset_left = 60.0
-offset_top = 26.0
-offset_right = 176.0
-offset_bottom = 66.0
+offset_left = 61.0
+offset_top = 19.0
+offset_right = 177.0
+offset_bottom = 59.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
@@ -457,10 +469,10 @@ vertical_alignment = 1
 
 [node name="Trust" type="Control" parent="." unique_id=1686512150]
 anchors_preset = 0
-offset_left = 264.0
-offset_top = 760.0
-offset_right = 452.0
-offset_bottom = 838.0
+offset_left = 267.0
+offset_top = 821.0
+offset_right = 455.0
+offset_bottom = 899.0
 mouse_filter = 2
 
 [node name="Frame" type="TextureRect" parent="Trust" unique_id=501389909]
@@ -469,6 +481,9 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -15.0
+offset_right = -28.0
+offset_bottom = 7.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -477,10 +492,10 @@ expand_mode = 1
 
 [node name="Caption" type="Label" parent="Trust" unique_id=1617400142]
 layout_mode = 0
-offset_left = 14.0
-offset_top = 7.0
-offset_right = 174.0
-offset_bottom = 31.0
+offset_left = 4.0
+offset_top = 8.0
+offset_right = 164.0
+offset_bottom = 32.0
 theme_override_colors/font_color = Color(1, 0.77, 0.3, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
@@ -490,10 +505,10 @@ horizontal_alignment = 1
 
 [node name="Amount" type="Label" parent="Trust" unique_id=836669560]
 layout_mode = 0
-offset_left = 14.0
-offset_top = 26.0
-offset_right = 174.0
-offset_bottom = 66.0
+offset_left = 5.0
+offset_top = 22.0
+offset_right = 165.0
+offset_bottom = 62.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
@@ -504,10 +519,10 @@ vertical_alignment = 1
 
 [node name="TrustNote" type="Label" parent="." unique_id=456318922]
 layout_mode = 0
-offset_left = 72.0
-offset_top = 840.0
-offset_right = 448.0
-offset_bottom = 878.0
+offset_left = 76.0
+offset_top = 899.0
+offset_right = 452.0
+offset_bottom = 937.0
 theme_override_colors/font_color = Color(0.78, 0.72, 0.62, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
@@ -520,10 +535,10 @@ autowrap_mode = 2
 [node name="ReturnButton" parent="." unique_id=2107071804 instance=ExtResource("21_nav")]
 custom_minimum_size = Vector2(360, 113)
 layout_mode = 0
-offset_left = 80.0
-offset_top = 892.0
-offset_right = 440.0
-offset_bottom = 1005.0
+offset_left = 79.0
+offset_top = 915.0
+offset_right = 439.0
+offset_bottom = 1028.0
 pivot_offset = Vector2(180, 56.5)
 texture_normal = ExtResource("14_button")
 texture_pressed = ExtResource("14_button")
@@ -540,43 +555,34 @@ focus_tint = Color(1.18, 1.08, 0.78, 1)
 focus_sound = ExtResource("24_hover")
 press_sound = ExtResource("25_click")
 
-[node name="HeaderPlaque" type="TextureRect" parent="." unique_id=209746684]
+[node name="HeaderPlaque" type="PanelContainer" parent="." unique_id=2058804243]
 texture_filter = 1
 layout_mode = 0
-offset_left = 534.0
-offset_top = 24.0
-offset_right = 1888.0
-offset_bottom = 130.0
+offset_left = 523.0
+offset_top = 23.0
+offset_right = 1877.0
+offset_bottom = 129.0
 mouse_filter = 2
-texture = ExtResource("14_button")
-expand_mode = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_ili6q")
 
 [node name="Title" type="Label" parent="HeaderPlaque" unique_id=247897769]
-layout_mode = 0
-offset_left = 42.0
-offset_top = 8.0
-offset_right = 520.0
-offset_bottom = 74.0
+layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.89, 0.64, 1)
 theme_override_colors/font_outline_color = Color(0.035, 0.008, 0, 1)
 theme_override_constants/outline_size = 5
 theme_override_fonts/font = ExtResource("23_title_font")
-theme_override_font_sizes/font_size = 38
+theme_override_font_sizes/font_size = 36
 text = "SHIP UPGRADES"
 vertical_alignment = 1
 
 [node name="Subtitle" type="Label" parent="HeaderPlaque" unique_id=1587946873]
-layout_mode = 0
-offset_left = 526.0
-offset_top = 23.0
-offset_right = 1300.0
-offset_bottom = 74.0
+layout_mode = 2
 theme_override_colors/font_color = Color(0.49, 0.92, 0.84, 1)
 theme_override_colors/font_outline_color = Color(0.02, 0.004, 0, 1)
 theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 28
 text = "COMPLETE A TIER TO EVOLVE YOUR SHIP"
-horizontal_alignment = 2
+horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="UpgradeColumns" type="HBoxContainer" parent="." unique_id=642867342]

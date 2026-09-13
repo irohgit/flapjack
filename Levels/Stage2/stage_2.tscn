@@ -32,13 +32,60 @@
 [ext_resource type="Script" uid="uid://diihmo0necydi" path="res://Systems/BankFrogSpawner.gd" id="32_bank_frog_spawner"]
 [ext_resource type="PackedScene" uid="uid://de1bc11i6qosg" path="res://Actors/Environment/bg_layer_1_fish.tscn" id="33_7pnqr"]
 [ext_resource type="Script" uid="uid://cjmgjv88bhgxy" path="res://Systems/SnakeSpawner.gd" id="33_snake_spawner"]
-[ext_resource type="PackedScene" uid="uid://ckkn43tmuuln0" path="res://Actors/Environment/ParallaxObjects/far_coral.tscn" id="34_cq7is"]
 [ext_resource type="PackedScene" uid="uid://du1b0f1hfk7hv" path="res://Actors/Enemies/snake_enemy.tscn" id="34_snake"]
-[ext_resource type="PackedScene" uid="uid://cnl7v1qfhh014" path="res://Actors/Environment/ParallaxObjects/far_rock.tscn" id="35_720vf"]
-[ext_resource type="PackedScene" uid="uid://b7wmf0ym3lvi6" path="res://Actors/Environment/ParallaxObjects/far_statues.tscn" id="36_5vxvm"]
+[ext_resource type="PackedScene" uid="uid://cy2nxy2knjndv" path="res://Actors/Environment/ParallaxObjects/far_croc.tscn" id="34_y8mhm"]
+[ext_resource type="PackedScene" uid="uid://4e8u8he65umc" path="res://Actors/Environment/ParallaxObjects/far_turtle.tscn" id="35_07xoo"]
+[ext_resource type="PackedScene" uid="uid://uoc4mmvluufx" path="res://Actors/Environment/ParallaxObjects/far_catfish.tscn" id="36_7pnqr"]
+[ext_resource type="PackedScene" uid="uid://bsgvjekiix3lw" path="res://Actors/Environment/ParallaxObjects/far_tadpole.tscn" id="37_cq7is"]
 [ext_resource type="PackedScene" uid="uid://bc2g5sxmhx1p2" path="res://Actors/Environment/ParallaxObjects/near_wood.tscn" id="37_hshsa"]
+[ext_resource type="PackedScene" uid="uid://cgkxqkcjbquyi" path="res://Actors/Environment/ParallaxObjects/far_stingray.tscn" id="38_07xoo"]
 [ext_resource type="PackedScene" uid="uid://bws0ib2ep02xb" path="res://Actors/Environment/cloud_overlay.tscn" id="38_51yg7"]
-[ext_resource type="Resource" uid="uid://b2xa4hm5ib5ca" path="res://Data/Levels/Stages/Stage1.tres" id="39_d7g3s"]
+
+[sub_resource type="Resource" id="Resource_54op2"]
+script = ExtResource("32_07xoo")
+scene = ExtResource("33_7pnqr")
+weight = 0.8
+metadata/_custom_type_script = "uid://8sxccskaloo3"
+
+[sub_resource type="Resource" id="Resource_g2hnl"]
+script = ExtResource("32_07xoo")
+scene = ExtResource("34_y8mhm")
+weight = 0.2
+metadata/_custom_type_script = "uid://8sxccskaloo3"
+
+[sub_resource type="Resource" id="Resource_y8mhm"]
+script = ExtResource("32_07xoo")
+scene = ExtResource("35_07xoo")
+weight = 0.6
+metadata/_custom_type_script = "uid://8sxccskaloo3"
+
+[sub_resource type="Resource" id="Resource_07xoo"]
+script = ExtResource("32_07xoo")
+scene = ExtResource("36_7pnqr")
+metadata/_custom_type_script = "uid://8sxccskaloo3"
+
+[sub_resource type="Resource" id="Resource_7pnqr"]
+script = ExtResource("32_07xoo")
+scene = ExtResource("37_cq7is")
+weight = 0.9
+metadata/_custom_type_script = "uid://8sxccskaloo3"
+
+[sub_resource type="Resource" id="Resource_720vf"]
+script = ExtResource("32_07xoo")
+scene = ExtResource("38_07xoo")
+metadata/_custom_type_script = "uid://8sxccskaloo3"
+
+[sub_resource type="Resource" id="Resource_b1rs4"]
+script = ExtResource("32_07xoo")
+scene = ExtResource("37_hshsa")
+weight = 0.4
+metadata/_custom_type_script = "uid://8sxccskaloo3"
+
+[sub_resource type="Resource" id="Resource_08pg4"]
+script = ExtResource("32_07xoo")
+scene = ExtResource("38_51yg7")
+weight = 0.9
+metadata/_custom_type_script = "uid://8sxccskaloo3"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8m7vp"]
 shader = ExtResource("18_a3klg")
@@ -90,41 +137,6 @@ enemy = ExtResource("30_frog_purple")
 weight = 15.0
 metadata/_custom_type_script = "uid://brpre4byem6tx"
 
-[sub_resource type="Resource" id="Resource_54op2"]
-script = ExtResource("32_07xoo")
-scene = ExtResource("33_7pnqr")
-metadata/_custom_type_script = "uid://8sxccskaloo3"
-
-[sub_resource type="Resource" id="Resource_jrq28"]
-script = ExtResource("32_07xoo")
-scene = ExtResource("34_cq7is")
-weight = 0.8
-metadata/_custom_type_script = "uid://8sxccskaloo3"
-
-[sub_resource type="Resource" id="Resource_7wjkh"]
-script = ExtResource("32_07xoo")
-scene = ExtResource("35_720vf")
-weight = 0.6
-metadata/_custom_type_script = "uid://8sxccskaloo3"
-
-[sub_resource type="Resource" id="Resource_fffbn"]
-script = ExtResource("32_07xoo")
-scene = ExtResource("36_5vxvm")
-weight = 0.4
-metadata/_custom_type_script = "uid://8sxccskaloo3"
-
-[sub_resource type="Resource" id="Resource_b1rs4"]
-script = ExtResource("32_07xoo")
-scene = ExtResource("37_hshsa")
-weight = 0.4
-metadata/_custom_type_script = "uid://8sxccskaloo3"
-
-[sub_resource type="Resource" id="Resource_08pg4"]
-script = ExtResource("32_07xoo")
-scene = ExtResource("38_51yg7")
-weight = 0.9
-metadata/_custom_type_script = "uid://8sxccskaloo3"
-
 [node name="Stage2" type="Node2D" unique_id=1126219472 node_paths=PackedStringArray("scroll_director", "enemy_controller", "level_generator", "screen_encounter_parent")]
 script = ExtResource("1_1bb5f")
 scroll_director = NodePath("ScrollDirector")
@@ -174,6 +186,27 @@ foam_wobble_px = 6.0
 foam_wavelength_px = 160.0
 pixel_size = 1
 
+[node name="ParallaxDirector" type="Node2D" parent="." unique_id=1366988134 node_paths=PackedStringArray("far_parent", "near_parent", "overlay_parent", "scroll_director", "banks")]
+position = Vector2(0, -3)
+script = ExtResource("31_y8mhm")
+far_objects = Array[ExtResource("32_07xoo")]([SubResource("Resource_54op2"), SubResource("Resource_g2hnl"), SubResource("Resource_y8mhm"), SubResource("Resource_07xoo"), SubResource("Resource_7pnqr"), SubResource("Resource_720vf")])
+near_objects = Array[ExtResource("32_07xoo")]([SubResource("Resource_b1rs4")])
+overlay_objects = Array[ExtResource("32_07xoo")]([SubResource("Resource_08pg4")])
+far_parent = NodePath("../ScrollRig/CanvasLayer/WaterSurface/Far")
+near_parent = NodePath("../ScrollRig/Near")
+overlay_parent = NodePath("../ScrollRig/Overlay")
+far_scroll_range = Vector2(2, 2)
+near_scroll_range = Vector2(2.5, 2.5)
+overlay_scroll_range = Vector2(10, 10)
+min_gap = 100.0
+max_gap = 500.0
+min_per_band = 3
+max_per_band = 6
+spawn_lead = 100.0
+scroll_director = NodePath("../ScrollDirector")
+level_data = ExtResource("15_lr66y")
+banks = NodePath("../BankPainter")
+
 [node name="ScrollRig" type="Node2D" parent="." unique_id=1624221049]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="ScrollRig" unique_id=1411935878]
@@ -187,6 +220,26 @@ wave_water_color = Color(0.27877283, 0.43329868, 0.1961692, 1)
 rim_color = Color(0.4744166, 0.66086525, 0.177697, 1)
 foam_color = Color(0.4744166, 0.66086525, 0.177697, 1)
 metadata/_edit_use_anchors_ = true
+
+[node name="WaterSurface" type="CanvasLayer" parent="ScrollRig/CanvasLayer" unique_id=884504447]
+layer = -5
+
+[node name="Far" type="Node2D" parent="ScrollRig/CanvasLayer/WaterSurface" unique_id=538829160]
+z_index = -10
+
+[node name="WaterSurface" parent="ScrollRig/CanvasLayer/WaterSurface" unique_id=1760302073 node_paths=PackedStringArray("camera") instance=ExtResource("5_2ahl2")]
+self_modulate = Color(1, 1, 1, 0)
+material = SubResource("ShaderMaterial_8m7vp")
+camera = NodePath("../../../ShakeCamera")
+deep_water_color = Color(0, 0.21960784, 0.011764706, 0.3019608)
+wave_water_color = Color(0.2784093, 0.43146813, 0.19641912, 0.30200002)
+rim_color = Color(0.47427702, 0.6629296, 0.17558163, 0.30200002)
+foam_color = Color(0.47427702, 0.6629296, 0.17558163, 0.30200002)
+metadata/_edit_use_anchors_ = true
+
+[node name="Near" type="Node2D" parent="ScrollRig" unique_id=1795914779]
+
+[node name="Overlay" type="Node2D" parent="ScrollRig" unique_id=1175213725]
 
 [node name="ShakeCamera" type="Camera2D" parent="ScrollRig" unique_id=1729136761 groups=["shake_camera"]]
 position = Vector2(960, 540)
@@ -232,24 +285,3 @@ parent = NodePath("../World")
 scroll_director = NodePath("../ScrollDirector")
 level_data = ExtResource("15_lr66y")
 bank_painter = NodePath("../BankPainter")
-
-[node name="ParallaxDirector" type="Node2D" parent="." unique_id=1366988134 node_paths=PackedStringArray("far_parent", "near_parent", "overlay_parent", "scroll_director", "banks")]
-position = Vector2(0, -3)
-script = ExtResource("31_y8mhm")
-far_objects = Array[ExtResource("32_07xoo")]([SubResource("Resource_54op2"), SubResource("Resource_jrq28"), SubResource("Resource_7wjkh"), SubResource("Resource_fffbn")])
-near_objects = Array[ExtResource("32_07xoo")]([SubResource("Resource_b1rs4")])
-overlay_objects = Array[ExtResource("32_07xoo")]([SubResource("Resource_08pg4")])
-far_parent = NodePath("")
-near_parent = NodePath("")
-overlay_parent = NodePath("")
-far_scroll_range = Vector2(2, 2)
-near_scroll_range = Vector2(2.5, 2.5)
-overlay_scroll_range = Vector2(10, 10)
-min_gap = 100.0
-max_gap = 500.0
-min_per_band = 3
-max_per_band = 6
-spawn_lead = 100.0
-scroll_director = NodePath("")
-level_data = ExtResource("39_d7g3s")
-banks = NodePath("")

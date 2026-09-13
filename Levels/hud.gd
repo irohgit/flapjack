@@ -1,8 +1,8 @@
 extends CanvasLayer
 
-@onready var coin_label: Label = $Coin/Amount
-@onready var gin_label: Label = $Gin/Amount
-@onready var score_label: Label = $Score/Amount
+@onready var coin_label: Label = $PanelContainer/HBoxContainer/Coin/Amount
+@onready var gin_label: Label = $PanelContainer/HBoxContainer/Gin/Amount
+@onready var score_label: Label = $PanelContainer/HBoxContainer/Score/Amount
 @onready var health_shield_icons: HBoxContainer = $"health and shield icon/HealthRow"
 @onready var active_effects_container: HBoxContainer = $ActiveEffects
 @onready var potion_slots_container: HBoxContainer = $PotionSlots
@@ -121,30 +121,49 @@ func _process(delta: float) -> void:
 
 func _bind_voyage_progress() -> void:
 	voyage_panel.hide()
+
 	var ancestor: Node = get_parent()
 	while ancestor != null and not (ancestor is LevelManager):
 		ancestor = ancestor.get_parent()
 	_progress_stage = ancestor as LevelManager
 	if _progress_stage == null or _progress_stage.level_generator == null:
 		return
+
 	var data: LevelData = _progress_stage.level_generator.level_data
 	if data == null:
 		return
+
 	_progress_stage_index = run_stage_ids.find(data.get_level_id())
-	if _progress_stage_index < 0:
-		return
-	voyage_title.text = "STAGE %d" % (_progress_stage_index + 1)
-	if not data.stage_title.is_empty():
-		voyage_title.text += "  /  " + data.stage_title.to_upper()
-	run_progress_label.text = "RUN  %d / %d" % [_progress_stage_index + 1, run_stage_ids.size()]
+
+	# The title now comes from the authored LevelData rather than the run
+	# index, so a stage that is not in run_stage_ids still labels itself.
+	var subtitle := data.stage_subtitle.to_upper()
+	if subtitle.is_empty() and _progress_stage_index >= 0:
+		subtitle = "STAGE %d" % (_progress_stage_index + 1)
+
+	var title := data.stage_title.to_upper()
+	if subtitle.is_empty():
+		voyage_title.text = title
+	elif title.is_empty():
+		voyage_title.text = subtitle
+	else:
+		voyage_title.text = subtitle + "  /  " + title
+
+	if _progress_stage_index >= 0:
+		run_progress_label.text = "RUN  %d / %d" % [
+			_progress_stage_index + 1, run_stage_ids.size()
+		]
+	else:
+		run_progress_label.text = ""
+
 	for path: String in ["GameUI/PauseMenu", "GameUI/ShopMenu", "GameUI/DeathScreen"]:
 		var menu: Control = _progress_stage.get_node_or_null(path) as Control
 		if menu != null:
 			_progress_menus.append(menu)
 			menu.visibility_changed.connect(_sync_voyage_visibility)
+
 	_sync_voyage_visibility()
 	_update_voyage_progress(0.0)
-
 
 func _sync_voyage_visibility() -> void:
 	var show_progress: bool = _progress_stage_index >= 0
