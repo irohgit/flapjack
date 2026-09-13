@@ -3,41 +3,31 @@ extends Enemy
 
 @export_group("Tentacles")
 @export var tentacle_scene: PackedScene
-@export var tentacles_per_stage: Array[int] = [1, 3, 4]
+@export var tentacles_per_stage: Array[int] = [1, 1, 1]
 @export var stage_data: Array[EnemyData] = []
-## Extra world-space nudge from the AnimatedSprite2D's own position - use
-## this if the Kraken's drawn body still isn't centred where you want
-## tentacles to spawn from, e.g. a more negative y to go higher. Flat world
-## units, so it won't shift around as the sprite's scale changes between
-## animations.
 @export var tentacle_spawn_offset := Vector2.ZERO
 
 @export_group("Projectiles")
 @export var projectile_scene: PackedScene
 @export var rock_ammo: ProjectileData
 @export var confusion_ammo: ProjectileData
-## Chance that a fire trigger becomes a Swipe burst (a fan of shots in
-## different directions) instead of the usual single aimed shot.
-@export_range(0.0, 1.0, 0.01) var swipe_chance := 0.5
+## Chance that a fire trigger becomes a Swipe burst (a fan of shots in different directions) instead of the usual single aimed shot.
+@export_range(0.0, 1.0, 0.01) var swipe_chance := 0.8
 @export_range(2, 12, 1) var swipe_projectile_count := 5
 @export_range(10.0, 180.0, 1.0) var swipe_spread_degrees := 90.0
+@export var swipe_vertical_offset := 100.0
 
-## kraken_idle.png's frames are natively 622x418, versus 1800x1200 for
-## kraken_swipe.png/kraken_wave.png - since they all play on one
-## AnimatedSprite2D node sharing one scale, Idle would otherwise render
-## visibly smaller. This compensates only while Idle is playing.
 const IDLE_SCALE_COMPENSATION := Vector2(1800.0 / 622.0, 1200.0 / 418.0)
-## The Swipe animation reads better smaller than the base body scale.
 const SWIPE_SCALE_MULTIPLIER := 1
+const DEATH_SCALE_MULTIPLIER := 4
 
 var _stage := 0
 var _active_tentacles: Array[KrakenTentacle] = []
 var _is_defeated := false
 var _is_swiping := false
-## The HUD bar tracks the whole fight (all 8 tentacles across all 3 stages),
-## not just whatever's active right now - these two make that possible.
 var _fight_total_max := 0
 var _fight_destroyed_max := 0
+var _base_sprite_position := Vector2.ZERO
 
 
 func _ready() -> void:
@@ -48,14 +38,12 @@ func _ready() -> void:
 	)
 
 	GameEvents.boss_name_changed.emit("KRAKEN")
+	_base_sprite_position = _animated_sprite.position
 	_fight_total_max = _compute_fight_total_max()
 	call_deferred("_start_stage", 0)
 
 
-## Every tentacle comes from the same scene, so its exported tentacle_health
-## default (read off a throwaway instance, never added to the tree) times
-## the total tentacle count across every stage gives the whole fight's pool
-## upfront - before stage 2/3's tentacles even exist yet.
+## Every tentacle comes from the same scene
 func _compute_fight_total_max() -> int:
 	var probe := tentacle_scene.instantiate() as KrakenTentacle
 	if probe == null:
@@ -85,11 +73,6 @@ func _apply_stage_visuals(stage_index: int) -> void:
 	_reset_initial_timer()
 
 
-## Called explicitly right after every _animated_sprite.play() this script
-## does, rather than reacting to animation_changed - that signal only fires
-## when the animation *name* actually changes, so re-playing "Idle" after a
-## stage swap (already "Idle" from the previous stage) would silently skip
-## re-applying the compensation and leave the old stage's scale in place.
 func _apply_animation_scale() -> void:
 	if data == null:
 		return
@@ -97,10 +80,16 @@ func _apply_animation_scale() -> void:
 	match _animated_sprite.animation:
 		&"Idle":
 			_animated_sprite.scale = base_scale * IDLE_SCALE_COMPENSATION
+			_animated_sprite.position = _base_sprite_position
 		&"Swipe":
 			_animated_sprite.scale = base_scale * SWIPE_SCALE_MULTIPLIER
+			_animated_sprite.position = _base_sprite_position + Vector2(0.0, swipe_vertical_offset)
+		&"Death":
+			_animated_sprite.scale = base_scale * DEATH_SCALE_MULTIPLIER
+			_animated_sprite.position = _base_sprite_position
 		_:
 			_animated_sprite.scale = base_scale
+			_animated_sprite.position = _base_sprite_position
 
 
 func _spawn_tentacle() -> void:
@@ -117,9 +106,6 @@ func _spawn_tentacle() -> void:
 	_recompute_boss_health()
 
 
-## The body's own Area2D origin isn't where the drawn Kraken visually sits -
-## its AnimatedSprite2D is offset well above it in the scene - so anchor
-## tentacles to the sprite's own position instead, plus a tunable nudge.
 func _get_tentacle_spawn_origin() -> Vector2:
 	return _animated_sprite.global_position + tentacle_spawn_offset
 
@@ -135,15 +121,13 @@ func _on_tentacle_destroyed(tentacle: KrakenTentacle) -> void:
 
 	if not _active_tentacles.is_empty():
 		return
-
 	if _stage + 1 < tentacles_per_stage.size():
-		_start_stage(_stage + 1)
+		call_deferred("_start_stage", _stage + 1)
 	else:
-		_defeat()
+		call_deferred("_defeat")
 
 
-## Whole-fight remaining = the total pool, minus tentacles already fully
-## destroyed, minus damage sustained by tentacles still alive right now.
+## Whole-fight remaining = the total pool, minus tentacles already fully destroyed, minus damage sustained by tentacles still alive right now.
 func _recompute_boss_health() -> void:
 	if _fight_total_max <= 0:
 		return
@@ -159,10 +143,9 @@ func _recompute_boss_health() -> void:
 	GameEvents.boss_health_changed.emit(fight_current, _fight_total_max)
 
 
-## Only fires while every current tentacle is hidden (i.e. not mid-attack)
-## and no swipe burst is already in progress.
+## Only fires while every current tentacle is hidden (not mid-attack),
 func _can_fire() -> bool:
-	if _is_swiping or projectile_scene == null or (rock_ammo == null and confusion_ammo == null):
+	if _is_defeated or _is_swiping or projectile_scene == null or (rock_ammo == null and confusion_ammo == null):
 		return false
 
 	for tentacle in _active_tentacles:
@@ -199,10 +182,6 @@ func _fire_single_shot() -> Projectile:
 	return shot
 
 
-## Shared by the single tracked shot and each shot in a swipe burst:
-## instantiate, assign ammo, aim, add to the tree, and position. Callers
-## still play their own fire sfx, since a burst only wants it once for the
-## whole volley rather than once per shot.
 func _spawn_projectile_shot(ammo: ProjectileData, spawn_position: Vector2, direction: Vector2) -> Projectile:
 	var shot := projectile_scene.instantiate() as Projectile
 	if shot == null:
@@ -220,9 +199,6 @@ func _play_fire_sfx() -> void:
 	Audio.play_sfx(data.fire_sfx, data.fire_sfx_volume_db, 0.06, data.fire_pitch)
 
 
-## Plays the Swipe animation and, as it starts, fans swipe_projectile_count
-## shots out across swipe_spread_degrees centred on straight down - a wider,
-## less aimed alternative to the single tracked shot.
 func _do_swipe_attack() -> void:
 	_is_swiping = true
 	_animated_sprite.play(&"Swipe")
@@ -268,14 +244,24 @@ func _defeat() -> void:
 		return
 	_is_defeated = true
 
-	Audio.play_sfx(data.death_sfx, -4.0)
-	GameEvents.boss_defeated.emit(global_position)
+	set_physics_process(false)
+
+	# Stop dealing contact damage the moment it's defeated, even though the death animation keeps it on screen a little longer.
+	set_deferred("monitoring", false)
+	set_deferred("monitorable", false)
 
 	for cam in get_tree().get_nodes_in_group("shake_camera"):
 		if cam is ShakeCamera:
 			cam.add_trauma(0.15)
 			break
 
+	if _has_animation(&"Death"):
+		_animated_sprite.play(&"Death")
+		_apply_animation_scale()
+		await _animated_sprite.animation_finished
+
+	Audio.play_sfx(data.death_sfx, -4.0)
+	GameEvents.boss_defeated.emit(global_position)
 	queue_free()
 
 

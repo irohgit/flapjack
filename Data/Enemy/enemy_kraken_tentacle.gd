@@ -15,31 +15,17 @@ enum State { HIDDEN, TELEGRAPH, DOWN }
 @export_range(0.0, 5.0, 0.1, "or_greater") var retract_pause_max := 2.5
 ## Distance from the Kraken (its top/root) to the tip that actually strikes.
 @export_range(0.0, 2000.0, 1.0, "or_greater") var tentacle_reach := 700.0
-## Length of the hitbox, root to tip. 0 = auto (Extend frame's own texture
-## height) - but that includes any transparent padding baked into the
-## frame, so it can run longer than the visibly drawn tentacle. Set this to
-## whatever actually matches the art on screen.
 @export_range(0.0, 2000.0, 1.0, "or_greater") var collision_length := 0.0
-## Total spread of angles it can protrude at, centred on straight down.
-## Re-picked each time it retracts, so a given tentacle doesn't always
-## strike in the same direction.
 @export_range(0.0, 180.0, 1.0) var angle_spread_degrees := 120.0
-## Frame index within the Extend animation to hold on for the rest of the
-## down/vulnerable window, once Extend/Attack finish playing. -1 skips
-## freezing and just leaves it on whatever frame played last.
 @export var hold_frame := 1
 
 @export_group("Shadow")
 ## Which animation's frame the telegraph shadow silhouette is drawn from.
 @export var shadow_animation: StringName = &"Extend"
-## Frame index within shadow_animation to use. -1 uses that animation's
-## last frame.
 @export var shadow_frame_index := 1
 
 @export_group("Health Bar")
 @export var health_bar_size := Vector2(150.0, 16.0)
-## Where along the tentacle it hovers: 0 = at the root (Kraken), 1 = at the
-## strike tip.
 @export_range(0.0, 1.0, 0.01) var health_bar_position_t := 0.5
 @export var health_bar_vertical_offset := -40.0
 
@@ -70,12 +56,6 @@ func _ready() -> void:
 	_collision.disabled = true
 
 
-## The scene's static shape only covered a fixed chunk near the top. Size it
-## to span root (y=0) to tip instead - using collision_length if set, since
-## the Extend frame's own texture size includes any transparent padding
-## baked into that frame and can run longer than the visibly drawn tentacle.
-## A fresh RectangleShape2D avoids mutating the scene's shared shape
-## resource, which multiple simultaneous tentacles would otherwise all read.
 func _build_collision_shape() -> void:
 	var existing := _collision.shape as RectangleShape2D
 	var width := existing.size.x if existing != null and existing.size.x > 0.0 else 176.0
@@ -94,8 +74,6 @@ func _build_collision_shape() -> void:
 
 
 ## origin is the Kraken's own position - the tentacle's top stays fixed
-## there for its whole lifetime, its rotation (picked fresh each cycle)
-## is what actually varies where it strikes.
 func start(origin: Vector2) -> void:
 	global_position = origin
 	_apply_strike_angle(_pick_strike_angle())
@@ -107,9 +85,6 @@ func _pick_strike_angle() -> float:
 	return deg_to_rad(randf_range(-angle_spread_degrees * 0.5, angle_spread_degrees * 0.5))
 
 
-## The art/shadow are drawn for a leftward-leaning tentacle - mirror both
-## horizontally when the picked angle points right instead, so the curve
-## reads correctly on that side rather than just rotating a left-facing pose.
 func _apply_strike_angle(angle: float) -> void:
 	rotation = angle
 	var flip := angle < 0.0
@@ -173,11 +148,6 @@ func _enter_down() -> void:
 	_play_down_sequence()
 
 
-## Extend (rising into view) plays first, then Attack - the strike/damage
-## check lands with Attack, not while it's still rising - then freezes on
-## hold_frame (a specific pose from Extend, e.g. "fully up, sitting in the
-## water") for the rest of the down window. Missing animations are skipped
-## gracefully, falling back to an instant strike.
 func _play_down_sequence() -> void:
 	if _has_animation(&"Extend"):
 		_animated_sprite.play(&"Extend")
@@ -208,8 +178,6 @@ func _has_animation(animation_name: StringName) -> bool:
 	return _animated_sprite.sprite_frames != null and _animated_sprite.sprite_frames.has_animation(animation_name)
 
 
-## The strike lands at the tip (tentacle_reach along the current angle from
-## the Kraken), not at the root - the root never moves.
 func _get_strike_tip() -> Vector2:
 	return global_position + Vector2(0.0, tentacle_reach).rotated(rotation)
 
@@ -222,21 +190,13 @@ func _strike_player() -> void:
 		player.take_damage(smash_damage)
 
 
-## Shifts the drawn sprite down by half its frame height so the node's own
-## position is the tentacle's top instead of its center - the Kraken's own
-## position (this node's origin) becomes the point it visibly hangs from,
-## same trick as the shadow silhouette below.
 func _anchor_sprite_to_top() -> void:
 	var texture := _get_frame_texture(&"Extend", 0)
 	if texture != null:
 		_animated_sprite.offset = _top_anchor_offset(texture)
 
 
-## Uses one frame of the tentacle's own animation as the telegraph shape -
-## a black modulate over the frame's own alpha reads as a silhouette. Grows
-## to the same scale the AnimatedSprite2D itself renders at, so the
-## telegraph previews the tentacle's actual on-screen size, not an
-## artificially resized stand-in.
+## Uses one frame of the tentacle's own animation as the telegraph shape
 func _build_shadow_silhouette() -> void:
 	var texture := _get_frame_texture(shadow_animation, shadow_frame_index)
 	if texture == null:
@@ -245,17 +205,10 @@ func _build_shadow_silhouette() -> void:
 
 	_shadow.texture = texture
 	_shadow.modulate = Color(0.0, 0.0, 0.0, 0.35)
-	# Shift the drawn texture down by half its height so the node's own
-	# position is its top edge instead of its center - offset scales with
-	# the node, so growing "scale" then grows downward from a fixed top
-	# instead of outward from the middle. Stays horizontally centered.
 	_shadow.offset = _top_anchor_offset(texture)
 	_shadow_base_scale = _animated_sprite.scale
 
 
-## Shared frame lookup used by both the sprite's own top-anchor and the
-## shadow silhouette: resolves an animation + frame index (-1 = that
-## animation's last frame) to a texture, or null if anything's missing.
 func _get_frame_texture(animation: StringName, index: int) -> Texture2D:
 	var frames := _animated_sprite.sprite_frames
 	if frames == null or not frames.has_animation(animation):
@@ -270,15 +223,10 @@ func _get_frame_texture(animation: StringName, index: int) -> Texture2D:
 	return frames.get_frame_texture(animation, resolved_index)
 
 
-## Shifts a texture down by half its height so the node's own position
-## becomes its top edge instead of its center.
 func _top_anchor_offset(texture: Texture2D) -> Vector2:
 	return Vector2(0.0, texture.get_size().y * 0.5)
 
 
-## top_level so it stays upright and never rotates/scales with the tentacle
-## (which spins to face wherever it's currently striking) - position is
-## synced manually each frame in _physics_process instead.
 func _build_health_bar() -> void:
 	_health_bar = Node2D.new()
 	_health_bar.top_level = true
