@@ -337,7 +337,7 @@ func _shake(amount: float) -> void:
 func _add_coins(amount: int):
 	coin_count += amount
 	coin_changed.emit(coin_count)
-	
+
 ## Takes coins for a curse hit. Returns false if the purse cannot pay,
 ## which tells the caller to fall back to damage instead.
 func try_steal_coins(amount: int) -> bool:

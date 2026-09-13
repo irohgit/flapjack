@@ -1,15 +1,14 @@
-[gd_resource type="Resource" script_class="ProjectileData" format=3]
+[gd_resource type="Resource" script_class="ProjectileData" format=3 uid="uid://bulg7dth0hd8c"]
 
-[ext_resource type="Script" path="res://Data/Projectiles/projectile_data.gd" id="1_projectile"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Items/Weapons/sulfur_stinkpot.png" id="2_pot"]
-[ext_resource type="Resource" path="res://Data/GroundEffects/sulfur_gas_cloud.tres" id="3_ground"]
-[ext_resource type="AudioStream" path="res://Audio/SFX/obstacle_hit.mp3" id="4_impact"]
+[ext_resource type="Script" uid="uid://cre7gs48pepsi" path="res://Data/Projectiles/projectile_data.gd" id="1_projectile"]
+[ext_resource type="Texture2D" uid="uid://bc6c1edqy1j7f" path="res://Assets/UI/Shop/Items/Weapons/sulfur_stinkpot.png" id="2_pot"]
+[ext_resource type="Resource" uid="uid://uhk6fx31ceiu" path="res://Data/GroundEffects/sulfur_gas_cloud.tres" id="3_ground"]
+[ext_resource type="AudioStream" uid="uid://bbl8l1g62mcup" path="res://Audio/SFX/obstacle_hit.mp3" id="4_impact"]
+[ext_resource type="Script" uid="uid://djyh13b16xtos" path="res://Systems/Combat/status_effect_data.gd" id="4_j1ngt"]
 
 [resource]
 script = ExtResource("1_projectile")
 texture = ExtResource("2_pot")
 scale = 0.5
-damage = 1
-pierce = 0
 death_ground_effect = ExtResource("3_ground")
 impact_sound = ExtResource("4_impact")

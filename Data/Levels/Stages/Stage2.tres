@@ -9,31 +9,15 @@
 [ext_resource type="Script" uid="uid://bgt6cqxd8jifw" path="res://Data/Levels/weighted_encounter_data.gd" id="5_d14ko"]
 [ext_resource type="PackedScene" uid="uid://g5m616ujcawl" path="res://Actors/Enemies/swamp_monster.tscn" id="5_t13e2"]
 [ext_resource type="Script" uid="uid://cytvv5o32ru6e" path="res://Data/Levels/encounter_data.gd" id="6_encounter"]
-[ext_resource type="Resource" path="res://Data/Pickups/BouncyHarpoonPickup.tres" id="7_bouncy"]
-[ext_resource type="Resource" path="res://Data/Pickups/CannonPickup.tres" id="7_cannon"]
-[ext_resource type="Resource" path="res://Data/Pickups/ClingfilmPickup.tres" id="7_clingfilm"]
-[ext_resource type="Resource" path="res://Data/Pickups/CrackedPotsPickup.tres" id="7_cracked_pots"]
-[ext_resource type="Resource" path="res://Data/Pickups/ExplosiveHarpoonPickup.tres" id="7_explosive"]
+[ext_resource type="Resource" uid="uid://upn2y8jumwn8" path="res://Data/Pickups/ClingfilmPickup.tres" id="7_clingfilm"]
+[ext_resource type="Resource" uid="uid://dxmfjwwdomuit" path="res://Data/Pickups/CrackedPotsPickup.tres" id="7_cracked_pots"]
 [ext_resource type="Resource" uid="uid://cpynird4edptk" path="res://Data/Pickups/FireballAugmentPickup.tres" id="7_fire"]
-[ext_resource type="Resource" uid="uid://bnh66tw3h3xk8" path="res://Data/Pickups/HarpoonPickup.tres" id="7_harpoon"]
-[ext_resource type="Resource" uid="uid://bkqumwc6jcphy" path="res://Data/Pickups/HealthPotion.tres" id="7_health"]
 [ext_resource type="Resource" uid="uid://c8prjyekwi7hm" path="res://Data/Pickups/HomingCannonPickup.tres" id="7_homing"]
-[ext_resource type="Resource" path="res://Data/Pickups/LiqueurMolotovPickup.tres" id="7_liqueur"]
 [ext_resource type="Resource" uid="uid://cesmcj6ctad" path="res://Data/Pickups/MagnetAugmentPickup.tres" id="7_magnet"]
-[ext_resource type="Resource" path="res://Data/Pickups/MolotovPickup.tres" id="7_molotov"]
 [ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="7_pickup_data"]
-[ext_resource type="Resource" uid="uid://e2bxh85j6kul" path="res://Data/Pickups/PierceAugmentPickup.tres" id="7_pierce"]
 [ext_resource type="Resource" uid="uid://5vagi0atsu3m" path="res://Data/Pickups/PlasmaAugmentPickup.tres" id="7_plasma"]
-[ext_resource type="Resource" uid="uid://p1kltsl8ervk" path="res://Data/Pickups/RapidFirePotion.tres" id="7_rapid"]
-[ext_resource type="Resource" uid="uid://e8bbiwbkus1o" path="res://Data/Pickups/OrbitalRicochetPickup.tres" id="7_ricochet"]
-[ext_resource type="Resource" path="res://Data/Pickups/RumMolotovPickup.tres" id="7_rum"]
-[ext_resource type="Resource" uid="uid://bcj4lyhuitxi2" path="res://Data/Pickups/ShieldPotion.tres" id="7_shield"]
-[ext_resource type="Resource" uid="uid://cmqc1v21s0l1b" path="res://Data/Pickups/SkewerHarpoonPickup.tres" id="7_skewer"]
-[ext_resource type="Resource" uid="uid://do5a365f2ffty" path="res://Data/Pickups/SpeedPotion.tres" id="7_speed"]
-[ext_resource type="Resource" path="res://Data/Pickups/SulfurStinkpotsPickup.tres" id="7_stinkpots"]
-[ext_resource type="Resource" path="res://Data/Pickups/TequilaMolotovPickup.tres" id="7_tequila"]
+[ext_resource type="Resource" uid="uid://dokkjh64ivbb1" path="res://Data/Pickups/SulfurStinkpotsPickup.tres" id="7_stinkpots"]
 [ext_resource type="PackedScene" uid="uid://3gxxy4myod8b" path="res://Actors/Enemies/PatternEnemyWaveSpawner.tscn" id="8_ygboy"]
-[ext_resource type="Resource" uid="uid://cxjxw3kq4xtdv" path="res://Data/Enemy/CerberusEnemy.tres" id="9_cerberus"]
 
 [sub_resource type="Resource" id="WeightedEnemy_bulwark"]
 script = ExtResource("1_nj72p")
@@ -61,20 +45,14 @@ metadata/_custom_type_script = "uid://dgn1ppeend4i1"
 
 [sub_resource type="Resource" id="Encounter_01_normal"]
 script = ExtResource("6_encounter")
-distance_after_previous = 0.0
+distance_after_previous = 1050.0
 enemy_pool = Array[ExtResource("1_nj72p")]([SubResource("WeightedEnemy_bulwark"), SubResource("WeightedEnemy_hunter")])
 formation_pool = Array[ExtResource("3_5467k")]([SubResource("WeightedFormation_line"), SubResource("WeightedFormation_v"), SubResource("WeightedFormation_circle")])
 
-[sub_resource type="Resource" id="WeightedEnemy_cerberus"]
-script = ExtResource("1_nj72p")
-enemy = ExtResource("9_cerberus")
-weight = 0.8
-metadata/_custom_type_script = "uid://brpre4byem6tx"
-
 [sub_resource type="Resource" id="Encounter_02_normal"]
 script = ExtResource("6_encounter")
-distance_after_previous = 650.0
-enemy_pool = Array[ExtResource("1_nj72p")]([SubResource("WeightedEnemy_bulwark"), SubResource("WeightedEnemy_hunter"), SubResource("WeightedEnemy_cerberus")])
+distance_after_previous = 1050.0
+enemy_pool = Array[ExtResource("1_nj72p")]([SubResource("WeightedEnemy_bulwark"), SubResource("WeightedEnemy_hunter")])
 formation_pool = Array[ExtResource("3_5467k")]([SubResource("WeightedFormation_line"), SubResource("WeightedFormation_v"), SubResource("WeightedFormation_circle")])
 
 [sub_resource type="Resource" id="WeightedSpecial_birds"]
@@ -85,7 +63,7 @@ metadata/_custom_type_script = "uid://bgt6cqxd8jifw"
 [sub_resource type="Resource" id="Encounter_03_special"]
 script = ExtResource("6_encounter")
 type = 1
-distance_after_previous = 450.0
+distance_after_previous = 1050.0
 special_encounter_pool = Array[ExtResource("5_d14ko")]([SubResource("WeightedSpecial_birds")])
 
 [sub_resource type="Resource" id="Encounter_04_optional_normal"]
@@ -97,7 +75,7 @@ formation_pool = Array[ExtResource("3_5467k")]([SubResource("WeightedFormation_l
 
 [sub_resource type="Resource" id="Encounter_05_normal"]
 script = ExtResource("6_encounter")
-distance_after_previous = 750.0
+distance_after_previous = 1050.0
 enemy_pool = Array[ExtResource("1_nj72p")]([SubResource("WeightedEnemy_bulwark"), SubResource("WeightedEnemy_hunter")])
 formation_pool = Array[ExtResource("3_5467k")]([SubResource("WeightedFormation_line"), SubResource("WeightedFormation_v"), SubResource("WeightedFormation_circle")])
 
@@ -110,8 +88,8 @@ formation_pool = Array[ExtResource("3_5467k")]([SubResource("WeightedFormation_l
 
 [sub_resource type="Resource" id="Encounter_07_normal"]
 script = ExtResource("6_encounter")
-distance_after_previous = 650.0
-enemy_pool = Array[ExtResource("1_nj72p")]([SubResource("WeightedEnemy_bulwark"), SubResource("WeightedEnemy_hunter"), SubResource("WeightedEnemy_cerberus")])
+distance_after_previous = 1050.0
+enemy_pool = Array[ExtResource("1_nj72p")]([SubResource("WeightedEnemy_bulwark"), SubResource("WeightedEnemy_hunter")])
 formation_pool = Array[ExtResource("3_5467k")]([SubResource("WeightedFormation_line"), SubResource("WeightedFormation_v"), SubResource("WeightedFormation_circle")])
 
 [sub_resource type="Resource" id="Encounter_08_optional_special"]
@@ -120,6 +98,31 @@ type = 1
 chance_to_run = 0.5
 distance_after_previous = 250.0
 special_encounter_pool = Array[ExtResource("5_d14ko")]([SubResource("WeightedSpecial_birds")])
+
+[sub_resource type="Resource" id="Encounter_09_normal"]
+script = ExtResource("6_encounter")
+distance_after_previous = 1050.0
+enemy_pool = Array[ExtResource("1_nj72p")]([SubResource("WeightedEnemy_bulwark"), SubResource("WeightedEnemy_hunter")])
+formation_pool = Array[ExtResource("3_5467k")]([SubResource("WeightedFormation_line"), SubResource("WeightedFormation_v"), SubResource("WeightedFormation_circle")])
+
+[sub_resource type="Resource" id="Encounter_10_optional_normal"]
+script = ExtResource("6_encounter")
+chance_to_run = 0.5
+distance_after_previous = 250.0
+enemy_pool = Array[ExtResource("1_nj72p")]([SubResource("WeightedEnemy_bulwark"), SubResource("WeightedEnemy_hunter")])
+formation_pool = Array[ExtResource("3_5467k")]([SubResource("WeightedFormation_line"), SubResource("WeightedFormation_v"), SubResource("WeightedFormation_circle")])
+
+[sub_resource type="Resource" id="Encounter_11_normal"]
+script = ExtResource("6_encounter")
+distance_after_previous = 1050.0
+enemy_pool = Array[ExtResource("1_nj72p")]([SubResource("WeightedEnemy_bulwark"), SubResource("WeightedEnemy_hunter")])
+formation_pool = Array[ExtResource("3_5467k")]([SubResource("WeightedFormation_line"), SubResource("WeightedFormation_v"), SubResource("WeightedFormation_circle")])
+
+[sub_resource type="Resource" id="Encounter_12_normal"]
+script = ExtResource("6_encounter")
+distance_after_previous = 1050.0
+enemy_pool = Array[ExtResource("1_nj72p")]([SubResource("WeightedEnemy_bulwark"), SubResource("WeightedEnemy_hunter")])
+formation_pool = Array[ExtResource("3_5467k")]([SubResource("WeightedFormation_line"), SubResource("WeightedFormation_v"), SubResource("WeightedFormation_circle")])
 
 [sub_resource type="Resource" id="Finale_boss"]
 script = ExtResource("2_h7gg0")
@@ -131,15 +134,9 @@ metadata/_custom_type_script = "uid://bhsc86o70es47"
 script = ExtResource("4_ygboy")
 level_id = &"stage_2"
 level_name = "Stage2"
-end_position = Vector2(0, -4300)
-spawn_ahead_distance = 0.0
-shop_items = Array[ExtResource("7_pickup_data")]([ExtResource("7_cannon"), ExtResource("7_harpoon"), ExtResource("7_molotov"), ExtResource("7_stinkpots"), ExtResource("7_health"), ExtResource("7_shield"), ExtResource("7_rapid"), ExtResource("7_speed"), ExtResource("7_homing"), ExtResource("7_plasma"), ExtResource("7_fire"), ExtResource("7_pierce"), ExtResource("7_ricochet"), ExtResource("7_magnet"), ExtResource("7_skewer"), ExtResource("7_bouncy"), ExtResource("7_explosive"), ExtResource("7_clingfilm"), ExtResource("7_cracked_pots"), ExtResource("7_rum"), ExtResource("7_tequila"), ExtResource("7_liqueur")])
-encounter_sequence = Array[ExtResource("6_encounter")]([SubResource("Encounter_01_normal"), SubResource("Encounter_02_normal"), SubResource("Encounter_03_special"), SubResource("Encounter_04_optional_normal"), SubResource("Encounter_05_normal"), SubResource("Encounter_06_optional_normal"), SubResource("Encounter_07_normal"), SubResource("Encounter_08_optional_special")])
-finale_trigger_position = Vector2(0, -4300)
-finale_spawn_position = Vector2(960, -4240)
+shop_items = Array[ExtResource("7_pickup_data")]([ExtResource("7_homing"), ExtResource("7_plasma"), ExtResource("7_fire"), ExtResource("7_magnet"), ExtResource("7_stinkpots"), ExtResource("7_clingfilm"), ExtResource("7_cracked_pots")])
+encounter_sequence = Array[ExtResource("6_encounter")]([SubResource("Encounter_01_normal"), SubResource("Encounter_02_normal"), SubResource("Encounter_03_special"), SubResource("Encounter_04_optional_normal"), SubResource("Encounter_05_normal"), SubResource("Encounter_06_optional_normal"), SubResource("Encounter_07_normal"), SubResource("Encounter_08_optional_special"), SubResource("Encounter_09_normal"), SubResource("Encounter_10_optional_normal"), SubResource("Encounter_11_normal"), SubResource("Encounter_12_normal")])
+finale_trigger_position = Vector2(0, -10000)
+finale_spawn_position = Vector2(960, -9940)
 finale_pool = Array[ExtResource("2_h7gg0")]([SubResource("Finale_boss")])
-gin_min = 15
-gin_max = 30
-stage_title = "Murkwood Mangroves"
-stage_subtitle = "Stage Two"
 metadata/_custom_type_script = "uid://p4ssfrvfj0uw"
