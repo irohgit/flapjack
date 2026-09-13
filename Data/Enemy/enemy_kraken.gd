@@ -3,7 +3,7 @@ extends Enemy
 
 @export_group("Tentacles")
 @export var tentacle_scene: PackedScene
-@export var tentacles_per_stage: Array[int] = [1, 1, 1]
+@export var tentacles_per_stage: Array[int] = [1, 3, 4]
 @export var stage_data: Array[EnemyData] = []
 @export var tentacle_spawn_offset := Vector2.ZERO
 

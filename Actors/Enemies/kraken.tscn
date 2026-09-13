@@ -217,8 +217,6 @@ confusion_ammo = ExtResource("9_confusion")
 position = Vector2(-2.9999998, -105.16668)
 sprite_frames = SubResource("SpriteFrames_t2cet")
 animation = &"Death"
-frame = 3
-frame_progress = 0.9490903
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1098306222]
 position = Vector2(4.9166565, -93.333336)
