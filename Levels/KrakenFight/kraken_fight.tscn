@@ -25,8 +25,8 @@ shader_parameter/glint_colour = Color(0.85, 0.92, 1, 1)
 shader_parameter/design_size = Vector2(320, 180)
 shader_parameter/camera_offset = Vector2(0, 0)
 shader_parameter/water_pixel_size = 2.0
-shader_parameter/animation_speed = 1.0
-shader_parameter/swell_drift = 0.0
+shader_parameter/animation_speed = 2.70000004023324
+shader_parameter/swell_drift = 0.019999988376960043
 shader_parameter/churn_speed = 1.0
 shader_parameter/swell_scale = 90.0
 shader_parameter/swell_stretch = 3.2
@@ -301,7 +301,7 @@ layer = -110
 [node name="Water" parent="OceanFloor" unique_id=364615905 node_paths=PackedStringArray("camera") instance=ExtResource("4_water")]
 modulate = Color(1, 1, 1, 0.1764706)
 material = SubResource("ShaderMaterial_uv1nn")
-camera = NodePath("")
+camera = NodePath("../../ShakeCamera")
 deep_water_color = Color(0.004864846, 0.064170115, 0.069873326, 1)
 wave_water_color = Color(0.016202513, 0.1346806, 0.13913924, 1)
 rim_color = Color(0.025103364, 0.15510175, 0.1561454, 1)
@@ -311,10 +311,9 @@ metadata/_edit_use_anchors_ = true
 [node name="WaterBackground" type="CanvasLayer" parent="." unique_id=25210011]
 layer = -100
 
-[node name="WaterBack" parent="WaterBackground" unique_id=25786587 node_paths=PackedStringArray("camera") instance=ExtResource("4_water")]
+[node name="WaterBack" parent="WaterBackground" unique_id=25786587 instance=ExtResource("4_water")]
 visible = false
 modulate = Color(1, 1, 1, 0.1764706)
-camera = NodePath("")
 deep_water_color = Color(0.23921569, 0.78039217, 0.81960785, 0.5882353)
 wave_water_color = Color(0.32156864, 0.85882354, 0.8784314, 0.5882353)
 rim_color = Color(0.61960787, 0.9490196, 0.9490196, 0.5882353)
@@ -322,13 +321,12 @@ foam_color = Color(0.96862745, 1, 1, 0.5882353)
 metadata/_edit_use_anchors_ = true
 
 [node name="NightLayer" type="CanvasLayer" parent="." unique_id=2013922728]
-layer = 5
+layer = -1
 
-[node name="Darkness" parent="NightLayer" unique_id=1056455170 node_paths=PackedStringArray("scroll_director") instance=ExtResource("4_water")]
+[node name="Darkness" parent="NightLayer" unique_id=1056455170 instance=ExtResource("4_water")]
 modulate = Color(1, 1, 1, 0.1764706)
 material = SubResource("ShaderMaterial_hls4e")
 script = ExtResource("9_hls4e")
-scroll_director = NodePath("")
 parallax = 5.0
 metadata/_edit_use_anchors_ = true
 
