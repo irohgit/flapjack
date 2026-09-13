@@ -65,6 +65,8 @@ metadata/_custom_type_script = "uid://1rcqoqlqlw40"
 script = ExtResource("2_pwglo")
 speaker = "Whitebeard"
 text = "Calvin...you had one task. Get the amulet so that we could get the kraken ink. It is the only substance in this world that can make your beard grow and my beard black."
+portrait = ExtResource("9_wxher")
+side = 2
 metadata/_custom_type_script = "uid://1rcqoqlqlw40"
 
 [node name="EndingCutscene" type="Control" unique_id=529416479]
