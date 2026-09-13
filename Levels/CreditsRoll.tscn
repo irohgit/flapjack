@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bq82vwum10wul" path="res://Systems/Cinematics/credits_roll.gd" id="1_3pw17"]
 [ext_resource type="FontFile" uid="uid://bocifqpdtmlvt" path="res://Assets/Fonts/MontagnaLTD.ttf" id="1_l0xxy"]
-[ext_resource type="AudioStream" uid="uid://chdisfs3feld7" path="res://Audio/BGM/Ian Post - Kings Rising - Instrumental version.mp3" id="2_l8sdk"]
+[ext_resource type="AudioStream" uid="uid://btq0trwxioi1b" path="res://Audio/BGM/Ian Post - Kings Rising - Instrumental version _NM.mp3" id="2_cdf2q"]
 [ext_resource type="Texture2D" uid="uid://cree3ehagcs5n" path="res://Assets/Cinematics/finalvictory.png" id="3_cdf2q"]
 
 [node name="CreditsRoll" type="Control" unique_id=1619834510]
@@ -76,7 +76,7 @@ Several barrels were.[/font_size]
 [font_size=32]Made at RMIT[/font_size]
 COSC2349 Games Studio 2
 2026[/center]"
-music = ExtResource("2_l8sdk")
+music = ExtResource("2_cdf2q")
 next_scene = "uid://dfgiunphxmxmr"
 
 [node name="Backdrop" type="ColorRect" parent="." unique_id=266542107]

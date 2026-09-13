@@ -55,7 +55,7 @@ metadata/_custom_type_script = "uid://1rcqoqlqlw40"
 
 [sub_resource type="Resource" id="Resource_gljos"]
 script = ExtResource("2_pwglo")
-speaker = "Whitebeard"
+speaker = "Blackbeard"
 text = "Forgive me brother..."
 portrait = ExtResource("9_wxher")
 side = 2
