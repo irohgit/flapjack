@@ -1,7 +1,7 @@
 class_name DialogueLine
 extends Resource
 
-enum Side { LEFT, RIGHT }
+enum Side { LEFT, RIGHT, FULL }
 
 @export var speaker := ""
 @export_multiline var text := ""

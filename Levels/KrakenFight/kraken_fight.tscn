@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cbcglrppq3751"]
 
 [ext_resource type="Script" uid="uid://dgmhhxl4sebdw" path="res://Levels/KrakenFight/kraken_fight.gd" id="1_script"]
+[ext_resource type="AudioStream" uid="uid://83gx7kl35kuf" path="res://Audio/BGM/Jakub Pietras - Onwards.mp3" id="2_atyfu"]
 [ext_resource type="PackedScene" uid="uid://cpy76lvb1x4cb" path="res://UI/GameUI.tscn" id="2_game_ui"]
 [ext_resource type="PackedScene" uid="uid://t7alddeyjrep" path="res://Levels/hud.tscn" id="3_hud"]
 [ext_resource type="PackedScene" uid="uid://c1hug03muahmo" path="res://Actors/Camera/water_background.tscn" id="4_water"]
@@ -10,6 +11,8 @@
 
 [node name="KrakenFight" type="Node2D" unique_id=822081891]
 script = ExtResource("1_script")
+stage_music = ExtResource("2_atyfu")
+stage_music_db = -15.0
 
 [node name="GameUI" parent="." unique_id=539804581 instance=ExtResource("2_game_ui")]
 

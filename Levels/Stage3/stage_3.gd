@@ -1,6 +1,6 @@
 extends LevelManager
 
-const NEXT_STAGE_SCENE := "res://Levels/Stage2/stage_2.tscn" #
+const NEXT_STAGE_SCENE := "res://Levels/KrakenFight/kraken_fight.tscn" #
 const DOCK_SCENE := "res://Levels/dock.tscn" #
 
 
