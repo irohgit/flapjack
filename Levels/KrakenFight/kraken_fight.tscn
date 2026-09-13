@@ -29,5 +29,6 @@ script = ExtResource("5_shake_cam")
 position = Vector2(960, 880)
 camera = NodePath("../ShakeCamera")
 
-[node name="KrakenEnemy" parent="." unique_id=1755241343 instance=ExtResource("7_kraken")]
-position = Vector2(960, 260)
+[node name="KrakenEnemy" parent="." unique_id=215655582 instance=ExtResource("7_kraken")]
+position = Vector2(954, 389)
+scale = Vector2(3, 3)

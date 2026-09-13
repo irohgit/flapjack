@@ -2,9 +2,65 @@
 
 [ext_resource type="Script" uid="uid://o4q7qekbojl1" path="res://Data/Enemy/enemy_kraken_tentacle.gd" id="1_tentacle"]
 [ext_resource type="Script" uid="uid://cv0v6ynhg51ei" path="res://Systems/Combat/HealthComponent.gd" id="2_health"]
+[ext_resource type="Texture2D" uid="uid://cn6mjorvw48bq" path="res://Assets/Enemies/Kraken/tentacle.png" id="2_tnthc"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_tentacle"]
-radius = 60.0
+[sub_resource type="AtlasTexture" id="AtlasTexture_v100q"]
+atlas = ExtResource("2_tnthc")
+region = Rect2(0, 0, 512, 768)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_naveu"]
+atlas = ExtResource("2_tnthc")
+region = Rect2(512, 0, 512, 768)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_blkxw"]
+atlas = ExtResource("2_tnthc")
+region = Rect2(0, 768, 512, 768)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n2jss"]
+atlas = ExtResource("2_tnthc")
+region = Rect2(0, 768, 512, 768)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_avpx6"]
+atlas = ExtResource("2_tnthc")
+region = Rect2(512, 768, 512, 768)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ns5jx"]
+atlas = ExtResource("2_tnthc")
+region = Rect2(0, 0, 512, 768)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g4n23"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v100q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_naveu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_blkxw")
+}],
+"loop": 0,
+"name": &"Extend",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n2jss")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_avpx6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ns5jx")
+}],
+"loop": 0,
+"name": &"Retract",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tnthc"]
+size = Vector2(176, 563)
 
 [node name="KrakenTentacle" type="Area2D" unique_id=204469274 groups=["enemy"]]
 collision_layer = 2
@@ -16,9 +72,14 @@ script = ExtResource("1_tentacle")
 color = Color(0, 0, 0, 0.35)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=684881774]
+sprite_frames = SubResource("SpriteFrames_g4n23")
+animation = &"Extend"
+frame = 2
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=613891213]
-shape = SubResource("CircleShape2D_tentacle")
+position = Vector2(6, -93.5)
+shape = SubResource("RectangleShape2D_tnthc")
 disabled = true
 
 [node name="HealthComponent" type="Node" parent="." unique_id=1269723538]

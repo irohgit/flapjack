@@ -12,10 +12,24 @@ extends Enemy
 @export var projectile_scene: PackedScene
 @export var rock_ammo: ProjectileData
 @export var confusion_ammo: ProjectileData
+## Chance that a fire trigger becomes a Swipe burst (a fan of shots in
+## different directions) instead of the usual single aimed shot.
+@export_range(0.0, 1.0, 0.01) var swipe_chance := 0.5
+@export_range(2, 12, 1) var swipe_projectile_count := 5
+@export_range(10.0, 180.0, 1.0) var swipe_spread_degrees := 90.0
+
+## kraken_idle.png's frames are natively 622x418, versus 1800x1200 for
+## kraken_swipe.png/kraken_wave.png - since they all play on one
+## AnimatedSprite2D node sharing one scale, Idle would otherwise render
+## visibly smaller. This compensates only while Idle is playing.
+const IDLE_SCALE_COMPENSATION := Vector2(1800.0 / 622.0, 1200.0 / 418.0)
+## The Swipe animation reads better smaller than the base body scale.
+const SWIPE_SCALE_MULTIPLIER := 1
 
 var _stage := 0
 var _active_tentacles: Array[KrakenTentacle] = []
 var _is_defeated := false
+var _is_swiping := false
 
 
 func _ready() -> void:
@@ -41,7 +55,26 @@ func _start_stage(stage_index: int) -> void:
 func _apply_stage_visuals(stage_index: int) -> void:
 	data = stage_data[stage_index]
 	_configure_visuals()
+	_apply_animation_scale()
 	_reset_initial_timer()
+
+
+## Called explicitly right after every _animated_sprite.play() this script
+## does, rather than reacting to animation_changed - that signal only fires
+## when the animation *name* actually changes, so re-playing "Idle" after a
+## stage swap (already "Idle" from the previous stage) would silently skip
+## re-applying the compensation and leave the old stage's scale in place.
+func _apply_animation_scale() -> void:
+	if data == null:
+		return
+	var base_scale := Vector2.ONE * data.visual_scale
+	match _animated_sprite.animation:
+		&"Idle":
+			_animated_sprite.scale = base_scale * IDLE_SCALE_COMPENSATION
+		&"Swipe":
+			_animated_sprite.scale = base_scale * SWIPE_SCALE_MULTIPLIER
+		_:
+			_animated_sprite.scale = base_scale
 
 
 func _spawn_tentacle() -> void:
@@ -96,9 +129,10 @@ func _recompute_boss_health() -> void:
 	GameEvents.boss_health_changed.emit(current, maximum)
 
 
-## Only fires while every current tentacle is hidden (i.e. not mid-attack).
+## Only fires while every current tentacle is hidden (i.e. not mid-attack)
+## and no swipe burst is already in progress.
 func _can_fire() -> bool:
-	if projectile_scene == null or (rock_ammo == null and confusion_ammo == null):
+	if _is_swiping or projectile_scene == null or (rock_ammo == null and confusion_ammo == null):
 		return false
 
 	for tentacle in _active_tentacles:
@@ -109,6 +143,14 @@ func _can_fire() -> bool:
 
 
 func _fire() -> Projectile:
+	if _has_animation(&"Swipe") and randf() < swipe_chance:
+		_do_swipe_attack()
+		return null
+
+	return _fire_single_shot()
+
+
+func _fire_single_shot() -> Projectile:
 	var ammo := _pick_ammo()
 	if ammo == null:
 		return null
@@ -135,10 +177,56 @@ func _fire() -> Projectile:
 	return shot
 
 
+## Plays the Swipe animation and, as it starts, fans swipe_projectile_count
+## shots out across swipe_spread_degrees centred on straight down - a wider,
+## less aimed alternative to the single tracked shot.
+func _do_swipe_attack() -> void:
+	_is_swiping = true
+	_animated_sprite.play(&"Swipe")
+	_apply_animation_scale()
+	_fire_swipe_burst()
+	await _animated_sprite.animation_finished
+
+	_is_swiping = false
+	if not _is_defeated:
+		_animated_sprite.play(&"Idle")
+		_apply_animation_scale()
+
+
+func _fire_swipe_burst() -> void:
+	var ammo: ProjectileData = rock_ammo if rock_ammo != null else confusion_ammo
+	if ammo == null:
+		return
+
+	var fire_position := _get_fire_position()
+	var half_spread := deg_to_rad(swipe_spread_degrees) * 0.5
+	var count := maxi(swipe_projectile_count, 1)
+
+	for i in range(count):
+		var t := 0.5 if count == 1 else float(i) / float(count - 1)
+		var angle := lerpf(-half_spread, half_spread, t)
+
+		var shot := projectile_scene.instantiate() as Projectile
+		if shot == null:
+			push_error("Kraken projectile_scene must inherit from Projectile")
+			continue
+
+		shot.data = ammo.duplicate() as ProjectileData
+		shot.direction = Vector2.DOWN.rotated(angle)
+		get_parent().add_child(shot)
+		shot.global_position = fire_position
+
+	Audio.play_sfx(data.fire_sfx, data.fire_sfx_volume_db, 0.06, data.fire_pitch)
+
+
 func _pick_ammo() -> ProjectileData:
 	if rock_ammo != null and confusion_ammo != null:
 		return rock_ammo if randf() < 0.5 else confusion_ammo
 	return rock_ammo if rock_ammo != null else confusion_ammo
+
+
+func _has_animation(anim_name: StringName) -> bool:
+	return _animated_sprite.sprite_frames != null and _animated_sprite.sprite_frames.has_animation(anim_name)
 
 
 func _defeat() -> void:

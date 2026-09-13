@@ -4,6 +4,7 @@
 [ext_resource type="AudioStream" uid="uid://bcf81qxqc8nxo" path="res://Audio/SFX/ship_destroyed.mp3" id="2_death"]
 [ext_resource type="AudioStream" uid="uid://41by6wg6cvxx" path="res://Audio/SFX/enemy_cannon_shot_1.mp3" id="3_fire"]
 [ext_resource type="Texture2D" uid="uid://cjaa334nb7qi0" path="res://Assets/Enemies/Kraken/stage3_kraken_idle.png" id="4_67mod"]
+[ext_resource type="Texture2D" uid="uid://blah1qd7g45n" path="res://Assets/Enemies/Kraken/kraken_swipe.png" id="5_o5rws"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_o5rws"]
 atlas = ExtResource("4_67mod")
@@ -29,6 +30,22 @@ region = Rect2(636, 418, 622, 418)
 atlas = ExtResource("4_67mod")
 region = Rect2(1258, 418, 622, 418)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_hgipk"]
+atlas = ExtResource("5_o5rws")
+region = Rect2(0, 0, 1800, 1200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tpu3t"]
+atlas = ExtResource("5_o5rws")
+region = Rect2(1800, 0, 1800, 1200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ql20l"]
+atlas = ExtResource("5_o5rws")
+region = Rect2(0, 1200, 1800, 1200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f1kmg"]
+atlas = ExtResource("5_o5rws")
+region = Rect2(1800, 1200, 1800, 1200)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_1fkws"]
 animations = [{
 "frames": [{
@@ -52,6 +69,23 @@ animations = [{
 }],
 "loop": 1,
 "name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hgipk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tpu3t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ql20l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f1kmg")
+}],
+"loop": 0,
+"name": &"Swipe",
 "speed": 5.0
 }]
 

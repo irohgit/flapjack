@@ -15,6 +15,10 @@ enum State { HIDDEN, TELEGRAPH, DOWN }
 @export_range(0.0, 5.0, 0.1, "or_greater") var retract_pause_max := 2.5
 ## Fraction down the visible playfield the tentacle smashes into.
 @export_range(0.0, 1.0, 0.01) var strike_depth_ratio := 0.65
+## Frame index within the Extend animation to hold on for the rest of the
+## down/vulnerable window, once Extend/Attack finish playing. -1 skips
+## freezing and just leaves it on whatever frame played last.
+@export var hold_frame := 2
 
 @onready var _health: HealthComponent = $HealthComponent
 @onready var _shadow: Polygon2D = $Shadow
@@ -59,9 +63,17 @@ func _physics_process(delta: float) -> void:
 func _enter_hidden() -> void:
 	_state = State.HIDDEN
 	_state_timer = randf_range(retract_pause_min, retract_pause_max)
+	_collision.disabled = true
+
+	if _has_animation(&"Retract"):
+		_animated_sprite.play(&"Retract")
+		await _animated_sprite.animation_finished
+		# A new cycle may have already started while we were retracting.
+		if _state != State.HIDDEN:
+			return
+
 	_shadow.visible = false
 	_animated_sprite.visible = false
-	_collision.disabled = true
 	global_position.x = _pick_strike_x()
 
 
@@ -78,10 +90,43 @@ func _enter_down() -> void:
 	_state_timer = smash_hold_time
 	_shadow.visible = false
 	_animated_sprite.visible = true
-	if _animated_sprite.sprite_frames != null:
-		_animated_sprite.play(&"Smash")
 	_collision.disabled = false
+	_play_down_sequence()
+
+
+## Extend (rising into view) plays first, then Attack - the strike/damage
+## check lands with Attack, not while it's still rising - then freezes on
+## hold_frame (a specific pose from Extend, e.g. "fully up, sitting in the
+## water") for the rest of the down window. Missing animations are skipped
+## gracefully, falling back to an instant strike.
+func _play_down_sequence() -> void:
+	if _has_animation(&"Extend"):
+		_animated_sprite.play(&"Extend")
+		await _animated_sprite.animation_finished
+		if _state != State.DOWN:
+			return
+
 	_strike_player()
+
+	if _has_animation(&"Attack"):
+		_animated_sprite.play(&"Attack")
+		await _animated_sprite.animation_finished
+		if _state != State.DOWN:
+			return
+
+	_freeze_on_hold_frame()
+
+
+func _freeze_on_hold_frame() -> void:
+	if hold_frame < 0 or not _has_animation(&"Extend"):
+		return
+	_animated_sprite.animation = &"Extend"
+	_animated_sprite.frame = hold_frame
+	_animated_sprite.pause()
+
+
+func _has_animation(animation_name: StringName) -> bool:
+	return _animated_sprite.sprite_frames != null and _animated_sprite.sprite_frames.has_animation(animation_name)
 
 
 func _strike_player() -> void:

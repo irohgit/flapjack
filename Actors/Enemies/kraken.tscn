@@ -4,53 +4,53 @@
 [ext_resource type="Script" uid="uid://fhvn78b2d6om" path="res://Data/Enemy/enemy_kraken.gd" id="1_kraken"]
 [ext_resource type="Script" uid="uid://dttjdne32amn0" path="res://Systems/Combat/status_effect_component.gd" id="3_status"]
 [ext_resource type="Texture2D" uid="uid://586tdym3ok1l" path="res://Assets/Enemies/Kraken/kraken_idle.png" id="4_fx7a1"]
-[ext_resource type="Resource" path="res://Data/Enemy/KrakenStage1.tres" id="4_stage1"]
+[ext_resource type="Resource" uid="uid://dht60exsd0wto" path="res://Data/Enemy/KrakenStage1.tres" id="4_stage1"]
 [ext_resource type="Resource" uid="uid://c1hpixv8dtt2a" path="res://Data/Enemy/KrakenStage2.tres" id="4_stage2"]
 [ext_resource type="Resource" uid="uid://8elyl23fp36x" path="res://Data/Enemy/KrakenStage3.tres" id="4_stage3"]
 [ext_resource type="Texture2D" uid="uid://blah1qd7g45n" path="res://Assets/Enemies/Kraken/kraken_swipe.png" id="5_eswaq"]
-[ext_resource type="PackedScene" path="res://Actors/Enemies/kraken_tentacle.tscn" id="5_tentacle"]
+[ext_resource type="PackedScene" uid="uid://byh3igd38upvf" path="res://Actors/Enemies/kraken_tentacle.tscn" id="5_tentacle"]
 [ext_resource type="Texture2D" uid="uid://c4nqn4mjjdu7u" path="res://Assets/Enemies/Kraken/kraken_wave.png" id="6_xfjaf"]
 [ext_resource type="PackedScene" uid="uid://bl12qi0n68b6i" path="res://Actors/Projectiles/projectile.tscn" id="7_proj"]
 [ext_resource type="Resource" uid="uid://d178fn6mvj77k" path="res://Data/Projectiles/enemy_rock.tres" id="8_rock"]
 [ext_resource type="Resource" uid="uid://c0e48rq103yt6" path="res://Data/Projectiles/voodoo_poison.tres" id="9_confusion"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_eswaq"]
-atlas = ExtResource("4_fx7a1")
-region = Rect2(14, 0, 622, 418)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_xfjaf"]
-atlas = ExtResource("4_fx7a1")
-region = Rect2(636, 0, 622, 418)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5xhqd"]
-atlas = ExtResource("4_fx7a1")
-region = Rect2(1258, 0, 622, 418)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1duyv"]
-atlas = ExtResource("4_fx7a1")
-region = Rect2(14, 418, 622, 418)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_g4wus"]
-atlas = ExtResource("4_fx7a1")
-region = Rect2(636, 418, 622, 418)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_jhsys"]
 atlas = ExtResource("4_fx7a1")
-region = Rect2(1258, 418, 622, 418)
+region = Rect2(11, 0, 623, 418)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_auwx8"]
+atlas = ExtResource("4_fx7a1")
+region = Rect2(634, 0, 623, 418)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1fkws"]
+atlas = ExtResource("4_fx7a1")
+region = Rect2(1257, 0, 623, 418)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fb4gw"]
+atlas = ExtResource("4_fx7a1")
+region = Rect2(11, 418, 623, 418)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_csd0f"]
+atlas = ExtResource("4_fx7a1")
+region = Rect2(634, 418, 623, 418)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s4bsw"]
+atlas = ExtResource("4_fx7a1")
+region = Rect2(1257, 418, 623, 418)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tne24"]
 atlas = ExtResource("5_eswaq")
 region = Rect2(0, 0, 1800, 1200)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_1fkws"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_d76o1"]
 atlas = ExtResource("5_eswaq")
 region = Rect2(1800, 0, 1800, 1200)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_fb4gw"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_6irw3"]
 atlas = ExtResource("5_eswaq")
 region = Rect2(0, 1200, 1800, 1200)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_csd0f"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_4r6nd"]
 atlas = ExtResource("5_eswaq")
 region = Rect2(1800, 1200, 1800, 1200)
 
@@ -74,28 +74,8 @@ region = Rect2(1800, 1200, 1800, 1200)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_eswaq")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xfjaf")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_5xhqd")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1duyv")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_g4wus")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_jhsys")
-}],
-"loop": 1,
-"name": &"Idle",
-"speed": 5.0
 }, {
-"frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_auwx8")
 }, {
@@ -107,8 +87,28 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_csd0f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s4bsw")
 }],
 "loop": 1,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tne24")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d76o1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6irw3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4r6nd")
+}],
+"loop": 0,
 "name": &"Swipe",
 "speed": 5.0
 }, {
@@ -125,17 +125,17 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_a0pn5")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"Wave",
 "speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s4bsw"]
-size = Vector2(221.33334, 106.66667)
+size = Vector2(484.1667, 175.16667)
 
-[node name="KrakenEnemy" type="Area2D" unique_id=215655582]
+[node name="KrakenEnemy" type="Area2D" unique_id=215655582 groups=["hazard"]]
 scale = Vector2(6, 6)
-collision_layer = 0
+collision_layer = 2
 collision_mask = 0
 script = ExtResource("1_kraken")
 tentacle_scene = ExtResource("5_tentacle")
@@ -145,12 +145,12 @@ rock_ammo = ExtResource("8_rock")
 confusion_ammo = ExtResource("9_confusion")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1149912033]
-scale = Vector2(0.3, 0.3)
+position = Vector2(-2.9999998, -105.16668)
 sprite_frames = SubResource("SpriteFrames_t2cet")
 animation = &"Idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1098306222]
-position = Vector2(4.5, -6.166666)
+position = Vector2(4.9166565, -71.083336)
 shape = SubResource("RectangleShape2D_s4bsw")
 
 [node name="StatusEffectComponent" type="Node" parent="." unique_id=1641484347]
