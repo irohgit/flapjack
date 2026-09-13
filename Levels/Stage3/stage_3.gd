@@ -1,10 +1,8 @@
 extends LevelManager
 
 const NEXT_STAGE_SCENE := "res://Levels/Stage2/stage_2.tscn" #
-const EXIT_PASSAGE_CUE_SCENE := preload("res://Actors/HUD/exit_passage_cue.tscn")
 const DOCK_SCENE := "res://Levels/dock.tscn" #
 
-@onready var game_ui: GameUI = $GameUI
 
 func _ready() -> void:
 	var finale_spawned: bool = await run_generated_stage()
@@ -21,20 +19,7 @@ func _ready() -> void:
 		push_error("Stage 3 cannot unlock its exit without a player")
 		return
 	
-	await _finish_stage_normally(player)
+	await finish_stage_normally(player)
 		
 func _load_next_stage() -> void:
-	get_tree().change_scene_to_file(NEXT_STAGE_SCENE)
-
-## Every clear after the first: shop, passage, Stage 2.
-func _finish_stage_normally(player: Player) -> void:
-	game_ui.open_shop(player, level_generator.level_data)
-	await game_ui.shop_closed
-
-	var exit_passage_cue := EXIT_PASSAGE_CUE_SCENE.instantiate()
-	$HUD.add_child(exit_passage_cue)
-	$HUD.move_child(exit_passage_cue, 0)
-	player.allow_forward_exit()
-	await player.exited_play_area
-	GlobalPlayer.capture_checkpoint(player)
-	_load_next_stage()
+	Transition.change_scene(NEXT_STAGE_SCENE)

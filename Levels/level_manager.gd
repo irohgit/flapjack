@@ -1,6 +1,6 @@
 class_name LevelManager
 extends Node
-
+const EXIT_PASSAGE_CUE_SCENE := preload("res://Actors/HUD/exit_passage_cue.tscn")
 signal sequence_completed
 
 @export var scroll_director: ScrollDirector
@@ -14,6 +14,8 @@ signal sequence_completed
 @export_range(-40.0, 6.0, 0.5) var stage_music_db := -6.0
 @export_range(0.0, 8.0, 0.1) var music_fade_in := 2.0
 @onready var _world: Node2D = $World
+@onready var game_HUD: CanvasLayer = $HUD
+@onready var game_ui: GameUI = $GameUI
 
 @export_group("Entry Script")
 @export var entry_enabled := true
@@ -339,9 +341,11 @@ func run_midboss_encounter(encounter: GeneratedEncounter) -> void:
 	while is_instance_valid(boss) and not _plan_cancelled:
 		death_position = boss.global_position
 		await get_tree().process_frame
+	
 	if _plan_cancelled:
 		return
-
+	await game_HUD.wait_for_victory_banner()
+	
 	# The reward owns its own beat and frees itself once collected.
 	if first_time and encounter.midboss_reward_scene != null:
 		var reward := encounter.midboss_reward_scene.instantiate() as Node2D
@@ -404,3 +408,23 @@ func _show_stage_title() -> void:
 		push_warning("No StageTitleCard in the scene, skipping the chapter card")
 		return
 	await card.show_title(data.stage_title, data.stage_subtitle, data.title_hold)
+	
+## Every clear after the first: shop, passage, next stage.
+func finish_stage_normally(player: Player) -> void:
+	await game_HUD.wait_for_victory_banner()
+	game_ui.open_shop(player, level_generator.level_data)
+	await game_ui.shop_closed
+
+	var exit_passage_cue := EXIT_PASSAGE_CUE_SCENE.instantiate()
+	$HUD.add_child(exit_passage_cue)
+	$HUD.move_child(exit_passage_cue, 0)
+	player.allow_forward_exit()
+	await player.exited_play_area
+	GlobalPlayer.capture_checkpoint(player)
+	_load_next_stage()
+
+
+## Each stage decides where it goes. Override in the stage script.
+func _load_next_stage() -> void:
+	push_error("%s did not override _load_next_stage" % name)
+	

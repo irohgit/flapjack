@@ -50,7 +50,7 @@ metadata/_custom_type_script = "uid://dgn1ppeend4i1"
 
 [sub_resource type="Resource" id="Encounter_04_optional_reinforcement"]
 script = ExtResource("6_encounter")
-distance_after_previous = 250.0
+distance_after_previous = 0.0
 max_pack_size = 3
 enemy_pool = Array[ExtResource("1_enemy")]([SubResource("Enemy_bulwark"), SubResource("Enemy_hunter_early")])
 formation_pool = Array[ExtResource("3_formation")]([SubResource("Formation_line")])
@@ -79,7 +79,7 @@ metadata/_custom_type_script = "uid://cytvv5o32ru6e"
 [sub_resource type="Resource" id="Resource_fmiii"]
 script = ExtResource("6_encounter")
 type = 4
-distance_after_previous = 1850.0
+distance_after_previous = 1800.0
 midboss_scene = ExtResource("9_bv1kr")
 midboss_intro = ExtResource("29_2rc1s")
 midboss_outro = ExtResource("6_upv3c")
@@ -146,7 +146,7 @@ metadata/_custom_type_script = "uid://cytvv5o32ru6e"
 [sub_resource type="Resource" id="Encounter_14_final_fleet"]
 script = ExtResource("6_encounter")
 type = 3
-distance_after_previous = 750.0
+distance_after_previous = 450.0
 min_pack_size = 6
 max_pack_size = 6
 enemy_pool = Array[ExtResource("1_enemy")]([SubResource("Enemy_bulwark"), SubResource("Enemy_hunter_late")])
@@ -171,11 +171,11 @@ metadata/_custom_type_script = "uid://bhsc86o70es47"
 script = ExtResource("4_level")
 level_id = &"stage_1"
 level_name = "Stage1"
-end_position = Vector2(0, -8000)
+end_position = Vector2(0, -6600)
 shop_items = Array[ExtResource("7_pickup_data")]([ExtResource("7_cannon"), ExtResource("7_harpoon"), ExtResource("7_molotov"), ExtResource("7_stinkpots"), ExtResource("7_health"), ExtResource("7_shield"), ExtResource("7_rapid"), ExtResource("7_speed"), ExtResource("7_homing"), ExtResource("7_plasma"), ExtResource("7_fire"), ExtResource("7_pierce"), ExtResource("7_ricochet")])
 encounter_sequence = Array[ExtResource("6_encounter")]([SubResource("Encounter_04_optional_reinforcement"), SubResource("Encounter_05_mixed_fleet"), SubResource("Resource_fmiii"), SubResource("Encounter_06_bird_warning"), SubResource("Encounter_03_first_hunters"), SubResource("Encounter_08_optional_circle"), SubResource("Encounter_13_late_fleet"), SubResource("Encounter_14_final_fleet"), SubResource("Encounter_15_final_birds")])
-finale_trigger_position = Vector2(0, -8000)
-finale_spawn_position = Vector2(960, -7600)
+finale_trigger_position = Vector2(0, -6600)
+finale_spawn_position = Vector2(960, -6540)
 finale_pool = Array[ExtResource("2_finale")]([SubResource("Finale_stage_clear")])
 gin_min = 20
 gin_max = 20

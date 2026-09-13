@@ -125,8 +125,6 @@ func _unhandled_input(event: InputEvent) -> void:
 
 	if not OS.is_debug_build():
 		return
-	if not OS.is_debug_build():
-		return
 
 	#1. Kill self instantly
 	if event.is_action_pressed("kill_self"):
