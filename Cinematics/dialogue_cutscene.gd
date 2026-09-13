@@ -6,6 +6,9 @@ signal finished
 @export var lines: Array[DialogueLine] = []
 @export var advance_action: StringName = &"ui_accept"
 @export var line_sfx_volume_db := -8.0
+## Scene to load when this cutscene ends. Leave empty for cutscenes that are
+## added as a child and whose caller handles what comes next.
+@export_file("*.tscn") var next_scene := ""
 
 @onready var _speaker: Label = $SayBox/VBox/SpeakerLabel
 @onready var _text: RichTextLabel = $SayBox/VBox/TextLabel
@@ -43,6 +46,8 @@ func _play_all() -> void:
 		if not is_inside_tree():
 			return
 	finished.emit()
+	if next_scene != "":
+		Transition.change_scene(next_scene)
 
 
 func _play_line(line: DialogueLine) -> void:

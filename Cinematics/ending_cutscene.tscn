@@ -42,6 +42,7 @@ script = ExtResource("2_pwglo")
 speaker = "Blackbeard"
 text = "My beard! Where has it gone?"
 portrait = ExtResource("7_ekdk8")
+side = 2
 metadata/_custom_type_script = "uid://1rcqoqlqlw40"
 
 [sub_resource type="Resource" id="Resource_wxher"]
@@ -75,6 +76,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_n1n3k")
 lines = Array[ExtResource("2_pwglo")]([SubResource("Resource_n1n3k"), SubResource("Resource_6y8p8"), SubResource("Resource_8tq3m"), SubResource("Resource_ah7bp"), SubResource("Resource_t08ni"), SubResource("Resource_wxher"), SubResource("Resource_gljos"), SubResource("Resource_gaeai")])
+next_scene = "uid://co7yh4hjdukdo"
 
 [node name="FullImage" type="TextureRect" parent="." unique_id=398402274]
 layout_mode = 1
