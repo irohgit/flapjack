@@ -4,26 +4,26 @@
 		"quantity": 1.0,
 		"weight": 3.0,
 		"level": "stage_2",
-		"rolls": 2
+		"rolls": 2.0
 	},
 	{
 		"item": "flapjack:silver_coin",
 		"quantity": 1.0,
 		"weight": 9.0,
 		"level": "stage_2",
-		"rolls": 2
+		"rolls": 2.0
 	},
 	{
 		"item": "flapjack:bronze_coin",
 		"quantity": 1.0,
 		"weight": 18.0,
 		"level": "stage_2",
-		"rolls": 2
+		"rolls": 2.0
 	},
 	{
 		"item": "none",
 		"weight": 80.0,
 		"level": "stage_2",
-		"rolls": 2
+		"rolls": 2.0
 	}
 ]

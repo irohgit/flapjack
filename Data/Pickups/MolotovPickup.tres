@@ -1,17 +1,17 @@
-[gd_resource type="Resource" script_class="PickupData" format=3]
+[gd_resource type="Resource" script_class="PickupData" format=3 uid="uid://dwua8mjekx2rt"]
 
-[ext_resource type="Script" path="res://Data/Pickups/pickup_data.gd" id="1_pickup"]
-[ext_resource type="Resource" path="res://Data/Weapons/Molotov.tres" id="2_content"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Items/Weapons/molotov.png" id="3_icon"]
+[ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="1_pickup"]
+[ext_resource type="Resource" uid="uid://b8dk8xcetmgj1" path="res://Data/Weapons/Molotov.tres" id="2_content"]
+[ext_resource type="Texture2D" uid="uid://r8o5xa1cccai" path="res://Assets/UI/Shop/Items/Weapons/molotov.png" id="3_icon"]
 
 [resource]
 script = ExtResource("1_pickup")
 item_id = &"flapjack:molotov"
 pickup_type = 1
+texture = ExtResource("3_icon")
 weapon = ExtResource("2_content")
 notification_name = "Molotov"
 shop_id = &"molotov"
-shop_price = 28
 shop_description = "Automatically throws a Molotov in a random direction. The bottle breaks on landing, leaving a fire patch that burns enemies."
-texture = ExtResource("3_icon")
 shop_icon = ExtResource("3_icon")
+shop_price = 28

@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dfww4fxipct38" path="res://Data/Weapons/weapon_data.gd" id="1_weapon"]
 [ext_resource type="Script" uid="uid://cv6um4mw0qupw" path="res://Data/Weapons/lobbed_weapon_behaviour.gd" id="2_behaviour"]
 [ext_resource type="PackedScene" uid="uid://bykqm8c2pcb6t" path="res://Actors/Projectiles/lobbed_projectile.tscn" id="3_scene"]
-[ext_resource type="Resource" path="res://Data/Projectiles/molotov.tres" id="4_projectile"]
+[ext_resource type="Resource" uid="uid://bpynqogyuhp6y" path="res://Data/Projectiles/molotov.tres" id="4_projectile"]
 [ext_resource type="Texture2D" uid="uid://r8o5xa1cccai" path="res://Assets/UI/Shop/Items/Weapons/molotov.png" id="5_icon"]
 
 [sub_resource type="Resource" id="Behaviour"]
