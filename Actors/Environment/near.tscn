@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cvvyhcgqrkc52"]
+
+[ext_resource type="Script" uid="uid://db24k72wqrmi" path="res://Actors/Environment/near.gd" id="1_xtv4c"]
+
+[node name="Near" type="Node2D" unique_id=50791970]
+script = ExtResource("1_xtv4c")

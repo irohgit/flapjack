@@ -1,17 +1,16 @@
-[gd_resource type="Resource" script_class="PickupData" format=3]
+[gd_resource type="Resource" script_class="PickupData" format=3 uid="uid://upn2y8jumwn8"]
 
-[ext_resource type="Script" path="res://Data/Pickups/pickup_data.gd" id="1_pickup"]
-[ext_resource type="Resource" path="res://Data/Augments/SulfurStinkpots/Clingfilm.tres" id="2_content"]
-[ext_resource type="Texture2D" path="res://Assets/GroundEffects/gas_cloud.png" id="3_icon"]
+[ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="1_pickup"]
+[ext_resource type="Resource" uid="uid://c0efeey0r2564" path="res://Data/Augments/SulfurStinkpots/Clingfilm.tres" id="2_content"]
+[ext_resource type="Texture2D" uid="uid://i05onw82srlw" path="res://Assets/GroundEffects/gas_cloud.png" id="3_icon"]
 
 [resource]
 script = ExtResource("1_pickup")
 item_id = &"flapjack:clingfilm"
-pickup_type = 0
+texture = ExtResource("3_icon")
 augment = ExtResource("2_content")
 notification_name = "Clingfilm"
 shop_id = &"clingfilm"
 shop_description = "Pots stick to the first enemy they hit, making it carry the gas cloud."
-shop_price = 95
-texture = ExtResource("3_icon")
 shop_icon = ExtResource("3_icon")
+shop_price = 95

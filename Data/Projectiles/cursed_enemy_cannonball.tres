@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ProjectileData" format=3 uid="uid://lal2aausnm0c"]
+
+[ext_resource type="AudioStream" uid="uid://byy7pb1556tpq" path="res://Audio/distant_cannon.mp3" id="1_o37lc"]
+[ext_resource type="Script" uid="uid://cre7gs48pepsi" path="res://Data/Projectiles/projectile_data.gd" id="2_fqyv2"]
+[ext_resource type="Script" uid="uid://djyh13b16xtos" path="res://Systems/Combat/status_effect_data.gd" id="3_cabuu"]
+[ext_resource type="Texture2D" uid="uid://csr8gl21i8k6k" path="res://Assets/Projectiles/enemy_cannonball.png" id="4_bc2im"]
+
+[resource]
+script = ExtResource("2_fqyv2")
+allegiance = 1
+texture = ExtResource("4_bc2im")
+scale = 0.5
+speed = 550.0
+trail_colour = Color(1.307195, 0.5989421, 0.374208, 0.32156864)
+trail_length = 20
+impact_sound = ExtResource("1_o37lc")
+metadata/_custom_type_script = "uid://cre7gs48pepsi"

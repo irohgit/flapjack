@@ -11,6 +11,6 @@ display_description = "+ Max Health"
 stat_type = 2
 tier = 3
 icon = ExtResource("1_iroo8")
-level_costs = Array[int]([50, 75, 100])
+level_costs = Array[int]([20, 20, 20])
 bonus_per_level = 1.0
 metadata/_custom_type_script = "uid://syfvycgndo0d"

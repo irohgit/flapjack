@@ -1,0 +1,270 @@
+class_name EnemyKraken
+extends Enemy
+
+@export_group("Tentacles")
+@export var tentacle_scene: PackedScene
+@export var tentacles_per_stage: Array[int] = [1, 3, 4]
+@export var stage_data: Array[EnemyData] = []
+@export var tentacle_spawn_offset := Vector2.ZERO
+
+@export_group("Projectiles")
+@export var projectile_scene: PackedScene
+@export var rock_ammo: ProjectileData
+@export var confusion_ammo: ProjectileData
+## Chance that a fire trigger becomes a Swipe burst (a fan of shots in different directions) instead of the usual single aimed shot.
+@export_range(0.0, 1.0, 0.01) var swipe_chance := 0.8
+@export_range(2, 12, 1) var swipe_projectile_count := 5
+@export_range(10.0, 180.0, 1.0) var swipe_spread_degrees := 90.0
+@export var swipe_vertical_offset := 100.0
+
+const IDLE_SCALE_COMPENSATION := Vector2(1800.0 / 622.0, 1200.0 / 418.0)
+const SWIPE_SCALE_MULTIPLIER := 1
+const DEATH_SCALE_MULTIPLIER := 4
+
+var _stage := 0
+var _active_tentacles: Array[KrakenTentacle] = []
+var _is_defeated := false
+var _is_swiping := false
+var _fight_total_max := 0
+var _fight_destroyed_max := 0
+var _base_sprite_position := Vector2.ZERO
+
+
+func _ready() -> void:
+	assert(tentacle_scene != null, "Kraken needs a tentacle_scene to spawn its attacks")
+	assert(
+		stage_data.size() == tentacles_per_stage.size(),
+		"Kraken needs one stage_data entry per tentacles_per_stage entry"
+	)
+
+	GameEvents.boss_name_changed.emit("KRAKEN")
+	_base_sprite_position = _animated_sprite.position
+	_fight_total_max = _compute_fight_total_max()
+	call_deferred("_start_stage", 0)
+
+
+## Every tentacle comes from the same scene
+func _compute_fight_total_max() -> int:
+	var probe := tentacle_scene.instantiate() as KrakenTentacle
+	if probe == null:
+		return 0
+	var per_tentacle := probe.tentacle_health
+	probe.queue_free()
+
+	var total_count := 0
+	for count in tentacles_per_stage:
+		total_count += count
+	return total_count * per_tentacle
+
+
+func _start_stage(stage_index: int) -> void:
+	_stage = stage_index
+	_active_tentacles.clear()
+	_apply_stage_visuals(stage_index)
+
+	var tentacle_count: int = tentacles_per_stage[_stage]
+	for i in range(tentacle_count):
+		_spawn_tentacle()
+
+func _apply_stage_visuals(stage_index: int) -> void:
+	data = stage_data[stage_index]
+	_configure_visuals()
+	_apply_animation_scale()
+	_reset_initial_timer()
+
+
+func _apply_animation_scale() -> void:
+	if data == null:
+		return
+	var base_scale := Vector2.ONE * data.visual_scale
+	match _animated_sprite.animation:
+		&"Idle":
+			_animated_sprite.scale = base_scale * IDLE_SCALE_COMPENSATION
+			_animated_sprite.position = _base_sprite_position
+		&"Swipe":
+			_animated_sprite.scale = base_scale * SWIPE_SCALE_MULTIPLIER
+			_animated_sprite.position = _base_sprite_position + Vector2(0.0, swipe_vertical_offset)
+		&"Death":
+			_animated_sprite.scale = base_scale * DEATH_SCALE_MULTIPLIER
+			_animated_sprite.position = _base_sprite_position
+		_:
+			_animated_sprite.scale = base_scale
+			_animated_sprite.position = _base_sprite_position
+
+
+func _spawn_tentacle() -> void:
+	var tentacle := tentacle_scene.instantiate() as KrakenTentacle
+	if tentacle == null:
+		push_error("Kraken tentacle_scene must inherit from KrakenTentacle")
+		return
+
+	get_parent().add_child(tentacle)
+	tentacle.tentacle_health_changed.connect(_on_tentacle_health_changed)
+	tentacle.tentacle_destroyed.connect(_on_tentacle_destroyed.bind(tentacle))
+	_active_tentacles.append(tentacle)
+	tentacle.start(_get_tentacle_spawn_origin())
+	_recompute_boss_health()
+
+
+func _get_tentacle_spawn_origin() -> Vector2:
+	return _animated_sprite.global_position + tentacle_spawn_offset
+
+
+func _on_tentacle_health_changed(_current: int, _maximum: int) -> void:
+	_recompute_boss_health()
+
+
+func _on_tentacle_destroyed(tentacle: KrakenTentacle) -> void:
+	_fight_destroyed_max += tentacle.get_max_health()
+	_active_tentacles.erase(tentacle)
+	_recompute_boss_health()
+
+	if not _active_tentacles.is_empty():
+		return
+	if _stage + 1 < tentacles_per_stage.size():
+		call_deferred("_start_stage", _stage + 1)
+	else:
+		call_deferred("_defeat")
+
+
+## Whole-fight remaining = the total pool, minus tentacles already fully destroyed, minus damage sustained by tentacles still alive right now.
+func _recompute_boss_health() -> void:
+	if _fight_total_max <= 0:
+		return
+
+	var active_current := 0
+	var active_maximum := 0
+	for tentacle in _active_tentacles:
+		if is_instance_valid(tentacle):
+			active_current += tentacle.get_current_health()
+			active_maximum += tentacle.get_max_health()
+
+	var fight_current := _fight_total_max - _fight_destroyed_max - (active_maximum - active_current)
+	GameEvents.boss_health_changed.emit(fight_current, _fight_total_max)
+
+
+## Only fires while every current tentacle is hidden (not mid-attack),
+func _can_fire() -> bool:
+	if _is_defeated or _is_swiping or projectile_scene == null or (rock_ammo == null and confusion_ammo == null):
+		return false
+
+	for tentacle in _active_tentacles:
+		if is_instance_valid(tentacle) and tentacle.is_attacking():
+			return false
+
+	return true
+
+
+func _fire() -> Projectile:
+	if _has_animation(&"Swipe") and randf() < swipe_chance:
+		_do_swipe_attack()
+		return null
+
+	return _fire_single_shot()
+
+
+func _fire_single_shot() -> Projectile:
+	var ammo := _pick_ammo()
+	if ammo == null:
+		return null
+
+	var fire_position := _get_fire_position()
+	var aim_direction := Vector2.DOWN
+	var player := get_tree().get_first_node_in_group("player") as Node2D
+	if player != null:
+		var direction_to_player := fire_position.direction_to(player.global_position)
+		if not direction_to_player.is_zero_approx():
+			aim_direction = direction_to_player
+
+	var shot := _spawn_projectile_shot(ammo, fire_position, aim_direction)
+	if shot != null:
+		_play_fire_sfx()
+	return shot
+
+
+func _spawn_projectile_shot(ammo: ProjectileData, spawn_position: Vector2, direction: Vector2) -> Projectile:
+	var shot := projectile_scene.instantiate() as Projectile
+	if shot == null:
+		push_error("Kraken projectile_scene must inherit from Projectile")
+		return null
+
+	shot.data = ammo.duplicate() as ProjectileData
+	shot.direction = direction
+	get_parent().add_child(shot)
+	shot.global_position = spawn_position
+	return shot
+
+
+func _play_fire_sfx() -> void:
+	Audio.play_sfx(data.fire_sfx, data.fire_sfx_volume_db, 0.06, data.fire_pitch)
+
+
+func _do_swipe_attack() -> void:
+	_is_swiping = true
+	_animated_sprite.play(&"Swipe")
+	_apply_animation_scale()
+	_fire_swipe_burst()
+	await _animated_sprite.animation_finished
+
+	_is_swiping = false
+	if not _is_defeated:
+		_animated_sprite.play(&"Idle")
+		_apply_animation_scale()
+
+
+func _fire_swipe_burst() -> void:
+	var ammo: ProjectileData = rock_ammo if rock_ammo != null else confusion_ammo
+	if ammo == null:
+		return
+
+	var fire_position := _get_fire_position()
+	var half_spread := deg_to_rad(swipe_spread_degrees) * 0.5
+	var count := maxi(swipe_projectile_count, 1)
+
+	for i in range(count):
+		var t := 0.5 if count == 1 else float(i) / float(count - 1)
+		var angle := lerpf(-half_spread, half_spread, t)
+		_spawn_projectile_shot(ammo, fire_position, Vector2.DOWN.rotated(angle))
+
+	_play_fire_sfx()
+
+
+func _pick_ammo() -> ProjectileData:
+	if rock_ammo != null and confusion_ammo != null:
+		return rock_ammo if randf() < 0.5 else confusion_ammo
+	return rock_ammo if rock_ammo != null else confusion_ammo
+
+
+func _has_animation(anim_name: StringName) -> bool:
+	return _animated_sprite.sprite_frames != null and _animated_sprite.sprite_frames.has_animation(anim_name)
+
+
+func _defeat() -> void:
+	if _is_defeated:
+		return
+	_is_defeated = true
+
+	set_physics_process(false)
+
+	# Stop dealing contact damage the moment it's defeated, even though the death animation keeps it on screen a little longer.
+	set_deferred("monitoring", false)
+	set_deferred("monitorable", false)
+
+	for cam in get_tree().get_nodes_in_group("shake_camera"):
+		if cam is ShakeCamera:
+			cam.add_trauma(0.15)
+			break
+
+	if _has_animation(&"Death"):
+		_animated_sprite.play(&"Death")
+		_apply_animation_scale()
+		await _animated_sprite.animation_finished
+
+	Audio.play_sfx(data.death_sfx, -4.0)
+	GameEvents.boss_defeated.emit(global_position)
+	queue_free()
+
+
+# The Kraken body can never be damaged directly - only its tentacles can.
+func take_damage(_amount: int) -> void:
+	pass

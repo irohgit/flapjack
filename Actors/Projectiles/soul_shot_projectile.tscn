@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://dacryxf13jmns"]
+
+[ext_resource type="Script" uid="uid://b7kqv448nvwgj" path="res://Actors/Projectiles/soul_shot_projectile.gd" id="1_l5t8u"]
+[ext_resource type="Resource" uid="uid://82lcrr73pi6g" path="res://Data/Projectiles/davyjones_soulshot.tres" id="2_6ls5s"]
+[ext_resource type="AudioStream" uid="uid://bbl8l1g62mcup" path="res://Audio/SFX/obstacle_hit.mp3" id="2_opvom"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wyght"]
+
+[sub_resource type="Curve" id="Curve_s6q3q"]
+_data = [Vector2(0.0014409218, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.0021277666), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_yys3n"]
+colors = PackedColorArray(0.680529, 0.8435728, 0.92674845, 1, 1, 1, 1, 0)
+
+[node name="SoulProjectile" type="Area2D" unique_id=1512241293]
+collision_layer = 4
+collision_mask = 34
+script = ExtResource("1_l5t8u")
+strip_sfx = ExtResource("2_opvom")
+data = ExtResource("2_6ls5s")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=492757982]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1875046026]
+shape = SubResource("CircleShape2D_wyght")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2055281263]
+
+[node name="Line2D" type="Line2D" parent="." unique_id=1035360307]
+width = 13.0
+width_curve = SubResource("Curve_s6q3q")
+gradient = SubResource("Gradient_yys3n")
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1304408751]
+rect = Rect2(-15, -15, 30, 30)

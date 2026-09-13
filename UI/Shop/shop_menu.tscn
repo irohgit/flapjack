@@ -3,13 +3,13 @@
 [ext_resource type="Script" uid="uid://mibkq2861k2d" path="res://UI/Shop/shop_menu.gd" id="1_script"]
 [ext_resource type="FontFile" uid="uid://1qarew2on3k7" path="res://Assets/Fonts/PixelOperator.ttf" id="2_font"]
 [ext_resource type="FontFile" uid="uid://cvo681c1hvgca" path="res://Assets/Fonts/Montserrat/static/Montserrat-Black.ttf" id="3_title_font"]
+[ext_resource type="Texture2D" uid="uid://dsy6fgwtedjnx" path="res://Assets/Cinematics/flapjack_wink_512x640.png" id="4_1w5pd"]
 [ext_resource type="Texture2D" uid="uid://vdcjhgb07r4x" path="res://Assets/UI/WoodMenu/wood_settings_panel.png" id="4_panel"]
 [ext_resource type="Texture2D" uid="uid://cjjelj1l1pyip" path="res://Assets/UI/WoodMenu/wood_button.png" id="5_button"]
-[ext_resource type="Texture2D" uid="uid://kxxrj3v5jv4l" path="res://Assets/UI/WoodMenu/octopus_crest.png" id="6_octopus"]
 [ext_resource type="Texture2D" uid="uid://rgu14womy8pw" path="res://Assets/Characters/vinny_drink_288x48.png" id="7_vinny"]
 [ext_resource type="Texture2D" uid="uid://8d7deqyu8e26" path="res://Assets/UI/Shop/Icons/Status/coin.png" id="8_coin"]
 [ext_resource type="PackedScene" uid="uid://das28foe55u6f" path="res://UI/navbutton.tscn" id="9_nav"]
-[ext_resource type="PackedScene" path="res://UI/Shop/shop_offer_card.tscn" id="10_offer"]
+[ext_resource type="PackedScene" uid="uid://0l7o0gwdyrvw" path="res://UI/Shop/shop_offer_card.tscn" id="10_offer"]
 [ext_resource type="AudioStream" uid="uid://dshox3m1impsv" path="res://Audio/SFX/soft_hover.mp3" id="11_hover"]
 [ext_resource type="AudioStream" uid="uid://dc263ntmf6iew" path="res://Audio/SFX/ui_click_stylized.mp3" id="12_click"]
 
@@ -69,6 +69,7 @@ animations = [{
 
 [node name="ShopMenu" type="Control" unique_id=992627864 node_paths=PackedStringArray("first_focus")]
 process_mode = 3
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -103,12 +104,12 @@ expand_mode = 1
 [node name="Octopus" type="TextureRect" parent="MerchantPanel" unique_id=1125725358]
 texture_filter = 1
 layout_mode = 0
-offset_left = 415.0
-offset_top = 18.0
-offset_right = 589.0
-offset_bottom = 178.0
+offset_left = 411.0
+offset_top = -14.0
+offset_right = 585.0
+offset_bottom = 146.0
 mouse_filter = 2
-texture = ExtResource("6_octopus")
+texture = ExtResource("4_1w5pd")
 expand_mode = 1
 stretch_mode = 5
 
@@ -142,7 +143,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Vinny" type="Node2D" parent="." unique_id=887767598]
-position = Vector2(530, 422)
+position = Vector2(520.00006, 523.00006)
 scale = Vector2(5.5, 5.5)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Vinny" unique_id=823351195]
@@ -151,40 +152,13 @@ sprite_frames = SubResource("SpriteFrames_vinny")
 animation = &"drink"
 autoplay = "drink"
 
-[node name="DialoguePlaque" type="TextureRect" parent="." unique_id=2142187876]
-texture_filter = 1
-layout_mode = 0
-offset_left = 112.0
-offset_top = 570.0
-offset_right = 956.0
-offset_bottom = 730.0
-mouse_filter = 2
-texture = ExtResource("5_button")
-expand_mode = 1
-
-[node name="MerchantDialogue" type="Label" parent="DialoguePlaque" unique_id=736434606]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 62.0
-offset_top = 34.0
-offset_right = 782.0
-offset_bottom = 126.0
-theme_override_colors/font_color = Color(1, 0.93, 0.75, 1)
-theme_override_colors/font_outline_color = Color(0.02, 0.004, 0, 1)
-theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 27
-text = "'Pick something that catches your eye.'"
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 2
-
 [node name="SelectionPlaque" type="TextureRect" parent="." unique_id=475545915]
 texture_filter = 1
 layout_mode = 0
-offset_left = 112.0
-offset_top = 744.0
-offset_right = 956.0
-offset_bottom = 936.0
+offset_left = 186.0
+offset_top = 666.0
+offset_right = 886.0
+offset_bottom = 858.0
 mouse_filter = 2
 texture = ExtResource("5_button")
 expand_mode = 1
@@ -192,15 +166,40 @@ expand_mode = 1
 [node name="SelectionInfo" type="Label" parent="SelectionPlaque" unique_id=458613720]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 62.0
 offset_top = 27.0
-offset_right = 782.0
+offset_right = 720.0
 offset_bottom = 162.0
 theme_override_colors/font_color = Color(0.53, 0.93, 0.85, 1)
 theme_override_colors/font_outline_color = Color(0.02, 0.004, 0, 1)
 theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 21
+theme_override_font_sizes/font_size = 36
 text = "SELECT AN OFFER TO INSPECT IT."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="DialoguePlaque" type="TextureRect" parent="." unique_id=2142187876]
+texture_filter = 1
+layout_mode = 0
+offset_left = 125.0
+offset_top = 283.0
+offset_right = 969.0
+offset_bottom = 443.0
+mouse_filter = 2
+expand_mode = 1
+
+[node name="MerchantDialogue" type="Label" parent="DialoguePlaque" unique_id=736434606]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 65.0
+offset_top = 43.0
+offset_right = 785.0
+offset_bottom = 135.0
+theme_override_colors/font_color = Color(1, 0.93, 0.75, 1)
+theme_override_colors/font_outline_color = Color(0.02, 0.004, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 32
+text = "'Pick something that catches your eye.'"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
@@ -213,10 +212,10 @@ anchors_preset = 11
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -844.0
-offset_top = 36.0
-offset_right = -24.0
-offset_bottom = -36.0
+offset_left = -890.0
+offset_top = 34.0
+offset_right = 10.0
+offset_bottom = -38.0
 grow_horizontal = 0
 grow_vertical = 2
 texture = ExtResource("4_panel")
@@ -227,10 +226,10 @@ patch_margin_bottom = 96
 
 [node name="Title" type="Label" parent="SidePanel" unique_id=1591690037]
 layout_mode = 0
-offset_left = 54.0
-offset_top = 58.0
-offset_right = 466.0
-offset_bottom = 118.0
+offset_left = 305.0
+offset_top = -3.0
+offset_right = 717.0
+offset_bottom = 57.0
 theme_override_colors/font_color = Color(1, 0.89, 0.64, 1)
 theme_override_colors/font_outline_color = Color(0.035, 0.008, 0, 1)
 theme_override_constants/outline_size = 4
@@ -242,10 +241,10 @@ vertical_alignment = 1
 [node name="CoinPanel" type="NinePatchRect" parent="SidePanel" unique_id=1023711883]
 texture_filter = 1
 layout_mode = 0
-offset_left = 492.0
-offset_top = 52.0
-offset_right = 766.0
-offset_bottom = 126.0
+offset_left = 272.0
+offset_top = 95.0
+offset_right = 622.0
+offset_bottom = 235.0
 texture = ExtResource("5_button")
 patch_margin_left = 40
 patch_margin_top = 20
@@ -255,10 +254,10 @@ patch_margin_bottom = 20
 [node name="CoinIcon" type="TextureRect" parent="SidePanel/CoinPanel" unique_id=2045525022]
 texture_filter = 1
 layout_mode = 0
-offset_left = 18.0
-offset_top = 10.0
-offset_right = 72.0
-offset_bottom = 64.0
+offset_left = 64.0
+offset_top = 42.0
+offset_right = 118.0
+offset_bottom = 96.0
 mouse_filter = 2
 texture = ExtResource("8_coin")
 expand_mode = 1
@@ -266,47 +265,48 @@ stretch_mode = 5
 
 [node name="CoinCaption" type="Label" parent="SidePanel/CoinPanel" unique_id=1392938413]
 layout_mode = 0
-offset_left = 80.0
-offset_top = 8.0
-offset_right = 252.0
-offset_bottom = 31.0
+offset_left = 73.0
+offset_top = 53.0
+offset_right = 245.0
+offset_bottom = 84.0
 theme_override_colors/font_color = Color(1, 0.76, 0.3, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 15
+theme_override_font_sizes/font_size = 30
 text = "COINS"
 horizontal_alignment = 1
 
 [node name="CoinAmount" type="Label" parent="SidePanel/CoinPanel" unique_id=380905262]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 80.0
-offset_top = 26.0
-offset_right = 252.0
-offset_bottom = 64.0
+offset_left = 145.0
+offset_top = 49.0
+offset_right = 317.0
+offset_bottom = 87.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 28
+theme_override_font_sizes/font_size = 36
 text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="HeaderDivider" type="ColorRect" parent="SidePanel" unique_id=2027196324]
+visible = false
 layout_mode = 0
-offset_left = 48.0
-offset_top = 146.0
-offset_right = 772.0
-offset_bottom = 149.0
+offset_left = -85.0
+offset_top = 29.0
+offset_right = 639.0
+offset_bottom = 32.0
 mouse_filter = 2
 color = Color(0.08, 0.68, 0.61, 0.85)
 
 [node name="OfferCards" type="VBoxContainer" parent="SidePanel" unique_id=913573481]
 layout_mode = 0
-offset_left = 48.0
-offset_top = 174.0
-offset_right = 772.0
-offset_bottom = 704.0
+offset_left = 151.0
+offset_top = 207.0
+offset_right = 751.0
+offset_bottom = 737.0
 theme_override_constants/separation = 10
 
 [node name="OfferCard1" parent="SidePanel/OfferCards" unique_id=2053583163 instance=ExtResource("10_offer")]
@@ -326,10 +326,10 @@ enforce_sizing = false
 
 [node name="PurchaseHint" type="Label" parent="SidePanel" unique_id=1994185773]
 layout_mode = 0
-offset_left = 48.0
-offset_top = 720.0
-offset_right = 772.0
-offset_bottom = 758.0
+offset_left = 90.0
+offset_top = 737.0
+offset_right = 814.0
+offset_bottom = 775.0
 theme_override_colors/font_color = Color(0.48, 0.92, 0.85, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
@@ -341,16 +341,16 @@ vertical_alignment = 1
 [node name="ExitButton" parent="SidePanel" unique_id=1486455157 instance=ExtResource("9_nav")]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 160.0
-offset_top = 776.0
-offset_right = 660.0
-offset_bottom = 916.0
+offset_left = 203.0
+offset_top = 753.0
+offset_right = 703.0
+offset_bottom = 893.0
 texture_normal = ExtResource("5_button")
 texture_pressed = ExtResource("5_button")
 texture_hover = ExtResource("5_button")
 texture_focused = ExtResource("5_button")
 act = 6
-label_text = "RETURN TO DOCK"
+label_text = "RETURN"
 label_font = ExtResource("2_font")
 label_color = Color(1, 0.93, 0.76, 1)
 label_outline_color = Color(0.02, 0.004, 0, 1)

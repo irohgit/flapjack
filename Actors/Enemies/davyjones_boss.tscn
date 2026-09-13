@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://ce8wvig2ty71k"]
+
+[ext_resource type="PackedScene" uid="uid://buoclsm4meh3f" path="res://Actors/Enemies/enemy.tscn" id="1_yb4s8"]
+[ext_resource type="Script" uid="uid://0hkhj0aqaqmk" path="res://Actors/Enemies/davyjones_boss.gd" id="2_t4t4b"]
+[ext_resource type="PackedScene" uid="uid://dacryxf13jmns" path="res://Actors/Projectiles/soul_shot_projectile.tscn" id="3_et0mu"]
+[ext_resource type="PackedScene" uid="uid://cfi7mkrndnj45" path="res://Actors/GroundEffects/bone_trap.tscn" id="3_ryusk"]
+[ext_resource type="PackedScene" uid="uid://cm5afml48nct0" path="res://Actors/Enemies/ghost_hunter_enemy.tscn" id="4_i84o4"]
+[ext_resource type="Resource" uid="uid://cjgjtsx0f33v5" path="res://Data/Enemy/DavyJonesBoss.tres" id="6_yb4s8"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape_boss"]
+radius = 90.0
+height = 280.0
+
+[node name="DavyJones" unique_id=993672052 instance=ExtResource("1_yb4s8")]
+script = ExtResource("2_t4t4b")
+bone_trap_scene = ExtResource("3_ryusk")
+ghost_ship_scene = ExtResource("4_i84o4")
+soul_shot_scene = ExtResource("3_et0mu")
+skill_interval = 2.5
+skill_pattern = Array[int]([0, 2, 1, 2, 2, 1, 0, 2])
+summon_count = 6
+summon_spacing = 120.0
+summon_lead = 140.0
+max_live_summons = 30
+hold_height_ratio = 0.25
+playfield_margin = 150.0
+explosion_scene = null
+activation_margin = 800.0
+arrival_offset = 150.0
+announce_on_arrival = true
+data = ExtResource("6_yb4s8")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." index="1" unique_id=2056924230]
+
+[node name="CollisionShape2D" parent="." index="2" unique_id=1631142024]
+position = Vector2(0, 0)
+shape = SubResource("CapsuleShape_boss")
+
+[node name="CannonMuzzle" type="Marker2D" parent="." index="5" unique_id=1112929954]
+position = Vector2(0, 145)

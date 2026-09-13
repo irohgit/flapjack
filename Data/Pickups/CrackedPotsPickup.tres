@@ -1,17 +1,16 @@
-[gd_resource type="Resource" script_class="PickupData" format=3]
+[gd_resource type="Resource" script_class="PickupData" format=3 uid="uid://dxmfjwwdomuit"]
 
-[ext_resource type="Script" path="res://Data/Pickups/pickup_data.gd" id="1_pickup"]
-[ext_resource type="Resource" path="res://Data/Augments/SulfurStinkpots/CrackedPots.tres" id="2_content"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Shop/Items/Weapons/sulfur_stinkpot.png" id="3_icon"]
+[ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="1_pickup"]
+[ext_resource type="Resource" uid="uid://74juyowpkux" path="res://Data/Augments/SulfurStinkpots/CrackedPots.tres" id="2_content"]
+[ext_resource type="Texture2D" uid="uid://bc6c1edqy1j7f" path="res://Assets/UI/Shop/Items/Weapons/sulfur_stinkpot.png" id="3_icon"]
 
 [resource]
 script = ExtResource("1_pickup")
 item_id = &"flapjack:cracked_pots"
-pickup_type = 0
+texture = ExtResource("3_icon")
 augment = ExtResource("2_content")
 notification_name = "Cracked Pots"
 shop_id = &"cracked_pots"
 shop_description = "Pots leak a narrow poison trail during flight before releasing their gas cloud."
-shop_price = 95
-texture = ExtResource("3_icon")
 shop_icon = ExtResource("3_icon")
+shop_price = 95

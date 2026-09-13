@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://cm5afml48nct0"]
+
+[ext_resource type="PackedScene" uid="uid://buoclsm4meh3f" path="res://Actors/Enemies/enemy.tscn" id="1_7vw64"]
+[ext_resource type="Script" uid="uid://c4ncfynumpea2" path="res://Data/Enemy/enemy_hunter.gd" id="2_pwfmy"]
+[ext_resource type="Resource" uid="uid://dcv11k8jd8ccc" path="res://Data/Enemy/GhostHunterEnemy.tres" id="3_pwfmy"]
+
+[node name="GhostHunterEnemy" unique_id=1419039188 instance=ExtResource("1_7vw64")]
+script = ExtResource("2_pwfmy")
+patrol_distance = 250.0
+data = ExtResource("3_pwfmy")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." index="4" unique_id=420740589]

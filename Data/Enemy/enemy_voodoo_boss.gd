@@ -204,5 +204,5 @@ func _on_died() -> void:
 		if is_instance_valid(node) and not node.is_queued_for_deletion():
 			node.queue_free()
 	_boss_spawns.clear()
-
+	
 	super()

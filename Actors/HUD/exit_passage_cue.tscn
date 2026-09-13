@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3 uid="uid://b2v7njx2c4lh5"]
 
-[ext_resource type="Script" path="res://Actors/HUD/exit_passage_cue.gd" id="1_cue"]
+[ext_resource type="Script" uid="uid://dc0h2747wejh8" path="res://Actors/HUD/exit_passage_cue.gd" id="1_cue"]
 
-[node name="ExitPassageCue" type="Control"]
+[node name="ExitPassageCue" type="Control" unique_id=899410016]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,3 +11,23 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_cue")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1445072430]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -49.5
+offset_top = 100.0
+offset_right = 49.5
+offset_bottom = 140.0
+grow_horizontal = 2
+theme_override_font_sizes/normal_font_size = 32
+bbcode_enabled = true
+text = "[wave]Sail onward past the exit! [/wave]"
+fit_content = true
+autowrap_mode = 0
+vertical_alignment = 1
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=697815126]
+position = Vector2(861.5, 100)

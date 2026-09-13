@@ -333,7 +333,7 @@ func _on_area_entered(area: Area2D) -> void:
 		hit_list.append(area)
 		_chain_lightning()
 		has_done_ricochet = true
-	if area.has_method("take_damage"):
+	if area.has_method("take_damage") and not _consume_hit(area): #added not_consume_hit so that we remove hits if there is somethign blocking it
 		area.take_damage(data.damage)
 	if skewer != null and is_enemy and is_instance_valid(area):
 		skewer.capture(area)
@@ -390,3 +390,9 @@ func _on_expired() -> void:
 func _on_screen_exited() -> void:
 	#DebugHud.flash("bullet screen_exited fired")
 	destroy(false)
+
+
+## Return true to swallow this hit's damage. Subclasses override.
+## The impact, effects and pierce accounting still happen either way.
+func _consume_hit(_area: Area2D) -> bool:
+	return false

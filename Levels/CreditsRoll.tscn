@@ -1,0 +1,172 @@
+[gd_scene format=3 uid="uid://co7yh4hjdukdo"]
+
+[ext_resource type="Script" uid="uid://bq82vwum10wul" path="res://Systems/Cinematics/credits_roll.gd" id="1_3pw17"]
+[ext_resource type="FontFile" uid="uid://bocifqpdtmlvt" path="res://Assets/Fonts/MontagnaLTD.ttf" id="1_l0xxy"]
+[ext_resource type="AudioStream" uid="uid://btq0trwxioi1b" path="res://Audio/BGM/Ian Post - Kings Rising - Instrumental version _NM.mp3" id="2_cdf2q"]
+[ext_resource type="Texture2D" uid="uid://cree3ehagcs5n" path="res://Assets/Cinematics/finalvictory.png" id="3_cdf2q"]
+
+[node name="CreditsRoll" type="Control" unique_id=1619834510]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_3pw17")
+credits = "[center][font_size=64]FLAPJACK[/font_size]
+
+[font_size=32]GGEZ Interactive[/font_size]
+
+[font_size=40]Creative Director[/font_size]
+Zhe
+
+[font_size=40]Programming Lead[/font_size]
+Ethan Hellyer
+
+[font_size=40]Project Manager[/font_size]
+Victoria Gelbak
+
+[font_size=40]Sound and Narrative Lead[/font_size]
+Iroh Nguyen
+
+
+
+[font_size=44]THE CAST[/font_size]
+
+[font_size=32]Flapjack Jack[/font_size]
+Iroh Nguyen
+
+[font_size=32]Princess Ana[/font_size]
+Victoria Gelbak
+
+[font_size=32]Ginny of the Shipworks[/font_size]
+Zhe
+
+[font_size=32]Vinny, Purveyor of Potions[/font_size]
+Ethan Hellyer
+
+[font_size=32]Blackbeard[/font_size]
+Ethan Hellyer
+
+[font_size=32]Davy Jones[/font_size]
+Zhe
+
+[font_size=32]The Kraken[/font_size]
+Itself
+
+[font_size=32]Assorted Barrels[/font_size]
+The Barrels Union, Local 4
+
+
+
+[font_size=36]Special Thanks[/font_size]
+
+Coffee
+The Godot merge conflict resolver, for its patience
+Everyone who playtested and said \"it froze again\"
+
+
+
+[font_size=28]No pirates were harmed in the making of this game.
+Several barrels were.[/font_size]
+
+
+
+[font_size=32]Made at RMIT[/font_size]
+COSC2349 Games Studio 2
+2026[/center]"
+music = ExtResource("2_cdf2q")
+next_scene = "uid://dfgiunphxmxmr"
+
+[node name="Backdrop" type="ColorRect" parent="." unique_id=266542107]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=388163129]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("3_cdf2q")
+
+[node name="Label" type="RichTextLabel" parent="." unique_id=321690009]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 384.0
+offset_right = -384.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("1_l0xxy")
+theme_override_font_sizes/normal_font_size = 36
+text = "[img=900]res://Assets/Cinematics/finalvictory.png[/img]
+[center][font_size=64]FLAPJACK[/font_size]
+
+[font_size=32]GGEZ Interactive[/font_size]
+
+
+
+[font_size=40]Creative Director[/font_size]
+Zhe
+
+[font_size=40]Programming Lead[/font_size]
+Ethan Hellyer
+
+[font_size=40]Project Manager[/font_size]
+Victoria Gelbak
+
+[font_size=40]Sound and Narrative Lead[/font_size]
+Iroh Nguyen
+
+
+
+[font_size=44]THE CAST[/font_size]
+
+[font_size=32]Flapjack Jack[/font_size]
+Iroh Nguyen
+
+[font_size=32]Princess Ana[/font_size]
+Victoria Gelbak
+
+[font_size=32]Ginny of the Shipworks[/font_size]
+Zhe
+
+[font_size=32]Vinny, Purveyor of Potions[/font_size]
+Ethan Hellyer
+
+[font_size=32]Blackbeard[/font_size]
+Ethan Hellyer
+
+[font_size=32]Davy Jones[/font_size]
+Zhe
+
+[font_size=32]The Kraken[/font_size]
+Itself
+
+[font_size=32]Assorted Barrels[/font_size]
+The Barrels Union, Local 4
+
+
+
+[font_size=36]Special Thanks[/font_size]
+
+Coffee
+The Godot merge conflict resolver, for its patience
+Everyone who playtested and said \"it froze again\"
+
+
+
+[font_size=28]No pirates were harmed in the making of this game.
+Several barrels were.[/font_size]
+
+
+
+[font_size=32]Made at RMIT[/font_size]
+COSC2349 Games Studio 2
+2026[/center]"
+fit_content = true

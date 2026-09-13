@@ -347,10 +347,10 @@ func _update_focus_neighbors() -> void:
 func _rarity_color(rarity: String) -> Color:
 	return RARITY_COLORS.get(rarity.to_upper(), RARITY_COLORS["COMMON"])
 
-
 ##IROH SECTION - Adding Functions to fill shop for Dock
-## The Dock path: already added and visible, just needs its contents.
+## The Dock path: the scene is instantiated hidden, so this has to open it.
 func setup_from_hotspot(hotspot: InteractHotspot) -> void:
+	super(hotspot)
 	var player := get_tree().get_first_node_in_group(Groups.PLAYER) as Player
 	load_offers(player, hotspot.shop_offers)
-	super(hotspot)
+	open_menu()

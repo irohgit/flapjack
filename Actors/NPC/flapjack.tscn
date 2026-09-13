@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://d1o3o7q7jqcmt"]
+
+[ext_resource type="Script" uid="uid://dp3sa1kgo3860" path="res://Actors/NPC/flapjack.gd" id="1_6ow31"]
+[ext_resource type="Texture2D" uid="uid://co10lbvo7qrks" path="res://Assets/Cinematics/flapjack_pale_base.png" id="1_ye7b5"]
+
+[node name="Flapjack_gd" type="Sprite2D" unique_id=1499076201 groups=["flapjack_fx"]]
+texture = ExtResource("1_ye7b5")
+script = ExtResource("1_6ow31")

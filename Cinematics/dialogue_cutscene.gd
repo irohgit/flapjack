@@ -6,13 +6,17 @@ signal finished
 @export var lines: Array[DialogueLine] = []
 @export var advance_action: StringName = &"ui_accept"
 @export var line_sfx_volume_db := -8.0
+## Scene to load when this cutscene ends. Leave empty for cutscenes that are
+## added as a child and whose caller handles what comes next.
+@export_file("*.tscn") var next_scene := ""
 
 @onready var _speaker: Label = $SayBox/VBox/SpeakerLabel
 @onready var _text: RichTextLabel = $SayBox/VBox/TextLabel
 @onready var _advance_icon: AdvanceIcon = $SayBox/AdvanceIcon
 @onready var _portrait_left: TextureRect = $PortraitLeft
 @onready var _portrait_right: TextureRect = $PortraitRight
-
+## Optional. Cutscenes made before full stills existed have no FullImage node.
+@onready var _portrait_full: TextureRect = get_node_or_null("FullImage")
 var _waiting := false
 
 
@@ -20,6 +24,8 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_portrait_left.visible = false
 	_portrait_right.visible = false
+	if _portrait_full != null:
+		_portrait_full.visible = false
 	_advance_icon.hide_icon()
 	_play_all()
 
@@ -40,6 +46,8 @@ func _play_all() -> void:
 		if not is_inside_tree():
 			return
 	finished.emit()
+	if next_scene != "":
+		Transition.change_scene(next_scene)
 
 
 func _play_line(line: DialogueLine) -> void:
@@ -60,8 +68,22 @@ func _play_line(line: DialogueLine) -> void:
 func _show_portrait(line: DialogueLine) -> void:
 	_portrait_left.visible = false
 	_portrait_right.visible = false
+	if _portrait_full != null:
+		_portrait_full.visible = false
+
 	if line.portrait == null:
 		return
-	var target := _portrait_right if line.side == DialogueLine.Side.RIGHT else _portrait_left
+
+	var target: TextureRect = _portrait_left
+	match line.side:
+		DialogueLine.Side.RIGHT:
+			target = _portrait_right
+		DialogueLine.Side.FULL:
+			target = _portrait_full
+		_:
+			target = _portrait_left
+
+	if target == null:
+		return
 	target.texture = line.portrait
 	target.visible = true

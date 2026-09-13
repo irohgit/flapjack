@@ -11,6 +11,6 @@ item_id = &"flapjack:gold_coin"
 pickup_type = 2
 texture = ExtResource("2_myq1t")
 sprite_frames = ExtResource("2_1sy38")
-coin_amount = 3
+coin_amount = 30
 pickup_sfx = ExtResource("1_1sy38")
 metadata/_custom_type_script = "uid://rau2jwiqd0pd"

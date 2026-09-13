@@ -146,7 +146,6 @@ func _applies_to_level(
 	_warn_row(loot_file, row_index, "'level' must be a string or string array")
 	return false
 
-
 func _run_chance_row(
 	row: Dictionary,
 	position: Vector2,
@@ -346,7 +345,6 @@ func _spawn_drop(drop: PickupData, position: Vector2) -> void:
 	if pickup == null:
 		push_error("ItemSpawner pickup_scene must inherit from WorldPickup")
 		return
-
 	pickup.data = drop
 	_add_pickup(pickup, position)
 

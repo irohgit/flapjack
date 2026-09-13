@@ -4,6 +4,8 @@ extends EnemyDropSourceData
 @export var scene: PackedScene
 @export var enemy_name := ""
 @export var is_boss := false
+## Points awarded to the player when this enemy dies.
+@export_range(0, 10000, 1, "or_greater") var score_value := 5
 @export var health := 3
 @export var contact_damage := 1 # Damage dealt to the player on contact.
 @export var projectile_damage := 1
@@ -27,6 +29,14 @@ extends EnemyDropSourceData
 @export var fire_pitch := 1.0
 @export_range(-40.0, 6.0) var fire_sfx_volume_db := 0.0
 
+
+@export_group("Moonlight")
+## Ticked: This enemy phases out in moonlight and can only be harmed in the dark. Untick for ordinary ships that behave the same everywhere.
+@export var goes_ethereal := false
+## Worn while phased. Leaving this null means the player cannot see why their shots are passing through, which reads as a bug rather than a rule.
+@export var ghost_material: ShaderMaterial
+@export var ghost_texture: Texture2D
+@export var ghost_sprite_frames: SpriteFrames
 
 func get_movement_speed() -> float:
 	return move_speed

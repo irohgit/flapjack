@@ -1,7 +1,8 @@
 extends CanvasLayer
 
-@onready var coin_label: Label = $Coin/Amount
-@onready var gin_label: Label = $Gin/Amount
+@onready var coin_label: Label = $PanelContainer/HBoxContainer/Coin/Amount
+@onready var gin_label: Label = $PanelContainer/HBoxContainer/Gin/Amount
+@onready var score_label: Label = $PanelContainer/HBoxContainer/Score/Amount
 @onready var health_shield_icons: HBoxContainer = $"health and shield icon/HealthRow"
 @onready var active_effects_container: HBoxContainer = $ActiveEffects
 @onready var potion_slots_container: HBoxContainer = $PotionSlots
@@ -17,6 +18,7 @@ extends CanvasLayer
 @onready var run_progress_bar: ProgressBar = $VoyageProgress/RunBar
 @onready var run_progress_label: Label = $VoyageProgress/RunLabel
 @onready var run_progress_percent: Label = $VoyageProgress/RunPercent
+@onready var _victory_banner: VictoryBanner = $VictoryBanner
 
 ## Ordered gameplay stages in the current run. The scripted tutorial has no distance bar.
 @export var run_stage_ids: Array[StringName] = [&"stage_1", &"stage_2"]
@@ -36,6 +38,7 @@ var _shield_icons: Array[TextureRect] = []
 var _potion_item_icons: Array[TextureRect] = []
 var _potion_selectors: Array[TextureRect] = []
 var _active_effect_entries: Dictionary = {}
+var _last_boss_name := "" #holds boss name as boss object will be destroyed 
 
 @export var full_heart_icon: Texture2D
 @export var half_heart_icon: Texture2D
@@ -53,6 +56,7 @@ func _ready() -> void:
 	GameEvents.boss_name_changed.connect(_on_boss_name_changed)
 	GameEvents.boss_defeated.connect(_on_boss_defeated)
 	GameEvents.player_died.connect(_on_player_died)
+	
 
 	_player = get_tree().get_first_node_in_group("player")
 
@@ -62,6 +66,7 @@ func _ready() -> void:
 
 	_player.coin_changed.connect(_on_coin_changed)
 	_player.gin_changed.connect(_on_gin_changed)
+	_player.score_changed.connect(_on_score_changed)
 	MetaProgress.gin_changed.connect(_on_gin_changed)
 
 	call_deferred("_init_display_values")
@@ -90,6 +95,7 @@ func _init_display_values() -> void:
 			_show_active_effect(effect_id)
 
 	_on_coin_changed(_player.coin_count)
+	_on_score_changed(_player.score_count)
 	_refresh_gin_display()
 
 	_on_health_changed(
@@ -115,35 +121,49 @@ func _process(delta: float) -> void:
 
 func _bind_voyage_progress() -> void:
 	voyage_panel.hide()
-	# Keep the original boss placement in tutorial and isolated boss test scenes.
-	boss_health_display.offset_top = 22.0
-	boss_health_display.offset_bottom = 124.0
+
 	var ancestor: Node = get_parent()
 	while ancestor != null and not (ancestor is LevelManager):
 		ancestor = ancestor.get_parent()
 	_progress_stage = ancestor as LevelManager
 	if _progress_stage == null or _progress_stage.level_generator == null:
 		return
+
 	var data: LevelData = _progress_stage.level_generator.level_data
 	if data == null:
 		return
+
 	_progress_stage_index = run_stage_ids.find(data.get_level_id())
-	if _progress_stage_index < 0:
-		return
-	boss_health_display.offset_top = 158.0
-	boss_health_display.offset_bottom = 260.0
-	voyage_title.text = "STAGE %d" % (_progress_stage_index + 1)
-	if not data.stage_title.is_empty():
-		voyage_title.text += "  /  " + data.stage_title.to_upper()
-	run_progress_label.text = "RUN  %d / %d" % [_progress_stage_index + 1, run_stage_ids.size()]
+
+	# The title now comes from the authored LevelData rather than the run
+	# index, so a stage that is not in run_stage_ids still labels itself.
+	var subtitle := data.stage_subtitle.to_upper()
+	if subtitle.is_empty() and _progress_stage_index >= 0:
+		subtitle = "STAGE %d" % (_progress_stage_index + 1)
+
+	var title := data.stage_title.to_upper()
+	if subtitle.is_empty():
+		voyage_title.text = title
+	elif title.is_empty():
+		voyage_title.text = subtitle
+	else:
+		voyage_title.text = subtitle + "  /  " + title
+
+	if _progress_stage_index >= 0:
+		run_progress_label.text = "RUN  %d / %d" % [
+			_progress_stage_index + 1, run_stage_ids.size()
+		]
+	else:
+		run_progress_label.text = ""
+
 	for path: String in ["GameUI/PauseMenu", "GameUI/ShopMenu", "GameUI/DeathScreen"]:
 		var menu: Control = _progress_stage.get_node_or_null(path) as Control
 		if menu != null:
 			_progress_menus.append(menu)
 			menu.visibility_changed.connect(_sync_voyage_visibility)
+
 	_sync_voyage_visibility()
 	_update_voyage_progress(0.0)
-
 
 func _sync_voyage_visibility() -> void:
 	var show_progress: bool = _progress_stage_index >= 0
@@ -183,8 +203,11 @@ func _on_coin_changed(amount: int) -> void:
 func _on_gin_changed(_amount: int) -> void:
 	_refresh_gin_display()
 
+func _on_score_changed(amount: int) -> void:
+	score_label.text = str(amount)
+
 func _refresh_gin_display() -> void:
-	gin_label.text = str(MetaProgress.gin + _player.gin_count)
+	gin_label.text = str(MetaProgress.gin)
 
 func _on_health_changed(current: int, maximum: int) -> void:
 	_current_health = current
@@ -212,9 +235,25 @@ func _on_boss_name_changed(boss_name: String) -> void:
 
 
 func _on_boss_defeated(_world_position: Vector2) -> void:
+	if not boss_name_label.text.is_empty():
+		_last_boss_name = boss_name_label.text
 	boss_name_label.text = ""
 	boss_health_display.hide()
+	_play_victory_banner()
+	
+## The HUD is the only thing that starts the banner. Fire and forget.
+func _play_victory_banner() -> void:
+	if _last_boss_name.is_empty():
+		return
+	await _victory_banner.play(_last_boss_name)
+	_last_boss_name = ""
 
+
+## Callers use this to hold their own flow until the banner is gone.
+## Returns immediately if no banner is running.
+func wait_for_victory_banner() -> void:
+	while _victory_banner.is_playing():
+		await get_tree().process_frame
 
 func _on_player_died(_retry_scene_path: String) -> void:
 	visible = false

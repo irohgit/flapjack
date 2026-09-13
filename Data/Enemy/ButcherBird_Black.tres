@@ -7,10 +7,11 @@
 
 [resource]
 script = ExtResource("1_qalvr")
-sprite_frames = ExtResource("2_ymj4p")
 warning_texture = ExtResource("3_6og0p")
 movement_pattern = 1
 amplitude = 100.0
 frequency = 1.0
+score_value = 1
+sprite_frames = ExtResource("2_ymj4p")
 loot = ExtResource("4_loot")
 metadata/_custom_type_script = "uid://b3vcm10hop7vv"

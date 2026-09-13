@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://br55a5ydf4qlm"]
 
 [ext_resource type="Script" uid="uid://ccrdo53clm5pg" path="res://Levels/Stage2/stage_2.gd" id="1_1bb5f"]
-[ext_resource type="AudioStream" uid="uid://b86afwbiwoubu" path="res://Audio/BGM/hesapirate.mp3" id="2_lr66y"]
+[ext_resource type="AudioStream" uid="uid://e4wa8maktpbv" path="res://Audio/BGM/Lance Conrad - Water Serpent NM.mp3" id="2_07xoo"]
 [ext_resource type="Script" uid="uid://tsoi3lwff5mf" path="res://Actors/Camera/shake_camera.gd" id="2_mjwon"]
 [ext_resource type="PackedScene" uid="uid://b27tvj4v653m2" path="res://Levels/enemy_controller.tscn" id="3_8awud"]
 [ext_resource type="Script" uid="uid://bo6li876odoia" path="res://Data/Enemy/enemy_data.gd" id="3_r3li8"]
@@ -27,9 +27,65 @@
 [ext_resource type="Resource" uid="uid://dng25y4uqbmmw" path="res://Data/Enemy/FrogEnemyGold.tres" id="29_frog_gold"]
 [ext_resource type="Resource" uid="uid://dify06vg1f8wi" path="res://Data/Enemy/FrogEnemyPurple.tres" id="30_frog_purple"]
 [ext_resource type="Script" uid="uid://c8rvuh3fmlyx" path="res://Levels/Stage1/bankpainter.gd" id="31_bankpainter"]
+[ext_resource type="Script" uid="uid://bbwfptmjbqmy8" path="res://Systems/ParallaxDirector2.gd" id="31_y8mhm"]
+[ext_resource type="Script" uid="uid://8sxccskaloo3" path="res://Systems/Environment/WeightedProp.gd" id="32_07xoo"]
 [ext_resource type="Script" uid="uid://diihmo0necydi" path="res://Systems/BankFrogSpawner.gd" id="32_bank_frog_spawner"]
+[ext_resource type="PackedScene" uid="uid://de1bc11i6qosg" path="res://Actors/Environment/bg_layer_1_fish.tscn" id="33_7pnqr"]
 [ext_resource type="Script" uid="uid://cjmgjv88bhgxy" path="res://Systems/SnakeSpawner.gd" id="33_snake_spawner"]
 [ext_resource type="PackedScene" uid="uid://du1b0f1hfk7hv" path="res://Actors/Enemies/snake_enemy.tscn" id="34_snake"]
+[ext_resource type="PackedScene" uid="uid://cy2nxy2knjndv" path="res://Actors/Environment/ParallaxObjects/far_croc.tscn" id="34_y8mhm"]
+[ext_resource type="PackedScene" uid="uid://4e8u8he65umc" path="res://Actors/Environment/ParallaxObjects/far_turtle.tscn" id="35_07xoo"]
+[ext_resource type="PackedScene" uid="uid://uoc4mmvluufx" path="res://Actors/Environment/ParallaxObjects/far_catfish.tscn" id="36_7pnqr"]
+[ext_resource type="PackedScene" uid="uid://bsgvjekiix3lw" path="res://Actors/Environment/ParallaxObjects/far_tadpole.tscn" id="37_cq7is"]
+[ext_resource type="PackedScene" uid="uid://bc2g5sxmhx1p2" path="res://Actors/Environment/ParallaxObjects/near_wood.tscn" id="37_hshsa"]
+[ext_resource type="PackedScene" uid="uid://cgkxqkcjbquyi" path="res://Actors/Environment/ParallaxObjects/far_stingray.tscn" id="38_07xoo"]
+[ext_resource type="PackedScene" uid="uid://bws0ib2ep02xb" path="res://Actors/Environment/cloud_overlay.tscn" id="38_51yg7"]
+
+[sub_resource type="Resource" id="Resource_54op2"]
+script = ExtResource("32_07xoo")
+scene = ExtResource("33_7pnqr")
+weight = 0.8
+metadata/_custom_type_script = "uid://8sxccskaloo3"
+
+[sub_resource type="Resource" id="Resource_g2hnl"]
+script = ExtResource("32_07xoo")
+scene = ExtResource("34_y8mhm")
+weight = 0.2
+metadata/_custom_type_script = "uid://8sxccskaloo3"
+
+[sub_resource type="Resource" id="Resource_y8mhm"]
+script = ExtResource("32_07xoo")
+scene = ExtResource("35_07xoo")
+weight = 0.6
+metadata/_custom_type_script = "uid://8sxccskaloo3"
+
+[sub_resource type="Resource" id="Resource_07xoo"]
+script = ExtResource("32_07xoo")
+scene = ExtResource("36_7pnqr")
+metadata/_custom_type_script = "uid://8sxccskaloo3"
+
+[sub_resource type="Resource" id="Resource_7pnqr"]
+script = ExtResource("32_07xoo")
+scene = ExtResource("37_cq7is")
+weight = 0.9
+metadata/_custom_type_script = "uid://8sxccskaloo3"
+
+[sub_resource type="Resource" id="Resource_720vf"]
+script = ExtResource("32_07xoo")
+scene = ExtResource("38_07xoo")
+metadata/_custom_type_script = "uid://8sxccskaloo3"
+
+[sub_resource type="Resource" id="Resource_b1rs4"]
+script = ExtResource("32_07xoo")
+scene = ExtResource("37_hshsa")
+weight = 0.4
+metadata/_custom_type_script = "uid://8sxccskaloo3"
+
+[sub_resource type="Resource" id="Resource_08pg4"]
+script = ExtResource("32_07xoo")
+scene = ExtResource("38_51yg7")
+weight = 0.9
+metadata/_custom_type_script = "uid://8sxccskaloo3"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8m7vp"]
 shader = ExtResource("18_a3klg")
@@ -87,7 +143,8 @@ scroll_director = NodePath("ScrollDirector")
 enemy_controller = NodePath("EnemyController")
 level_generator = NodePath("LevelGenerator")
 screen_encounter_parent = NodePath("ScrollRig/ScreenEncounters")
-stage_music = ExtResource("2_lr66y")
+stage_music = ExtResource("2_07xoo")
+stage_music_db = -15.0
 
 [node name="EnemyController" parent="." unique_id=335274421 node_paths=PackedStringArray("spawn_parent") instance=ExtResource("3_8awud")]
 enemy_types = Array[ExtResource("3_r3li8")]([ExtResource("4_lr66y"), ExtResource("5_1t5xe")])
@@ -129,6 +186,27 @@ foam_wobble_px = 6.0
 foam_wavelength_px = 160.0
 pixel_size = 1
 
+[node name="ParallaxDirector" type="Node2D" parent="." unique_id=1366988134 node_paths=PackedStringArray("far_parent", "near_parent", "overlay_parent", "scroll_director", "banks")]
+position = Vector2(0, -3)
+script = ExtResource("31_y8mhm")
+far_objects = Array[ExtResource("32_07xoo")]([SubResource("Resource_54op2"), SubResource("Resource_g2hnl"), SubResource("Resource_y8mhm"), SubResource("Resource_07xoo"), SubResource("Resource_7pnqr"), SubResource("Resource_720vf")])
+near_objects = Array[ExtResource("32_07xoo")]([SubResource("Resource_b1rs4")])
+overlay_objects = Array[ExtResource("32_07xoo")]([SubResource("Resource_08pg4")])
+far_parent = NodePath("../ScrollRig/CanvasLayer/WaterSurface/Far")
+near_parent = NodePath("../ScrollRig/Near")
+overlay_parent = NodePath("../ScrollRig/Overlay")
+far_scroll_range = Vector2(2, 2)
+near_scroll_range = Vector2(2.5, 2.5)
+overlay_scroll_range = Vector2(10, 10)
+min_gap = 100.0
+max_gap = 500.0
+min_per_band = 3
+max_per_band = 6
+spawn_lead = 100.0
+scroll_director = NodePath("../ScrollDirector")
+level_data = ExtResource("15_lr66y")
+banks = NodePath("../BankPainter")
+
 [node name="ScrollRig" type="Node2D" parent="." unique_id=1624221049]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="ScrollRig" unique_id=1411935878]
@@ -143,6 +221,26 @@ rim_color = Color(0.4744166, 0.66086525, 0.177697, 1)
 foam_color = Color(0.4744166, 0.66086525, 0.177697, 1)
 metadata/_edit_use_anchors_ = true
 
+[node name="WaterSurface" type="CanvasLayer" parent="ScrollRig/CanvasLayer" unique_id=884504447]
+layer = -5
+
+[node name="Far" type="Node2D" parent="ScrollRig/CanvasLayer/WaterSurface" unique_id=538829160]
+z_index = -10
+
+[node name="WaterSurface" parent="ScrollRig/CanvasLayer/WaterSurface" unique_id=1760302073 node_paths=PackedStringArray("camera") instance=ExtResource("5_2ahl2")]
+self_modulate = Color(1, 1, 1, 0)
+material = SubResource("ShaderMaterial_8m7vp")
+camera = NodePath("../../../ShakeCamera")
+deep_water_color = Color(0, 0.21960784, 0.011764706, 0.3019608)
+wave_water_color = Color(0.2784093, 0.43146813, 0.19641912, 0.30200002)
+rim_color = Color(0.47427702, 0.6629296, 0.17558163, 0.30200002)
+foam_color = Color(0.47427702, 0.6629296, 0.17558163, 0.30200002)
+metadata/_edit_use_anchors_ = true
+
+[node name="Near" type="Node2D" parent="ScrollRig" unique_id=1795914779]
+
+[node name="Overlay" type="Node2D" parent="ScrollRig" unique_id=1175213725]
+
 [node name="ShakeCamera" type="Camera2D" parent="ScrollRig" unique_id=1729136761 groups=["shake_camera"]]
 position = Vector2(960, 540)
 script = ExtResource("2_mjwon")
@@ -150,7 +248,7 @@ max_offset = Vector2(0, 0)
 metadata/_custom_type_script = "uid://tsoi3lwff5mf"
 
 [node name="Player" parent="ScrollRig" unique_id=2109576054 node_paths=PackedStringArray("camera", "banks") instance=ExtResource("7_wnqgr")]
-position = Vector2(960, 1000)
+position = Vector2(975, 770)
 camera = NodePath("../ShakeCamera")
 banks = NodePath("../../BankPainter")
 
