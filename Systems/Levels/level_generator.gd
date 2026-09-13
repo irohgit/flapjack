@@ -189,7 +189,7 @@ func _generate_encounter(
 			encounter.midboss_outro = encounter_data.midboss_outro
 			encounter.midboss_reward_scene = encounter_data.midboss_reward_scene
 			encounter.midboss_reward_potion = encounter_data.midboss_reward_potion
-
+			encounter.story_id = encounter_data.story_id
 		_:
 			return null
 

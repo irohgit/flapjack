@@ -42,7 +42,7 @@ func _on_area_entered(area: Area2D) -> void:
 	_shape.debug_color = debug_color_active
 	var msg := _ship_message()
 	if msg:
-		msg.show_prompt(self, prompt_text, prompt_icon, prompt_style)
+		msg.show_prompt(self, prompt_text, prompt_icon, prompt_style, "", action)
 	player_entered.emit()
 
 
@@ -58,6 +58,9 @@ func _on_area_exited(area: Area2D) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed:
+		print("[HOTSPOT] ", name, " in_range=", _player_in_range,
+			" matches=", event.is_action_pressed(action), " action=", action)
 	if _player_in_range and event.is_action_pressed(action):
 		get_viewport().set_input_as_handled()
 		interacted.emit()

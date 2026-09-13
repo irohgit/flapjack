@@ -21,12 +21,19 @@ extends Area2D
 @onready var _sprite: Sprite2D = get_node_or_null("Sprite2D") as Sprite2D
 @onready var _animated_sprite: AnimatedSprite2D = get_node_or_null("AnimatedSprite2D") as AnimatedSprite2D
 @onready var _status_effects: StatusEffectComponent = get_node_or_null("StatusEffectComponent") as StatusEffectComponent
+## Found once. Null in stages with no moonlight, which is how ordinary stages
+## keep working without knowing anything about Stage 3.
+var _moonlight: MoonlightDirector = null
+var _moonlight_checked := false
+var _ethereal := false
 
 var _fire_timer := 0.0
 var _spawn_position := Vector2.ZERO
 var _has_spawn_position := false
 var _spawn_position_is_local := false
-
+var _solid_texture: Texture2D = null
+var _solid_frames: SpriteFrames = null
+var _visuals_cached := false
 
 func _ready() -> void:
 	if _health != null:
@@ -52,7 +59,8 @@ func _physics_process(delta: float) -> void:
 	_update_play_area_state()
 	if is_queued_for_deletion():
 		return
-
+		
+	_update_ethereal()
 	# Enemies waiting above the camera do not count down or shoot. Their opening
 	# delay begins on the first frame that they are actually visible.
 	if not _can_fire() or not Playarea.is_near_screen(global_position):
@@ -255,3 +263,66 @@ func _on_died() -> void:
 			cam.add_trauma(0.15)
 			break
 	queue_free()
+
+
+
+## Phases in and out with the moonlight. Only changes anything on the frame the state actually flips, so this is cheap to call every frame.
+func _update_ethereal() -> void:
+	if not data.goes_ethereal:
+		return
+
+	if not _moonlight_checked:
+		_moonlight_checked = true
+		_moonlight = get_tree().get_first_node_in_group("moonlight") as MoonlightDirector
+
+	if _moonlight == null:
+		return
+
+	var lit := _moonlight.is_lit(global_position)
+	if lit == _ethereal:
+		return
+	_set_ethereal(lit)
+
+func _set_ethereal(value: bool) -> void:
+	_ethereal = value
+	_cache_solid_visuals()
+
+	if _sprite != null:
+		_sprite.texture = (
+			data.ghost_texture if value and data.ghost_texture != null
+			else _solid_texture
+		)
+
+	if _animated_sprite != null:
+		var frames: SpriteFrames = (
+			data.ghost_sprite_frames if value and data.ghost_sprite_frames != null
+			else _solid_frames
+		)
+		if _animated_sprite.sprite_frames != frames:
+			_animated_sprite.sprite_frames = frames
+			# Swapping the frames resets playback, so the clip has to restart.
+			if not data.animation_name.is_empty():
+				_animated_sprite.play(data.animation_name)
+
+	var ghost: ShaderMaterial = data.ghost_material if value else null
+	if _sprite != null:
+		_sprite.material = ghost
+	if _animated_sprite != null:
+		_animated_sprite.material = ghost
+
+	# Phased ships cannot be shot and cannot ram the player. Their projectiles
+	# are unaffected, so they stay dangerous from inside the light.
+	set_deferred("monitorable", not value)
+
+
+## Remembers the solid look the first time this enemy phases. Read off the node
+## rather than from data, so a boss whose art is set in its scene rather than in
+## its resource still restores correctly.
+func _cache_solid_visuals() -> void:
+	if _visuals_cached:
+		return
+	_visuals_cached = true
+	if _sprite != null:
+		_solid_texture = _sprite.texture
+	if _animated_sprite != null:
+		_solid_frames = _animated_sprite.sprite_frames

@@ -40,6 +40,7 @@ var _suppressed: Dictionary = {}
 
 
 func _ready() -> void:
+	add_to_group(&"menu_screen")
 	visibility_changed.connect(_focus_first)
 	if visible:
 		# Instantiated already-visible (the Dock path). open_menu() was never
@@ -65,6 +66,12 @@ func _unhandled_input(event: InputEvent) -> void:
 		# closing that menu would thaw the world mid-cutscene.
 		if CutsceneManager.is_playing():
 			get_viewport().set_input_as_handled()
+			return
+
+		# Escape is bound to both "pause" and "ui_cancel". If another screen is
+		# already open, this one declines the event WITHOUT consuming it, so it
+		# reaches the open screen's cancel branch below and closes that instead.
+		if not visible and _is_another_screen_open():
 			return
 
 		get_viewport().set_input_as_handled()
@@ -149,3 +156,14 @@ func _exit_tree() -> void:
 ## Override in a subclass that needs data off the hotspot, and call super() last.
 func setup_from_hotspot(_hotspot: InteractHotspot) -> void:
 	_focus_first()
+
+func _is_another_screen_open() -> bool:
+	var found := get_tree().get_nodes_in_group(&"menu_screen")
+	print("[MENU] ", name, " sees ", found.size(), " screens in group")
+	for node: Node in found:
+		var screen := node as MenuScreen
+		if screen != null:
+			print("[MENU]   ", screen.name, " visible=", screen.visible)
+		if screen != null and screen != self and screen.visible:
+			return true
+	return false

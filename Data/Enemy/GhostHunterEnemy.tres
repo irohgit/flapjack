@@ -1,0 +1,98 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://dcv11k8jd8ccc"]
+
+[ext_resource type="Resource" uid="uid://lal2aausnm0c" path="res://Data/Projectiles/cursed_enemy_cannonball.tres" id="1_r2le8"]
+[ext_resource type="AudioStream" uid="uid://bcf81qxqc8nxo" path="res://Audio/SFX/ship_destroyed.mp3" id="2_vdjen"]
+[ext_resource type="AudioStream" uid="uid://41by6wg6cvxx" path="res://Audio/SFX/enemy_cannon_shot_1.mp3" id="3_qwnwg"]
+[ext_resource type="AudioStream" uid="uid://cbplby7nfcsyw" path="res://Audio/SFX/ship_hit.mp3" id="4_r2le8"]
+[ext_resource type="Material" uid="uid://4awmmxa4uiyx" path="res://Assets/Shaders/ghost_material.tres" id="4_wo88t"]
+[ext_resource type="Texture2D" uid="uid://bemxgtryvnamd" path="res://Assets/Enemies/Blackbeard_Pirates/ghost_hunter_spritesheet_640x215.png" id="5_i3wg7"]
+[ext_resource type="JSON" path="res://Data/Loot/Enemies/hunter.json" id="5_wo88t"]
+[ext_resource type="Texture2D" uid="uid://btvu31ftbr04l" path="res://Assets/Enemies/Blackbeard_Pirates/ghost_hunter_80x160.png" id="6_grj4b"]
+[ext_resource type="PackedScene" uid="uid://dp8ghl50f4y6s" path="res://Actors/Enemies/hunter_enemy.tscn" id="7_grj4b"]
+[ext_resource type="Script" uid="uid://bo6li876odoia" path="res://Data/Enemy/enemy_data.gd" id="8_6g447"]
+[ext_resource type="Texture2D" uid="uid://c1i4w0rfv82dy" path="res://Assets/Enemies/Blackbeard_Pirates/Enemy_Ship_Hunter.png" id="9_pmjjp"]
+[ext_resource type="PackedScene" uid="uid://biiidm7buychr" path="res://Actors/Projectiles/cursed_projectile.tscn" id="9_wo88t"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6g447"]
+atlas = ExtResource("5_i3wg7")
+region = Rect2(0, 0, 80, 215)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pmjjp"]
+atlas = ExtResource("5_i3wg7")
+region = Rect2(80, 0, 80, 215)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f0b5y"]
+atlas = ExtResource("5_i3wg7")
+region = Rect2(160, 0, 80, 215)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bgdlx"]
+atlas = ExtResource("5_i3wg7")
+region = Rect2(240, 0, 80, 215)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8nxvb"]
+atlas = ExtResource("5_i3wg7")
+region = Rect2(320, 0, 80, 215)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vcyxo"]
+atlas = ExtResource("5_i3wg7")
+region = Rect2(400, 0, 80, 215)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eoq3n"]
+atlas = ExtResource("5_i3wg7")
+region = Rect2(480, 0, 80, 215)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5n4f6"]
+atlas = ExtResource("5_i3wg7")
+region = Rect2(560, 0, 80, 215)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_f0b5y"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6g447")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pmjjp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f0b5y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bgdlx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8nxvb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vcyxo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eoq3n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5n4f6")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[resource]
+script = ExtResource("8_6g447")
+scene = ExtResource("7_grj4b")
+score_value = 10
+move_speed = 50.0
+texture = ExtResource("9_pmjjp")
+projectile_scene = ExtResource("9_wo88t")
+ammo = ExtResource("1_r2le8")
+hit_sfx = ExtResource("4_r2le8")
+death_sfx = ExtResource("2_vdjen")
+fire_sfx = ExtResource("3_qwnwg")
+fire_pitch = 0.3
+fire_sfx_volume_db = -10.0
+goes_ethereal = true
+ghost_material = ExtResource("4_wo88t")
+ghost_texture = ExtResource("6_grj4b")
+ghost_sprite_frames = SubResource("SpriteFrames_f0b5y")
+loot = ExtResource("5_wo88t")
+metadata/_custom_type_script = "uid://bo6li876odoia"

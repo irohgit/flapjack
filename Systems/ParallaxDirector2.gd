@@ -10,6 +10,9 @@ extends Node2D
 #
 # Spawning is driven by DISTANCE TRAVELLED, not a timer, so density stays
 # constant however scroll_speed is tuned.
+#
+# Props spawn in open water only. The spawn band is inset by the widest a bank
+# can ever be, so nothing can land on sand however the coast happens to wind.
 # =============================================================================
 
 @export_group("Object pools")
@@ -49,7 +52,8 @@ extends Node2D
 @export_group("References")
 @export var scroll_director: ScrollDirector
 @export var level_data: LevelData
-
+## Used only to read the widest a bank can be, so props stay in open water.
+@export var banks: BankPainter
 
 
 var _next_spawn_y := 0.0
@@ -90,6 +94,7 @@ func _spawn_band(pool: Array[WeightedProp], scroll_range: Vector2, parent: Node2
 	for i in randi_range(min_per_band, max_per_band):
 		_spawn_one(pool, scroll_range, parent, band_z)
 
+
 func _spawn_one(pool: Array[WeightedProp], scroll_range: Vector2, parent: Node2D, band_z: int) -> void:
 	var scene: PackedScene = _weighted_pick(pool)
 	if scene == null:
@@ -107,13 +112,25 @@ func _spawn_one(pool: Array[WeightedProp], scroll_range: Vector2, parent: Node2D
 	parent.add_child(prop)
 	prop.setup(depth, scroll_director.scroll_rig)
 
-	var x := randf_range(edge_margin, play_width - edge_margin)
+	var x := _pick_water_x()
 
 	if prop.is_in_canvas_layer():
 		# Screen space: negative y is above the top of the viewport.
 		prop.global_position = Vector2(x, -spawn_lead - randf_range(0.0, 300.0))
 	else:
 		prop.global_position = Vector2(x, top - spawn_lead - randf_range(0.0, 300.0))
+
+
+## Somewhere in open water. Inset by the widest a bank can ever be, so a prop
+## can never land on sand no matter how the coast winds at that row.
+func _pick_water_x() -> float:
+	var inset := edge_margin
+	if banks != null:
+		inset += banks.get_max_bank_width()
+	if inset * 2.0 >= play_width:
+		return play_width * 0.5
+	return randf_range(inset, play_width - inset)
+
 
 func _weighted_pick(pool: Array[WeightedProp]) -> PackedScene:
 	var total := 0.0

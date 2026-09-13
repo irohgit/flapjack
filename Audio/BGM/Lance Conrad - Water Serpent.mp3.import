@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cufofgb20yxns"
+path="res://.godot/imported/Lance Conrad - Water Serpent.mp3-ff0f900c73bd0a80504d7e93b8677468.mp3str"
+
+[deps]
+
+source_file="res://Audio/BGM/Lance Conrad - Water Serpent.mp3"
+dest_files=["res://.godot/imported/Lance Conrad - Water Serpent.mp3-ff0f900c73bd0a80504d7e93b8677468.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

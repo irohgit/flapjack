@@ -1,7 +1,7 @@
 extends LevelManager
 ## The tutorial is a scripted mini-stage. One instance, so it is written as a coroutine rather than a data-driven system.
 
-#const NEXT_SCENE := "res://Levels/Stage1/stage_1.tscn" //replaced with transition
+const NEXT_SCENE := "res://Levels/Stage1/stage_1.tscn" #Use this constant to load up stage 1 if tutorial has already been played 
 const JACK_DETERMINED := preload("res://Assets/Cinematics/DUO_DETERMINED_512x640.png")
 const JACK_MONOCLE := preload("res://Assets/Cinematics/JACK_MONOCLE_512x640.png")
 const FLAPJACK_STAUNCH := preload("res://Assets/Cinematics/FLAPJACK_STAUNCH_512x640.png")
@@ -11,6 +11,8 @@ const DUO_SHEEPISH := preload("res://Assets/Cinematics/DUO_SHEEPISH_512x640.png"
 const JACK_CONCERNED := preload("res://Assets/Cinematics/JACK_CONCERNED_512x640.png")
 const FLAPJACK_WINK := preload("res://Assets/Cinematics/flapjack_wink_512x640.png")
 const FLAPJACK_IDLE := preload("res://Assets/Cinematics/flapjack_idle_512x640.png")
+
+
 
 @export var force_tutorial := false
 
@@ -23,7 +25,7 @@ const FLAPJACK_IDLE := preload("res://Assets/Cinematics/flapjack_idle_512x640.pn
 @export var highlight_period := 0.6
 #@onready var _world: Node2D = $World
 @onready var _tutorial_ui: TutorialUI = $HUD/TutorialLayer/TutorialUI
-@onready var game_ui: GameUI = $GameUI
+#@onready var game_ui: GameUI = $GameUI
 
 
 
@@ -53,13 +55,12 @@ var _last_raider_position := Vector2.ZERO
 var _highlight_tweens: Array[Tween] = []
 
 func _ready() -> void:
-	if MetaProgress.tutorial_seen and not force_tutorial and not OS.is_debug_build():
+	if MetaProgress.tutorial_seen and not force_tutorial:
 		_go_to_stage_1()
 		return
 	
 	await play_entry()
-	
-	
+		
 	_player = get_tree().get_first_node_in_group("player") as Player
 	if _player == null:
 		push_error("Tutorial needs a player")
@@ -97,6 +98,7 @@ func _beat_movement() -> void:
 	_tutorial_ui.set_objective("floating debris won't hurt you")
 	await _tutorial_ui.say("Flapjack", "It's just driftwood, Jack. It's not going to hurt us.")
 	_tutorial_ui.clear_objective(1.5)
+	
 # --- 3. The ambush -----------------------------------------------------------
 func _beat_ambush() -> void:
 	_raider = _spawn_raider()

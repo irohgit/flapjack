@@ -12,7 +12,7 @@ const DOCK_SCENE := "res://Levels/dock.tscn"
 @onready var _gin_label: Label = $Gin/Amount
 @onready var _trust_label: Label = $Trust/Amount
 @onready var _boat_sprite: TextureRect = $LeftPanel/BoatDeck/BoatPreview
-@onready var _boat_deck: TextureRect = $LeftPanel/BoatDeck
+@onready var _boat_deck: PanelContainer = $LeftPanel/BoatDeck
 @onready var _boat_tier_label: Label = %BoatTier
 @onready var _refit_progress: Label = %RefitProgress
 @onready var _return_button: NavButton = $ReturnButton
@@ -40,6 +40,7 @@ const DOCK_SCENE := "res://Levels/dock.tscn"
 var _owns_lifetime := false
 	
 func _ready() -> void:
+	super()
 	# The Dock instantiates this screen as a modal child, while the death menu
 	# opens it as the entire current scene. Dismissing a standalone scene would
 	# free the only visible root and leave a blank viewport, so that route must

@@ -2,7 +2,7 @@ class_name ExitPassageCue
 extends Control
 
 
-const LINE_Y := 22.0
+const LINE_Y := 100.0
 const PARTICLES_PER_SECOND := 18.0
 const INITIAL_PARTICLE_COUNT := 12
 

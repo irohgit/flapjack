@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://cclwwsegfn8rr" path="res://Actors/Player/player.tscn" id="2_wv1s7"]
 [ext_resource type="Script" uid="uid://c5arswu2ypo5c" path="res://Levels/dockbounds.gd" id="4_u0fe5"]
 [ext_resource type="Texture2D" uid="uid://df607lk1lqag2" path="res://Assets/Characters/ginny_drinking_spritesheet_96x96.png" id="5_4nibh"]
-[ext_resource type="Texture2D" uid="uid://dj466dve2c23g" path="res://Assets/Input/xbox_A_64x64.png" id="5_e3o5v"]
 [ext_resource type="Texture2D" uid="uid://b6vlcs7mjr1q4" path="res://Assets/Characters/Ginny_Idle_spritesheet_96x96.png" id="5_y055y"]
 [ext_resource type="Resource" uid="uid://be7cetvnlx4hv" path="res://Systems/Dialogue/prompt_urgent.tres" id="6_e3o5v"]
 [ext_resource type="Texture2D" uid="uid://bq5au2ufytqr6" path="res://Assets/Characters/ginny_drinking_long_spritesheet_288x48.png" id="6_jlhff"]
@@ -28,7 +27,7 @@
 [ext_resource type="Texture2D" uid="uid://rgu14womy8pw" path="res://Assets/Characters/vinny_drink_288x48.png" id="25_um2y4"]
 [ext_resource type="Script" uid="uid://chptb5oh375uo" path="res://Levels/launchgate.gd" id="27_rftcx"]
 [ext_resource type="Script" uid="uid://c5ywokn5mfnvt" path="res://Systems/prompt_style.gd" id="28_ili6q"]
-[ext_resource type="Texture2D" uid="uid://bih4j810dbm77" path="res://Assets/UI/Health/heart.png" id="29_wi8h3"]
+[ext_resource type="FontFile" uid="uid://bocifqpdtmlvt" path="res://Assets/Fonts/MontagnaLTD.ttf" id="28_wi8h3"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pxqul"]
 radius = 11.751648
@@ -443,6 +442,16 @@ metadata/_custom_type_script = "uid://c5ywokn5mfnvt"
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5yy73"]
 size = Vector2(498, 128.53125)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ili6q"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.60038817, 0.60038817, 0.60038817, 0.5)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5st54"]
 particle_flag_disable_z = true
 emission_shape = 3
@@ -465,8 +474,8 @@ texture = ExtResource("1_jk8js")
 position = Vector2(624, 572)
 script = ExtResource("11_q2u3x")
 screen_scene = ExtResource("2_pxqul")
-prompt_text = "Upgrade Ship"
-prompt_icon = ExtResource("5_e3o5v")
+action = "interact"
+prompt_text = "Press %s to Upgrade Ship"
 prompt_style = ExtResource("6_e3o5v")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ginny_Interact" unique_id=1073849320]
@@ -479,13 +488,13 @@ debug_color = Color(2.466701e-07, 0.1333726, 0.1626957, 0.41960785)
 position = Vector2(1008, 673)
 script = ExtResource("11_q2u3x")
 screen_scene = ExtResource("7_vsn3u")
-prompt_text = "Procure Potions"
-prompt_icon = ExtResource("5_e3o5v")
+action = "interact"
+prompt_text = "Press %s to Procure Potions"
 prompt_style = ExtResource("6_e3o5v")
 shop_offers = Array[ExtResource("8_3cuo4")]([ExtResource("9_uuko1"), ExtResource("10_pbksv"), ExtResource("11_x8iy1"), ExtResource("12_um2y4")])
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Vinny_Interact" unique_id=123093869]
-position = Vector2(-9, 9)
+position = Vector2(-10, 46.999996)
 scale = Vector2(4.5100045, 4.8165307)
 shape = SubResource("CapsuleShape2D_pxqul")
 debug_color = Color(2.466701e-07, 0.1333726, 0.1626957, 0.41960785)
@@ -547,7 +556,7 @@ anim_idle = &"drink"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Vinny" unique_id=1090546632]
 sprite_frames = SubResource("SpriteFrames_3cuo4")
-animation = &"pour"
+animation = &"wave"
 autoplay = "pour"
 
 [node name="UILayer" type="CanvasLayer" parent="." unique_id=1997797273]
@@ -566,7 +575,20 @@ visible = false
 position = Vector2(1042, 1018)
 shape = SubResource("RectangleShape2D_5yy73")
 
+[node name="Exit" type="RichTextLabel" parent="DockExit" unique_id=1684030288]
+offset_left = 762.0
+offset_top = 1006.0
+offset_right = 1325.0
+offset_bottom = 1061.0
+theme_override_fonts/normal_font = ExtResource("28_wi8h3")
+theme_override_font_sizes/normal_font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_ili6q")
+bbcode_enabled = true
+text = "Sail out of the bay to rescue the princess!"
+fit_content = true
+autowrap_mode = 0
+
 [node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1056487577]
-position = Vector2(1034, 977)
-texture = ExtResource("29_wi8h3")
+position = Vector2(1021, 968)
+amount = 20
 process_material = SubResource("ParticleProcessMaterial_5st54")
