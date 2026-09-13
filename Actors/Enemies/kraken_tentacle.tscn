@@ -63,13 +63,15 @@ animations = [{
 size = Vector2(176, 563)
 
 [node name="KrakenTentacle" type="Area2D" unique_id=204469274 groups=["enemy"]]
+z_index = -1
 collision_layer = 2
 collision_mask = 0
 monitoring = false
 script = ExtResource("1_tentacle")
 
-[node name="Shadow" type="Polygon2D" parent="." unique_id=1457699710]
-color = Color(0, 0, 0, 0.35)
+[node name="Shadow" type="Sprite2D" parent="." unique_id=1457699710]
+modulate = Color(0, 0, 0, 0.35)
+scale = Vector2(2, 2)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=684881774]
 sprite_frames = SubResource("SpriteFrames_g4n23")

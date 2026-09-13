@@ -3,10 +3,14 @@ extends Enemy
 
 @export_group("Tentacles")
 @export var tentacle_scene: PackedScene
-## Tentacles pick a random strike x within this margin from each screen edge.
-@export_range(0.0, 500.0, 1.0, "or_greater") var playfield_margin := 220.0
 @export var tentacles_per_stage: Array[int] = [1, 3, 4]
 @export var stage_data: Array[EnemyData] = []
+## Extra world-space nudge from the AnimatedSprite2D's own position - use
+## this if the Kraken's drawn body still isn't centred where you want
+## tentacles to spawn from, e.g. a more negative y to go higher. Flat world
+## units, so it won't shift around as the sprite's scale changes between
+## animations.
+@export var tentacle_spawn_offset := Vector2.ZERO
 
 @export_group("Projectiles")
 @export var projectile_scene: PackedScene
@@ -87,16 +91,15 @@ func _spawn_tentacle() -> void:
 	tentacle.tentacle_health_changed.connect(_on_tentacle_health_changed)
 	tentacle.tentacle_destroyed.connect(_on_tentacle_destroyed.bind(tentacle))
 	_active_tentacles.append(tentacle)
-	tentacle.start(_pick_tentacle_spawn_x())
+	tentacle.start(_get_tentacle_spawn_origin())
 	_recompute_boss_health()
 
 
-func _pick_tentacle_spawn_x() -> float:
-	var visible_rect := Playarea.get_visible_world_rect()
-	return randf_range(
-		visible_rect.position.x + playfield_margin,
-		visible_rect.end.x - playfield_margin
-	)
+## The body's own Area2D origin isn't where the drawn Kraken visually sits -
+## its AnimatedSprite2D is offset well above it in the scene - so anchor
+## tentacles to the sprite's own position instead, plus a tunable nudge.
+func _get_tentacle_spawn_origin() -> Vector2:
+	return _animated_sprite.global_position + tentacle_spawn_offset
 
 
 func _on_tentacle_health_changed(_current: int, _maximum: int) -> void:
