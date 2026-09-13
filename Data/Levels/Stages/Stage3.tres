@@ -15,9 +15,9 @@
 [ext_resource type="Resource" uid="uid://5vagi0atsu3m" path="res://Data/Pickups/PlasmaAugmentPickup.tres" id="13_e4wjl"]
 [ext_resource type="Resource" uid="uid://cpynird4edptk" path="res://Data/Pickups/FireballAugmentPickup.tres" id="14_bygr1"]
 [ext_resource type="Resource" uid="uid://cesmcj6ctad" path="res://Data/Pickups/MagnetAugmentPickup.tres" id="15_23xsl"]
-[ext_resource type="Resource" path="res://Data/Pickups/SulfurStinkpotsPickup.tres" id="16_ycjx4"]
-[ext_resource type="Resource" path="res://Data/Pickups/ClingfilmPickup.tres" id="17_e4r4v"]
-[ext_resource type="Resource" path="res://Data/Pickups/CrackedPotsPickup.tres" id="18_bw2bx"]
+[ext_resource type="Resource" uid="uid://dokkjh64ivbb1" path="res://Data/Pickups/SulfurStinkpotsPickup.tres" id="16_ycjx4"]
+[ext_resource type="Resource" uid="uid://upn2y8jumwn8" path="res://Data/Pickups/ClingfilmPickup.tres" id="17_e4r4v"]
+[ext_resource type="Resource" uid="uid://dxmfjwwdomuit" path="res://Data/Pickups/CrackedPotsPickup.tres" id="18_bw2bx"]
 
 [sub_resource type="Resource" id="WeightedEnemy_bulwark"]
 script = ExtResource("2_af0b6")

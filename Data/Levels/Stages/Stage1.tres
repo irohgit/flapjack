@@ -25,7 +25,7 @@
 [ext_resource type="Resource" uid="uid://e8bbiwbkus1o" path="res://Data/Pickups/OrbitalRicochetPickup.tres" id="7_ricochet"]
 [ext_resource type="Resource" uid="uid://bcj4lyhuitxi2" path="res://Data/Pickups/ShieldPotion.tres" id="7_shield"]
 [ext_resource type="Resource" uid="uid://do5a365f2ffty" path="res://Data/Pickups/SpeedPotion.tres" id="7_speed"]
-[ext_resource type="Resource" path="res://Data/Pickups/SulfurStinkpotsPickup.tres" id="7_stinkpots"]
+[ext_resource type="Resource" uid="uid://dokkjh64ivbb1" path="res://Data/Pickups/SulfurStinkpotsPickup.tres" id="7_stinkpots"]
 [ext_resource type="PackedScene" uid="uid://3gxxy4myod8b" path="res://Actors/Enemies/PatternEnemyWaveSpawner.tscn" id="8_birds"]
 [ext_resource type="PackedScene" uid="uid://bg1vqnsif3eb6" path="res://Actors/Enemies/cerberus_boss.tscn" id="9_bv1kr"]
 [ext_resource type="Resource" uid="uid://bau7v7mpln58f" path="res://Data/Potions/ShieldPotion.tres" id="11_asv6p"]
