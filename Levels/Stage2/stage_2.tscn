@@ -27,9 +27,18 @@
 [ext_resource type="Resource" uid="uid://dng25y4uqbmmw" path="res://Data/Enemy/FrogEnemyGold.tres" id="29_frog_gold"]
 [ext_resource type="Resource" uid="uid://dify06vg1f8wi" path="res://Data/Enemy/FrogEnemyPurple.tres" id="30_frog_purple"]
 [ext_resource type="Script" uid="uid://c8rvuh3fmlyx" path="res://Levels/Stage1/bankpainter.gd" id="31_bankpainter"]
+[ext_resource type="Script" uid="uid://bbwfptmjbqmy8" path="res://Systems/ParallaxDirector2.gd" id="31_y8mhm"]
+[ext_resource type="Script" uid="uid://8sxccskaloo3" path="res://Systems/Environment/WeightedProp.gd" id="32_07xoo"]
 [ext_resource type="Script" uid="uid://diihmo0necydi" path="res://Systems/BankFrogSpawner.gd" id="32_bank_frog_spawner"]
+[ext_resource type="PackedScene" uid="uid://de1bc11i6qosg" path="res://Actors/Environment/bg_layer_1_fish.tscn" id="33_7pnqr"]
 [ext_resource type="Script" uid="uid://cjmgjv88bhgxy" path="res://Systems/SnakeSpawner.gd" id="33_snake_spawner"]
+[ext_resource type="PackedScene" uid="uid://ckkn43tmuuln0" path="res://Actors/Environment/ParallaxObjects/far_coral.tscn" id="34_cq7is"]
 [ext_resource type="PackedScene" uid="uid://du1b0f1hfk7hv" path="res://Actors/Enemies/snake_enemy.tscn" id="34_snake"]
+[ext_resource type="PackedScene" uid="uid://cnl7v1qfhh014" path="res://Actors/Environment/ParallaxObjects/far_rock.tscn" id="35_720vf"]
+[ext_resource type="PackedScene" uid="uid://b7wmf0ym3lvi6" path="res://Actors/Environment/ParallaxObjects/far_statues.tscn" id="36_5vxvm"]
+[ext_resource type="PackedScene" uid="uid://bc2g5sxmhx1p2" path="res://Actors/Environment/ParallaxObjects/near_wood.tscn" id="37_hshsa"]
+[ext_resource type="PackedScene" uid="uid://bws0ib2ep02xb" path="res://Actors/Environment/cloud_overlay.tscn" id="38_51yg7"]
+[ext_resource type="Resource" uid="uid://b2xa4hm5ib5ca" path="res://Data/Levels/Stages/Stage1.tres" id="39_d7g3s"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8m7vp"]
 shader = ExtResource("18_a3klg")
@@ -81,6 +90,41 @@ enemy = ExtResource("30_frog_purple")
 weight = 15.0
 metadata/_custom_type_script = "uid://brpre4byem6tx"
 
+[sub_resource type="Resource" id="Resource_54op2"]
+script = ExtResource("32_07xoo")
+scene = ExtResource("33_7pnqr")
+metadata/_custom_type_script = "uid://8sxccskaloo3"
+
+[sub_resource type="Resource" id="Resource_jrq28"]
+script = ExtResource("32_07xoo")
+scene = ExtResource("34_cq7is")
+weight = 0.8
+metadata/_custom_type_script = "uid://8sxccskaloo3"
+
+[sub_resource type="Resource" id="Resource_7wjkh"]
+script = ExtResource("32_07xoo")
+scene = ExtResource("35_720vf")
+weight = 0.6
+metadata/_custom_type_script = "uid://8sxccskaloo3"
+
+[sub_resource type="Resource" id="Resource_fffbn"]
+script = ExtResource("32_07xoo")
+scene = ExtResource("36_5vxvm")
+weight = 0.4
+metadata/_custom_type_script = "uid://8sxccskaloo3"
+
+[sub_resource type="Resource" id="Resource_b1rs4"]
+script = ExtResource("32_07xoo")
+scene = ExtResource("37_hshsa")
+weight = 0.4
+metadata/_custom_type_script = "uid://8sxccskaloo3"
+
+[sub_resource type="Resource" id="Resource_08pg4"]
+script = ExtResource("32_07xoo")
+scene = ExtResource("38_51yg7")
+weight = 0.9
+metadata/_custom_type_script = "uid://8sxccskaloo3"
+
 [node name="Stage2" type="Node2D" unique_id=1126219472 node_paths=PackedStringArray("scroll_director", "enemy_controller", "level_generator", "screen_encounter_parent")]
 script = ExtResource("1_1bb5f")
 scroll_director = NodePath("ScrollDirector")
@@ -88,6 +132,7 @@ enemy_controller = NodePath("EnemyController")
 level_generator = NodePath("LevelGenerator")
 screen_encounter_parent = NodePath("ScrollRig/ScreenEncounters")
 stage_music = ExtResource("2_lr66y")
+stage_music_db = -30.0
 
 [node name="EnemyController" parent="." unique_id=335274421 node_paths=PackedStringArray("spawn_parent") instance=ExtResource("3_8awud")]
 enemy_types = Array[ExtResource("3_r3li8")]([ExtResource("4_lr66y"), ExtResource("5_1t5xe")])
@@ -150,7 +195,7 @@ max_offset = Vector2(0, 0)
 metadata/_custom_type_script = "uid://tsoi3lwff5mf"
 
 [node name="Player" parent="ScrollRig" unique_id=2109576054 node_paths=PackedStringArray("camera", "banks") instance=ExtResource("7_wnqgr")]
-position = Vector2(960, 1000)
+position = Vector2(975, 770)
 camera = NodePath("../ShakeCamera")
 banks = NodePath("../../BankPainter")
 
@@ -187,3 +232,24 @@ parent = NodePath("../World")
 scroll_director = NodePath("../ScrollDirector")
 level_data = ExtResource("15_lr66y")
 bank_painter = NodePath("../BankPainter")
+
+[node name="ParallaxDirector" type="Node2D" parent="." unique_id=1366988134 node_paths=PackedStringArray("far_parent", "near_parent", "overlay_parent", "scroll_director", "banks")]
+position = Vector2(0, -3)
+script = ExtResource("31_y8mhm")
+far_objects = Array[ExtResource("32_07xoo")]([SubResource("Resource_54op2"), SubResource("Resource_jrq28"), SubResource("Resource_7wjkh"), SubResource("Resource_fffbn")])
+near_objects = Array[ExtResource("32_07xoo")]([SubResource("Resource_b1rs4")])
+overlay_objects = Array[ExtResource("32_07xoo")]([SubResource("Resource_08pg4")])
+far_parent = NodePath("")
+near_parent = NodePath("")
+overlay_parent = NodePath("")
+far_scroll_range = Vector2(2, 2)
+near_scroll_range = Vector2(2.5, 2.5)
+overlay_scroll_range = Vector2(10, 10)
+min_gap = 100.0
+max_gap = 500.0
+min_per_band = 3
+max_per_band = 6
+spawn_lead = 100.0
+scroll_director = NodePath("")
+level_data = ExtResource("39_d7g3s")
+banks = NodePath("")

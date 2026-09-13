@@ -376,6 +376,7 @@ func run_midboss_encounter(encounter: GeneratedEncounter) -> void:
 	MetaProgress.mark_story_seen(encounter.story_id)
 	scroll_director.resume()
 func play_entry() -> void:
+
 	if not entry_enabled:
 		return
 
@@ -385,6 +386,7 @@ func play_entry() -> void:
 		return
 
 	var resting := player.position
+	print("[ENTRY] player at ", player.global_position, " destination ", entry_distance)
 	player.position = resting + Vector2(0.0, entry_distance)
 	player.begin_scripted_move()
 

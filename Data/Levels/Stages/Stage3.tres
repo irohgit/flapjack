@@ -6,8 +6,9 @@
 [ext_resource type="Resource" uid="uid://dcv11k8jd8ccc" path="res://Data/Enemy/GhostHunterEnemy.tres" id="4_3ihbp"]
 [ext_resource type="Script" uid="uid://dgn1ppeend4i1" path="res://Data/Levels/weighted_formation_data.gd" id="5_f8naw"]
 [ext_resource type="Script" uid="uid://bgt6cqxd8jifw" path="res://Data/Levels/weighted_encounter_data.gd" id="6_yhyoi"]
+[ext_resource type="PackedScene" uid="uid://bq1hohq82ovyn" path="res://Actors/Enemies/enemy_pattern_butcherbird.tscn" id="7_cpi3s"]
+[ext_resource type="PackedScene" uid="uid://ce8wvig2ty71k" path="res://Actors/Enemies/davyjones_boss.tscn" id="8_3ihbp"]
 [ext_resource type="Script" uid="uid://bhsc86o70es47" path="res://Data/Levels/weighted_end_event_data.gd" id="8_3ko58"]
-[ext_resource type="PackedScene" uid="uid://g5m616ujcawl" path="res://Actors/Enemies/swamp_monster.tscn" id="9_mxhwu"]
 [ext_resource type="Script" uid="uid://p4ssfrvfj0uw" path="res://Data/Levels/level_data.gd" id="10_jyine"]
 [ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="11_omuis"]
 [ext_resource type="Resource" uid="uid://c8prjyekwi7hm" path="res://Data/Pickups/HomingCannonPickup.tres" id="12_t8jwx"]
@@ -49,34 +50,63 @@ metadata/_custom_type_script = "uid://dgn1ppeend4i1"
 
 [sub_resource type="Resource" id="Encounter_01_normal"]
 script = ExtResource("1_cpi3s")
-distance_after_previous = 650.0
+distance_after_previous = 0.0
 enemy_pool = Array[ExtResource("2_af0b6")]([SubResource("WeightedEnemy_bulwark"), SubResource("Resource_eiq86"), SubResource("Resource_7bt0i")])
 formation_pool = Array[ExtResource("5_f8naw")]([SubResource("WeightedFormation_line"), SubResource("WeightedFormation_v"), SubResource("WeightedFormation_circle")])
 
 [sub_resource type="Resource" id="Resource_cpi3s"]
 script = ExtResource("1_cpi3s")
-distance_after_previous = 650.0
+distance_after_previous = 300.0
+min_pack_size = 5
+max_pack_size = 7
 enemy_pool = Array[ExtResource("2_af0b6")]([SubResource("WeightedEnemy_bulwark"), SubResource("Resource_eiq86"), SubResource("Resource_7bt0i")])
 formation_pool = Array[ExtResource("5_f8naw")]([SubResource("WeightedFormation_line"), SubResource("WeightedFormation_v"), SubResource("WeightedFormation_circle")])
 metadata/_custom_type_script = "uid://cytvv5o32ru6e"
 
 [sub_resource type="Resource" id="Resource_af0b6"]
 script = ExtResource("1_cpi3s")
-distance_after_previous = 650.0
+distance_after_previous = 400.0
+min_pack_size = 6
+max_pack_size = 8
 enemy_pool = Array[ExtResource("2_af0b6")]([SubResource("WeightedEnemy_bulwark"), SubResource("Resource_eiq86"), SubResource("Resource_7bt0i")])
 formation_pool = Array[ExtResource("5_f8naw")]([SubResource("WeightedFormation_line"), SubResource("WeightedFormation_v"), SubResource("WeightedFormation_circle")])
 metadata/_custom_type_script = "uid://cytvv5o32ru6e"
 
 [sub_resource type="Resource" id="Resource_mii17"]
 script = ExtResource("1_cpi3s")
-distance_after_previous = 650.0
+distance_after_previous = 330.0
+min_pack_size = 6
+max_pack_size = 7
 enemy_pool = Array[ExtResource("2_af0b6")]([SubResource("WeightedEnemy_bulwark"), SubResource("Resource_eiq86"), SubResource("Resource_7bt0i")])
 formation_pool = Array[ExtResource("5_f8naw")]([SubResource("WeightedFormation_line"), SubResource("WeightedFormation_v"), SubResource("WeightedFormation_circle")])
 metadata/_custom_type_script = "uid://cytvv5o32ru6e"
 
 [sub_resource type="Resource" id="Resource_wddnc"]
 script = ExtResource("1_cpi3s")
-distance_after_previous = 650.0
+distance_after_previous = 400.0
+enemy_pool = Array[ExtResource("2_af0b6")]([SubResource("WeightedEnemy_bulwark"), SubResource("Resource_eiq86"), SubResource("Resource_7bt0i")])
+formation_pool = Array[ExtResource("5_f8naw")]([SubResource("WeightedFormation_line"), SubResource("WeightedFormation_v"), SubResource("WeightedFormation_circle")])
+metadata/_custom_type_script = "uid://cytvv5o32ru6e"
+
+[sub_resource type="Resource" id="Resource_vrutu"]
+script = ExtResource("6_yhyoi")
+encounter_scene = ExtResource("7_cpi3s")
+metadata/_custom_type_script = "uid://bgt6cqxd8jifw"
+
+[sub_resource type="Resource" id="Resource_sin7p"]
+script = ExtResource("1_cpi3s")
+type = 1
+distance_after_previous = 250.0
+enemy_pool = Array[ExtResource("2_af0b6")]([SubResource("WeightedEnemy_bulwark"), SubResource("Resource_eiq86"), SubResource("Resource_7bt0i")])
+formation_pool = Array[ExtResource("5_f8naw")]([SubResource("WeightedFormation_line"), SubResource("WeightedFormation_v"), SubResource("WeightedFormation_circle")])
+special_encounter_pool = Array[ExtResource("6_yhyoi")]([SubResource("Resource_vrutu")])
+metadata/_custom_type_script = "uid://cytvv5o32ru6e"
+
+[sub_resource type="Resource" id="Resource_i6kde"]
+script = ExtResource("1_cpi3s")
+distance_after_previous = 250.0
+min_pack_size = 5
+max_pack_size = 7
 enemy_pool = Array[ExtResource("2_af0b6")]([SubResource("WeightedEnemy_bulwark"), SubResource("Resource_eiq86"), SubResource("Resource_7bt0i")])
 formation_pool = Array[ExtResource("5_f8naw")]([SubResource("WeightedFormation_line"), SubResource("WeightedFormation_v"), SubResource("WeightedFormation_circle")])
 metadata/_custom_type_script = "uid://cytvv5o32ru6e"
@@ -84,16 +114,17 @@ metadata/_custom_type_script = "uid://cytvv5o32ru6e"
 [sub_resource type="Resource" id="Finale_boss"]
 script = ExtResource("8_3ko58")
 event_name = "FinaleBoss"
-encounter_scene = ExtResource("9_mxhwu")
+encounter_scene = ExtResource("8_3ihbp")
 metadata/_custom_type_script = "uid://bhsc86o70es47"
 
 [resource]
 script = ExtResource("10_jyine")
 level_id = &"stage_3"
 level_name = "Stage3"
+end_position = Vector2(0, -4000)
 shop_items = Array[ExtResource("11_omuis")]([ExtResource("12_t8jwx"), ExtResource("13_e4wjl"), ExtResource("14_bygr1"), ExtResource("15_23xsl"), ExtResource("16_ycjx4"), ExtResource("17_e4r4v"), ExtResource("18_bw2bx")])
-encounter_sequence = Array[ExtResource("1_cpi3s")]([SubResource("Encounter_01_normal"), SubResource("Resource_cpi3s"), SubResource("Resource_af0b6"), SubResource("Resource_mii17"), SubResource("Resource_wddnc")])
-finale_trigger_position = Vector2(0, -10000)
-finale_spawn_position = Vector2(960, -9940)
+encounter_sequence = Array[ExtResource("1_cpi3s")]([SubResource("Encounter_01_normal"), SubResource("Resource_cpi3s"), SubResource("Resource_af0b6"), SubResource("Resource_mii17"), SubResource("Resource_wddnc"), SubResource("Resource_sin7p"), SubResource("Resource_i6kde")])
+finale_trigger_position = Vector2(0, -4000)
+finale_spawn_position = Vector2(960, -3940)
 finale_pool = Array[ExtResource("8_3ko58")]([SubResource("Finale_boss")])
 metadata/_custom_type_script = "uid://p4ssfrvfj0uw"

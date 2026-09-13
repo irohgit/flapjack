@@ -2,16 +2,16 @@
 
 [ext_resource type="Script" uid="uid://bfj0o35a1xwhy" path="res://UI/pause_menu.gd" id="1_script"]
 [ext_resource type="PackedScene" uid="uid://das28foe55u6f" path="res://UI/navbutton.tscn" id="2_navbutton"]
+[ext_resource type="Texture2D" uid="uid://b45l65es1qjaq" path="res://Assets/Cinematics/flapjack_idle_512x640.png" id="3_mexjk"]
 [ext_resource type="PackedScene" uid="uid://b2judmr242f45" path="res://UI/settings_menu.tscn" id="3_settings"]
-[ext_resource type="Texture2D" path="res://Assets/UI/WoodMenu/wood_settings_panel.png" id="4_panel"]
-[ext_resource type="Texture2D" path="res://Assets/UI/WoodMenu/wood_button.png" id="5_button"]
-[ext_resource type="Texture2D" path="res://Assets/UI/WoodMenu/octopus_crest.png" id="6_octopus"]
-[ext_resource type="Texture2D" path="res://Assets/UI/WoodMenu/settings_gear.png" id="7_gear"]
+[ext_resource type="Texture2D" uid="uid://vdcjhgb07r4x" path="res://Assets/UI/WoodMenu/wood_settings_panel.png" id="4_panel"]
+[ext_resource type="Texture2D" uid="uid://cjjelj1l1pyip" path="res://Assets/UI/WoodMenu/wood_button.png" id="5_button"]
+[ext_resource type="Texture2D" uid="uid://c63ihj1k20rex" path="res://Assets/UI/WoodMenu/settings_gear.png" id="7_gear"]
 [ext_resource type="FontFile" uid="uid://cvo681c1hvgca" path="res://Assets/Fonts/Montserrat/static/Montserrat-Black.ttf" id="8_font"]
 [ext_resource type="AudioStream" uid="uid://dshox3m1impsv" path="res://Audio/SFX/soft_hover.mp3" id="9_hover"]
 [ext_resource type="AudioStream" uid="uid://dc263ntmf6iew" path="res://Audio/SFX/ui_click_stylized.mp3" id="10_click"]
 
-[node name="PauseMenu" type="Control" node_paths=PackedStringArray("first_focus")]
+[node name="PauseMenu" type="Control" unique_id=2073214181 node_paths=PackedStringArray("first_focus")]
 process_mode = 3
 visible = false
 layout_mode = 3
@@ -26,7 +26,7 @@ first_focus = NodePath("Panel/Content/Actions/Resume")
 open_action = &"pause"
 pauses_tree = true
 
-[node name="Dimmer" type="ColorRect" parent="."]
+[node name="Dimmer" type="ColorRect" parent="." unique_id=1448614300]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -36,7 +36,7 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.00392157, 0.00784314, 0.0117647, 0.72)
 
-[node name="Panel" type="TextureRect" parent="."]
+[node name="Panel" type="TextureRect" parent="." unique_id=674675719]
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 8
@@ -54,7 +54,7 @@ mouse_filter = 2
 texture = ExtResource("4_panel")
 expand_mode = 1
 
-[node name="Content" type="VBoxContainer" parent="Panel"]
+[node name="Content" type="VBoxContainer" parent="Panel" unique_id=948891559]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -67,23 +67,23 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 12
 
-[node name="Header" type="HBoxContainer" parent="Panel/Content"]
+[node name="Header" type="HBoxContainer" parent="Panel/Content" unique_id=414878270]
 custom_minimum_size = Vector2(0, 104)
 layout_mode = 2
 theme_override_constants/separation = 14
 alignment = 1
 
-[node name="Octopus" type="TextureRect" parent="Panel/Content/Header"]
-custom_minimum_size = Vector2(94, 94)
+[node name="Octopus" type="TextureRect" parent="Panel/Content/Header" unique_id=1387811306]
 texture_filter = 1
+custom_minimum_size = Vector2(94, 94)
 layout_mode = 2
 size_flags_vertical = 4
 mouse_filter = 2
-texture = ExtResource("6_octopus")
+texture = ExtResource("3_mexjk")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Title" type="Label" parent="Panel/Content/Header"]
+[node name="Title" type="Label" parent="Panel/Content/Header" unique_id=325138868]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.890196, 0.65098, 1)
 theme_override_colors/font_outline_color = Color(0.0313726, 0.00784314, 0, 1)
@@ -93,7 +93,7 @@ theme_override_font_sizes/font_size = 52
 text = "PAUSED"
 vertical_alignment = 1
 
-[node name="Subtitle" type="Label" parent="Panel/Content"]
+[node name="Subtitle" type="Label" parent="Panel/Content" unique_id=583837155]
 custom_minimum_size = Vector2(0, 38)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.541176, 0.890196, 0.862745, 1)
@@ -105,19 +105,19 @@ text = "CHART YOUR NEXT COURSE"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Divider" type="ColorRect" parent="Panel/Content"]
+[node name="Divider" type="ColorRect" parent="Panel/Content" unique_id=1156466155]
 custom_minimum_size = Vector2(0, 3)
 layout_mode = 2
 mouse_filter = 2
 color = Color(0.0431373, 0.635294, 0.603922, 0.9)
 
-[node name="Actions" type="VBoxContainer" parent="Panel/Content"]
+[node name="Actions" type="VBoxContainer" parent="Panel/Content" unique_id=128084649]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 12
 alignment = 1
 
-[node name="Resume" parent="Panel/Content/Actions" instance=ExtResource("2_navbutton")]
+[node name="Resume" parent="Panel/Content/Actions" unique_id=778084136 instance=ExtResource("2_navbutton")]
 custom_minimum_size = Vector2(510, 132)
 layout_mode = 2
 texture_normal = ExtResource("5_button")
@@ -135,7 +135,7 @@ focus_tint = Color(1.2, 1.08, 0.76, 1)
 focus_sound = ExtResource("9_hover")
 press_sound = ExtResource("10_click")
 
-[node name="Settings" parent="Panel/Content/Actions" node_paths=PackedStringArray("panel_to_open") instance=ExtResource("2_navbutton")]
+[node name="Settings" parent="Panel/Content/Actions" unique_id=1553722073 node_paths=PackedStringArray("panel_to_open") instance=ExtResource("2_navbutton")]
 custom_minimum_size = Vector2(510, 132)
 layout_mode = 2
 texture_normal = ExtResource("5_button")
@@ -156,7 +156,7 @@ focus_tint = Color(1.2, 1.08, 0.76, 1)
 focus_sound = ExtResource("9_hover")
 press_sound = ExtResource("10_click")
 
-[node name="MainMenu" parent="Panel/Content/Actions" instance=ExtResource("2_navbutton")]
+[node name="MainMenu" parent="Panel/Content/Actions" unique_id=1715540074 instance=ExtResource("2_navbutton")]
 custom_minimum_size = Vector2(510, 132)
 layout_mode = 2
 texture_normal = ExtResource("5_button")
@@ -175,7 +175,7 @@ focus_tint = Color(1.2, 1.08, 0.76, 1)
 focus_sound = ExtResource("9_hover")
 press_sound = ExtResource("10_click")
 
-[node name="BottomInstruction" type="Label" parent="Panel/Content"]
+[node name="BottomInstruction" type="Label" parent="Panel/Content" unique_id=482693273]
 custom_minimum_size = Vector2(0, 38)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.301961, 0.858824, 0.823529, 1)
@@ -187,5 +187,6 @@ text = "PRESS ESC TO RESUME"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SettingsMenu" parent="." instance=ExtResource("3_settings")]
+[node name="SettingsMenu" parent="." unique_id=1675656007 instance=ExtResource("3_settings")]
+visible = false
 layout_mode = 1

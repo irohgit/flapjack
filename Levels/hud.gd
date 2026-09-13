@@ -56,6 +56,7 @@ func _ready() -> void:
 	GameEvents.boss_name_changed.connect(_on_boss_name_changed)
 	GameEvents.boss_defeated.connect(_on_boss_defeated)
 	GameEvents.player_died.connect(_on_player_died)
+	
 
 	_player = get_tree().get_first_node_in_group("player")
 

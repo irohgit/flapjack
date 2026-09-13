@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://c5bogs0afdgpq"]
+
+[ext_resource type="Script" uid="uid://pt18rjve0t5r" path="res://Actors/HUD/floating_text.gd" id="1_kgwy7"]
+[ext_resource type="FontFile" uid="uid://1qarew2on3k7" path="res://Assets/Fonts/PixelOperator.ttf" id="2_kty6b"]
+
+[node name="FloatingText" type="Node2D" unique_id=681243314]
+script = ExtResource("1_kgwy7")
+rise_distance = 60.0
+duration = 1.5
+fade_start = 0.5
+
+[node name="Label" type="Label" parent="." unique_id=917948349]
+custom_minimum_size = Vector2(200, 40)
+offset_left = -100.0
+offset_top = -20.0
+offset_right = 100.0
+offset_bottom = 20.0
+theme_override_colors/font_color = Color(0.81339645, 0.12534577, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_kty6b")
+theme_override_font_sizes/font_size = 36
+horizontal_alignment = 1
+vertical_alignment = 1

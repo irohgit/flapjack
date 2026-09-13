@@ -5,6 +5,7 @@ signal gin_changed(amount: int)
 signal trust_changed(amount: int)
 signal upgrade_purchased(node_id: StringName, new_level: int)
 signal boat_tier_changed(new_tier: int)
+signal coin_count_changed(new_count: int)
 
 enum BoatTier { SKIFF, SCHOONER, GALLEON }
 
@@ -15,7 +16,13 @@ const SAVED_FIELDS := [
 ]
 
 var gin := 315 #Don't change this value. 315 is the total cost for gin for "demo/publishing build"
-var coin_count := 0
+var coin_count := 0:
+	set(value):
+		var clamped := maxi(value, 0) #clamp to 0 so cursed projectiles never steal beyond 0.
+		if clamped == coin_count:
+			return
+		coin_count = clamped
+		coin_count_changed.emit(coin_count)
 var score_count := 0
 var trust := 0   # lifetime total spend, never decreases
 var boat_tier: BoatTier = BoatTier.SKIFF

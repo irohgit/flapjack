@@ -350,8 +350,10 @@ level_generator = NodePath("LevelGenerator")
 screen_encounter_parent = NodePath("ScrollRig/ScreenEncounters")
 potion_flourish_scene = ExtResource("2_vtim8")
 stage_music = ExtResource("3_o3cjt")
+stage_music_db = -30.0
 
 [node name="GameUI" parent="." unique_id=1532914546 instance=ExtResource("1_11sid")]
+layer = 20
 
 [node name="EnemyController" parent="." unique_id=335274421 node_paths=PackedStringArray("spawn_parent") instance=ExtResource("2_warin")]
 enemy_types = Array[ExtResource("3_e3b2g")]([ExtResource("4_vtim8"), ExtResource("5_o3cjt")])

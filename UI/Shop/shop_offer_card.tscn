@@ -1,6 +1,6 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene format=3 uid="uid://0l7o0gwdyrvw"]
 
-[ext_resource type="Script" path="res://UI/Shop/shop_offer_card.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://ecstyd87i3ss" path="res://UI/Shop/shop_offer_card.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://c4036y7ofwfu3" path="res://Assets/UI/Shop/Panels/panel_selected_icon_frame.png" id="2_icon_frame"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_card_normal"]
@@ -15,21 +15,6 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 shadow_color = Color(0, 0, 0, 0.45)
-shadow_size = 4
-shadow_offset = Vector2(0, 3)
-
-[sub_resource type="StyleBoxFlat" id="StyleBox_card_hover"]
-bg_color = Color(0.25, 0.12, 0.035, 1)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color(0.792157, 0.65098, 0.329412, 1)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
-shadow_color = Color(0, 0, 0, 0.5)
 shadow_size = 4
 shadow_offset = Vector2(0, 3)
 
@@ -48,17 +33,20 @@ shadow_color = Color(0, 0, 0, 0.55)
 shadow_size = 5
 shadow_offset = Vector2(0, 3)
 
-[sub_resource type="StyleBoxFlat" id="StyleBox_card_focus"]
-draw_center = false
+[sub_resource type="StyleBoxFlat" id="StyleBox_card_hover"]
+bg_color = Color(0.25, 0.12, 0.035, 1)
 border_width_left = 3
 border_width_top = 3
 border_width_right = 3
 border_width_bottom = 3
-border_color = Color(1, 0.929412, 0.67451, 1)
+border_color = Color(0.792157, 0.65098, 0.329412, 1)
 corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
+shadow_color = Color(0, 0, 0, 0.5)
+shadow_size = 4
+shadow_offset = Vector2(0, 3)
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_card_disabled"]
 bg_color = Color(0.09, 0.055, 0.035, 0.92)
@@ -72,36 +60,47 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[node name="ShopOfferCard" type="Button"]
-clip_contents = true
+[sub_resource type="StyleBoxFlat" id="StyleBox_card_focus"]
+draw_center = false
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0.929412, 0.67451, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="ShopOfferCard" type="Button" unique_id=1357828064]
 custom_minimum_size = Vector2(0, 170)
+clip_contents = true
 size_flags_horizontal = 3
 size_flags_vertical = 3
-focus_mode = 2
 mouse_default_cursor_shape = 2
-toggle_mode = true
 theme_override_styles/normal = SubResource("StyleBox_card_normal")
-theme_override_styles/hover = SubResource("StyleBox_card_hover")
 theme_override_styles/pressed = SubResource("StyleBox_card_selected")
+theme_override_styles/hover = SubResource("StyleBox_card_hover")
 theme_override_styles/hover_pressed = SubResource("StyleBox_card_selected")
-theme_override_styles/focus = SubResource("StyleBox_card_focus")
 theme_override_styles/disabled = SubResource("StyleBox_card_disabled")
+theme_override_styles/focus = SubResource("StyleBox_card_focus")
+toggle_mode = true
 script = ExtResource("1_script")
 
-[node name="RarityStripe" type="ColorRect" parent="."]
+[node name="RarityStripe" type="ColorRect" parent="." unique_id=53222575]
 layout_mode = 1
-anchors_preset = 13
-anchor_right = 0.0
+anchors_preset = 9
 anchor_bottom = 1.0
 offset_left = 8.0
 offset_top = 8.0
 offset_right = 16.0
 offset_bottom = -8.0
+grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 color = Color(0.513726, 0.898039, 0.415686, 1)
 
-[node name="ContentMargin" type="MarginContainer" parent="."]
+[node name="ContentMargin" type="MarginContainer" parent="." unique_id=1026848336]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -114,24 +113,23 @@ theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 22
 theme_override_constants/margin_bottom = 16
 
-[node name="Row" type="HBoxContainer" parent="ContentMargin"]
+[node name="Row" type="HBoxContainer" parent="ContentMargin" unique_id=1996818828]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 20
 
-[node name="IconFrame" type="NinePatchRect" parent="ContentMargin/Row"]
+[node name="IconFrame" type="NinePatchRect" parent="ContentMargin/Row" unique_id=1015943030]
 texture_filter = 1
 custom_minimum_size = Vector2(136, 136)
 layout_mode = 2
 size_flags_vertical = 4
-mouse_filter = 2
 texture = ExtResource("2_icon_frame")
 patch_margin_left = 10
 patch_margin_top = 10
 patch_margin_right = 10
 patch_margin_bottom = 10
 
-[node name="ItemIcon" type="TextureRect" parent="ContentMargin/Row/IconFrame"]
+[node name="ItemIcon" type="TextureRect" parent="ContentMargin/Row/IconFrame" unique_id=1956912020]
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 15
@@ -147,7 +145,7 @@ mouse_filter = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TextColumn" type="VBoxContainer" parent="ContentMargin/Row"]
+[node name="TextColumn" type="VBoxContainer" parent="ContentMargin/Row" unique_id=1457900482]
 custom_minimum_size = Vector2(0, 116)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -156,9 +154,8 @@ mouse_filter = 2
 theme_override_constants/separation = 8
 alignment = 1
 
-[node name="ItemName" type="Label" parent="ContentMargin/Row/TextColumn"]
+[node name="ItemName" type="Label" parent="ContentMargin/Row/TextColumn" unique_id=300449386]
 layout_mode = 2
-mouse_filter = 2
 theme_override_colors/font_color = Color(1, 0.960784, 0.85098, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
@@ -166,23 +163,22 @@ theme_override_font_sizes/font_size = 28
 text = "ITEM"
 text_overrun_behavior = 3
 
-[node name="ItemType" type="Label" parent="ContentMargin/Row/TextColumn"]
+[node name="ItemType" type="Label" parent="ContentMargin/Row/TextColumn" unique_id=476121412]
 layout_mode = 2
-mouse_filter = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 18
 text = "TYPE  •  COMMON"
 text_overrun_behavior = 3
 
-[node name="Divider" type="ColorRect" parent="ContentMargin/Row"]
+[node name="Divider" type="ColorRect" parent="ContentMargin/Row" unique_id=483788489]
 custom_minimum_size = Vector2(2, 112)
 layout_mode = 2
 size_flags_vertical = 4
 mouse_filter = 2
 color = Color(0.294118, 0.388235, 0.419608, 0.7)
 
-[node name="StatusColumn" type="VBoxContainer" parent="ContentMargin/Row"]
+[node name="StatusColumn" type="VBoxContainer" parent="ContentMargin/Row" unique_id=307828967]
 custom_minimum_size = Vector2(178, 100)
 layout_mode = 2
 size_flags_vertical = 4
@@ -190,21 +186,19 @@ mouse_filter = 2
 theme_override_constants/separation = 5
 alignment = 1
 
-[node name="StatusCaption" type="Label" parent="ContentMargin/Row/StatusColumn"]
+[node name="StatusCaption" type="Label" parent="ContentMargin/Row/StatusColumn" unique_id=852090511]
 layout_mode = 2
-mouse_filter = 2
 theme_override_colors/font_color = Color(0.541176, 0.635294, 0.670588, 1)
 theme_override_font_sizes/font_size = 14
 text = "OFFER"
 horizontal_alignment = 1
 
-[node name="Status" type="Label" parent="ContentMargin/Row/StatusColumn"]
+[node name="Status" type="Label" parent="ContentMargin/Row/StatusColumn" unique_id=815765398]
 layout_mode = 2
-mouse_filter = 2
 theme_override_colors/font_color = Color(1, 0.905882, 0.615686, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 21
+theme_override_font_sizes/font_size = 36
 text = "BUY  •  0"
 horizontal_alignment = 1
 vertical_alignment = 1

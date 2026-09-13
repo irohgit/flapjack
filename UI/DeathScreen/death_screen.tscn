@@ -3,16 +3,17 @@
 [ext_resource type="Script" uid="uid://bst4l0rluxyls" path="res://UI/DeathScreen/death_screen.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://dfi4akwlw6hxo" path="res://Assets/UI/DeathScreen/death_screen_background.png" id="2_background"]
 [ext_resource type="FontFile" uid="uid://cvo681c1hvgca" path="res://Assets/Fonts/Montserrat/static/Montserrat-Black.ttf" id="3_font"]
+[ext_resource type="Texture2D" uid="uid://b45l65es1qjaq" path="res://Assets/Cinematics/flapjack_idle_512x640.png" id="4_k1pt0"]
 [ext_resource type="PackedScene" uid="uid://das28foe55u6f" path="res://UI/navbutton.tscn" id="4_navbutton"]
 [ext_resource type="AudioStream" uid="uid://dshox3m1impsv" path="res://Audio/SFX/soft_hover.mp3" id="5_hover"]
 [ext_resource type="AudioStream" uid="uid://dc263ntmf6iew" path="res://Audio/SFX/ui_click_stylized.mp3" id="6_click"]
 [ext_resource type="PackedScene" uid="uid://b2judmr242f45" path="res://UI/settings_menu.tscn" id="7_settings"]
 [ext_resource type="Texture2D" uid="uid://vdcjhgb07r4x" path="res://Assets/UI/WoodMenu/wood_settings_panel.png" id="8_panel"]
 [ext_resource type="Texture2D" uid="uid://cjjelj1l1pyip" path="res://Assets/UI/WoodMenu/wood_button.png" id="9_button"]
-[ext_resource type="Texture2D" uid="uid://kxxrj3v5jv4l" path="res://Assets/UI/WoodMenu/octopus_crest.png" id="10_octopus"]
 
 [node name="DeathScreen" type="Control" unique_id=2017607369 node_paths=PackedStringArray("retry_button", "upgrade_button", "main_menu_button", "first_focus")]
 process_mode = 3
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -94,7 +95,7 @@ custom_minimum_size = Vector2(88, 88)
 layout_mode = 2
 size_flags_vertical = 4
 mouse_filter = 2
-texture = ExtResource("10_octopus")
+texture = ExtResource("4_k1pt0")
 expand_mode = 1
 stretch_mode = 5
 

@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://d1y5q1bsmrb6u"]
 
-[ext_resource type="Resource" uid="uid://dk3d73cdpoumi" path="res://Data/Projectiles/enemy_cannonball.tres" id="1_r7st8"]
+[ext_resource type="Resource" uid="uid://lal2aausnm0c" path="res://Data/Projectiles/cursed_enemy_cannonball.tres" id="1_v1jso"]
 [ext_resource type="AudioStream" uid="uid://bcf81qxqc8nxo" path="res://Audio/SFX/ship_destroyed.mp3" id="2_mc67e"]
 [ext_resource type="AudioStream" uid="uid://41by6wg6cvxx" path="res://Audio/SFX/enemy_cannon_shot_1.mp3" id="3_wrn7q"]
 [ext_resource type="Material" uid="uid://4awmmxa4uiyx" path="res://Assets/Shaders/ghost_material.tres" id="4_mc67e"]
@@ -8,9 +8,9 @@
 [ext_resource type="JSON" path="res://Data/Loot/Enemies/bulwark.json" id="5_hk6ei"]
 [ext_resource type="Texture2D" uid="uid://cjsvic2ikfpwr" path="res://Assets/Enemies/Blackbeard_Pirates/ghost_bulwark_spritesheet_400x280.png" id="5_v1jso"]
 [ext_resource type="Texture2D" uid="uid://t3a54t720i37" path="res://Assets/Enemies/Blackbeard_Pirates/ghost_bulwark_140x160.png" id="6_hk6ei"]
-[ext_resource type="PackedScene" uid="uid://bl12qi0n68b6i" path="res://Actors/Projectiles/projectile.tscn" id="6_paajy"]
 [ext_resource type="Script" uid="uid://bo6li876odoia" path="res://Data/Enemy/enemy_data.gd" id="7_fp275"]
 [ext_resource type="Texture2D" uid="uid://bvwwuxlli4ysf" path="res://Assets/Enemies/Blackbeard_Pirates/Enemy_Ship_Bulwark.png" id="8_uf77o"]
+[ext_resource type="PackedScene" uid="uid://biiidm7buychr" path="res://Actors/Projectiles/cursed_projectile.tscn" id="9_hk6ei"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_paajy"]
 atlas = ExtResource("5_v1jso")
@@ -80,8 +80,8 @@ animations = [{
 script = ExtResource("7_fp275")
 enemy_name = "Ghostly Bulwark"
 texture = ExtResource("8_uf77o")
-projectile_scene = ExtResource("6_paajy")
-ammo = ExtResource("1_r7st8")
+projectile_scene = ExtResource("9_hk6ei")
+ammo = ExtResource("1_v1jso")
 hit_sfx = ExtResource("4_v1jso")
 death_sfx = ExtResource("2_mc67e")
 fire_sfx = ExtResource("3_wrn7q")

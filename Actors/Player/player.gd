@@ -189,7 +189,7 @@ func _ready() -> void:
 	_refresh_tier_visuals()
 	
 	#4. Restore a run in progress, or arm a fresh one
-	var restored_from_checkpoint := GlobalPlayer.restore_checkpoint(self)
+	var restored_from_checkpoint := GlobalPlayer.restore_checkpoint(self) 
 	if not restored_from_checkpoint:
 		for weapon in starting_weapons:
 			add_weapon(weapon)
@@ -337,7 +337,21 @@ func _shake(amount: float) -> void:
 func _add_coins(amount: int):
 	coin_count += amount
 	coin_changed.emit(coin_count)
-
+	
+## Takes coins for a curse hit. Returns false if the purse cannot pay,
+## which tells the caller to fall back to damage instead.
+func try_steal_coins(amount: int) -> bool:
+	if amount <= 0 or coin_count < amount:
+		return false
+	_add_coins(-amount)
+	FloatingText.spawn(
+		get_parent(),
+		global_position + Vector2(0.0, -48.0),
+		"-%d GOLD" % amount,
+		Color(1.0, 0.3, 0.26)
+	)
+	return true
+	
 func _add_gin(amount: int):
 	gin_count += amount
 	gin_changed.emit(gin_count)
@@ -753,3 +767,12 @@ func _refresh_tier_visuals() -> void:
 	_apply_tier()
 	_update_hull(_health.current_health, _health.max_health)
 	_fit_wake_to_hull()
+
+
+## Soul Hit destroys all armour outright. Returns false when there is none
+## to take, which lets the shot fall through to ordinary damage instead.
+func try_strip_armour() -> bool:
+	if _health.is_invincible():
+		return false
+	return _health.strip_shield() > 0
+	
