@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://des8tka4uw8kx" path="res://Actors/UI/potion_flourish.tscn" id="2_vtim8"]
 [ext_resource type="PackedScene" uid="uid://b27tvj4v653m2" path="res://Levels/enemy_controller.tscn" id="2_warin"]
 [ext_resource type="Script" uid="uid://bo6li876odoia" path="res://Data/Enemy/enemy_data.gd" id="3_e3b2g"]
-[ext_resource type="AudioStream" uid="uid://b86afwbiwoubu" path="res://Audio/BGM/hesapirate.mp3" id="3_o3cjt"]
+[ext_resource type="AudioStream" uid="uid://ccrb1bb7not1n" path="res://Audio/BGM/Rick Abbott - Fog Choke.mp3" id="3_eiq86"]
 [ext_resource type="Resource" uid="uid://bsk4oh4u6bnhe" path="res://Data/Enemy/BulwarkEnemy.tres" id="4_vtim8"]
 [ext_resource type="Resource" uid="uid://cnxtqo5woe8ja" path="res://Data/Enemy/HunterEnemy.tres" id="5_o3cjt"]
 [ext_resource type="PackedScene" uid="uid://dsf0q5lcpr0mh" path="res://Actors/Camera/ScrollDirector.tscn" id="6_bi33i"]
@@ -349,8 +349,8 @@ enemy_controller = NodePath("EnemyController")
 level_generator = NodePath("LevelGenerator")
 screen_encounter_parent = NodePath("ScrollRig/ScreenEncounters")
 potion_flourish_scene = ExtResource("2_vtim8")
-stage_music = ExtResource("3_o3cjt")
-stage_music_db = -30.0
+stage_music = ExtResource("3_eiq86")
+stage_music_db = -15.0
 
 [node name="GameUI" parent="." unique_id=1532914546 instance=ExtResource("1_11sid")]
 layer = 20

@@ -18,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://t7alddeyjrep" path="res://Levels/hud.tscn" id="7_o86e7"]
 [ext_resource type="Script" uid="uid://benkbks8rk38x" path="res://Levels/StageTutorial/tutorial_ui.gd" id="9_v5awh"]
 [ext_resource type="Script" uid="uid://ddmjy6ihgdk7k" path="res://Systems/Levels/level_generator.gd" id="10_t5sjw"]
+[ext_resource type="AudioStream" uid="uid://d6s1i42u0v3y" path="res://Audio/BGM/Veaceslav Draganov - Pirates Treasury.mp3" id="11_2uh0j"]
 [ext_resource type="FontFile" uid="uid://bocifqpdtmlvt" path="res://Assets/Fonts/MontagnaLTD.ttf" id="13_jeyy5"]
 [ext_resource type="FontFile" uid="uid://cvo681c1hvgca" path="res://Assets/Fonts/Montserrat/static/Montserrat-Black.ttf" id="14_eh6uy"]
 [ext_resource type="Resource" uid="uid://cyghdcm1pbq0p" path="res://Levels/StageTutorial/tutorial.tres" id="15_tgm0e"]
@@ -49,6 +50,8 @@ tutorial_potion = ExtResource("5_khstj")
 gin_spawner = NodePath("GinSpawner")
 tutorial_barrel = ExtResource("6_khstj")
 level_generator = NodePath("LevelGenerator")
+stage_music = ExtResource("11_2uh0j")
+stage_music_db = -15.0
 
 [node name="GameUI" parent="." unique_id=1532914546 instance=ExtResource("1_7lj3a")]
 

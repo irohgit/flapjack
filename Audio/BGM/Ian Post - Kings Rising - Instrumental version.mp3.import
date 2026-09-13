@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://chdisfs3feld7"
+path="res://.godot/imported/Ian Post - Kings Rising - Instrumental version.mp3-2b7ba2d5ee5013c1235bf24b191076fb.mp3str"
+
+[deps]
+
+source_file="res://Audio/BGM/Ian Post - Kings Rising - Instrumental version.mp3"
+dest_files=["res://.godot/imported/Ian Post - Kings Rising - Instrumental version.mp3-2b7ba2d5ee5013c1235bf24b191076fb.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

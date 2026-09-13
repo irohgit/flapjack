@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://br55a5ydf4qlm"]
 
 [ext_resource type="Script" uid="uid://ccrdo53clm5pg" path="res://Levels/Stage2/stage_2.gd" id="1_1bb5f"]
-[ext_resource type="AudioStream" uid="uid://b86afwbiwoubu" path="res://Audio/BGM/hesapirate.mp3" id="2_lr66y"]
+[ext_resource type="AudioStream" uid="uid://cufofgb20yxns" path="res://Audio/BGM/Lance Conrad - Water Serpent.mp3" id="2_07xoo"]
 [ext_resource type="Script" uid="uid://tsoi3lwff5mf" path="res://Actors/Camera/shake_camera.gd" id="2_mjwon"]
 [ext_resource type="PackedScene" uid="uid://b27tvj4v653m2" path="res://Levels/enemy_controller.tscn" id="3_8awud"]
 [ext_resource type="Script" uid="uid://bo6li876odoia" path="res://Data/Enemy/enemy_data.gd" id="3_r3li8"]
@@ -143,8 +143,8 @@ scroll_director = NodePath("ScrollDirector")
 enemy_controller = NodePath("EnemyController")
 level_generator = NodePath("LevelGenerator")
 screen_encounter_parent = NodePath("ScrollRig/ScreenEncounters")
-stage_music = ExtResource("2_lr66y")
-stage_music_db = -30.0
+stage_music = ExtResource("2_07xoo")
+stage_music_db = -15.0
 
 [node name="EnemyController" parent="." unique_id=335274421 node_paths=PackedStringArray("spawn_parent") instance=ExtResource("3_8awud")]
 enemy_types = Array[ExtResource("3_r3li8")]([ExtResource("4_lr66y"), ExtResource("5_1t5xe")])

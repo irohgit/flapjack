@@ -101,6 +101,8 @@ func play_music(stream: AudioStream, volume_db := 0.0, fade_time := 1.5) -> void
 	if _music_active.stream == stream and _music_active.playing:
 		return
 
+	_force_loop(stream)
+
 	var incoming := _music_b if _music_active == _music_a else _music_a
 	var outgoing := _music_active
 
@@ -162,3 +164,15 @@ func stop_cinematic() -> void:
 	for p: AudioStreamPlayer in _sfx_pool:
 		if p.bus == "Cinematic":
 			p.stop()
+			
+## Music always loops. MP3 and Ogg expose a plain "loop" bool; WAV uses a
+## loop_mode enum instead, so it is handled separately.
+func _force_loop(stream: AudioStream) -> void:
+	if stream is AudioStreamWAV:
+		var wav := stream as AudioStreamWAV
+		if wav.loop_mode == AudioStreamWAV.LOOP_DISABLED:
+			wav.loop_mode = AudioStreamWAV.LOOP_FORWARD
+		return
+
+	if "loop" in stream:
+		stream.set("loop", true)
