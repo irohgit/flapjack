@@ -7,6 +7,8 @@ signal tentacle_destroyed
 enum State { HIDDEN, TELEGRAPH, DOWN }
 
 @export var tentacle_health := 50
+## Awarded to the player's score on death, same field/convention as
+@export_range(0, 10000, 1, "or_greater") var score_value := 1000
 @export var smash_damage := 2
 @export var smash_radius := 100.0
 @export var telegraph_time := 2.0
@@ -280,5 +282,10 @@ func _on_died() -> void:
 	if _is_dying:
 		return
 	_is_dying = true
+
+	var player := get_tree().get_first_node_in_group("player") as Player
+	if player != null:
+		player._add_score(score_value)
+
 	tentacle_destroyed.emit()
 	queue_free()
