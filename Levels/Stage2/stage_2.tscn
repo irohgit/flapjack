@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://br55a5ydf4qlm"]
 
 [ext_resource type="Script" uid="uid://ccrdo53clm5pg" path="res://Levels/Stage2/stage_2.gd" id="1_1bb5f"]
-[ext_resource type="AudioStream" uid="uid://cufofgb20yxns" path="res://Audio/BGM/Lance Conrad - Water Serpent.mp3" id="2_07xoo"]
+[ext_resource type="AudioStream" uid="uid://e4wa8maktpbv" path="res://Audio/BGM/Lance Conrad - Water Serpent NM.mp3" id="2_07xoo"]
 [ext_resource type="Script" uid="uid://tsoi3lwff5mf" path="res://Actors/Camera/shake_camera.gd" id="2_mjwon"]
 [ext_resource type="PackedScene" uid="uid://b27tvj4v653m2" path="res://Levels/enemy_controller.tscn" id="3_8awud"]
 [ext_resource type="Script" uid="uid://bo6li876odoia" path="res://Data/Enemy/enemy_data.gd" id="3_r3li8"]

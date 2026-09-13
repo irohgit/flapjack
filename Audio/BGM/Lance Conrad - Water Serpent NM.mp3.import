@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://e4wa8maktpbv"
+path="res://.godot/imported/Lance Conrad - Water Serpent NM.mp3-ec5c258d551c038b95eeccf2044018c4.mp3str"
+
+[deps]
+
+source_file="res://Audio/BGM/Lance Conrad - Water Serpent NM.mp3"
+dest_files=["res://.godot/imported/Lance Conrad - Water Serpent NM.mp3-ec5c258d551c038b95eeccf2044018c4.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

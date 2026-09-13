@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://gcqtjh6jewcl"
+path="res://.godot/imported/Rick Abbott - Fog Choke NM.mp3-90b4edd081181c4f84fe7e1aade12e5f.mp3str"
+
+[deps]
+
+source_file="res://Audio/BGM/Rick Abbott - Fog Choke NM.mp3"
+dest_files=["res://.godot/imported/Rick Abbott - Fog Choke NM.mp3-90b4edd081181c4f84fe7e1aade12e5f.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

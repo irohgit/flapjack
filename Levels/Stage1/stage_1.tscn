@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dsf0q5lcpr0mh" path="res://Actors/Camera/ScrollDirector.tscn" id="3_o28ls"]
 [ext_resource type="PackedScene" uid="uid://cpy76lvb1x4cb" path="res://UI/GameUI.tscn" id="3_p2t5c"]
 [ext_resource type="PackedScene" uid="uid://c1hug03muahmo" path="res://Actors/Camera/water_background.tscn" id="3_utqb5"]
-[ext_resource type="AudioStream" uid="uid://bbe1ofas00pcp" path="res://Audio/BGM/Adrián Berenguer - Potencial.mp3" id="4_gjikx"]
+[ext_resource type="AudioStream" uid="uid://cg4ep34u72flw" path="res://Audio/BGM/Adrián Berenguer - Potencial _ NM.mp3" id="4_gjikx"]
 [ext_resource type="PackedScene" uid="uid://cclwwsegfn8rr" path="res://Actors/Player/player.tscn" id="4_nx2dg"]
 [ext_resource type="Resource" uid="uid://bsk4oh4u6bnhe" path="res://Data/Enemy/BulwarkEnemy.tres" id="5_fkloy"]
 [ext_resource type="Resource" uid="uid://cnxtqo5woe8ja" path="res://Data/Enemy/HunterEnemy.tres" id="6_rvay1"]
