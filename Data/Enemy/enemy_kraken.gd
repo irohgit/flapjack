@@ -34,6 +34,10 @@ var _stage := 0
 var _active_tentacles: Array[KrakenTentacle] = []
 var _is_defeated := false
 var _is_swiping := false
+## The HUD bar tracks the whole fight (all 8 tentacles across all 3 stages),
+## not just whatever's active right now - these two make that possible.
+var _fight_total_max := 0
+var _fight_destroyed_max := 0
 
 
 func _ready() -> void:
@@ -44,7 +48,25 @@ func _ready() -> void:
 	)
 
 	GameEvents.boss_name_changed.emit("KRAKEN")
+	_fight_total_max = _compute_fight_total_max()
 	call_deferred("_start_stage", 0)
+
+
+## Every tentacle comes from the same scene, so its exported tentacle_health
+## default (read off a throwaway instance, never added to the tree) times
+## the total tentacle count across every stage gives the whole fight's pool
+## upfront - before stage 2/3's tentacles even exist yet.
+func _compute_fight_total_max() -> int:
+	var probe := tentacle_scene.instantiate() as KrakenTentacle
+	if probe == null:
+		return 0
+	var per_tentacle := probe.tentacle_health
+	probe.queue_free()
+
+	var total_count := 0
+	for count in tentacles_per_stage:
+		total_count += count
+	return total_count * per_tentacle
 
 
 func _start_stage(stage_index: int) -> void:
@@ -107,6 +129,7 @@ func _on_tentacle_health_changed(_current: int, _maximum: int) -> void:
 
 
 func _on_tentacle_destroyed(tentacle: KrakenTentacle) -> void:
+	_fight_destroyed_max += tentacle.get_max_health()
 	_active_tentacles.erase(tentacle)
 	_recompute_boss_health()
 
@@ -119,17 +142,21 @@ func _on_tentacle_destroyed(tentacle: KrakenTentacle) -> void:
 		_defeat()
 
 
+## Whole-fight remaining = the total pool, minus tentacles already fully
+## destroyed, minus damage sustained by tentacles still alive right now.
 func _recompute_boss_health() -> void:
-	var current := 0
-	var maximum := 0
+	if _fight_total_max <= 0:
+		return
+
+	var active_current := 0
+	var active_maximum := 0
 	for tentacle in _active_tentacles:
 		if is_instance_valid(tentacle):
-			current += tentacle.get_current_health()
-			maximum += tentacle.get_max_health()
+			active_current += tentacle.get_current_health()
+			active_maximum += tentacle.get_max_health()
 
-	if maximum <= 0:
-		return
-	GameEvents.boss_health_changed.emit(current, maximum)
+	var fight_current := _fight_total_max - _fight_destroyed_max - (active_maximum - active_current)
+	GameEvents.boss_health_changed.emit(fight_current, _fight_total_max)
 
 
 ## Only fires while every current tentacle is hidden (i.e. not mid-attack)
@@ -158,13 +185,6 @@ func _fire_single_shot() -> Projectile:
 	if ammo == null:
 		return null
 
-	var shot := projectile_scene.instantiate() as Projectile
-	if shot == null:
-		push_error("Kraken projectile_scene must inherit from Projectile")
-		return null
-
-	shot.data = ammo.duplicate() as ProjectileData
-
 	var fire_position := _get_fire_position()
 	var aim_direction := Vector2.DOWN
 	var player := get_tree().get_first_node_in_group("player") as Node2D
@@ -173,11 +193,31 @@ func _fire_single_shot() -> Projectile:
 		if not direction_to_player.is_zero_approx():
 			aim_direction = direction_to_player
 
-	shot.direction = aim_direction
-	get_parent().add_child(shot)
-	shot.global_position = fire_position
-	Audio.play_sfx(data.fire_sfx, data.fire_sfx_volume_db, 0.06, data.fire_pitch)
+	var shot := _spawn_projectile_shot(ammo, fire_position, aim_direction)
+	if shot != null:
+		_play_fire_sfx()
 	return shot
+
+
+## Shared by the single tracked shot and each shot in a swipe burst:
+## instantiate, assign ammo, aim, add to the tree, and position. Callers
+## still play their own fire sfx, since a burst only wants it once for the
+## whole volley rather than once per shot.
+func _spawn_projectile_shot(ammo: ProjectileData, spawn_position: Vector2, direction: Vector2) -> Projectile:
+	var shot := projectile_scene.instantiate() as Projectile
+	if shot == null:
+		push_error("Kraken projectile_scene must inherit from Projectile")
+		return null
+
+	shot.data = ammo.duplicate() as ProjectileData
+	shot.direction = direction
+	get_parent().add_child(shot)
+	shot.global_position = spawn_position
+	return shot
+
+
+func _play_fire_sfx() -> void:
+	Audio.play_sfx(data.fire_sfx, data.fire_sfx_volume_db, 0.06, data.fire_pitch)
 
 
 ## Plays the Swipe animation and, as it starts, fans swipe_projectile_count
@@ -208,18 +248,9 @@ func _fire_swipe_burst() -> void:
 	for i in range(count):
 		var t := 0.5 if count == 1 else float(i) / float(count - 1)
 		var angle := lerpf(-half_spread, half_spread, t)
+		_spawn_projectile_shot(ammo, fire_position, Vector2.DOWN.rotated(angle))
 
-		var shot := projectile_scene.instantiate() as Projectile
-		if shot == null:
-			push_error("Kraken projectile_scene must inherit from Projectile")
-			continue
-
-		shot.data = ammo.duplicate() as ProjectileData
-		shot.direction = Vector2.DOWN.rotated(angle)
-		get_parent().add_child(shot)
-		shot.global_position = fire_position
-
-	Audio.play_sfx(data.fire_sfx, data.fire_sfx_volume_db, 0.06, data.fire_pitch)
+	_play_fire_sfx()
 
 
 func _pick_ammo() -> ProjectileData:

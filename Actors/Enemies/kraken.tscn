@@ -131,7 +131,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s4bsw"]
-size = Vector2(484.1667, 175.16667)
+size = Vector2(484.1667, 130.66667)
 
 [node name="KrakenEnemy" type="Area2D" unique_id=215655582 groups=["hazard"]]
 scale = Vector2(6, 6)
@@ -150,7 +150,7 @@ sprite_frames = SubResource("SpriteFrames_t2cet")
 animation = &"Idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1098306222]
-position = Vector2(4.9166565, -71.083336)
+position = Vector2(4.9166565, -93.333336)
 shape = SubResource("RectangleShape2D_s4bsw")
 
 [node name="StatusEffectComponent" type="Node" parent="." unique_id=1641484347]

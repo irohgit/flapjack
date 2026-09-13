@@ -60,7 +60,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tnthc"]
-size = Vector2(176, 563)
+size = Vector2(103, 538)
 
 [node name="KrakenTentacle" type="Area2D" unique_id=204469274 groups=["enemy"]]
 z_index = -1
@@ -68,6 +68,7 @@ collision_layer = 2
 collision_mask = 0
 monitoring = false
 script = ExtResource("1_tentacle")
+collision_length = 580.0
 
 [node name="Shadow" type="Sprite2D" parent="." unique_id=1457699710]
 modulate = Color(0, 0, 0, 0.35)
@@ -80,7 +81,7 @@ frame = 2
 frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=613891213]
-position = Vector2(6, -93.5)
+position = Vector2(8.5, -106)
 shape = SubResource("RectangleShape2D_tnthc")
 disabled = true
 
