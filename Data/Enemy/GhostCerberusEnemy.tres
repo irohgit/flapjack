@@ -1,0 +1,99 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://dgvmv4tdygi6f"]
+
+[ext_resource type="Resource" uid="uid://lal2aausnm0c" path="res://Data/Projectiles/cursed_enemy_cannonball.tres" id="1_ulyn0"]
+[ext_resource type="AudioStream" uid="uid://bcf81qxqc8nxo" path="res://Audio/SFX/ship_destroyed.mp3" id="2_rwc35"]
+[ext_resource type="AudioStream" uid="uid://41by6wg6cvxx" path="res://Audio/SFX/enemy_cannon_shot_1.mp3" id="3_51jga"]
+[ext_resource type="Material" uid="uid://4awmmxa4uiyx" path="res://Assets/Shaders/ghost_material.tres" id="4_kp2te"]
+[ext_resource type="AudioStream" uid="uid://cbplby7nfcsyw" path="res://Audio/SFX/ship_hit.mp3" id="4_ulyn0"]
+[ext_resource type="Texture2D" uid="uid://bc3kndbrvkgar" path="res://Assets/Enemies/Cerberus_Pirates/ghost_cerberus_spritesheet_640x200.png" id="5_5dv2w"]
+[ext_resource type="JSON" path="res://Data/Loot/Enemies/cerberus.json" id="5_kp2te"]
+[ext_resource type="Texture2D" uid="uid://db0cb52qu4ewd" path="res://Assets/Enemies/Cerberus_Pirates/ghost_ceberus_80x160.png" id="6_731w1"]
+[ext_resource type="PackedScene" uid="uid://bhmi8mtmsl4qy" path="res://Actors/Enemies/cerberus_enemy.tscn" id="7_731w1"]
+[ext_resource type="Script" uid="uid://bo6li876odoia" path="res://Data/Enemy/enemy_data.gd" id="8_d0wls"]
+[ext_resource type="Texture2D" uid="uid://b81o3k3xhfu20" path="res://Assets/Enemies/Cerberus_Pirates/cerberus_80x160.png" id="9_hllkd"]
+[ext_resource type="PackedScene" uid="uid://biiidm7buychr" path="res://Actors/Projectiles/cursed_projectile.tscn" id="9_kp2te"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d0wls"]
+atlas = ExtResource("5_5dv2w")
+region = Rect2(0, 0, 80, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hllkd"]
+atlas = ExtResource("5_5dv2w")
+region = Rect2(80, 0, 80, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vgtvw"]
+atlas = ExtResource("5_5dv2w")
+region = Rect2(160, 0, 80, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vh80g"]
+atlas = ExtResource("5_5dv2w")
+region = Rect2(240, 0, 80, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ifgc"]
+atlas = ExtResource("5_5dv2w")
+region = Rect2(320, 0, 80, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4tve7"]
+atlas = ExtResource("5_5dv2w")
+region = Rect2(400, 0, 80, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tew8d"]
+atlas = ExtResource("5_5dv2w")
+region = Rect2(480, 0, 80, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ba4w"]
+atlas = ExtResource("5_5dv2w")
+region = Rect2(560, 0, 80, 200)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vgtvw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d0wls")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hllkd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vgtvw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vh80g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ifgc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4tve7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tew8d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ba4w")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[resource]
+script = ExtResource("8_d0wls")
+scene = ExtResource("7_731w1")
+enemy_name = "Cerberus"
+score_value = 15
+projectile_speed = 0.7
+texture = ExtResource("9_hllkd")
+projectile_scene = ExtResource("9_kp2te")
+ammo = ExtResource("1_ulyn0")
+hit_sfx = ExtResource("4_ulyn0")
+death_sfx = ExtResource("2_rwc35")
+fire_sfx = ExtResource("3_51jga")
+fire_pitch = 0.3
+fire_sfx_volume_db = -10.0
+goes_ethereal = true
+ghost_material = ExtResource("4_kp2te")
+ghost_texture = ExtResource("6_731w1")
+ghost_sprite_frames = SubResource("SpriteFrames_vgtvw")
+loot = ExtResource("5_kp2te")
+metadata/_custom_type_script = "uid://bo6li876odoia"

@@ -18,7 +18,7 @@ extends Enemy
 ## Distance below the top of the screen the ship must reach before it counts as
 ## arrived. Set this to roughly the height of the boss health panel so the ship
 ## is clear of it before the player can hurt it.
-@export_range(0.0, 800.0, 10.0, "or_greater") var arrival_offset := 260.0
+@export_range(0.0, 800.0, 10.0, "or_greater") var arrival_offset := 150.0
 ## Most bosses reveal themselves the moment they arrive. The tutorial turns this
 ## off so the reveal can be timed to a teaching beat, and calls announce_boss()
 ## itself. Invulnerability during entry is unaffected by this.

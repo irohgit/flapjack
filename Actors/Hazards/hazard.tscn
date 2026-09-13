@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://cuwj1wdixoj3p"]
+
+[ext_resource type="Script" uid="uid://curt0kp8cfxrs" path="res://Actors/Hazards/hazard.gd" id="1_62q4n"]
+[ext_resource type="Resource" uid="uid://c88gfpq8o5v7f" path="res://Data/Hazards/rock.tres" id="2_87ehs"]
+
+[node name="Hazard" type="Area2D" unique_id=90124748 groups=["enemy", "hazard", "pickup"]]
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("1_62q4n")
+data = ExtResource("2_87ehs")
+drift_speed = 0.0
+metadata/_custom_type_script = "uid://curt0kp8cfxrs"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=693676307]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=192880938]

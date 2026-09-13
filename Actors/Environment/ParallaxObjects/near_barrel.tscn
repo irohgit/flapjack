@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://bossw7m3pbuhw"]
+
+[ext_resource type="Script" uid="uid://bmpjei5mq0i3u" path="res://Actors/Environment/ParallaxObjects/variantprop.gd" id="1_2um8k"]
+[ext_resource type="Texture2D" uid="uid://b3k48vxms43yg" path="res://Assets/Environment/dock_tileset_1.png" id="2_2um8k"]
+
+[node name="NearBarrel" type="Node2D" unique_id=2042900424]
+script = ExtResource("1_2um8k")
+min_scale = 0.3
+max_scale = 0.7
+push_strength = 120.0
+push_return = 2.0
+float_enabled = true
+sway_deg = 20.0
+sway_speed = 1.4
+bob_pixels = 5.0
+bob_speed = 5.0
+metadata/_custom_type_script = "uid://d06qlr4jj1y3a"
+
+[node name="NearBarrel_1" type="Sprite2D" parent="." unique_id=1060330307]
+modulate = Color(0.7647059, 0.827451, 1, 1)
+texture = ExtResource("2_2um8k")
+region_enabled = true
+region_rect = Rect2(6, 482, 36, 45)
+
+[node name="NearBarrel_2" type="Sprite2D" parent="." unique_id=446404399]
+modulate = Color(0.7647059, 0.827451, 1, 1)
+texture = ExtResource("2_2um8k")
+region_enabled = true
+region_rect = Rect2(54, 530, 36, 44)
+
+[node name="NearBarrel_3" type="Sprite2D" parent="." unique_id=669931696]
+modulate = Color(0.7647059, 0.827451, 1, 1)
+texture = ExtResource("2_2um8k")
+region_enabled = true
+region_rect = Rect2(54, 578, 36, 44)
+
+[node name="NearBarrel_4" type="Sprite2D" parent="." unique_id=1193489910]
+modulate = Color(0.7647059, 0.827451, 1, 1)
+texture = ExtResource("2_2um8k")
+region_enabled = true
+region_rect = Rect2(54, 627, 36, 43)
+
+[node name="NearBarrel_5" type="Sprite2D" parent="." unique_id=1732815652]
+modulate = Color(0.7647059, 0.827451, 1, 1)
+texture = ExtResource("2_2um8k")
+region_enabled = true
+region_rect = Rect2(102, 578, 36, 44)
+
+[node name="NearBarrel_6" type="Sprite2D" parent="." unique_id=962576635]
+modulate = Color(0.7647059, 0.827451, 1, 1)
+texture = ExtResource("2_2um8k")
+region_enabled = true
+region_rect = Rect2(150, 579, 36, 43)
+
+[node name="NearBarrel_7" type="Sprite2D" parent="." unique_id=764074746]
+modulate = Color(0.7647059, 0.827451, 1, 1)
+texture = ExtResource("2_2um8k")
+region_enabled = true
+region_rect = Rect2(102, 578, 36, 44)

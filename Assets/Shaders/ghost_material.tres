@@ -1,0 +1,15 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://4awmmxa4uiyx"]
+
+[ext_resource type="Shader" uid="uid://b5dl00kt3tg4w" path="res://Assets/Shaders/ghost.gdshader" id="1_rorh8"]
+
+[resource]
+shader = ExtResource("1_rorh8")
+shader_parameter/ghost_tint = Color(0.36, 1, 0.62, 1)
+shader_parameter/tint_strength = 0.8
+shader_parameter/ghost_alpha = 0.45
+shader_parameter/rim_strength = 1.8
+shader_parameter/pulse_speed = 2.2
+shader_parameter/pulse_amount = 0.12
+shader_parameter/wobble_speed = 2.0
+shader_parameter/wobble_amount = 0.003
+shader_parameter/wobble_frequency = 18.0

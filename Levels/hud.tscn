@@ -15,35 +15,24 @@
 [ext_resource type="Texture2D" uid="uid://c2io1a0l25kwq" path="res://Assets/UI/Potions/potion_slot_selector.png" id="13_potion_selector"]
 [ext_resource type="Texture2D" uid="uid://cjjelj1l1pyip" path="res://Assets/UI/WoodMenu/wood_button.png" id="14_wood_counter"]
 [ext_resource type="Texture2D" uid="uid://wghkafmmef08" path="res://Assets/Cinematics/NarrativeIntro/Ships/player_ship.png" id="15_progress_ship"]
+[ext_resource type="PackedScene" uid="uid://blhey4kpp5exr" path="res://Actors/HUD/victory_banner.tscn" id="16_wk513"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_boss_panel"]
-bg_color = Color(0.105882354, 0.03529412, 0.011764706, 0.46666667)
+bg_color = Color(0.106126174, 0.03876, 0.012920001, 0)
+draw_center = false
 border_width_left = 4
 border_width_top = 4
 border_width_right = 4
 border_width_bottom = 4
-border_color = Color(0.843137, 0.584314, 0.172549, 1)
+border_color = Color(0.8433892, 0.5847179, 0.17184411, 0.2)
 corner_radius_top_left = 9
 corner_radius_top_right = 9
 corner_radius_bottom_right = 9
 corner_radius_bottom_left = 9
-shadow_color = Color(0, 0, 0, 0.72)
 shadow_size = 7
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_boss_bar_background"]
-bg_color = Color(0.0196078, 0.027451, 0.0392157, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.352941, 0.160784, 0.0627451, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_boss_bar_fill"]
-bg_color = Color(0.815686, 0.0705882, 0.0352941, 1)
+bg_color = Color(0.815826, 0.07016479, 0.03876, 0.5)
 border_width_top = 3
 border_width_bottom = 3
 border_color = Color(1, 0.298039, 0.0823529, 1)
@@ -51,6 +40,18 @@ corner_radius_top_left = 3
 corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wk513"]
+content_margin_left = 18.0
+content_margin_top = 14.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0, 0, 0, 0.4)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 4
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_augments"]
 
@@ -145,11 +146,15 @@ theme_override_constants/separation = 3
 
 [node name="BossName" type="Label" parent="BossHealth/Panel/Margin/Content" unique_id=1443352547]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.886275, 0.627451, 1)
+theme_override_colors/font_color = Color(0.99151784, 0.7646367, 5.6601762e-05, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0.0196078, 0.00392157, 0, 1)
-theme_override_constants/outline_size = 4
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 6
+theme_override_constants/shadow_outline_size = 2
 theme_override_fonts/font = ExtResource("8_uu2l2")
-theme_override_font_sizes/font_size = 27
+theme_override_font_sizes/font_size = 34
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -166,7 +171,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme_override_styles/background = SubResource("StyleBoxFlat_boss_bar_background")
 theme_override_styles/fill = SubResource("StyleBoxFlat_boss_bar_fill")
 max_value = 250.0
 value = 250.0
@@ -197,48 +201,50 @@ offset_bottom = 88.0
 [node name="HealthRow" type="HBoxContainer" parent="health and shield icon" unique_id=2119128913]
 layout_mode = 2
 
-[node name="Coin" type="Control" parent="." unique_id=1004159780]
-layout_mode = 3
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=412779581]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -260.0
-offset_top = 20.0
-offset_right = -24.0
-offset_bottom = 92.0
+offset_left = -381.0
+offset_top = 49.0
+offset_right = -81.0
+offset_bottom = 113.0
 grow_horizontal = 0
+pivot_offset = Vector2(-48, 48)
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_wk513")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer" unique_id=1184379734]
+propagate_maximum_size = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 15
+
+[node name="Coin" type="HBoxContainer" parent="PanelContainer/HBoxContainer" unique_id=381605948]
+layout_mode = 2
 mouse_filter = 2
 
-[node name="Frame" type="TextureRect" parent="Coin" unique_id=2076571732]
+[node name="Frame" type="TextureRect" parent="PanelContainer/HBoxContainer/Coin" unique_id=2076571732]
+visible = false
 texture_filter = 1
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("14_wood_counter")
 expand_mode = 1
 
-[node name="CoinIcon" type="TextureRect" parent="Coin" unique_id=525282589]
+[node name="CoinIcon" type="TextureRect" parent="PanelContainer/HBoxContainer/Coin" unique_id=525282589]
 texture_filter = 1
-layout_mode = 0
-offset_left = 12.0
-offset_top = 8.0
-offset_right = 68.0
-offset_bottom = 64.0
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("7_2lib2")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Caption" type="Label" parent="Coin" unique_id=1023885463]
-layout_mode = 0
-offset_left = 73.0
-offset_top = 7.0
-offset_right = 218.0
-offset_bottom = 29.0
+[node name="Caption" type="Label" parent="PanelContainer/HBoxContainer/Coin" unique_id=1023885463]
+visible = false
+layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.760784, 0.309804, 1)
 theme_override_colors/font_outline_color = Color(0.0196078, 0.00392157, 0, 1)
 theme_override_constants/outline_size = 3
@@ -248,12 +254,8 @@ text = "COINS"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Amount" type="Label" parent="Coin" unique_id=195701409]
-layout_mode = 0
-offset_left = 73.0
-offset_top = 25.0
-offset_right = 218.0
-offset_bottom = 63.0
+[node name="Amount" type="Label" parent="PanelContainer/HBoxContainer/Coin" unique_id=195701409]
+layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0.0196078, 0.00392157, 0, 1)
 theme_override_constants/outline_size = 4
@@ -263,48 +265,30 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Gin" type="Control" parent="." unique_id=1495590449]
-layout_mode = 3
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -260.0
-offset_top = 102.0
-offset_right = -24.0
-offset_bottom = 174.0
-grow_horizontal = 0
+[node name="Gin" type="HBoxContainer" parent="PanelContainer/HBoxContainer" unique_id=783330809]
+layout_mode = 2
 mouse_filter = 2
 
-[node name="Frame" type="TextureRect" parent="Gin" unique_id=2017084565]
+[node name="Frame" type="TextureRect" parent="PanelContainer/HBoxContainer/Gin" unique_id=2017084565]
+visible = false
 texture_filter = 1
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("14_wood_counter")
 expand_mode = 1
 
-[node name="GinIcon" type="TextureRect" parent="Gin" unique_id=1722352701]
+[node name="GinIcon" type="TextureRect" parent="PanelContainer/HBoxContainer/Gin" unique_id=1722352701]
 texture_filter = 1
-layout_mode = 0
-offset_left = 14.0
-offset_top = 7.0
-offset_right = 66.0
-offset_bottom = 65.0
+custom_minimum_size = Vector2(30, 24)
+layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("11_1wnoe")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Caption" type="Label" parent="Gin" unique_id=2084258214]
-layout_mode = 0
-offset_left = 73.0
-offset_top = 7.0
-offset_right = 218.0
-offset_bottom = 29.0
+[node name="Caption" type="Label" parent="PanelContainer/HBoxContainer/Gin" unique_id=2084258214]
+visible = false
+layout_mode = 2
 theme_override_colors/font_color = Color(0.458824, 0.929412, 0.835294, 1)
 theme_override_colors/font_outline_color = Color(0.0196078, 0.00392157, 0, 1)
 theme_override_constants/outline_size = 3
@@ -314,12 +298,8 @@ text = "GIN"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Amount" type="Label" parent="Gin" unique_id=493406975]
-layout_mode = 0
-offset_left = 73.0
-offset_top = 25.0
-offset_right = 218.0
-offset_bottom = 63.0
+[node name="Amount" type="Label" parent="PanelContainer/HBoxContainer/Gin" unique_id=493406975]
+layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0.0196078, 0.00392157, 0, 1)
 theme_override_constants/outline_size = 4
@@ -329,63 +309,40 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Score" type="Control" parent="." unique_id=1413957060]
-layout_mode = 3
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -260.0
-offset_top = 185.0
-offset_right = -24.0
-offset_bottom = 257.0
-grow_horizontal = 0
+[node name="Score" type="HBoxContainer" parent="PanelContainer/HBoxContainer" unique_id=1781706691]
+layout_mode = 2
 mouse_filter = 2
 
-[node name="Frame" type="TextureRect" parent="Score" unique_id=1608501580]
+[node name="Frame" type="TextureRect" parent="PanelContainer/HBoxContainer/Score" unique_id=1608501580]
+visible = false
 texture_filter = 1
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("14_wood_counter")
 expand_mode = 1
 
-[node name="ScoreIcon" type="TextureRect" parent="Score" unique_id=286105933]
+[node name="ScoreIcon" type="TextureRect" parent="PanelContainer/HBoxContainer/Score" unique_id=286105933]
+visible = false
 texture_filter = 1
-layout_mode = 0
-offset_left = 14.0
-offset_top = 7.0
-offset_right = 66.0
-offset_bottom = 65.0
+layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("12_uu2l2")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Caption" type="Label" parent="Score" unique_id=606023563]
-layout_mode = 0
-offset_left = 73.0
-offset_top = 7.0
-offset_right = 218.0
-offset_bottom = 29.0
+[node name="Caption" type="Label" parent="PanelContainer/HBoxContainer/Score" unique_id=606023563]
+layout_mode = 2
 theme_override_colors/font_color = Color(0.458824, 0.929412, 0.835294, 1)
 theme_override_colors/font_outline_color = Color(0.0196078, 0.00392157, 0, 1)
 theme_override_constants/outline_size = 3
 theme_override_fonts/font = ExtResource("8_uu2l2")
-theme_override_font_sizes/font_size = 16
-text = "SCORE"
+theme_override_font_sizes/font_size = 20
+text = "SCORE:"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Amount" type="Label" parent="Score" unique_id=1136099171]
-layout_mode = 0
-offset_left = 73.0
-offset_top = 25.0
-offset_right = 218.0
-offset_bottom = 63.0
+[node name="Amount" type="Label" parent="PanelContainer/HBoxContainer/Score" unique_id=1136099171]
+layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0.0196078, 0.00392157, 0, 1)
 theme_override_constants/outline_size = 4
@@ -466,6 +423,7 @@ mouse_filter = 2
 theme = SubResource("Theme_voyage")
 
 [node name="Frame" type="TextureRect" parent="VoyageProgress" unique_id=2047270735]
+visible = false
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 15
@@ -479,10 +437,10 @@ expand_mode = 1
 
 [node name="StageTitle" type="Label" parent="VoyageProgress" unique_id=1488297134]
 layout_mode = 0
-offset_left = 64.0
-offset_top = 10.0
-offset_right = 466.0
-offset_bottom = 36.0
+offset_left = 85.0
+offset_top = 40.0
+offset_right = 487.0
+offset_bottom = 67.0
 theme_override_font_sizes/font_size = 26
 text = "STAGE 1  /  AZURE SEAS"
 vertical_alignment = 1
@@ -490,10 +448,10 @@ text_overrun_behavior = 3
 
 [node name="Status" type="Label" parent="VoyageProgress" unique_id=567678661]
 layout_mode = 0
-offset_left = 478.0
-offset_top = 10.0
-offset_right = 616.0
-offset_bottom = 36.0
+offset_left = 482.0
+offset_top = 40.0
+offset_right = 620.0
+offset_bottom = 66.0
 theme_override_colors/font_color = Color(0.47, 0.94, 0.84, 1)
 text = "100% LEFT"
 horizontal_alignment = 2
@@ -521,11 +479,13 @@ step = 0.0
 show_percentage = false
 
 [node name="FinishPole" type="Line2D" parent="VoyageProgress/Route" unique_id=255993396]
+position = Vector2(-8, 11)
 points = PackedVector2Array(611, 16, 611, 43)
 width = 2.0
 default_color = Color(1, 0.87, 0.55, 1)
 
 [node name="FinishFlag" type="Polygon2D" parent="VoyageProgress/Route" unique_id=1190027844]
+position = Vector2(-8, 11)
 color = Color(0.95, 0.69, 0.26, 1)
 polygon = PackedVector2Array(611, 16, 625, 16, 621, 22, 625, 28, 611, 28)
 
@@ -533,9 +493,10 @@ polygon = PackedVector2Array(611, 16, 625, 16, 621, 22, 625, 28, 611, 28)
 modulate = Color(1.2, 1.2, 1.2, 1)
 texture_filter = 1
 layout_mode = 0
-offset_top = 4.0
-offset_right = 56.0
-offset_bottom = 46.0
+offset_left = 7.0
+offset_top = 15.0
+offset_right = 63.0
+offset_bottom = 57.0
 mouse_filter = 2
 texture = ExtResource("15_progress_ship")
 expand_mode = 1
@@ -575,3 +536,5 @@ theme_override_font_sizes/font_size = 22
 text = "0%"
 horizontal_alignment = 2
 vertical_alignment = 1
+
+[node name="VictoryBanner" parent="." unique_id=476852536 instance=ExtResource("16_wk513")]

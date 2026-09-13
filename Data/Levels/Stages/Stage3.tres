@@ -1,0 +1,132 @@
+[gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://bqilok0p2k5a4"]
+
+[ext_resource type="Script" uid="uid://cytvv5o32ru6e" path="res://Data/Levels/encounter_data.gd" id="1_cpi3s"]
+[ext_resource type="Script" uid="uid://brpre4byem6tx" path="res://Data/Levels/weighted_enemy_data.gd" id="2_af0b6"]
+[ext_resource type="Resource" uid="uid://d1y5q1bsmrb6u" path="res://Data/Enemy/GhostBulwarkEnemy.tres" id="3_y8qs1"]
+[ext_resource type="Resource" uid="uid://dcv11k8jd8ccc" path="res://Data/Enemy/GhostHunterEnemy.tres" id="4_3ihbp"]
+[ext_resource type="Script" uid="uid://dgn1ppeend4i1" path="res://Data/Levels/weighted_formation_data.gd" id="5_f8naw"]
+[ext_resource type="Script" uid="uid://bgt6cqxd8jifw" path="res://Data/Levels/weighted_encounter_data.gd" id="6_yhyoi"]
+[ext_resource type="PackedScene" uid="uid://bq1hohq82ovyn" path="res://Actors/Enemies/enemy_pattern_butcherbird.tscn" id="7_cpi3s"]
+[ext_resource type="PackedScene" uid="uid://ce8wvig2ty71k" path="res://Actors/Enemies/davyjones_boss.tscn" id="8_3ihbp"]
+[ext_resource type="Script" uid="uid://bhsc86o70es47" path="res://Data/Levels/weighted_end_event_data.gd" id="8_3ko58"]
+[ext_resource type="Script" uid="uid://p4ssfrvfj0uw" path="res://Data/Levels/level_data.gd" id="10_jyine"]
+[ext_resource type="Script" uid="uid://rau2jwiqd0pd" path="res://Data/Pickups/pickup_data.gd" id="11_omuis"]
+[ext_resource type="Resource" uid="uid://c8prjyekwi7hm" path="res://Data/Pickups/HomingCannonPickup.tres" id="12_t8jwx"]
+[ext_resource type="Resource" uid="uid://5vagi0atsu3m" path="res://Data/Pickups/PlasmaAugmentPickup.tres" id="13_e4wjl"]
+[ext_resource type="Resource" uid="uid://cpynird4edptk" path="res://Data/Pickups/FireballAugmentPickup.tres" id="14_bygr1"]
+[ext_resource type="Resource" uid="uid://cesmcj6ctad" path="res://Data/Pickups/MagnetAugmentPickup.tres" id="15_23xsl"]
+[ext_resource type="Resource" path="res://Data/Pickups/SulfurStinkpotsPickup.tres" id="16_ycjx4"]
+[ext_resource type="Resource" path="res://Data/Pickups/ClingfilmPickup.tres" id="17_e4r4v"]
+[ext_resource type="Resource" path="res://Data/Pickups/CrackedPotsPickup.tres" id="18_bw2bx"]
+
+[sub_resource type="Resource" id="WeightedEnemy_bulwark"]
+script = ExtResource("2_af0b6")
+enemy = ExtResource("3_y8qs1")
+metadata/_custom_type_script = "uid://brpre4byem6tx"
+
+[sub_resource type="Resource" id="Resource_eiq86"]
+script = ExtResource("2_af0b6")
+enemy = ExtResource("3_y8qs1")
+metadata/_custom_type_script = "uid://brpre4byem6tx"
+
+[sub_resource type="Resource" id="Resource_7bt0i"]
+script = ExtResource("2_af0b6")
+enemy = ExtResource("4_3ihbp")
+metadata/_custom_type_script = "uid://brpre4byem6tx"
+
+[sub_resource type="Resource" id="WeightedFormation_line"]
+script = ExtResource("5_f8naw")
+metadata/_custom_type_script = "uid://dgn1ppeend4i1"
+
+[sub_resource type="Resource" id="WeightedFormation_v"]
+script = ExtResource("5_f8naw")
+formation = 1
+metadata/_custom_type_script = "uid://dgn1ppeend4i1"
+
+[sub_resource type="Resource" id="WeightedFormation_circle"]
+script = ExtResource("5_f8naw")
+formation = 3
+metadata/_custom_type_script = "uid://dgn1ppeend4i1"
+
+[sub_resource type="Resource" id="Encounter_01_normal"]
+script = ExtResource("1_cpi3s")
+distance_after_previous = 0.0
+enemy_pool = Array[ExtResource("2_af0b6")]([SubResource("WeightedEnemy_bulwark"), SubResource("Resource_eiq86"), SubResource("Resource_7bt0i")])
+formation_pool = Array[ExtResource("5_f8naw")]([SubResource("WeightedFormation_line"), SubResource("WeightedFormation_v"), SubResource("WeightedFormation_circle")])
+
+[sub_resource type="Resource" id="Resource_cpi3s"]
+script = ExtResource("1_cpi3s")
+distance_after_previous = 300.0
+min_pack_size = 5
+max_pack_size = 7
+enemy_pool = Array[ExtResource("2_af0b6")]([SubResource("WeightedEnemy_bulwark"), SubResource("Resource_eiq86"), SubResource("Resource_7bt0i")])
+formation_pool = Array[ExtResource("5_f8naw")]([SubResource("WeightedFormation_line"), SubResource("WeightedFormation_v"), SubResource("WeightedFormation_circle")])
+metadata/_custom_type_script = "uid://cytvv5o32ru6e"
+
+[sub_resource type="Resource" id="Resource_af0b6"]
+script = ExtResource("1_cpi3s")
+distance_after_previous = 400.0
+min_pack_size = 6
+max_pack_size = 8
+enemy_pool = Array[ExtResource("2_af0b6")]([SubResource("WeightedEnemy_bulwark"), SubResource("Resource_eiq86"), SubResource("Resource_7bt0i")])
+formation_pool = Array[ExtResource("5_f8naw")]([SubResource("WeightedFormation_line"), SubResource("WeightedFormation_v"), SubResource("WeightedFormation_circle")])
+metadata/_custom_type_script = "uid://cytvv5o32ru6e"
+
+[sub_resource type="Resource" id="Resource_mii17"]
+script = ExtResource("1_cpi3s")
+distance_after_previous = 330.0
+min_pack_size = 6
+max_pack_size = 7
+enemy_pool = Array[ExtResource("2_af0b6")]([SubResource("WeightedEnemy_bulwark"), SubResource("Resource_eiq86"), SubResource("Resource_7bt0i")])
+formation_pool = Array[ExtResource("5_f8naw")]([SubResource("WeightedFormation_line"), SubResource("WeightedFormation_v"), SubResource("WeightedFormation_circle")])
+metadata/_custom_type_script = "uid://cytvv5o32ru6e"
+
+[sub_resource type="Resource" id="Resource_wddnc"]
+script = ExtResource("1_cpi3s")
+distance_after_previous = 400.0
+enemy_pool = Array[ExtResource("2_af0b6")]([SubResource("WeightedEnemy_bulwark"), SubResource("Resource_eiq86"), SubResource("Resource_7bt0i")])
+formation_pool = Array[ExtResource("5_f8naw")]([SubResource("WeightedFormation_line"), SubResource("WeightedFormation_v"), SubResource("WeightedFormation_circle")])
+metadata/_custom_type_script = "uid://cytvv5o32ru6e"
+
+[sub_resource type="Resource" id="Resource_vrutu"]
+script = ExtResource("6_yhyoi")
+encounter_scene = ExtResource("7_cpi3s")
+metadata/_custom_type_script = "uid://bgt6cqxd8jifw"
+
+[sub_resource type="Resource" id="Resource_sin7p"]
+script = ExtResource("1_cpi3s")
+type = 1
+distance_after_previous = 250.0
+enemy_pool = Array[ExtResource("2_af0b6")]([SubResource("WeightedEnemy_bulwark"), SubResource("Resource_eiq86"), SubResource("Resource_7bt0i")])
+formation_pool = Array[ExtResource("5_f8naw")]([SubResource("WeightedFormation_line"), SubResource("WeightedFormation_v"), SubResource("WeightedFormation_circle")])
+special_encounter_pool = Array[ExtResource("6_yhyoi")]([SubResource("Resource_vrutu")])
+metadata/_custom_type_script = "uid://cytvv5o32ru6e"
+
+[sub_resource type="Resource" id="Resource_i6kde"]
+script = ExtResource("1_cpi3s")
+distance_after_previous = 250.0
+min_pack_size = 5
+max_pack_size = 7
+enemy_pool = Array[ExtResource("2_af0b6")]([SubResource("WeightedEnemy_bulwark"), SubResource("Resource_eiq86"), SubResource("Resource_7bt0i")])
+formation_pool = Array[ExtResource("5_f8naw")]([SubResource("WeightedFormation_line"), SubResource("WeightedFormation_v"), SubResource("WeightedFormation_circle")])
+metadata/_custom_type_script = "uid://cytvv5o32ru6e"
+
+[sub_resource type="Resource" id="Finale_boss"]
+script = ExtResource("8_3ko58")
+event_name = "FinaleBoss"
+encounter_scene = ExtResource("8_3ihbp")
+metadata/_custom_type_script = "uid://bhsc86o70es47"
+
+[resource]
+script = ExtResource("10_jyine")
+level_id = &"stage_3"
+level_name = "Stage3"
+end_position = Vector2(0, -4000)
+shop_items = Array[ExtResource("11_omuis")]([ExtResource("12_t8jwx"), ExtResource("13_e4wjl"), ExtResource("14_bygr1"), ExtResource("15_23xsl"), ExtResource("16_ycjx4"), ExtResource("17_e4r4v"), ExtResource("18_bw2bx")])
+encounter_sequence = Array[ExtResource("1_cpi3s")]([SubResource("Encounter_01_normal"), SubResource("Resource_cpi3s"), SubResource("Resource_af0b6"), SubResource("Resource_mii17"), SubResource("Resource_wddnc"), SubResource("Resource_sin7p"), SubResource("Resource_i6kde")])
+finale_trigger_position = Vector2(0, -4000)
+finale_spawn_position = Vector2(960, -3940)
+finale_pool = Array[ExtResource("8_3ko58")]([SubResource("Finale_boss")])
+stage_title = "Dead Sea"
+stage_subtitle = "Stage Three"
+metadata/_custom_type_script = "uid://p4ssfrvfj0uw"

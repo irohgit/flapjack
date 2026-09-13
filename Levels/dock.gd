@@ -29,6 +29,8 @@ func _ready() -> void:
 	launch_gate.launch_confirmed.connect(_launch_run)
 	
 func _on_hotspot_interacted(hotspot: InteractHotspot) -> void:
+	if _current_screen != null and not is_instance_valid(_current_screen):
+		_current_screen = null
 	if _current_screen != null:
 		return                                    # something is already open
 	if hotspot.screen_scene == null:

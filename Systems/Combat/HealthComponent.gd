@@ -87,3 +87,18 @@ func get_shield_points() -> int:
 
 func is_invincible() -> bool:
 	return _invincibility_remaining > 0.0
+
+
+## Destroys all shield at once. Returns how many points were taken, so the
+## caller can tell the difference between "stripped" and "there was none".
+func strip_shield() -> int:
+	if shield_points <= 0:
+		return 0
+
+	var lost := shield_points
+	shield_points = 0
+	shield_changed.emit(shield_points)
+	shield_damaged.emit(lost)
+	return lost
+	
+	

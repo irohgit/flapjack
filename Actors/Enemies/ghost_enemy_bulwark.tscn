@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://bweb74lf17hds"]
+
+[ext_resource type="Script" uid="uid://bokjl1r7po7pc" path="res://Data/Enemy/enemy.gd" id="1_3bicw"]
+[ext_resource type="Resource" uid="uid://bsk4oh4u6bnhe" path="res://Data/Enemy/BulwarkEnemy.tres" id="2_0m3bv"]
+[ext_resource type="Texture2D" uid="uid://cv04hsa45l3hf" path="res://Assets/Enemies/Blackbeard_Pirates/Enemy_Ship_5.png" id="3_6jrjg"]
+[ext_resource type="Script" uid="uid://cv0v6ynhg51ei" path="res://Systems/Combat/HealthComponent.gd" id="4_4ayq4"]
+[ext_resource type="Script" uid="uid://dttjdne32amn0" path="res://Systems/Combat/status_effect_component.gd" id="5_wsuo1"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_odipc"]
+radius = 31.0
+height = 130.0
+
+[node name="EnemyShip" type="Area2D" unique_id=1035340143 groups=["enemy", "hazard"]]
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("1_3bicw")
+data = ExtResource("2_0m3bv")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=435719709]
+texture_filter = 1
+texture = ExtResource("3_6jrjg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1631142024]
+position = Vector2(2, 3)
+shape = SubResource("CapsuleShape2D_odipc")
+debug_color = Color(0.85882354, 0, 0.8784314, 0.19607843)
+
+[node name="HealthComponent" type="Node" parent="." unique_id=347688055]
+script = ExtResource("4_4ayq4")
+max_health = 5
+metadata/_custom_type_script = "uid://cv0v6ynhg51ei"
+
+[node name="StatusEffectComponent" type="Node" parent="." unique_id=1674272058]
+script = ExtResource("5_wsuo1")

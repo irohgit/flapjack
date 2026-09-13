@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://duntr73s38siv" path="res://UI/main_menu.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://cfohfwxs3eryg" path="res://Assets/UI/Backgrounds/main menu light.png" id="2_bg"]
 [ext_resource type="Texture2D" uid="uid://cjjelj1l1pyip" path="res://Assets/UI/WoodMenu/wood_button.png" id="3_wood"]
-[ext_resource type="Texture2D" uid="uid://kxxrj3v5jv4l" path="res://Assets/UI/WoodMenu/octopus_crest.png" id="4_octopus"]
+[ext_resource type="Texture2D" uid="uid://b45l65es1qjaq" path="res://Assets/Cinematics/flapjack_idle_512x640.png" id="5_mmlvu"]
 [ext_resource type="Texture2D" uid="uid://m8mh02fc50w3" path="res://Assets/UI/Pause/resume_icon.png" id="5_play"]
 [ext_resource type="Texture2D" uid="uid://c63ihj1k20rex" path="res://Assets/UI/WoodMenu/settings_gear.png" id="6_settings"]
 [ext_resource type="Texture2D" uid="uid://jeouuktphq8g" path="res://Assets/UI/Pause/exit_icon.png" id="7_exit"]
@@ -107,7 +107,7 @@ offset_top = -46.0
 offset_right = 410.0
 offset_bottom = 82.0
 mouse_filter = 2
-texture = ExtResource("4_octopus")
+texture = ExtResource("5_mmlvu")
 expand_mode = 1
 stretch_mode = 5
 

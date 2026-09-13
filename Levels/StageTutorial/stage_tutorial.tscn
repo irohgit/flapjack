@@ -16,9 +16,9 @@
 [ext_resource type="PackedScene" uid="uid://dqfrgwh5s05ei" path="res://Actors/CombatEffects/hit_explosion.tscn" id="6_o86e7"]
 [ext_resource type="AudioStream" uid="uid://cbplby7nfcsyw" path="res://Audio/SFX/ship_hit.mp3" id="6_tgm0e"]
 [ext_resource type="PackedScene" uid="uid://t7alddeyjrep" path="res://Levels/hud.tscn" id="7_o86e7"]
-[ext_resource type="Resource" uid="uid://b2xa4hm5ib5ca" path="res://Data/Levels/Stages/Stage1.tres" id="9_2uh0j"]
 [ext_resource type="Script" uid="uid://benkbks8rk38x" path="res://Levels/StageTutorial/tutorial_ui.gd" id="9_v5awh"]
 [ext_resource type="Script" uid="uid://ddmjy6ihgdk7k" path="res://Systems/Levels/level_generator.gd" id="10_t5sjw"]
+[ext_resource type="AudioStream" uid="uid://d6s1i42u0v3y" path="res://Audio/BGM/Veaceslav Draganov - Pirates Treasury.mp3" id="11_2uh0j"]
 [ext_resource type="FontFile" uid="uid://bocifqpdtmlvt" path="res://Assets/Fonts/MontagnaLTD.ttf" id="13_jeyy5"]
 [ext_resource type="FontFile" uid="uid://cvo681c1hvgca" path="res://Assets/Fonts/Montserrat/static/Montserrat-Black.ttf" id="14_eh6uy"]
 [ext_resource type="Resource" uid="uid://cyghdcm1pbq0p" path="res://Levels/StageTutorial/tutorial.tres" id="15_tgm0e"]
@@ -40,6 +40,7 @@ highlight_period = 1.0
 ambush_health_floor = 0.6
 cannonball_texture = ExtResource("5_6x5ea")
 explosion_scene = ExtResource("6_o86e7")
+cannonball_speed = 450.0
 cannon_fire_sfx = ExtResource("5_2lnso")
 cannon_impact_sfx = ExtResource("6_tgm0e")
 debris_scene = ExtResource("17_q577q")
@@ -49,6 +50,8 @@ tutorial_potion = ExtResource("5_khstj")
 gin_spawner = NodePath("GinSpawner")
 tutorial_barrel = ExtResource("6_khstj")
 level_generator = NodePath("LevelGenerator")
+stage_music = ExtResource("11_2uh0j")
+stage_music_db = -15.0
 
 [node name="GameUI" parent="." unique_id=1532914546 instance=ExtResource("1_7lj3a")]
 
@@ -251,7 +254,7 @@ camera = NodePath("../ScrollRig/ShakeCamera")
 [node name="BankPainter" type="Node2D" parent="." unique_id=227454568]
 z_index = -5
 script = ExtResource("21_go8m5")
-level_data = ExtResource("9_2uh0j")
+level_data = ExtResource("15_tgm0e")
 min_width_px = 120
 max_width_px = 300
 max_segment_px = 1200
@@ -318,6 +321,7 @@ metadata/_custom_type_script = "uid://tsoi3lwff5mf"
 
 [node name="ScreenEncounters" type="Node2D" parent="ScrollRig" unique_id=1731196316]
 
-[node name="Player" parent="ScrollRig" unique_id=2109576054 node_paths=PackedStringArray("camera") instance=ExtResource("24_7smvb")]
+[node name="Player" parent="ScrollRig" unique_id=2109576054 node_paths=PackedStringArray("camera", "banks") instance=ExtResource("24_7smvb")]
 position = Vector2(960, 853)
 camera = NodePath("../ShakeCamera")
+banks = NodePath("../../BankPainter")
